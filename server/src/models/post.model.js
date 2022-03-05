@@ -1,8 +1,8 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import toJSON from './plugins/toJson'
 import paginate from './plugins/paginate'
 
-const postSchema = mongoose.Schema(
+const postSchema = Schema(
   {
     text: String,
     image: String,
