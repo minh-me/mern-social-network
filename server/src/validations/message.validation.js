@@ -3,15 +3,16 @@ import { transValidations } from '../_lang/en'
 import config from './config.validation'
 
 const createMessage = {
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  email: yup.string().required().email(),
+  sender: yup.string().required(),
+  readBy: yup.string().required(),
+  chat: yup.string().required(),
+  text: yup.string(),
+  image: yup.string(),
 }
 
 const getMessages = {
-  firstName: yup.string(),
-  lastName: yup.string(),
-  email: yup.string().email(),
+  chat: yup.string().required(),
+  text: yup.string(),
   role: yup.string(),
   page: yup.number().integer(),
   limit: yup.number().integer(),
@@ -31,13 +32,7 @@ const updateMessage = {
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
-  firstName: yup.string(),
-  lastName: yup.string(),
-  email: yup.string().email(),
-  checkbox_selection: yup.string().when(['firstName', 'lastName', 'email'], {
-    is: (firstName, lastName, email) => !firstName && !lastName && !email,
-    then: yup.string().required(),
-  }),
+  content: yup.string().required(),
 }
 
 const deleteMessage = {
