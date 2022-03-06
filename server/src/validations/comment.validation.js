@@ -3,15 +3,18 @@ import { transValidations } from '../_lang/en'
 import config from './config.validation'
 
 const createComment = {
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  email: yup.string().required().email(),
+  content: yup.string().required(),
+  post: yup.string().required(),
 }
 
 const getComments = {
-  firstName: yup.string(),
-  lastName: yup.string(),
-  email: yup.string().email(),
+  content: yup.string(),
+  post: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
+  user: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
   role: yup.string(),
   page: yup.number().integer(),
   limit: yup.number().integer(),
@@ -31,13 +34,7 @@ const updateComment = {
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
-  firstName: yup.string(),
-  lastName: yup.string(),
-  email: yup.string().email(),
-  checkbox_selection: yup.string().when(['firstName', 'lastName', 'email'], {
-    is: (firstName, lastName, email) => !firstName && !lastName && !email,
-    then: yup.string().required(),
-  }),
+  content: yup.string(),
 }
 
 const deleteComment = {
