@@ -5,7 +5,14 @@ import config from './config.validation'
 const createChat = {
   chatName: yup.string(),
   isGroupChat: yup.boolean().required().default(false),
-  lastestMessage: yup.string(),
+  users: yup
+    .array()
+    .of(
+      yup
+        .string()
+        .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
+        .required()
+    ),
 }
 
 const getChats = {
