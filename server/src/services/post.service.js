@@ -57,8 +57,9 @@ const updatePostById = async (postId, body) => {
  * @returns {Promise<post>}
  */
 const deletePostById = async postId => {
-  const result = await Post.findByIdAndDelete(postId)
-  return result
+  const post = await Post.findByIdAndDelete(postId)
+  if (!post) throw new createHttpError.NotFound('Not found post.')
+  return post
 }
 
 export { createPost, queryPosts, getPostById, updatePostById, deletePostById }
