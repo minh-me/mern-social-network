@@ -7,13 +7,17 @@ const router = new Router()
 
 router
   .route('/')
-  .post(validate(chatValidation.createChat), chatController.createChat)
+  .post(auth(), validate(chatValidation.createChat), chatController.createChat)
   .get(validate(chatValidation.getChats), chatController.getChats)
 
 router
   .route('/:chatId')
   .get(validate(chatValidation.getChat), chatController.getChat)
-  .patch(validate(chatValidation.updateChat), chatController.updateChat)
-  .delete(validate(chatValidation.deleteChat), chatController.deleteChat)
+  .patch(auth(), validate(chatValidation.updateChat), chatController.updateChat)
+  .delete(
+    auth(),
+    validate(chatValidation.deleteChat),
+    chatController.deleteChat
+  )
 
 export default router

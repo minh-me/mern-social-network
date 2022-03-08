@@ -46,7 +46,9 @@ const createComment = async commentBody => {
  * @returns {Promise<comment>}
  */
 const updateCommentById = async (commentId, body) => {
-  const comment = await Comment.findByIdAndUpdate(commentId, body)
+  const comment = await Comment.findByIdAndUpdate(commentId, body, {
+    new: true,
+  })
   if (!comment) throw new createHttpError.NotFound('Not found comment.')
   return comment
 }

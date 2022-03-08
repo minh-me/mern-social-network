@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors'
 import { Chat } from '../models'
 
 /**
@@ -45,7 +46,8 @@ const createChat = async chatBody => {
  * @returns {Promise<chat>}
  */
 const updateChatById = async (chatId, body) => {
-  const chat = await Chat.findByIdAndUpdate(chatId, body)
+  const chat = await Chat.findByIdAndUpdate(chatId, body, { new: true })
+  if (!chat) throw new createHttpError.NotFound('Not found chat.')
   return chat
 }
 
@@ -55,8 +57,9 @@ const updateChatById = async (chatId, body) => {
  * @returns {Promise<chat>}
  */
 const deleteChatById = async chatId => {
-  const result = await Chat.findByIdAndDelete(chatId)
-  return result
+  const chat = await Chat.findByIdAndDelete(chatId)
+  if (!chat) throw new createHttpError.NotFound('Not found chat.')
+  return chat
 }
 
 export { createChat, queryChats, getChatById, updateChatById, deleteChatById }

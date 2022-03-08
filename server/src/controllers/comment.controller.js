@@ -61,8 +61,8 @@ const updateComment = catchAsync(async (req, res) => {
  * @access private
  */
 const deleteComment = catchAsync(async (req, res) => {
-  await commentService.deleteCommentById(req.params.commentId)
-  res.send({ message: tranSuccess.deleted_success('comment') })
+  const comment = await commentService.deleteCommentById(req.params.commentId)
+  res.send(comment)
 })
 
 export { createComment, getComments, getComment, updateComment, deleteComment }

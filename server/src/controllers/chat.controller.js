@@ -2,7 +2,6 @@ import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
 import { chatService } from '../services'
-import { tranSuccess } from '../_lang/en'
 
 /**
  * Create a chat
@@ -10,7 +9,10 @@ import { tranSuccess } from '../_lang/en'
  * @access private
  */
 const createChat = catchAsync(async (req, res) => {
-  const chat = await chatService.createChat(req.body)
+  const chat = await chatService.createChat({
+    ...req.body,
+    users: [...req.body.users, req.user.id],
+  })
   res.status(201).json(chat)
 })
 
@@ -55,8 +57,8 @@ const updateChat = catchAsync(async (req, res) => {
  * @access private
  */
 const deleteChat = catchAsync(async (req, res) => {
-  await chatService.deleteChatById(req.params.chatId)
-  res.send({ message: tranSuccess.deleted_success('chat') })
+  const chat = await chatService.deleteChatById(req.params.chatId)
+  res.send(chat)
 })
 
 export { createChat, getChats, getChat, updateChat, deleteChat }
