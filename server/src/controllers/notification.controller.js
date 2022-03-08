@@ -60,8 +60,10 @@ const updateNotification = catchAsync(async (req, res) => {
  * @access private
  */
 const deleteNotification = catchAsync(async (req, res) => {
-  await notificationService.deleteNotificationById(req.params.notificationId)
-  res.send({ message: tranSuccess.deleted_success('notification') })
+  const notification = await notificationService.deleteNotificationById(
+    req.params.notificationId
+  )
+  res.send(notification)
 })
 
 export {

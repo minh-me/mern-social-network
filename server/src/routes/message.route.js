@@ -8,19 +8,30 @@ const router = new Router()
 router
   .route('/')
   .post(
+    auth(),
     validate(messageValidation.createMessage),
     messageController.createMessage
   )
-  .get(validate(messageValidation.getMessages), messageController.getMessages)
+  .get(
+    auth(),
+    validate(messageValidation.getMessages),
+    messageController.getMessages
+  )
 
 router
   .route('/:messageId')
-  .get(validate(messageValidation.getMessage), messageController.getMessage)
+  .get(
+    auth(),
+    validate(messageValidation.getMessage),
+    messageController.getMessage
+  )
   .patch(
+    auth(),
     validate(messageValidation.updateMessage),
     messageController.updateMessage
   )
   .delete(
+    auth(),
     validate(messageValidation.deleteMessage),
     messageController.deleteMessage
   )

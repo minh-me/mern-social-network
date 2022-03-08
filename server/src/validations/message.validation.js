@@ -3,15 +3,24 @@ import { transValidations } from '../_lang/en'
 import config from './config.validation'
 
 const createMessage = {
-  sender: yup.string().required(),
-  readBy: yup.string().required(),
-  chat: yup.string().required(),
-  text: yup.string(),
+  readBy: yup
+    .array()
+    .of(
+      yup
+        .string()
+        .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
+    )
+    .nullable(true),
+  chat: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
+    .required(),
+  text: yup.string().required(),
   image: yup.string(),
 }
 
 const getMessages = {
-  chat: yup.string().required(),
+  chat: yup.string(),
   text: yup.string(),
   role: yup.string(),
   page: yup.number().integer(),
@@ -32,7 +41,7 @@ const updateMessage = {
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
-  content: yup.string().required(),
+  text: yup.string().required(),
 }
 
 const deleteMessage = {

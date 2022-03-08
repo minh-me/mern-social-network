@@ -10,7 +10,11 @@ import { tranSuccess } from '../_lang/en'
  * @access private
  */
 const createMessage = catchAsync(async (req, res) => {
-  const message = await messageService.createMessage(req.body)
+  const message = await messageService.createMessage({
+    ...req.body,
+    sender: req.user.id,
+    readBy: [req.user.id],
+  })
   res.status(201).json(message)
 })
 
@@ -58,8 +62,8 @@ const updateMessage = catchAsync(async (req, res) => {
  * @access private
  */
 const deleteMessage = catchAsync(async (req, res) => {
-  await messageService.deleteMessageById(req.params.messageId)
-  res.send({ message: tranSuccess.deleted_success('message') })
+  const message = await messageService.deleteMessageById(req.params.messageId)
+  res.send(message)
 })
 
 export { createMessage, getMessages, getMessage, updateMessage, deleteMessage }

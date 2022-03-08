@@ -1,4 +1,5 @@
 import { Message } from '../models'
+import createHttpError from 'http-errors'
 
 /**
  * Get messages by query(filter, options)
@@ -45,7 +46,10 @@ const createMessage = async messageBody => {
  * @returns {Promise<message>}
  */
 const updateMessageById = async (messageId, body) => {
-  const message = await Message.findByIdAndUpdate(messageId, body)
+  const message = await Message.findByIdAndUpdate(messageId, body, {
+    new: true,
+  })
+  if (!message) throw new createHttpError.NotFound('Not found message.')
   return message
 }
 
@@ -55,8 +59,9 @@ const updateMessageById = async (messageId, body) => {
  * @returns {Promise<message>}
  */
 const deleteMessageById = async messageId => {
-  const result = await Message.findByIdAndDelete(messageId)
-  return result
+  const message = await Message.findByIdAndDelete(messageId)
+  if (!message) throw new createHttpError.NotFound('Not found message.')
+  return message
 }
 
 export {
