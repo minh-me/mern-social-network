@@ -1,6 +1,6 @@
 import cloudinary from 'cloudinary'
 import fs from 'fs'
-import config from '../config/config'
+import { config } from '../config'
 
 // Config cloudinary
 cloudinary.v2.config(config.cloudinaryV2)
@@ -36,4 +36,4 @@ const uploadAvatar = async path => {
   return url
 }
 
-export default { upload, uploadAvatar }
+export { upload, uploadAvatar }

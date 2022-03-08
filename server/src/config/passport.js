@@ -1,6 +1,6 @@
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
-import config from './config'
-import User from '../models/user.model'
+import { config } from './config'
+import { User } from '../models'
 
 const jwtOptions = {
   secretOrKey: config.jwt.accessSecret,
@@ -17,6 +17,4 @@ const jwtVerify = async (payload, done) => {
   }
 }
 
-const jwtStrategy = new JwtStrategy(jwtOptions, jwtVerify)
-
-export default jwtStrategy
+export const jwtStrategy = new JwtStrategy(jwtOptions, jwtVerify)

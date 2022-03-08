@@ -59,10 +59,4 @@ const deleteChat = catchAsync(async (req, res) => {
   res.send({ message: tranSuccess.deleted_success('chat') })
 })
 
-export default {
-  createChat,
-  getChats,
-  getChat,
-  updateChat,
-  deleteChat,
-}
+export { createChat, getChats, getChat, updateChat, deleteChat }

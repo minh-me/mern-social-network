@@ -47,7 +47,7 @@ const deleteNotification = {
     .required(),
 }
 
-export default {
+export {
   createNotification,
   getNotifications,
   getNotification,

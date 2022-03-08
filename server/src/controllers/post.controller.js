@@ -59,10 +59,4 @@ const deletePost = catchAsync(async (req, res) => {
   res.send({ message: tranSuccess.deleted_success('post') })
 })
 
-export default {
-  createPost,
-  getPosts,
-  getPost,
-  updatePost,
-  deletePost,
-}
+export { createPost, getPosts, getPost, updatePost, deletePost }

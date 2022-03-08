@@ -3,7 +3,7 @@ import createHttpError from 'http-errors'
 import config from '../config/config'
 import { transErrors } from '../_lang/en'
 
-const upload = (req, res, next) => {
+export const upload = (req, res, next) => {
   // check file exist
   // req.file is the `image` file
   // req.body will hold the text fields, if there were any
@@ -29,4 +29,3 @@ const upload = (req, res, next) => {
   // success
   next()
 }
-export default upload

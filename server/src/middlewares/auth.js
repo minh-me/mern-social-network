@@ -1,7 +1,7 @@
 const passport = require('passport')
 const createHttpError = require('http-errors')
 
-const auth =
+export const auth =
   (...roles) =>
   (req, res, next) => {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
@@ -19,5 +19,3 @@ const auth =
       next()
     })(req, res, next)
   }
-
-export default auth

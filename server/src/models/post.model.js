@@ -1,6 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import toJSON from './plugins/toJson'
-import paginate from './plugins/paginate'
+import { paginate, toJSON } from './plugins'
 
 const postSchema = Schema(
   {
@@ -28,6 +27,4 @@ postSchema.plugin(paginate)
 /**
  * @typedef Post
  */
-const Post = mongoose.model('Post', postSchema)
-
-export default Post
+export const Post = mongoose.model('Post', postSchema)

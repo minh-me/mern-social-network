@@ -1,6 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import toJSON from './plugins/toJson'
-import paginate from './plugins/paginate'
+import { paginate, toJSON } from './plugins'
 
 const notificationSchema = new Schema(
   {
@@ -20,6 +19,4 @@ notificationSchema.plugin(paginate)
 /**
  * @typedef Notification
  */
-const Notification = mongoose.model('Notification', notificationSchema)
-
-export default Notification
+export const Notification = mongoose.model('Notification', notificationSchema)

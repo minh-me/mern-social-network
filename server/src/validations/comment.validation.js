@@ -44,10 +44,4 @@ const deleteComment = {
     .required(),
 }
 
-export default {
-  createComment,
-  getComments,
-  getComment,
-  updateComment,
-  deleteComment,
-}
+export { createComment, getComments, getComment, updateComment, deleteComment }

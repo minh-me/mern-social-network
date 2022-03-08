@@ -64,7 +64,7 @@ const deleteNotification = catchAsync(async (req, res) => {
   res.send({ message: tranSuccess.deleted_success('notification') })
 })
 
-export default {
+export {
   createNotification,
   getNotifications,
   getNotification,

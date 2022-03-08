@@ -1,7 +1,6 @@
 import { Router } from 'express'
-import validate from '../middlewares/validate'
+import { validate, auth } from '../middlewares'
 import { notificationValidation } from '../validations'
-import auth from '../middlewares/auth'
 import { notificationController } from '../controllers'
 
 const router = new Router()

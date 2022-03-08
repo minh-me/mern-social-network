@@ -51,7 +51,7 @@ const deleteUser = {
     .required(),
 }
 
-const updateMe = {
+const updateProfile = {
   firstName: yup.string(),
   lastName: yup.string(),
   email: yup.string().email(),
@@ -61,11 +61,4 @@ const updateMe = {
   }),
 }
 
-export default {
-  createUser,
-  getUsers,
-  getUser,
-  updateUser,
-  deleteUser,
-  updateMe,
-}
+export { createUser, getUsers, getUser, updateUser, deleteUser, updateProfile }

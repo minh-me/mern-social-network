@@ -18,4 +18,4 @@ function toJSON(schema) {
   })
 }
 
-export default toJSON
+export { toJSON }

@@ -1,5 +1,5 @@
 import { createLogger, transports, format } from 'winston'
-import config from './config.js'
+import { config } from './config.js'
 
 const { combine, colorize, uncolorize, label, splat, printf } = format
 
@@ -24,6 +24,4 @@ const logConfiguration = {
   ),
 }
 
-const logger = createLogger(logConfiguration)
-
-export default logger
+export const logger = createLogger(logConfiguration)

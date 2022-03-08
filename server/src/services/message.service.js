@@ -59,7 +59,7 @@ const deleteMessageById = async messageId => {
   return result
 }
 
-export default {
+export {
   createMessage,
   queryMessages,
   getMessageById,
