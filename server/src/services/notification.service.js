@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors'
 import { Notification } from '../models'
 
 /**
@@ -47,8 +48,11 @@ const createNotification = async notificationBody => {
 const updateNotificationById = async (notificationId, body) => {
   const notification = await Notification.findByIdAndUpdate(
     notificationId,
-    body
+    body,
+    { new: true }
   )
+  if (!notification)
+    throw new createHttpError.NotFound('Not found notification.')
   return notification
 }
 
@@ -58,8 +62,10 @@ const updateNotificationById = async (notificationId, body) => {
  * @returns {Promise<notification>}
  */
 const deleteNotificationById = async notificationId => {
-  const result = await Notification.findByIdAndDelete(notificationId)
-  return result
+  const notification = await Notification.findByIdAndDelete(notificationId)
+  if (!notification)
+    throw new createHttpError.NotFound('Not found notification.')
+  return notification
 }
 
 export {
