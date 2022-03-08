@@ -9,7 +9,7 @@ const postSchema = Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-    pinned: Boolean,
+    pinned: { type: Boolean, default: false },
     likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     retweetUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     retweetData: { type: Schema.Types.ObjectId, ref: 'Post' },

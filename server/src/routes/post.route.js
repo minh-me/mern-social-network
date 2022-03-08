@@ -7,13 +7,17 @@ const router = new Router()
 
 router
   .route('/')
-  .post(validate(postValidation.createPost), postController.createPost)
+  .post(auth(), validate(postValidation.createPost), postController.createPost)
   .get(validate(postValidation.getPosts), postController.getPosts)
 
 router
   .route('/:postId')
   .get(validate(postValidation.getPost), postController.getPost)
-  .patch(validate(postValidation.updatePost), postController.updatePost)
-  .delete(validate(postValidation.deletePost), postController.deletePost)
+  .patch(auth(), validate(postValidation.updatePost), postController.updatePost)
+  .delete(
+    auth(),
+    validate(postValidation.deletePost),
+    postController.deletePost
+  )
 
 export default router

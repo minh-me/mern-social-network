@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors'
 import { Post } from '../models'
 
 /**
@@ -45,7 +46,8 @@ const createPost = async postBody => {
  * @returns {Promise<post>}
  */
 const updatePostById = async (postId, body) => {
-  const post = await Post.findByIdAndUpdate(postId, body)
+  const post = await Post.findByIdAndUpdate(postId, body, { new: true })
+  if (!post) throw new createHttpError('Not found post.')
   return post
 }
 
