@@ -10,7 +10,10 @@ import { tranSuccess } from '../_lang/en'
  * @access private
  */
 const createComment = catchAsync(async (req, res) => {
-  const comment = await commentService.createComment(req.body)
+  const comment = await commentService.createComment({
+    ...req.body,
+    user: req.user.id,
+  })
   res.status(201).json(comment)
 })
 

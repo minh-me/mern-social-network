@@ -1,4 +1,5 @@
 import { Comment } from '../models'
+import createHttpError from 'http-errors'
 
 /**
  * Get comments by query(filter, options)
@@ -46,6 +47,7 @@ const createComment = async commentBody => {
  */
 const updateCommentById = async (commentId, body) => {
   const comment = await Comment.findByIdAndUpdate(commentId, body)
+  if (!comment) throw new createHttpError.NotFound('Not found comment.')
   return comment
 }
 
@@ -55,8 +57,9 @@ const updateCommentById = async (commentId, body) => {
  * @returns {Promise<comment>}
  */
 const deleteCommentById = async commentId => {
-  const result = await Comment.findByIdAndDelete(commentId)
-  return result
+  const comment = await Comment.findByIdAndDelete(commentId)
+  if (!comment) throw new createHttpError.NotFound('Not found comment.')
+  return comment
 }
 
 export {

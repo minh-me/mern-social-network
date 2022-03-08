@@ -34,7 +34,7 @@ const updateComment = {
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
-  content: yup.string(),
+  content: yup.string().required(),
 }
 
 const deleteComment = {
