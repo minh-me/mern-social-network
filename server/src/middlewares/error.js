@@ -1,7 +1,7 @@
 import createHttpError, { HttpError } from 'http-errors'
-import logger from '../config/logger'
+import { logger } from '../config'
 
-const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
   let error = { ...err }
   error.message = err.message
 
@@ -38,5 +38,3 @@ const errorHandler = (err, req, res, next) => {
       createHttpError.InternalServerError().message,
   })
 }
-
-export default errorHandler

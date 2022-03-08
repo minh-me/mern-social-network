@@ -1,7 +1,5 @@
 import nodemailer from 'nodemailer'
-import { google } from 'googleapis'
-import config from '../config/config'
-import logger from '../config/logger'
+import { config, logger } from '../config'
 import { transEmail } from '../_lang/en'
 // create stmp transporter
 const transporter = nodemailer.createTransport(config.email.smtp)
@@ -71,4 +69,4 @@ const sendEmailResetPassword = async (to, token, name) => {
   await sendEmail(to, subject, htmlContent)
 }
 
-export default { sendEmail, sendEmailRegister, sendEmailResetPassword }
+export { sendEmail, sendEmailRegister, sendEmailResetPassword }

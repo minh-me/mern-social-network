@@ -59,7 +59,7 @@ const deleteCommentById = async commentId => {
   return result
 }
 
-export default {
+export {
   createComment,
   queryComments,
   getCommentById,

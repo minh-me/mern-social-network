@@ -1,7 +1,6 @@
 import { Router } from 'express'
-import validate from '../middlewares/validate'
+import { validate, auth } from '../middlewares'
 import { commentValidation } from '../validations'
-import auth from '../middlewares/auth'
 import { commentController } from '../controllers'
 
 const router = new Router()

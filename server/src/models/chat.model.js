@@ -1,6 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import toJSON from './plugins/toJson'
-import paginate from './plugins/paginate'
+import { paginate, toJSON } from './plugins'
 
 const chatSchema = mongoose.Schema(
   {
@@ -21,6 +20,4 @@ chatSchema.plugin(paginate)
 /**
  * @typedef Chat
  */
-const Chat = mongoose.model('Chat', chatSchema)
-
-export default Chat
+export const Chat = mongoose.model('Chat', chatSchema)

@@ -59,10 +59,4 @@ const deleteChatById = async chatId => {
   return result
 }
 
-export default {
-  createChat,
-  queryChats,
-  getChatById,
-  updateChatById,
-  deleteChatById,
-}
+export { createChat, queryChats, getChatById, updateChatById, deleteChatById }

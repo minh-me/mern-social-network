@@ -62,10 +62,4 @@ const deleteMessage = catchAsync(async (req, res) => {
   res.send({ message: tranSuccess.deleted_success('message') })
 })
 
-export default {
-  createMessage,
-  getMessages,
-  getMessage,
-  updateMessage,
-  deleteMessage,
-}
+export { createMessage, getMessages, getMessage, updateMessage, deleteMessage }

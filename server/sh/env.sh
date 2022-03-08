@@ -5,7 +5,7 @@ export PORT=8888
 
 # URL of the Mongo DB
 # export MONGODB_URL="mongodb://127.0.0.1:27017/node-boilerplate"
-export MONGODB_URL="mongodb+srv://minhchiu:minhchiu@cluster0.8r8ak.mongodb.net/react-node-ecommerce?retryWrites=true&w=majority"
+export MONGODB_URL="mongodb+srv://miniSocialNetwork:miniSocialNetwork@cluster0.3rkpg.mongodb.net/mini-social-network?retryWrites=true&w=majority"
 
 
 # JWT

@@ -1,7 +1,7 @@
 import createError from 'http-errors'
 import { tokenService } from '.'
 import { transErrors } from '../_lang/en'
-import userService from './user.service'
+import { getUserByEmail } from './user.service'
 
 /**
  * Login user with email and password
@@ -10,7 +10,7 @@ import userService from './user.service'
  * @returns {Promise<User>}
  */
 const loginWithEmailAndPassword = async (email, password) => {
-  const user = await userService.getUserByEmail(email)
+  const user = await getUserByEmail(email)
   if (!user || !(await user.isPasswordMatch(password)))
     throw new createError.Unauthorized(transErrors.login_failed)
 
@@ -19,4 +19,4 @@ const loginWithEmailAndPassword = async (email, password) => {
   return refressh_token
 }
 
-export default { loginWithEmailAndPassword }
+export { loginWithEmailAndPassword }

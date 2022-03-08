@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { authController } from '../controllers'
-import auth from '../middlewares/auth'
-import validate from '../middlewares/validate'
+import { auth, validate } from '../middlewares'
 import { authValidation, userValidation } from '../validations'
 
 const router = new Router()
@@ -30,6 +29,6 @@ router.post(
   authController.resetPassword
 )
 
-router.post('/sign-out', auth(), authController.logout)
+router.post('/logout', auth(), authController.logout)
 
 export default router

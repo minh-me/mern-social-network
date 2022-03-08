@@ -62,10 +62,4 @@ const deleteComment = catchAsync(async (req, res) => {
   res.send({ message: tranSuccess.deleted_success('comment') })
 })
 
-export default {
-  createComment,
-  getComments,
-  getComment,
-  updateComment,
-  deleteComment,
-}
+export { createComment, getComments, getComment, updateComment, deleteComment }

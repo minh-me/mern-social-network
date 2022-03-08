@@ -42,10 +42,4 @@ const deleteMessage = {
     .required(),
 }
 
-export default {
-  createMessage,
-  getMessages,
-  getMessage,
-  updateMessage,
-  deleteMessage,
-}
+export { createMessage, getMessages, getMessage, updateMessage, deleteMessage }

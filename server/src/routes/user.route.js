@@ -1,18 +1,18 @@
 import { Router } from 'express'
-import validate from '../middlewares/validate'
 import { userValidation } from '../validations'
-import auth from '../middlewares/auth'
+import { auth, validate } from '../middlewares'
 import { userController } from '../controllers'
 
 const router = new Router()
 
-router.get('/me', auth(), userController.getMe)
-router.patch(
-  '/update-me',
-  auth(),
-  validate(userValidation.updateMe),
-  userController.updateMe
-)
+router
+  .route('/profile')
+  .get(auth(), userController.getProfile)
+  .patch(
+    auth(),
+    validate(userValidation.updateProfile),
+    userController.updateProfile
+  )
 
 router
   .route('/')

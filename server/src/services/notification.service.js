@@ -62,7 +62,7 @@ const deleteNotificationById = async notificationId => {
   return result
 }
 
-export default {
+export {
   createNotification,
   queryNotifications,
   getNotificationById,

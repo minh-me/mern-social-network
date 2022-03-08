@@ -1,6 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
-import toJSON from './plugins/toJson'
-import paginate from './plugins/paginate'
+import { paginate, toJSON } from './plugins'
 
 const messageSchema = mongoose.Schema(
   {
@@ -22,6 +21,4 @@ messageSchema.plugin(paginate)
 /**
  * @typedef Message
  */
-const Message = mongoose.model('Message', messageSchema)
-
-export default Message
+export const Message = mongoose.model('Message', messageSchema)

@@ -64,7 +64,7 @@ const deleteUser = catchAsync(async (req, res) => {
  * @GET api/users/me
  * @access private
  */
-const getMe = catchAsync(async (req, res) => {
+const getProfile = catchAsync(async (req, res) => {
   const user = await userService.getUserById(req.user.id)
   res.send(user)
 })
@@ -74,17 +74,17 @@ const getMe = catchAsync(async (req, res) => {
  * @PATCH api/users/update-me
  * @access private
  */
-const updateMe = catchAsync(async (req, res, next) => {
+const updateProfile = catchAsync(async (req, res, next) => {
   const user = await userService.updateUserById(req.user.id, req.body)
   res.send(user)
 })
 
-export default {
+export {
   createUser,
   getUsers,
   getUser,
   updateUser,
   deleteUser,
-  getMe,
-  updateMe,
+  getProfile,
+  updateProfile,
 }

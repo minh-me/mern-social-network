@@ -39,11 +39,4 @@ const singout = {
   refreshToken: yup.string().required(),
 }
 
-export default {
-  register,
-  activate,
-  login,
-  forgotPassword,
-  resetPassword,
-  singout,
-}
+export { register, activate, login, forgotPassword, resetPassword, singout }

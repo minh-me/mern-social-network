@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
 import httpError from 'http-errors'
 import { transErrors } from '../_lang/en'
-import config from '../config/config'
-import userService from './user.service'
+import { config } from '../config'
+import * as userService from './user.service'
 
 /**
  * private function generateToken
@@ -123,7 +123,7 @@ const verifyRefreshToken = async token => {
   return await verifyToken(token, config.jwt.refreshSecret)
 }
 
-export default {
+export {
   generateToken,
   verifyToken,
   generateActivationToken,

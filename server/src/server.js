@@ -11,12 +11,8 @@ import cors from 'cors'
 import httpError from 'http-errors'
 import 'colors'
 
-import jwtStrategy from './config/passport'
-import config from './config/config'
-import db from './config/db'
-import logger from './config/logger'
-import { authLimiter } from './config/rateLimit'
-import errorHandler from './middlewares/error'
+import { jwtStrategy, config, db, logger, authLimiter } from './config'
+import { errorHandler } from './middlewares'
 import routes from './routes/_index'
 
 // connect to database

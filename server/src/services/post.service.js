@@ -59,10 +59,4 @@ const deletePostById = async postId => {
   return result
 }
 
-export default {
-  createPost,
-  queryPosts,
-  getPostById,
-  updatePostById,
-  deletePostById,
-}
+export { createPost, queryPosts, getPostById, updatePostById, deletePostById }

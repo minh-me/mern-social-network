@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors'
 import catchAsync from '../utils/catchAsync'
 import { tranSuccess, transErrors } from '../_lang/en'
-import config from '../config/config'
+import { config } from '../config'
 import {
   userService,
   authService,
@@ -122,7 +122,7 @@ const logout = catchAsync(async (req, res) => {
   res.send({ message: tranSuccess.logout_success })
 })
 
-export default {
+export {
   register,
   activate,
   login,

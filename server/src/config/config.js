@@ -30,7 +30,7 @@ const {
   EMAIL_FROM,
 } = process.env
 
-const config = {
+export const config = {
   env: NODE_ENV,
   port: PORT,
   mongodbUrl: MONGODB_URL,
@@ -44,7 +44,6 @@ const config = {
     refreshExpiration: JWT_REFRESH_EXPIRATION,
     activateExpiration: JWT_ACTIVATE_EXPIRATION,
     resetPasswordExpiration: JWT_RESET_PASSWORD_EXPIRATION,
-
   },
   cookie: {
     path: '/api/auth/access',
@@ -79,4 +78,3 @@ const config = {
     image_types: ['image/jpg', 'image/png', 'image/jpeg'],
   },
 }
-export default config

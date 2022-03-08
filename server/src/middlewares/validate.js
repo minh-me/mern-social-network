@@ -2,7 +2,7 @@ import httpError from 'http-errors'
 import { object } from 'yup'
 import logger from '../config/logger'
 
-const validate = schema => (req, res, next) => {
+export const validate = schema => (req, res, next) => {
   try {
     const obj = {
       ...req.body,
@@ -25,5 +25,3 @@ const validate = schema => (req, res, next) => {
     })
   }
 }
-
-export default validate

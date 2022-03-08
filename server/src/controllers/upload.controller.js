@@ -12,4 +12,4 @@ const uploadAvatar = catchAsync(async (req, res) => {
   return res.send({ url })
 })
 
-export default { uploadAvatar }
+export { uploadAvatar }

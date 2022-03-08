@@ -118,4 +118,4 @@ const paginate = schema => {
   }
 }
 
-export default paginate
+export { paginate }

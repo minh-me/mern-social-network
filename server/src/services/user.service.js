@@ -105,7 +105,7 @@ const deleteUserById = async userId => {
   return result
 }
 
-export default {
+export {
   createUser,
   queryUsers,
   getUserById,

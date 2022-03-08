@@ -41,10 +41,4 @@ const deleteChat = {
     .required(),
 }
 
-export default {
-  createChat,
-  getChats,
-  getChat,
-  updateChat,
-  deleteChat,
-}
+export { createChat, getChats, getChat, updateChat, deleteChat }
