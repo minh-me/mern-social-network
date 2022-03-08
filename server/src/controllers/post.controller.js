@@ -10,7 +10,10 @@ import { tranSuccess } from '../_lang/en'
  * @access private
  */
 const createPost = catchAsync(async (req, res) => {
-  const post = await postService.createPost(req.body)
+  const post = await postService.createPost({
+    ...req.body,
+    postedBy: req.user.id,
+  })
   res.status(201).json(post)
 })
 
@@ -20,7 +23,7 @@ const createPost = catchAsync(async (req, res) => {
  * @access public
  */
 const getPosts = catchAsync(async (req, res) => {
-  const filter = pick(req.query, [])
+  const filter = pick(req.query, ['text'])
   const options = pick(req.query, ['sort', 'select', 'sortBy', 'limit', 'page'])
   const result = await postService.queryPosts(filter, options)
   res.send(result)
@@ -55,8 +58,8 @@ const updatePost = catchAsync(async (req, res) => {
  * @access private
  */
 const deletePost = catchAsync(async (req, res) => {
-  await postService.deletePostById(req.params.postId)
-  res.send({ message: tranSuccess.deleted_success('post') })
+  let post = await postService.deletePostById(req.params.postId)
+  res.send(post)
 })
 
 export { createPost, getPosts, getPost, updatePost, deletePost }

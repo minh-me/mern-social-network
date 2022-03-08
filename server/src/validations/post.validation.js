@@ -3,16 +3,13 @@ import { transValidations } from '../_lang/en'
 import config from './config.validation'
 
 const createPost = {
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  email: yup.string().required().email(),
+  text: yup.string(),
+  image: yup.string(),
+  pinned: yup.boolean().default(false),
 }
 
 const getPosts = {
-  firstName: yup.string(),
-  lastName: yup.string(),
-  email: yup.string().email(),
-  role: yup.string(),
+  text: yup.string(),
   page: yup.number().integer(),
   limit: yup.number().integer(),
   sortBy: yup.string(),
@@ -31,11 +28,11 @@ const updatePost = {
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
-  firstName: yup.string(),
-  lastName: yup.string(),
-  email: yup.string().email(),
-  checkbox_selection: yup.string().when(['firstName', 'lastName', 'email'], {
-    is: (firstName, lastName, email) => !firstName && !lastName && !email,
+  text: yup.string(),
+  image: yup.string(),
+
+  checkbox_selection: yup.string().when(['text', 'image'], {
+    is: (text, image) => !text && !image,
     then: yup.string().required(),
   }),
 }
