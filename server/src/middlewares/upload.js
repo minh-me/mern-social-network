@@ -1,6 +1,6 @@
 import fs from 'fs'
 import createHttpError from 'http-errors'
-import config from '../config/config'
+import { config } from '../config'
 import { transErrors } from '../_lang/en'
 
 export const upload = (req, res, next) => {
