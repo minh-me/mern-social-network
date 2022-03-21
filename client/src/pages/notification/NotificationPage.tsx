@@ -1,4 +1,4 @@
-import { Title } from 'components/Common';
+import { Title } from 'components/App';
 import { FC } from 'react';
 
 type Props = {};

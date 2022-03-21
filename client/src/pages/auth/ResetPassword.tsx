@@ -24,7 +24,7 @@ const defaultValues = {
   password: '',
 };
 
-export const SignIn = () => {
+export const ResetPassword = () => {
   const { control, handleSubmit } = useForm({
     defaultValues,
     resolver: yupResolver(loginSchema),
@@ -37,24 +37,8 @@ export const SignIn = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box mb={3}>
           <Typography variant="h5" fontWeight="600" component="h3" align="center">
-            Chào mừng trở lại!
+            Reset Password
           </Typography>
-          <Typography color="#B9BBBE" variant="body2" fontWeight={300} align="center">
-            Chúng tôi rất vui mừng được gặp lại bạn!
-          </Typography>
-        </Box>
-
-        <Box mb={3}>
-          <Typography
-            fontWeight="500"
-            component="label"
-            color="#b9bbbe"
-            fontSize="small"
-            textTransform="uppercase"
-          >
-            Email
-          </Typography>
-          <FormInputText name="email" autoFocus={true} control={control} />
         </Box>
 
         <Box mb={3}>
@@ -67,23 +51,7 @@ export const SignIn = () => {
           >
             Password
           </Typography>
-          <FormInputText name="password" type="password" control={control} />
-          <Typography
-            sx={{
-              marginTop: '2px',
-              color: pink[500],
-
-              '&:hover': {
-                textDecoration: 'underline',
-                color: pink[400],
-                cursor: 'pointer',
-              },
-            }}
-            color="#72767D"
-            fontSize={13}
-          >
-            Forgot your password?
-          </Typography>
+          <FormInputText name="password" autoFocus={true} type="password" control={control} />
         </Box>
 
         <Button
@@ -101,29 +69,8 @@ export const SignIn = () => {
             },
           }}
         >
-          Đăng Nhập
+          Reset
         </Button>
-
-        <Box my={2}>
-          <Typography
-            sx={{
-              a: {
-                color: pink[400],
-                textDecoration: 'none',
-                marginLeft: 1,
-              },
-              '&:hover a': {
-                textDecoration: 'underline',
-                color: pink[500],
-              },
-            }}
-            color="#72767D"
-            fontSize={12}
-          >
-            Need an account?
-            <Link to="/register">Register</Link>
-          </Typography>
-        </Box>
       </form>
     </Box>
   );

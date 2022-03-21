@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { Title } from 'components/Common';
+import { Title } from 'components/App';
 
 export const HomePage = () => {
   return (

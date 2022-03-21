@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import HomeSharpIcon from '@mui/icons-material/HomeSharp';
 import NotificationsSharpIcon from '@mui/icons-material/NotificationsSharp';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
-import AccountBoxSharpIcon from '@mui/icons-material/AccountBoxSharp';
+import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
 
 const SidebarList = () => {
@@ -68,7 +68,7 @@ const SidebarList = () => {
       <NavLink to="/profile">
         <ListItemButton>
           <ListItemIcon sx={{ minWidth: '30px' }}>
-            <AccountBoxSharpIcon sx={{ color: 'white' }} />
+            <AccountBoxRoundedIcon sx={{ color: 'white' }} />
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItemButton>
