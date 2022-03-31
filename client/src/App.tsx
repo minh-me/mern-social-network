@@ -1,13 +1,29 @@
-import { BrowserRouter } from 'react-router-dom';
-import { MainLayout } from 'components/Layout';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AuthLayout, MainLayout } from 'components/Layout';
 import { Container } from '@mui/material';
+import { ChatPage, HomePage, MessagePage, NotificationPage, ProfilePage, SearchPage } from 'pages';
+import { ResetPassword, SignIn, SignUp } from 'pages/auth';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Container maxWidth="xl">
-          <MainLayout />
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/notification" element={<NotificationPage />} />
+              <Route path="/chat" element={<ChatPage />} />
+              <Route path="/message" element={<MessagePage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+            </Route>
+            <Route path="/" element={<AuthLayout />}>
+              <Route path="login" element={<SignIn />} />
+              <Route path="register" element={<SignUp />} />
+              <Route path="reset-password" element={<ResetPassword />} />
+            </Route>
+          </Routes>
         </Container>
       </BrowserRouter>
     </>

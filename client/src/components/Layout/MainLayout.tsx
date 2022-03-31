@@ -1,12 +1,9 @@
 import { Grid, Box } from '@mui/material';
 import { blueGrey } from '@mui/material/colors';
-import { Sidebar } from '../Common';
-import { Routes, Route } from 'react-router-dom';
-import { ChatPage, HomePage, MessagePage, NotificationPage, ProfilePage, SearchPage } from 'pages';
+import { Sidebar } from '../App';
+import { Outlet } from 'react-router-dom';
 
-type Props = {};
-
-export const MainLayout = (props: Props) => {
+export const MainLayout = () => {
   return (
     <Grid container>
       <Grid item xs={2} px={2} sx={{ borderRight: 16, borderColor: blueGrey[800] }}>
@@ -33,14 +30,7 @@ export const MainLayout = (props: Props) => {
             },
           }}
         >
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/notification" element={<NotificationPage />} />
-            <Route path="/chat" element={<ChatPage />} />
-            <Route path="/message" element={<MessagePage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-          </Routes>
+          <Outlet />
         </Box>
       </Grid>
       <Grid item xs={3}>

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Title } from 'components/Common';
+import { Title } from 'components/App';
 
 type Props = {};
 
