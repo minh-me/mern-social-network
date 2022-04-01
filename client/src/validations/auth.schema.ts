@@ -12,6 +12,10 @@ export const registerSchema = yup.object({
   dateOfBirth: yup.date().required().label('Date Of Birth'),
 });
 
+export const emailSchema = yup.object({
+  email: yup.string().email().required().label('Email'),
+});
+
 export const passwordSchema = yup.object({
   password: yup.string().required().label('Password'),
 });

@@ -1,12 +1,22 @@
 import { Link } from 'react-router-dom';
-import { Box, Button, Typography } from '@mui/material';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Typography,
+} from '@mui/material';
+import { useForm, SubmitHandler, ErrorOption } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { FormInputText } from 'components/Common';
 import { LoginData } from 'interface';
 import { styles } from './styles';
-import { loginSchema } from 'validations';
+import { emailSchema, loginSchema } from 'validations';
+import { useState } from 'react';
 
 const defaultValues: LoginData = {
   email: '',
@@ -14,12 +24,24 @@ const defaultValues: LoginData = {
 };
 
 export const SignIn = () => {
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, getValues, setError } = useForm({
     defaultValues,
+    mode: 'onChange',
     resolver: yupResolver(loginSchema),
   });
 
   const onSubmit: SubmitHandler<LoginData> = (data) => console.log({ data });
+
+  const [openModal, setOpenModal] = useState(false);
+  const handleClickForgotPass = async () => {
+    try {
+      const email = getValues('email');
+      await emailSchema.validate({ email });
+      setOpenModal(true);
+    } catch (error) {
+      setError('email', error as ErrorOption);
+    }
+  };
 
   return (
     <Box sx={{ background: '#36393f', borderRadius: 2, p: 4, color: 'white' }}>
@@ -39,7 +61,9 @@ export const SignIn = () => {
 
         <Box mb={3}>
           <FormInputText label="Password" name="password" type="password" control={control} />
-          <Typography sx={styles.link}>Forgot your password?</Typography>
+          <Typography sx={styles.link} onClick={handleClickForgotPass}>
+            Forgot your password?
+          </Typography>
         </Box>
 
         <Button variant="contained" fullWidth type="submit" sx={styles.button}>
@@ -53,6 +77,25 @@ export const SignIn = () => {
           </Typography>
         </Box>
       </form>
+      <Dialog maxWidth="xs" open={openModal} onClose={() => setOpenModal(false)}>
+        <DialogTitle sx={{ background: '#36393f', color: 'white' }}>Đã gửi hướng dẫn</DialogTitle>
+        <DialogContent sx={{ background: '#36393f' }}>
+          <DialogContentText sx={{ color: '#DCDDDE', fontWeight: 400, fontSize: 14 }}>
+            Chúng tôi đã gửi hướng dẫn thay đổi mật khẩu vào <b>{getValues('email')}</b>, vui lòng
+            kiếm tra hộp thư cũng như thư rác của bạn.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ background: '#2f3136' }}>
+          <Button
+            sx={styles.button}
+            variant="contained"
+            onClick={() => setOpenModal(false)}
+            autoFocus
+          >
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
