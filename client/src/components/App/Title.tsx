@@ -8,8 +8,8 @@ type TitleProps = {
 
 export const Title: FC<TitleProps> = ({ title }) => {
   return (
-    <Box py={2} px={3} sx={{ borderBottom: 2, borderBottomColor: grey[600] }}>
-      <Typography variant="h4" component="h4" fontWeight="900" fontSize={24}>
+    <Box py={2} px={3}>
+      <Typography variant="h4" component="h4" fontWeight="600" fontSize={20}>
         {title}
       </Typography>
     </Box>

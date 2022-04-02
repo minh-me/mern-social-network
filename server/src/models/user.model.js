@@ -9,12 +9,7 @@ const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z]).{6,}$/
 
 const userSchema = mongoose.Schema(
   {
-    firstName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    lastName: {
+    name: {
       type: String,
       required: true,
       trim: true,
@@ -41,12 +36,7 @@ const userSchema = mongoose.Schema(
     },
     coverPhoto: String,
     profilePic: String,
-    facebook: {
-      type: String,
-    },
-    google: {
-      type: String,
-    },
+    authKey: String,
   },
   {
     timestamps: true,
@@ -66,11 +56,6 @@ userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 8)
   }
   next()
-})
-
-// Create a virtual property `fullName` that's computed from `fistname and lastname`.
-userSchema.virtual('fullName').get(function () {
-  return `${this.firstName} ${this.lastName}`
 })
 
 userSchema.methods = {

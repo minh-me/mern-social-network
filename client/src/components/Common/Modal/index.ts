@@ -1,1 +1,1 @@
-export * from './ResponsiveDialog';
+export * from './MDialog';
