@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { Title } from 'components/App';
 
 type Props = {};
@@ -5,7 +6,9 @@ type Props = {};
 export const MessagePage = (props: Props) => {
   return (
     <>
-      <Title title="MessagePage" />
+      <Box sx={{ borderBottom: '1px solid #38444d' }}>
+        <Title title="Message" />
+      </Box>
     </>
   );
 };

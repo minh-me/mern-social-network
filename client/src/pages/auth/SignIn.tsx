@@ -17,6 +17,7 @@ import { LoginData } from 'interface';
 import { styles } from './styles';
 import { emailSchema, loginSchema } from 'validations';
 import { useState } from 'react';
+import { MDialog } from 'components/Common/Modal';
 
 const defaultValues: LoginData = {
   email: '',
@@ -77,25 +78,18 @@ export const SignIn = () => {
           </Typography>
         </Box>
       </form>
-      <Dialog maxWidth="xs" open={openModal} onClose={() => setOpenModal(false)}>
-        <DialogTitle sx={{ background: '#36393f', color: 'white' }}>Đã gửi hướng dẫn</DialogTitle>
-        <DialogContent sx={{ background: '#36393f' }}>
-          <DialogContentText sx={{ color: '#DCDDDE', fontWeight: 400, fontSize: 14 }}>
-            Chúng tôi đã gửi hướng dẫn thay đổi mật khẩu vào <b>{getValues('email')}</b>, vui lòng
-            kiếm tra hộp thư cũng như thư rác của bạn.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ background: '#2f3136' }}>
-          <Button
-            sx={styles.button}
-            variant="contained"
-            onClick={() => setOpenModal(false)}
-            autoFocus
-          >
-            Đồng ý
-          </Button>
-        </DialogActions>
-      </Dialog>
+
+      <MDialog
+        type="ok"
+        onClose={() => setOpenModal(false)}
+        open={openModal}
+        title="Đã gửi hướng dẫn"
+      >
+        <>
+          Chúng tôi đã gửi hướng dẫn thay đổi mật khẩu vào <b>{getValues('email')}</b>, vui lòng
+          kiếm tra hộp thư cũng như thư rác của bạn.
+        </>
+      </MDialog>
     </Box>
   );
 };
