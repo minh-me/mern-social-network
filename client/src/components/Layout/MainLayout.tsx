@@ -2,6 +2,7 @@ import { Grid, Box } from '@mui/material';
 import { blueGrey } from '@mui/material/colors';
 import { Sidebar } from '../App';
 import { Outlet } from 'react-router-dom';
+import { FormSearch } from 'components/Common/Forms';
 
 export const MainLayout = () => {
   return (
@@ -34,7 +35,9 @@ export const MainLayout = () => {
         </Box>
       </Grid>
       <Grid item xs={3}>
-        Sidebar right
+        <Box px={2} my={3} sx={{ maxWidth: '100%' }}>
+          <FormSearch fontSize={14} />
+        </Box>
       </Grid>
     </Grid>
   );

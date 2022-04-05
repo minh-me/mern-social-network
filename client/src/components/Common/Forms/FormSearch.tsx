@@ -2,20 +2,22 @@ import { styled } from '@mui/material/styles';
 import { FormControl, IconButton, InputAdornment, InputBase, OutlinedInput } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-type Props = {};
-const Input = styled(InputBase)(({ theme }) => ({
+type Props = {
+  [key: string]: any;
+};
+const Input = styled(InputBase)(() => ({
+  fontSize: 16,
   '& .MuiInputBase-input': {
     borderRadius: 50,
     position: 'relative',
-    fontSize: 16,
-    padding: '10px 26px 10px 20px',
+    padding: '8px 20px 8px 20px',
     color: '#f21980',
     '&::-webkit-input-placeholder': {
       color: 'white',
     },
   },
 }));
-export const FormSearch = (props: Props) => {
+export const FormSearch = ({ ...rest }: Props) => {
   return (
     <>
       <FormControl
@@ -25,6 +27,7 @@ export const FormSearch = (props: Props) => {
         <Input
           fullWidth
           placeholder="Enter name or post..."
+          sx={{ ...rest }}
           endAdornment={
             <InputAdornment position="end">
               <IconButton sx={{ color: '#999ea3' }}>
