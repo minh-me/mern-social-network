@@ -14,11 +14,25 @@ type ModalProps = {
   entityId?: string;
   children: JSX.Element[] | JSX.Element | string;
   type: 'delete' | 'ok';
+  position?: 'top' | 'center';
 };
 
-export const MDialog: FC<ModalProps> = ({ type, title, open, children, onClose, entityId }) => {
+export const MDialog: FC<ModalProps> = ({
+  type,
+  position = 'top',
+  title,
+  open,
+  children,
+  onClose,
+  entityId,
+}) => {
   return (
-    <Dialog maxWidth="xs" open={open} onClose={() => onClose()}>
+    <Dialog
+      sx={{ bottom: position === 'center' ? 0 : 'inherit' }}
+      maxWidth="xs"
+      open={open}
+      onClose={() => onClose()}
+    >
       <DialogTitle sx={{ background: '#36393f', color: '#f91880' }}>{title}</DialogTitle>
       <DialogContent sx={{ background: '#36393f' }}>
         <DialogContentText sx={{ color: '#DCDDDE', fontWeight: 400, fontSize: 14 }}>

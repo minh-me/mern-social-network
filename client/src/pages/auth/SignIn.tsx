@@ -81,6 +81,7 @@ export const SignIn = () => {
 
       <MDialog
         type="ok"
+        position="center"
         onClose={() => setOpenModal(false)}
         open={openModal}
         title="Đã gửi hướng dẫn"

@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Box, Button, Typography } from '@mui/material';
+
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import { FormInputText, FormInputDate } from 'components/Common';
+
 import { registerSchema } from 'validations';
 import { RegisterData } from 'interface';
 import { styles } from './styles';
