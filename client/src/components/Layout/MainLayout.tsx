@@ -3,6 +3,8 @@ import { blueGrey } from '@mui/material/colors';
 import { Sidebar } from '../App';
 import { Outlet } from 'react-router-dom';
 import { FormSearch } from 'components/Common/Forms';
+import { PostList, UserList } from 'components/Common';
+import { posts, userFroms } from 'pages';
 
 export const MainLayout = () => {
   return (
@@ -10,24 +12,24 @@ export const MainLayout = () => {
       <Grid item xs={2} px={2} sx={{ borderRight: 16, borderColor: blueGrey[800] }}>
         <Sidebar />
       </Grid>
-      <Grid item xs={7}>
+      <Grid item xs={7} sx={{ borderRight: 1, borderColor: blueGrey[800] }}>
         <Box
           sx={{
-            height: '100vh',
+            maxHeight: '100vh',
             scrollBehavior: 'smooth',
-            overflowY: 'scroll',
+            overflowY: 'auto',
             '&::-webkit-scrollbar': {
-              width: 8,
+              width: 6,
             },
             '&::-webkit-scrollbar-track': {
-              backgroundColor: '#38444d',
+              backgroundColor: 'transparent',
             },
             '&::-webkit-scrollbar-thumb': {
               backgroundColor: blueGrey['A700'],
-              borderRadius: 4,
+              borderRadius: '2px',
             },
             '&::-webkit-scrollbar-thumb:hover': {
-              background: blueGrey[700],
+              backgroundColor: blueGrey[400],
             },
           }}
         >
@@ -37,6 +39,10 @@ export const MainLayout = () => {
       <Grid item xs={3}>
         <Box px={2} my={3} sx={{ maxWidth: '100%' }}>
           <FormSearch fontSize={14} />
+        </Box>
+        <Box px={1}>
+          <UserList users={userFroms} />
+          {/* <PostList posts={posts} /> */}
         </Box>
       </Grid>
     </Grid>
