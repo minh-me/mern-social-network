@@ -1,10 +1,15 @@
-import { FC } from 'react';
+import { useEffect, useState } from 'react';
 import { Title } from 'components/App';
 import { Box } from '@mui/material';
-import { FormSearch } from 'components/Common/Forms';
 import { Tab } from 'components/Common/Buttons/Tab';
-import { PostList, UserList } from 'components/Common';
+import { FormInputSearch, PostList, UserList } from 'components/Common';
 import { User, Post } from 'interface';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import * as yup from 'yup';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
+import { FormSearch } from './FormSearch';
+
 export const userFroms: User[] = [
   {
     profilePic:
@@ -62,9 +67,22 @@ const posts: Post[] = [
     user: userFroms[0],
   },
 ];
-type Props = {};
 
-export const SearchPage: FC<Props> = (props) => {
+export type SearchProps = {
+  text: string;
+};
+export const SearchPage = () => {
+  const location = useLocation();
+  const selectedTab = location.pathname.split('/').slice(-1)[0] as 'posts' | 'users';
+  const isSelectedPosts = selectedTab === 'posts';
+  const queryKey = isSelectedPosts ? 'text' : 'name';
+  const navigate = useNavigate();
+  const queryValue = location.search.split('=')[1];
+
+  useEffect(() => {
+    console.log({ queryValue });
+  }, [queryValue]);
+
   return (
     <>
       {/* Title */}
@@ -74,20 +92,30 @@ export const SearchPage: FC<Props> = (props) => {
 
       {/* Form search */}
       <Box px={10} my={3} sx={{ maxWidth: '100%' }}>
-        <FormSearch />
+        <FormSearch queryKey={queryKey} />
       </Box>
 
       {/* Tab control */}
       <Box mx={3} sx={{ display: 'flex', alignItems: 'center' }}>
-        <Tab text="Users" />
-        <Tab text="Posts" active={true} />
+        <Tab
+          onClick={() => {
+            navigate('/search/users');
+          }}
+          text="Users"
+          active={!isSelectedPosts}
+        />
+        <Tab
+          onClick={() => {
+            navigate('/search/posts');
+          }}
+          text="Posts"
+          active={isSelectedPosts}
+        />
       </Box>
       <Box sx={{ borderBottom: '1px solid #38444d' }} my={2} mt={4} />
 
-      {/* Users List */}
-      <UserList users={userFroms} />
-      {/* Posts List */}
-      <PostList posts={posts} />
+      {/* Result */}
+      {isSelectedPosts ? <PostList posts={posts} /> : <UserList users={userFroms} />}
     </>
   );
 };

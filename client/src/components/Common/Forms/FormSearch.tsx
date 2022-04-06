@@ -1,9 +1,12 @@
 import { styled } from '@mui/material/styles';
 import { FormControl, IconButton, InputAdornment, InputBase, OutlinedInput } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { Control, Controller } from 'react-hook-form';
+import { SearchProps } from 'pages';
 
 type Props = {
-  [key: string]: any;
+  control: Control<SearchProps, any>;
+  name: string;
 };
 const Input = styled(InputBase)(() => ({
   fontSize: 16,
@@ -17,26 +20,29 @@ const Input = styled(InputBase)(() => ({
     },
   },
 }));
-export const FormSearch = ({ ...rest }: Props) => {
+export const FormSearch = ({ control, name }: Props) => {
   return (
-    <>
-      <FormControl
-        sx={{ border: '1px solid #38444d', borderRadius: 25, paddingRight: 1, width: '100%' }}
-        variant="standard"
-      >
-        <Input
-          fullWidth
-          placeholder="Enter name or post..."
-          sx={{ ...rest }}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton sx={{ color: '#999ea3' }}>
-                <SearchIcon />
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </FormControl>
-    </>
+    <Controller
+      control={control}
+      name="text"
+      render={() => (
+        <FormControl
+          sx={{ border: '1px solid #38444d', borderRadius: 25, paddingRight: 1, width: '100%' }}
+          variant="standard"
+        >
+          <Input
+            fullWidth
+            placeholder="Enter name or post..."
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton sx={{ color: '#999ea3' }}>
+                  <SearchIcon />
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+      )}
+    />
   );
 };

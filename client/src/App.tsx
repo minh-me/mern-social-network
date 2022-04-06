@@ -21,6 +21,8 @@ function App() {
             <Route path="/" element={<MainLayout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/search" element={<SearchPage />} />
+              <Route path="/search/users" element={<SearchPage />} />
+              <Route path="/search/posts" element={<SearchPage />} />
               <Route path="/notification" element={<NotificationPage />} />
               <Route path="/chat" element={<ChatPage />} />
               <Route path="/chat/new" element={<NewChatPage />} />

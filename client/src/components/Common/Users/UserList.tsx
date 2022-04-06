@@ -22,13 +22,7 @@ export const UserList: FC<UserListProps> = ({ users, sx }) => {
             ...sx,
           }}
         >
-          <UserItem
-            name={user.name}
-            username={user.username}
-            profilePic={user.profilePic}
-            numFollowers={3}
-            isFollowing={false}
-          />
+          <UserItem user={user} />
         </Box>
       ))}
     </>
