@@ -38,7 +38,7 @@ export const MainLayout = () => {
       </Grid>
       <Grid item xs={3}>
         <Box px={2} my={3} sx={{ maxWidth: '100%' }}>
-          <FormSearch fontSize={14} />
+          {/* <FormSearch fontSize={14} /> */}
         </Box>
         <Box px={1}>
           <UserList users={userFroms} />

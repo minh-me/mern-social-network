@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { Title } from 'components/App';
 import { UserItem } from 'components/Common';
@@ -13,9 +13,7 @@ interface InputProps {
   text: string;
 }
 
-type Props = {};
-
-export const NewChatPage: FC<Props> = (props) => {
+export const NewChatPage = () => {
   const [selectedUsers, setSelectedUsers] = useState<{ name: string; id: string }[]>([]);
   const { control, handleSubmit, reset, getValues } = useForm<InputProps>({
     defaultValues: { text: '' },
@@ -24,6 +22,7 @@ export const NewChatPage: FC<Props> = (props) => {
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     console.log({ data });
+    reset();
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -42,45 +41,30 @@ export const NewChatPage: FC<Props> = (props) => {
         <Title title="New Chat" />
       </Box>
 
-      <Box
-        px={3}
-        sx={{
-          maxWidth: '100%',
-          borderBottom: '1px solid #38444d',
-          display: 'flex',
-          alignItems: 'center',
-        }}
+      <form
+        id="createChatForm"
+        style={styles.createChatFormContainer}
+        onSubmit={handleSubmit(onSubmit)}
       >
-        <form id="createPostForm" onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            control={control}
-            name="text"
-            render={({ field }) => (
-              <Box py={1}>
-                <Typography sx={{ pr: 1 }} component="span">
-                  To:{' '}
-                </Typography>
-                {selectedUsers.length > 0 && <LabelUsers users={selectedUsers} />}
-                <input
-                  {...field}
-                  placeholder="Type the name of person"
-                  onKeyDown={handleKeyDown}
-                  style={{
-                    color: 'white',
-                    fontSize: 16,
-                    outline: 'none',
-                    border: 0,
-                    backgroundColor: 'transparent',
-                    flex: 1,
-                    minWidth: '350px',
-                    padding: '8px 0px',
-                  }}
-                />
-              </Box>
-            )}
-          />
-        </form>
-      </Box>
+        <Controller
+          control={control}
+          name="text"
+          render={({ field }) => (
+            <Box py={1}>
+              <Typography sx={{ pr: 1 }} component="span">
+                To:{' '}
+              </Typography>
+              {selectedUsers.length > 0 && <LabelUsers users={selectedUsers} />}
+              <input
+                {...field}
+                placeholder="Type the name of person"
+                onKeyDown={handleKeyDown}
+                style={styles.input}
+              />
+            </Box>
+          )}
+        />
+      </form>
 
       {/* Users List */}
       {userFroms.map((user: User) => (
@@ -89,45 +73,54 @@ export const NewChatPage: FC<Props> = (props) => {
           key={user.id}
           py={2}
           px={2}
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            borderBottom: '1px solid #38444d',
-          }}
+          sx={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #38444d' }}
         >
-          <UserItem
-            name={user.name}
-            username={user.username}
-            profilePic={user.profilePic}
-            numFollowers={3}
-            isFollowing={false}
-          />
+          <UserItem user={user} />
         </Box>
       ))}
 
       {/* Button Create */}
       <Box my={2} sx={{ textAlign: 'center' }}>
-        <Button
-          variant="contained"
-          disabled={true}
-          sx={{
-            color: '#fff',
-            background: pink[500],
-            textTransform: 'capitalize',
-            fontWeight: '400',
-            borderRadius: 25,
-            '&:hover': {
-              background: pink[400],
-            },
-            '&:disabled': {
-              bgcolor: '#b5496b',
-              color: 'white',
-            },
-          }}
-        >
+        <Button variant="contained" disabled={true} sx={styles.buttonCreate}>
           Create Chat
         </Button>
       </Box>
     </Box>
   );
+};
+
+const styles = {
+  createChatFormContainer: {
+    maxWidth: '100%',
+    borderBottom: '1px solid #38444d',
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: '24px',
+    paddingRight: '24px',
+  },
+  buttonCreate: {
+    color: '#fff',
+    background: pink[500],
+    textTransform: 'capitalize',
+    fontWeight: '400',
+    borderRadius: 25,
+    '&:hover': {
+      background: pink[400],
+    },
+    '&:disabled': {
+      bgcolor: '#b5496b',
+      color: 'white',
+    },
+  },
+
+  input: {
+    color: 'white',
+    fontSize: 16,
+    outline: 'none',
+    border: 0,
+    backgroundColor: 'transparent',
+    flex: 1,
+    minWidth: '350px',
+    padding: '8px 0px',
+  },
 };

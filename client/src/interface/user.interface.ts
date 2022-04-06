@@ -7,6 +7,8 @@ export interface User {
   coverPhoto?: string;
   profilePic: string;
   authKey?: string;
+  follwers?: string[];
+  following?: string[];
 
   createdAt?: string;
   updatedAt?: string;

@@ -3,27 +3,15 @@ import { Avatar, Box, Button, Link, Typography } from '@mui/material';
 import { User } from 'interface';
 import { pink } from '@mui/material/colors';
 
-interface Props {
-  name: string;
-  profilePic: string;
-  username: string;
-  numFollowers: number;
-  isFollowing: boolean;
-  following?: string[];
+interface UserItemProps {
+  user: User;
 }
 
-export const UserItem: FC<Props> = ({
-  name,
-  profilePic,
-  username,
-  numFollowers,
-  isFollowing,
-  following,
-}) => {
-  // const isFollowing = following?.includes('currentUserId')
+export const UserItem: FC<UserItemProps> = ({ user }) => {
+  const isFollowing = user.following?.includes('currentUserId');
   return (
     <Box sx={styles.container}>
-      <Avatar src={profilePic} sx={{ border: '1px solid white' }} alt={name} />
+      <Avatar src={user.profilePic} sx={{ border: '1px solid white' }} alt={user.name} />
       <Box px={2} sx={{ display: 'flex', alignItems: 'start', flexDirection: 'column', flex: 1 }}>
         <Link
           sx={{
@@ -38,13 +26,13 @@ export const UserItem: FC<Props> = ({
           }}
           underline="hover"
         >
-          {name}
+          {user.name}
         </Link>
         <Typography fontSize={12} color="#999ea3" component="p">
-          @{username}
+          @{user.username}
         </Typography>
         <Typography fontSize={12} color="#999ea3" component="span">
-          {numFollowers} follwers
+          {user?.follwers?.length} follwers
         </Typography>
       </Box>
       <Box>
