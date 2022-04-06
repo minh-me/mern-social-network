@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 import { Title } from 'components/App';
 import { NotificationItem } from 'components/Common';
@@ -10,6 +10,7 @@ const userFrom: User = {
   profilePic:
     'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
   name: 'minh',
+  username: 'minhchiu',
   email: 'minhch.vn@gmail.com',
   role: 'admin',
   createdAt: '2022-03-08T14:12:58.562Z',
@@ -19,6 +20,7 @@ const userFrom: User = {
 
 const userTo: User = {
   name: 'minh',
+  username: 'minhchiu',
   email: 'minhch.vn@gmail.com',
   role: 'admin',
   createdAt: '2022-03-08T14:12:58.562Z',
@@ -49,9 +51,9 @@ export const NotificationPage: FC<Props> = ({}) => {
         }}
       >
         <Title title="Notifications" />
-        <Typography sx={{ cursor: 'pointer' }} component="span" px={2}>
+        <IconButton size="small" sx={{ color: 'white', mr: 3 }}>
           <DoneAllOutlinedIcon />
-        </Typography>
+        </IconButton>
       </Box>
 
       <Box>
