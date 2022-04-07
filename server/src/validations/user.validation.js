@@ -3,9 +3,9 @@ import { transValidations } from '../_lang/en'
 import config from './config.validation'
 
 const createUser = {
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
+  name: yup.string().trim().min(2).required(),
   email: yup.string().required().email(),
+  dateOfBirth: yup.date(),
   password: yup
     .string()
     .matches(config.regexPassword, transValidations.password_incorrect)
@@ -13,8 +13,7 @@ const createUser = {
 }
 
 const getUsers = {
-  firstName: yup.string(),
-  lastName: yup.string(),
+  name: yup.string(),
   email: yup.string().email(),
   role: yup.string(),
   page: yup.number().integer(),
@@ -35,11 +34,11 @@ const updateUser = {
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
-  firstName: yup.string(),
-  lastName: yup.string(),
+  name: yup.string(),
   email: yup.string().email(),
-  checkbox_selection: yup.string().when(['firstName', 'lastName', 'email'], {
-    is: (firstName, lastName, email) => !firstName && !lastName && !email,
+  dateOfBirth: yup.date(),
+  checkbox_selection: yup.string().when(['name', 'email'], {
+    is: (name, email) => !name && !email,
     then: yup.string().required(),
   }),
 }
@@ -52,11 +51,11 @@ const deleteUser = {
 }
 
 const updateProfile = {
-  firstName: yup.string(),
-  lastName: yup.string(),
+  name: yup.string(),
   email: yup.string().email(),
-  checkbox_selection: yup.string().when(['firstName', 'lastName', 'email'], {
-    is: (firstName, lastName, email) => !firstName && !lastName && !email,
+  dateOfBirth: yup.date(),
+  checkbox_selection: yup.string().when(['name', 'email', 'dateOfBirth'], {
+    is: (name, email, dateOfBirth) => !name && !email && !dateOfBirth,
     then: yup.string().required(),
   }),
 }

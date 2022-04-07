@@ -53,7 +53,11 @@ if (config.env === 'production') {
 app.use(hpp())
 
 // enable CORS
-app.use(cors())
+app.use(
+  cors({
+    credentials: true,
+  })
+)
 
 // jwt authentication
 app.use(passport.initialize())

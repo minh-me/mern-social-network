@@ -4,7 +4,6 @@ import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 import { Title } from 'components/App';
 import { NotificationItem } from 'components/Common';
 import { User } from 'interface';
-type Props = {};
 
 const userFrom: User = {
   profilePic:
@@ -39,7 +38,7 @@ const notification = {
   entityId: '123o0192u31023',
 };
 
-export const NotificationPage: FC<Props> = ({}) => {
+export const NotificationPage: FC<Props> = () => {
   return (
     <>
       <Box

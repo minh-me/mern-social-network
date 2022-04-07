@@ -21,7 +21,11 @@ router
     validate(userValidation.createUser),
     userController.createUser
   )
-  .get(auth(), validate(userValidation.getUsers), userController.getUsers)
+  .get(
+    // auth(),
+    validate(userValidation.getUsers),
+    userController.getUsers
+  )
 
 router
   .route('/:userId')
@@ -32,7 +36,7 @@ router
     userController.updateUser
   )
   .delete(
-    auth('admin'),
+    // auth('admin'),
     validate(userValidation.deleteUser),
     userController.deleteUser
   )

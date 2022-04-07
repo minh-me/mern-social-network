@@ -1,49 +1,43 @@
-import axios from 'axios'
+import axios from 'axios';
+import { LoginData, LoginResponse, RegisterData } from 'interface';
 
-const authUrl = '/api/auth'
+const authUrl = '/api/auth';
 export const authApi = {
-  signIn(data: { email: string; password: string }) {
+  login(data: LoginData): Promise<LoginResponse> {
     return axios.post(`${authUrl}/login`, data, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
-    })
+    });
   },
 
-  signUp(data: { email: string; name: string; password: string }) {
+  register(data: RegisterData) {
     return axios.post(`${authUrl}/register`, data, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
-    })
+    });
   },
 
   forgotPassword(email: string) {
     return axios.post(
-      `${authUrl}/forgot-password`,
+      `${authUrl}/forgot_pass`,
       { email },
-      {
-        headers: { 'Content-Type': 'application/json' },
-      }
-    )
+      { headers: { 'Content-Type': 'application/json' } }
+    );
   },
 
-  resetPassword(password: string) {
+  resetPassword(password: string): Promise<LoginResponse> {
     return axios.post(
-      `${authUrl}/reset-password`,
+      `${authUrl}/reset_pass`,
       { password },
-      {
-        headers: { 'Content-Type': 'application/json' },
-      }
-    )
+      { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
+    );
   },
 
   logout() {
     return axios.post(
       `${authUrl}/logout`,
       {},
-      {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      }
-    )
+      { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
+    );
   },
-}
+};

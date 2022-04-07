@@ -66,12 +66,11 @@ const generateActivationToken = async userBody => {
  * @returns {Promise<token>}
  */
 const generateRefreshToken = async userId => {
-  const token = await generateToken(
+  return generateToken(
     { sub: userId },
     config.jwt.refreshSecret,
     config.jwt.refreshExpiration
   )
-  return token
 }
 
 /**
@@ -80,12 +79,27 @@ const generateRefreshToken = async userId => {
  * @returns {Promise<token>}
  */
 const generateAccessToken = async userId => {
-  const token = await generateToken(
+  return generateToken(
     { sub: userId },
     config.jwt.accessSecret,
     config.jwt.accessExpiration
   )
-  return token
+}
+
+/**
+ * Generate auth token
+ * @param {string} userId
+ * @returns {Promise<token>}
+ */
+const generateAuthToken = async userId => {
+  const [ac_token, rf_token] = await Promise.all([
+    generateAccessToken(userId),
+    generateRefreshToken(userId),
+  ])
+  return {
+    ac_token,
+    rf_token,
+  }
 }
 
 /**
@@ -132,4 +146,5 @@ export {
   generateResetPasswordToken,
   verifyActivationToken,
   verifyRefreshToken,
+  generateAuthToken,
 }
