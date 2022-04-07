@@ -14,9 +14,10 @@ const loginWithEmailAndPassword = async (email, password) => {
   if (!user || !(await user.isPasswordMatch(password)))
     throw new createError.Unauthorized(transErrors.login_failed)
 
+  const { ac_token, rf_token } = await tokenService.generateAuthToken(user.id)
   // refresh token
-  const refressh_token = await tokenService.generateRefreshToken(user.id)
-  return refressh_token
+  delete user.password
+  return { user, ac_token, rf_token }
 }
 
 export { loginWithEmailAndPassword }

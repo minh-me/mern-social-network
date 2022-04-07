@@ -15,7 +15,7 @@ export const PostContent: FC<PostTextProps> = ({ text, imageUrl }) => {
           {text}
         </Typography>
       </Box>
-      {imageUrl && <PostImage imageUrl={imageUrl} />}
+      {imageUrl && <PostImage alt="Not found image" imageUrl={imageUrl} />}
     </>
   );
 };

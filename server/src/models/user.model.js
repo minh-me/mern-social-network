@@ -34,6 +34,9 @@ const userSchema = mongoose.Schema(
       enum: roles,
       default: 'user',
     },
+    dateOfBirth: {
+      type: Date,
+    },
     coverPhoto: String,
     profilePic: String,
     authKey: String,

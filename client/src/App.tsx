@@ -10,7 +10,7 @@ import {
   ProfilePage,
   SearchPage,
 } from 'pages';
-import { ResetPassword, SignIn, SignUp } from 'pages/auth';
+import { Activate, ResetPassword, SignIn, SignUp } from 'pages/auth';
 
 function App() {
   return (
@@ -33,6 +33,7 @@ function App() {
               <Route path="login" element={<SignIn />} />
               <Route path="register" element={<SignUp />} />
               <Route path="reset-password" element={<ResetPassword />} />
+              <Route path="activate/:token" element={<Activate />} />
             </Route>
           </Routes>
         </Container>

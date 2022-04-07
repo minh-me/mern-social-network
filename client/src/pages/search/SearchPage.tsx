@@ -1,13 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Title } from 'components/App';
 import { Box } from '@mui/material';
 import { Tab } from 'components/Common/Buttons/Tab';
-import { FormInputSearch, PostList, UserList } from 'components/Common';
+import { PostList, UserList } from 'components/Common';
 import { User, Post } from 'interface';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import * as yup from 'yup';
-import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FormSearch } from './FormSearch';
 
 export const userFroms: User[] = [

@@ -46,7 +46,6 @@ export const config = {
     resetPasswordExpiration: JWT_RESET_PASSWORD_EXPIRATION,
   },
   cookie: {
-    path: '/api/auth/access',
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7days
     httpOnly: true,
     sameSite: true,

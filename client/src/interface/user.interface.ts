@@ -13,3 +13,17 @@ export interface User {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface UserResponse {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'user';
+  createdAt: string;
+  updatedAt: string;
+
+  dateOfBirth?: string;
+  coverPhoto?: String;
+  profilePic?: String;
+  authKey?: String;
+}

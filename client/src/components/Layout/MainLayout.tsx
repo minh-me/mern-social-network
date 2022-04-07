@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom';
 import { FormSearch } from 'components/Common/Forms';
 import { PostList, UserList } from 'components/Common';
 import { posts, userFroms } from 'pages';
+import { styleScroll } from 'utils';
 
 export const MainLayout = () => {
   return (
@@ -18,19 +19,7 @@ export const MainLayout = () => {
             maxHeight: '100vh',
             scrollBehavior: 'smooth',
             overflowY: 'auto',
-            '&::-webkit-scrollbar': {
-              width: 6,
-            },
-            '&::-webkit-scrollbar-track': {
-              backgroundColor: 'transparent',
-            },
-            '&::-webkit-scrollbar-thumb': {
-              backgroundColor: blueGrey['A700'],
-              borderRadius: '2px',
-            },
-            '&::-webkit-scrollbar-thumb:hover': {
-              backgroundColor: blueGrey[400],
-            },
+            ...styleScroll,
           }}
         >
           <Outlet />
