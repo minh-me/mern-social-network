@@ -14,8 +14,9 @@ import {
  * @POST api/auth/sign-up
  * @access public
  */
-const register = catchAsync(async (req, res, next) => {
+const register = catchAsync(async (req, res) => {
   const activation_token = await tokenService.generateActivationToken(req.body)
+
   await emailService.sendEmailRegister(req.body.email, activation_token)
   // registration success
   return res.send({ message: tranSuccess.user_registered })
@@ -26,7 +27,7 @@ const register = catchAsync(async (req, res, next) => {
  * @POST api/auth/activation
  * @private public
  */
-const activate = catchAsync(async (req, res, next) => {
+const activate = catchAsync(async (req, res) => {
   // verify token
   const newUser = await tokenService.verifyActivationToken(
     req.body.activation_token

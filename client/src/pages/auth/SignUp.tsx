@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, Typography } from '@mui/material';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -8,6 +8,8 @@ import { FormInputText, FormInputDate } from 'components/Common';
 import { registerSchema } from 'validations';
 import { RegisterData } from 'interface';
 import { styles } from './styles';
+import { storage } from 'utils';
+import { useEffect } from 'react';
 
 const defaultValues: RegisterData = {
   email: '',
@@ -22,7 +24,14 @@ export const SignUp = () => {
     resolver: yupResolver(registerSchema),
   });
 
+  const token = storage.getToken();
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<RegisterData> = (data) => console.log({ data });
+
+  useEffect(() => {
+    if (!!token) navigate('/', { replace: true });
+  }, [token, navigate]);
 
   return (
     <Box sx={{ background: '#36393f', borderRadius: 2, p: 4, color: 'white' }}>
@@ -55,7 +64,7 @@ export const SignUp = () => {
 
         <Box my={2}>
           <Typography sx={styles.text}>
-            <Link to="/login"> Already have an account?</Link>
+            <Link to="/auth/login"> Already have an account?</Link>
           </Typography>
         </Box>
       </form>

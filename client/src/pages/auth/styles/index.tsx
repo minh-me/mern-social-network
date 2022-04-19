@@ -35,5 +35,11 @@ export const styles = {
     '&:hover': {
       background: pink[400],
     },
+    '&:disabled': {
+      background: pink[400],
+      div: {
+        color: 'white',
+      },
+    },
   },
 };

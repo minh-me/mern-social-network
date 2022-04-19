@@ -1,24 +1,23 @@
-import axios from 'axios';
+import { client } from 'utils';
 import { LoginData, LoginResponse, RegisterData } from 'interface';
 
 const authUrl = '/api/auth';
 export const authApi = {
   login(data: LoginData): Promise<LoginResponse> {
-    return axios.post(`${authUrl}/login`, data, {
+    return client.post(`${authUrl}/login`, data, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
   },
 
   register(data: RegisterData) {
-    return axios.post(`${authUrl}/register`, data, {
+    return client.post(`${authUrl}/register`, data, {
       headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
     });
   },
 
   forgotPassword(email: string) {
-    return axios.post(
+    return client.post(
       `${authUrl}/forgot_pass`,
       { email },
       { headers: { 'Content-Type': 'application/json' } }
@@ -26,7 +25,7 @@ export const authApi = {
   },
 
   resetPassword(password: string): Promise<LoginResponse> {
-    return axios.post(
+    return client.post(
       `${authUrl}/reset_pass`,
       { password },
       { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
@@ -34,7 +33,7 @@ export const authApi = {
   },
 
   logout() {
-    return axios.post(
+    return client.post(
       `${authUrl}/logout`,
       {},
       { headers: { 'Content-Type': 'application/json' }, withCredentials: true }

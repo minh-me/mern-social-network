@@ -1,7 +1,13 @@
 import axios from 'axios';
+import { UserResponse } from 'interface';
+import axiosInstance from 'utils/axiosInstance';
 
 const userUrl = '/api/users';
 export const userApi = {
+  getProfile(): Promise<UserResponse> {
+    return axiosInstance.get(`${userUrl}/profile`);
+  },
+
   getUsers(filter: {}) {
     return axios.get(`${userUrl}${filter}`);
   },

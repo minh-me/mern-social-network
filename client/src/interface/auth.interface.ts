@@ -11,6 +11,7 @@ export interface RegisterData {
   password: string;
   dateOfBirth: Date | null;
 }
+
 export interface PasswordData {
   password: string;
 }

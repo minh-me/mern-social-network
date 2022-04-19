@@ -19,9 +19,9 @@ export interface UserResponse {
   name: string;
   email: string;
   role: 'admin' | 'user';
-  createdAt: string;
-  updatedAt: string;
 
+  createdAt?: string;
+  updatedAt?: string;
   dateOfBirth?: string;
   coverPhoto?: String;
   profilePic?: String;

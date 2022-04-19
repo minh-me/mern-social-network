@@ -38,7 +38,7 @@ const notification = {
   entityId: '123o0192u31023',
 };
 
-export const NotificationPage: FC<Props> = () => {
+export const NotificationPage = () => {
   return (
     <>
       <Box

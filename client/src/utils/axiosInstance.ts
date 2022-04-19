@@ -1,13 +1,13 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
+import { storage } from './storage';
+import { LoginResponse } from 'interface';
 
-const API_SERVER_URL = 'http://127.0.0.1:8000';
-
-let ac_token = localStorage.getItem('ac_token') || '';
+let ac_token = storage.getToken() || '';
 
 const config: AxiosRequestConfig = {
-  baseURL: API_SERVER_URL,
+  baseURL: 'http://localhost:8888',
   headers: { Authorization: `Bearer ${ac_token}` },
 };
 
@@ -15,24 +15,28 @@ const axiosInstance: AxiosInstance = axios.create(config);
 
 axiosInstance.interceptors.request.use(async (req: AxiosRequestConfig<AxiosRequestHeaders>) => {
   if (!ac_token) {
-    ac_token = localStorage.getItem('ac_token') || '';
+    ac_token = storage.getToken() || '';
     req.headers = {
       Authorization: `Bearer ${ac_token}`,
     };
   }
-
   const user: { exp: number } = jwt_decode(ac_token);
   const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
 
   if (!isExpired) return req;
 
-  const response = await axios.get(`${API_SERVER_URL}/api/auth/refresh`);
-
-  localStorage.setItem('ac_token', JSON.stringify(response.data));
+  const data: LoginResponse = await axios.get(`/api/auth/rf_token`, {
+    withCredentials: true,
+  });
+  storage.setToken(data.ac_token);
   req.headers = {
-    Authorization: `Bearer ${response.data.ac_token}`,
+    Authorization: `Bearer ${data.ac_token}`,
   };
   return req;
+});
+
+axiosInstance.interceptors.response.use((res) => {
+  return res.data;
 });
 
 export default axiosInstance;

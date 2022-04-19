@@ -2,16 +2,6 @@ import * as yup from 'yup'
 import { transValidations } from '../_lang/en'
 import config from './config.validation'
 
-const register = {
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  email: yup.string().required().email(),
-  password: yup
-    .string()
-    .matches(config.regexPassword, transValidations.password_incorrect)
-    .required(),
-}
-
 const activate = {
   activation_token: yup.string().required(),
 }
@@ -35,8 +25,4 @@ const resetPassword = {
     .required(),
 }
 
-const singout = {
-  refreshToken: yup.string().required(),
-}
-
-export { register, activate, login, forgotPassword, resetPassword, singout }
+export { activate, login, forgotPassword, resetPassword }

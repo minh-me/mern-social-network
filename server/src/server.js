@@ -7,13 +7,13 @@ import mongoSanitize from 'express-mongo-sanitize'
 import helmet from 'helmet'
 import xss from 'xss-clean'
 import hpp from 'hpp'
-import cors from 'cors'
 import httpError from 'http-errors'
 import 'colors'
 
 import { jwtStrategy, config, db, logger, authLimiter } from './config'
 import { errorHandler } from './middlewares'
 import routes from './routes/_index'
+import { configCors } from './config/cors'
 
 // connect to database
 db.connect()
@@ -53,11 +53,7 @@ if (config.env === 'production') {
 app.use(hpp())
 
 // enable CORS
-app.use(
-  cors({
-    credentials: true,
-  })
-)
+app.use(configCors)
 
 // jwt authentication
 app.use(passport.initialize())

@@ -10,10 +10,23 @@ import { styleScroll } from 'utils';
 export const MainLayout = () => {
   return (
     <Grid container>
-      <Grid item xs={2} px={2} sx={{ borderRight: 16, borderColor: blueGrey[800] }}>
+      <Grid
+        item
+        sm={2}
+        md={2}
+        px={2}
+        sx={{
+          borderRight: 16,
+          borderColor: blueGrey[800],
+          display: {
+            xs: 'none',
+            sm: 'inherit',
+          },
+        }}
+      >
         <Sidebar />
       </Grid>
-      <Grid item xs={7} sx={{ borderRight: 1, borderColor: blueGrey[800] }}>
+      <Grid item xs={12} sm={10} md={7} sx={{ borderRight: 1, borderColor: blueGrey[800] }}>
         <Box
           sx={{
             maxHeight: '100vh',
@@ -25,7 +38,17 @@ export const MainLayout = () => {
           <Outlet />
         </Box>
       </Grid>
-      <Grid item xs={3}>
+      <Grid
+        item
+        xs={0}
+        sm={3}
+        sx={{
+          display: {
+            xs: 'none',
+            md: 'inherit',
+          },
+        }}
+      >
         <Box px={2} my={3} sx={{ maxWidth: '100%' }}>
           {/* <FormSearch fontSize={14} /> */}
         </Box>

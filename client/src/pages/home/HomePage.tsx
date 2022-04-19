@@ -3,6 +3,8 @@ import { Title } from 'components/App';
 import { CreatePostForm, PostList } from 'components/Common';
 import { userFroms } from 'pages/search';
 import { Post } from 'interface';
+import { useAppContext } from 'context/useAppContext';
+
 const user = userFroms[0];
 
 export const posts: Post[] = [

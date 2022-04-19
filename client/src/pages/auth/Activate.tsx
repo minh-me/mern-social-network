@@ -1,13 +1,13 @@
 import { Box, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 export const Activate = () => {
   const { token } = useParams();
   const navigate = useNavigate();
   console.log({ token });
   const handleClick = () => {
-    navigate('/login');
+    navigate('/auth/login');
   };
 
   return (
@@ -21,7 +21,6 @@ export const Activate = () => {
         letterSpacing: '2px',
       }}
     >
-      <ToastContainer />
       <Typography fontSize={15} color="#fbc02d" sx={{ textTransform: 'capitalize' }}>
         ready to login ? 👉🏻
         <Typography

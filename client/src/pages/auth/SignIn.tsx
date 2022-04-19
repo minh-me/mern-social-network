@@ -1,14 +1,5 @@
-import { Link } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Typography,
-} from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { Box, Typography } from '@mui/material';
 import { useForm, SubmitHandler, ErrorOption } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -16,8 +7,11 @@ import { FormInputText } from 'components/Common';
 import { LoginData } from 'interface';
 import { styles } from './styles';
 import { emailSchema, loginSchema } from 'validations';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MDialog } from 'components/Common/Modal';
+import { useForgotPassword, useLogin } from 'RQhooks';
+import { LoadingButton } from '@mui/lab';
+import { storage } from 'utils';
 
 const defaultValues: LoginData = {
   email: '',
@@ -31,18 +25,28 @@ export const SignIn = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<LoginData> = (data) => console.log({ data });
+  const token = storage.getToken();
+
+  const { mutate: login, isLoading: isLogging } = useLogin();
+  const { mutateAsync: forgotPassword, isLoading } = useForgotPassword();
+  const onSubmit: SubmitHandler<LoginData> = (data) => login(data);
 
   const [openModal, setOpenModal] = useState(false);
   const handleClickForgotPass = async () => {
     try {
       const email = getValues('email');
       await emailSchema.validate({ email });
+      await forgotPassword(email);
       setOpenModal(true);
     } catch (error) {
       setError('email', error as ErrorOption);
     }
   };
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!!token) navigate('/', { replace: true });
+  }, [token, navigate]);
 
   return (
     <Box sx={{ background: '#36393f', borderRadius: 2, p: 4, color: 'white' }}>
@@ -62,19 +66,32 @@ export const SignIn = () => {
 
         <Box mb={3}>
           <FormInputText label="Password" name="password" type="password" control={control} />
-          <Typography sx={styles.link} onClick={handleClickForgotPass}>
-            Forgot your password?
-          </Typography>
+          {isLoading ? (
+            <Typography fontSize={12} color="primary">
+              Requesting forgot password...
+            </Typography>
+          ) : (
+            <Typography sx={styles.link} onClick={handleClickForgotPass}>
+              Forgot your password?
+            </Typography>
+          )}
         </Box>
 
-        <Button variant="contained" fullWidth type="submit" sx={styles.button}>
+        <LoadingButton
+          loadingIndicator="Logging..."
+          loading={isLogging}
+          variant="contained"
+          fullWidth
+          type="submit"
+          sx={styles.button}
+        >
           Đăng Nhập
-        </Button>
+        </LoadingButton>
 
         <Box my={2}>
           <Typography sx={styles.text}>
             Need an account?
-            <Link to="/register">Register</Link>
+            <Link to="/auth/register">Register</Link>
           </Typography>
         </Box>
       </form>

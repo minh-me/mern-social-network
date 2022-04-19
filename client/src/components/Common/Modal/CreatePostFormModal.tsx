@@ -13,7 +13,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { User } from 'interface';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { UserInfo } from '../Users';
 import { Image } from '../Images';
 import { postSchema } from 'validations';
@@ -50,29 +50,13 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen, user }) => 
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     console.log(data);
-    toast.success(`🦄 Create post success!`, {
-      position: 'bottom-right',
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    toast.success(`🦄 Create post success!`);
     handleClose();
   };
 
   useEffect(() => {
     if (errors?.image) {
-      toast.error(`🦄 ${errors.image.message}!`, {
-        position: 'bottom-right',
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(`🦄 ${errors.image.message}!`);
     }
     resetField('image');
   }, [errors?.image, resetField]);
@@ -141,18 +125,6 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen, user }) => 
           </Button>
         </DialogActions>
       </Dialog>
-
-      <ToastContainer
-        position="bottom-left"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </>
   );
 };

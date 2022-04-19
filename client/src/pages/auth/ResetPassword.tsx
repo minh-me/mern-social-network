@@ -6,6 +6,9 @@ import { FormInputText } from 'components/Common';
 import { passwordSchema } from 'validations';
 import { PasswordData } from 'interface';
 import { styles } from './styles';
+import { useEffect } from 'react';
+import { storage } from 'utils';
+import { useNavigate } from 'react-router-dom';
 
 const defaultValues: PasswordData = {
   password: '',
@@ -16,6 +19,12 @@ export const ResetPassword = () => {
     defaultValues,
     resolver: yupResolver(passwordSchema),
   });
+
+  const token = storage.getToken();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!!token) navigate('/', { replace: true });
+  }, [token, navigate]);
 
   const onSubmit: SubmitHandler<PasswordData> = (data) => console.log({ data });
 
