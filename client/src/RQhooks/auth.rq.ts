@@ -1,5 +1,5 @@
 import { authApi } from 'api/authApi';
-import { addAuth, addUser } from 'context/actions';
+import { addAuth, addUser, resetAppState } from 'context/actions';
 import { useAppContext } from 'context/useAppContext';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -57,6 +57,22 @@ export const useResetPassword = () => {
       // storage.setUser(user);
 
       toast.success(`Hi ${data.user.name}, have a nice day!`);
+    },
+    onError: handlerError,
+  });
+};
+
+export const useLogout = () => {
+  const { dispatch } = useAppContext();
+  const navigate = useNavigate();
+
+  return useMutation(authApi.logout, {
+    onSuccess: () => {
+      dispatch(resetAppState());
+      storage.clearToken();
+      storage.clearUser();
+
+      navigate('/auth', { replace: true });
     },
     onError: handlerError,
   });

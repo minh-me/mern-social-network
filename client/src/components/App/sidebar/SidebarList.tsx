@@ -8,8 +8,19 @@ import NotificationsSharpIcon from '@mui/icons-material/NotificationsSharp';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Box, Link, Typography } from '@mui/material';
+import { useState } from 'react';
+import { MDialog } from 'components/Common/Modal';
+import { useLogout } from 'RQhooks';
 
 const SidebarList = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const { mutateAsync } = useLogout();
+  const handleClose = () => {
+    mutateAsync();
+    setOpenModal(false);
+  };
   return (
     <List
       sx={{
@@ -73,6 +84,27 @@ const SidebarList = () => {
           <ListItemText primary="Profile" />
         </ListItemButton>
       </NavLink>
+
+      <Link onClick={() => setOpenModal(true)}>
+        <ListItemButton>
+          <ListItemIcon sx={{ minWidth: '30px' }}>
+            <LogoutIcon sx={{ color: 'white' }} />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItemButton>
+      </Link>
+
+      <MDialog
+        position="center"
+        title="Đăng xuất tài khoản?"
+        onClose={handleClose}
+        open={openModal}
+        textAlign="center"
+      >
+        <Typography component="span" sx={{ minWidth: 300, display: 'inline-block' }}>
+          Đăng xuất tài khoản.
+        </Typography>
+      </MDialog>
     </List>
   );
 };

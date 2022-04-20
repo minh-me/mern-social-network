@@ -7,7 +7,7 @@ export const Activate = () => {
   const navigate = useNavigate();
   console.log({ token });
   const handleClick = () => {
-    navigate('/auth/login');
+    navigate('/auth');
   };
 
   return (

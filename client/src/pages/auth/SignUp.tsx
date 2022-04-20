@@ -64,7 +64,7 @@ export const SignUp = () => {
 
         <Box my={2}>
           <Typography sx={styles.text}>
-            <Link to="/auth/login"> Already have an account?</Link>
+            <Link to="/auth"> Already have an account?</Link>
           </Typography>
         </Box>
       </form>

@@ -13,18 +13,20 @@ type ModalProps = {
   onClose: Function;
   entityId?: string;
   children: JSX.Element[] | JSX.Element | string;
-  type: 'delete' | 'ok';
+  type?: 'delete' | 'ok';
   position?: 'top' | 'center';
+  textAlign?: 'center' | 'left';
 };
 
 export const MDialog: FC<ModalProps> = ({
-  type,
+  type = 'ok',
   position = 'top',
   title,
   open,
   children,
   onClose,
   entityId,
+  textAlign = 'left',
 }) => {
   return (
     <Dialog
@@ -33,9 +35,9 @@ export const MDialog: FC<ModalProps> = ({
       open={open}
       onClose={() => onClose()}
     >
-      <DialogTitle sx={{ background: '#36393f', color: '#f91880' }}>{title}</DialogTitle>
+      <DialogTitle sx={{ background: '#36393f', color: '#f91880', textAlign }}>{title}</DialogTitle>
       <DialogContent sx={{ background: '#36393f' }}>
-        <DialogContentText sx={{ color: '#DCDDDE', fontWeight: 400, fontSize: 14 }}>
+        <DialogContentText sx={{ color: '#DCDDDE', fontWeight: 400, fontSize: 14, textAlign }}>
           {children}
         </DialogContentText>
       </DialogContent>
