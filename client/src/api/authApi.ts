@@ -1,5 +1,6 @@
 import { client } from 'utils';
 import { LoginData, LoginResponse, RegisterData } from 'interface';
+import axiosInstance from 'utils/axiosInstance';
 
 const authUrl = '/api/auth';
 export const authApi = {
@@ -33,7 +34,7 @@ export const authApi = {
   },
 
   logout() {
-    return client.post(
+    return axiosInstance.post(
       `${authUrl}/logout`,
       {},
       { headers: { 'Content-Type': 'application/json' }, withCredentials: true }

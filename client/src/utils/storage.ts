@@ -7,5 +7,5 @@ export const storage = {
   getUser: () =>
     localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : null,
   setUser: (user: UserResponse) => localStorage.setItem('user', JSON.stringify(user)),
-  clearnUser: () => localStorage.removeItem('user'),
+  clearUser: () => localStorage.removeItem('user'),
 };
