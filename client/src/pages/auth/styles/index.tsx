@@ -6,11 +6,17 @@ export const styles = {
     color: pink[500],
     fontSize: 13,
     fontWeight: 400,
+    textTransform: 'capitalize',
+    p: 0,
+    display: 'block',
 
     '&:hover': {
       textDecoration: 'underline',
       color: pink[400],
       cursor: 'pointer',
+    },
+    '&:disabled': {
+      color: pink[400],
     },
   },
   text: {

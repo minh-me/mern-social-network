@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useForm, SubmitHandler, ErrorOption } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -12,6 +12,7 @@ import { MDialog } from 'components/Common/Modal';
 import { useForgotPassword, useLogin } from 'RQhooks';
 import { LoadingButton } from '@mui/lab';
 import { storage } from 'utils';
+import { pink } from '@mui/material/colors';
 
 const defaultValues: LoginData = {
   email: '',
@@ -70,13 +71,13 @@ export const SignIn = () => {
         <Box mb={3}>
           <FormInputText label="Password" name="password" type="password" control={control} />
           {isLoading ? (
-            <Typography fontSize={12} color="primary">
+            <Typography fontSize={12} color={pink[400]}>
               Requesting forgot password...
             </Typography>
           ) : (
-            <Typography sx={styles.link} onClick={handleClickForgotPass}>
+            <Button disabled={isLogging} sx={styles.link} onClick={handleClickForgotPass}>
               Forgot your password?
-            </Typography>
+            </Button>
           )}
         </Box>
 
@@ -87,6 +88,7 @@ export const SignIn = () => {
           fullWidth
           type="submit"
           sx={styles.button}
+          disabled={isLoading}
         >
           Đăng Nhập
         </LoadingButton>
