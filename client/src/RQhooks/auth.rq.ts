@@ -45,6 +45,7 @@ export const useForgotPassword = () => {
 };
 
 export const useResetPassword = () => {
+  const navigate = useNavigate();
   const { dispatch } = useAppContext();
   return useMutation(authApi.resetPassword, {
     onSuccess: (data) => {
@@ -54,9 +55,9 @@ export const useResetPassword = () => {
       dispatch(addUser(user));
 
       storage.setToken(ac_token);
-      // storage.setUser(user);
+      storage.setUser(user);
 
-      toast.success(`Hi ${data.user.name}, have a nice day!`);
+      navigate('/', { replace: true });
     },
     onError: handlerError,
   });

@@ -5,8 +5,15 @@ export const auth =
   (...roles) =>
   (req, res, next) => {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
-      if (err || info || !user)
-        return next(new createHttpError.Unauthorized('Please authenticate.'))
+      console.log({ err, info, user })
+      if (err || info || !user) {
+        const message =
+          info?.name == 'TokenExpiredError'
+            ? 'Token has expired, please try again.'
+            : 'Please authenticate.'
+        return next(new createHttpError.Unauthorized(message))
+      }
+
       req.user = user
 
       if (roles.length > 0 && !roles.includes(req.user.role)) {
