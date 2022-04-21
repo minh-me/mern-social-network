@@ -40,7 +40,7 @@ const sendEmail = async (to, subject, htmlContent) => {
 const sendEmailRegister = async (to, token) => {
   const subject = 'ACTIVATE YOUR ACCOUNT'
   // replace this url with the link to the reset password page of your front-end app
-  const url = `http://localhost:8888/api/auth/activate/${token}`
+  const url = `http://localhost:3000/auth/activate/${token}`
   const text = 'Verify your email'
 
   const title = `<span>Welcome !</span> And thank you for registering !`

@@ -1,13 +1,18 @@
 import cors from 'cors'
+import createHttpError from 'http-errors'
 
 const whitelist = ['http://localhost:3000']
 
-const corsOptions = {
+var corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
-      callback(new Error('Not allowed by CORS'))
+      callback(
+        createHttpError.Forbidden(
+          "The CORS policy for this origin doesn't allow access from the particular origin."
+        )
+      )
     }
   },
   credentials: true,
