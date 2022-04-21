@@ -17,7 +17,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   useEffect(() => {
     if (!!token) {
       dispatch(addAuth(token));
-      toast.success(`Hi :, Have a nice day!`, {
+      toast.success(`Hi ${storage.getUser().name}, Have a nice day!`, {
         position: 'bottom-right',
       });
       return;

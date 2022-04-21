@@ -44,7 +44,9 @@ export const authApi = {
     return axiosInstance.post(
       `${authUrl}/logout`,
       {},
-      { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
+      {
+        withCredentials: true,
+      }
     );
   },
 };
