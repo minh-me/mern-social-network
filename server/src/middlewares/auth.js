@@ -5,7 +5,6 @@ export const auth =
   (...roles) =>
   (req, res, next) => {
     passport.authenticate('jwt', { session: false }, (err, user, info) => {
-      console.log({ err, info, user })
       if (err || info || !user) {
         const message =
           info?.name == 'TokenExpiredError'

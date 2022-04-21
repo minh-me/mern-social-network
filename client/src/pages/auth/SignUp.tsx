@@ -1,15 +1,16 @@
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, Typography } from '@mui/material';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormInputText, FormInputDate } from 'components/Common';
+import { MDialog } from 'components/Common/Modal';
 
 import { registerSchema } from 'validations';
 import { RegisterData } from 'interface';
 import { styles } from './styles';
 import { storage } from 'utils';
-import { useEffect } from 'react';
 
 const defaultValues: RegisterData = {
   email: '',
@@ -19,16 +20,18 @@ const defaultValues: RegisterData = {
 };
 
 export const SignUp = () => {
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, getValues } = useForm({
     defaultValues,
     resolver: yupResolver(registerSchema),
   });
+  const [openModal, setOpenModal] = useState(false);
 
+  const onSubmit: SubmitHandler<RegisterData> = (data) => {
+    console.log({ data });
+    setOpenModal(true);
+  };
   const token = storage.getToken();
   const navigate = useNavigate();
-
-  const onSubmit: SubmitHandler<RegisterData> = (data) => console.log({ data });
-
   useEffect(() => {
     if (!!token) navigate('/', { replace: true });
   }, [token, navigate]);
@@ -68,6 +71,19 @@ export const SignUp = () => {
           </Typography>
         </Box>
       </form>
+
+      <MDialog
+        type="ok"
+        position="center"
+        onClose={() => setOpenModal(false)}
+        open={openModal}
+        title="Đã gửi hướng dẫn"
+      >
+        <>
+          Chúng tôi đã gửi thông tin xác nhận tạo tài khoản vào <b>{getValues('email')}</b>, vui
+          lòng kiếm tra hộp thư cũng như thư rác của bạn.
+        </>
+      </MDialog>
     </Box>
   );
 };
