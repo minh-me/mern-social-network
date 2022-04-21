@@ -25,11 +25,18 @@ export const authApi = {
     );
   },
 
-  resetPassword(password: string): Promise<LoginResponse> {
+  resetPassword(data: { password: string; reset_token: string }): Promise<LoginResponse> {
+    console.log({ data });
     return client.post(
       `${authUrl}/reset_pass`,
-      { password },
-      { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
+      { password: data.password },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${data.reset_token}`,
+        },
+        withCredentials: true,
+      }
     );
   },
 

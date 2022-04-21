@@ -8,7 +8,8 @@ import { PasswordData } from 'interface';
 import { styles } from './styles';
 import { useEffect } from 'react';
 import { storage } from 'utils';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useResetPassword } from 'RQhooks';
 
 const defaultValues: PasswordData = {
   password: '',
@@ -20,13 +21,18 @@ export const ResetPassword = () => {
     resolver: yupResolver(passwordSchema),
   });
 
+  const { mutateAsync } = useResetPassword();
+  const { reset_token } = useParams();
+
   const token = storage.getToken();
   const navigate = useNavigate();
   useEffect(() => {
     if (!!token) navigate('/', { replace: true });
   }, [token, navigate]);
 
-  const onSubmit: SubmitHandler<PasswordData> = (data) => console.log({ data });
+  const onSubmit: SubmitHandler<PasswordData> = ({ password }) => {
+    if (!!reset_token) mutateAsync({ password, reset_token });
+  };
 
   return (
     <Box sx={{ background: '#36393f', borderRadius: 2, p: 4, color: 'white' }}>

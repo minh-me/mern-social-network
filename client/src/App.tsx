@@ -27,7 +27,7 @@ function App() {
             <Route path="/auth" element={<AuthLayout />}>
               <Route index element={<SignIn />} />
               <Route path="register" element={<SignUp />} />
-              <Route path="reset-password" element={<ResetPassword />} />
+              <Route path="reset-password/:reset_token" element={<ResetPassword />} />
               <Route path="activate/:token" element={<Activate />} />
             </Route>
             <Route
