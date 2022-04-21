@@ -11,6 +11,8 @@ import { registerSchema } from 'validations';
 import { RegisterData } from 'interface';
 import { styles } from './styles';
 import { storage } from 'utils';
+import { useRegister } from 'RQhooks';
+import { LoadingButton } from '@mui/lab';
 
 const defaultValues: RegisterData = {
   email: '',
@@ -24,10 +26,13 @@ export const SignUp = () => {
     defaultValues,
     resolver: yupResolver(registerSchema),
   });
+
+  const { mutateAsync, isLoading } = useRegister();
+
   const [openModal, setOpenModal] = useState(false);
 
-  const onSubmit: SubmitHandler<RegisterData> = (data) => {
-    console.log({ data });
+  const onSubmit: SubmitHandler<RegisterData> = async (data) => {
+    await mutateAsync(data);
     setOpenModal(true);
   };
   const token = storage.getToken();
@@ -61,9 +66,16 @@ export const SignUp = () => {
           <FormInputDate label="Ngày Sinh" name="dateOfBirth" control={control} />
         </Box>
 
-        <Button variant="contained" fullWidth type="submit" sx={styles.button}>
+        <LoadingButton
+          loadingIndicator="Sign Up..."
+          loading={isLoading}
+          variant="contained"
+          fullWidth
+          type="submit"
+          sx={styles.button}
+        >
           Đăng Ký
-        </Button>
+        </LoadingButton>
 
         <Box my={2}>
           <Typography sx={styles.text}>

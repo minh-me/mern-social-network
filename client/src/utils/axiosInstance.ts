@@ -21,7 +21,6 @@ axiosInstance.interceptors.request.use(async (req: AxiosRequestConfig<AxiosReque
     'Content-Type': 'application/json',
     withCredentials: true,
   };
-  console.log(ac_token);
   const user: { exp: number } = jwt_decode(ac_token);
   const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
 

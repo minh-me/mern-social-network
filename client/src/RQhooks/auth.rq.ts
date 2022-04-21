@@ -35,6 +35,15 @@ export const useRegister = () => {
   });
 };
 
+export const useActiveAccount = () => {
+  return useMutation(authApi.activeAccount, {
+    onSuccess: (data) => {
+      toast.info(data.message);
+    },
+    onError: handlerError,
+  });
+};
+
 export const useForgotPassword = () => {
   return useMutation(authApi.forgotPassword, {
     onSuccess: (data) => {

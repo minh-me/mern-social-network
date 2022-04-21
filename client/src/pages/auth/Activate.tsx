@@ -1,11 +1,23 @@
 import { Box, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useActiveAccount } from 'RQhooks';
 
 export const Activate = () => {
   const { token } = useParams();
   const navigate = useNavigate();
-  console.log({ token });
+  const { mutateAsync } = useActiveAccount();
+
+  useEffect(() => {
+    const activeAccount = async () => {
+      try {
+        await mutateAsync(token as string);
+      } catch (error) {
+        navigate('/auth/register');
+      }
+    };
+    if (token) activeAccount();
+  }, [token]);
   const handleClick = () => {
     navigate('/auth');
   };

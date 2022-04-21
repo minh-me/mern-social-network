@@ -16,7 +16,11 @@ export const authApi = {
       headers: { 'Content-Type': 'application/json' },
     });
   },
-
+  activeAccount(token: string): Promise<{ message: string }> {
+    return client.post(`${authUrl}/activation`, {
+      activation_token: token,
+    });
+  },
   forgotPassword(email: string) {
     return client.post(
       `${authUrl}/forgot_pass`,
