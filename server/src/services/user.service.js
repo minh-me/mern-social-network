@@ -41,6 +41,16 @@ const getUserByEmail = async email => {
 }
 
 /**
+ * Find user by googleId
+ * @param {string} googleId
+ * @returns {Promise<user>}
+ */
+const getUserByGoogleId = async googleId => {
+  const user = await User.findOne({ googleId })
+  return user
+}
+
+/**
  * Create user
  * @param {Object} body
  * @returns {Promise<user>}
@@ -53,6 +63,24 @@ const createUser = async userBody => {
   const newUser = await User.create(userBody)
   return newUser
 }
+
+/**
+ * Create user
+ * @param {Object} googleData
+ * @returns {Promise<user>}
+ */
+const createUserByGoogle = async googleData => {
+  let user = await getUserByEmail(googleData.email)
+  if (user)
+    return User.findByIdAndUpdate(
+      user.id,
+      { googleId: googleData.googleId },
+      { new: true }
+    )
+  const newUser = await User.create(googleData)
+  return newUser
+}
+
 /**
  * Update user by id
  * @param {ObjectId} userId
@@ -113,4 +141,6 @@ export {
   updateUserById,
   deleteUserById,
   updateUserPasswordById,
+  getUserByGoogleId,
+  createUserByGoogle,
 }

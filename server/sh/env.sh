@@ -33,3 +33,7 @@ export SMTP_PORT=587
 export SMTP_USERNAME=minh.mchiu@gmail.com
 export SMTP_PASSWORD=Minhchiu.it.01
 export EMAIL_FROM=minh.mchiu
+
+# OAuth client
+export OAUTH_CLIENT_ID=679275323194-0m8bkvm059v14kcepq57l873v8lm7r37.apps.googleusercontent.com
+export OAUTH_CLIENT_SECRET=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

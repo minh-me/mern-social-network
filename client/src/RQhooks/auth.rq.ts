@@ -22,6 +22,22 @@ export const useLogin = () => {
   });
 };
 
+export const useLoginWithGoogle = () => {
+  const { dispatch } = useAppContext();
+  return useMutation(authApi.googleLogin, {
+    onSuccess: (data) => {
+      const { ac_token, user } = data;
+
+      dispatch(addAuth(ac_token));
+      dispatch(addUser(user));
+
+      storage.setToken(ac_token);
+      storage.setUser(user);
+    },
+    onError: handlerError,
+  });
+};
+
 export const useRegister = () => {
   return useMutation(authApi.register, {
     onSuccess: (data) => {

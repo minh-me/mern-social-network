@@ -14,6 +14,13 @@ const login = {
     .required(),
 }
 
+const google = {
+  email: yup.string().required(),
+  googleId: yup.string().required(),
+  imageUrl: yup.string(),
+  name: yup.string().required(),
+}
+
 const forgotPassword = {
   email: yup.string().email().required(),
 }
@@ -25,4 +32,4 @@ const resetPassword = {
     .required(),
 }
 
-export { activate, login, forgotPassword, resetPassword }
+export { activate, login, forgotPassword, resetPassword, google }
