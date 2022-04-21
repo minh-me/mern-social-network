@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import { useForm, SubmitHandler, ErrorOption } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -13,6 +13,7 @@ import { useForgotPassword, useLogin } from 'RQhooks';
 import { LoadingButton } from '@mui/lab';
 import { storage } from 'utils';
 import { pink } from '@mui/material/colors';
+import { GoogleButton } from 'components/Common/Buttons';
 
 const defaultValues: LoginData = {
   email: '',
@@ -92,15 +93,29 @@ export const SignIn = () => {
         >
           Đăng Nhập
         </LoadingButton>
-
-        <Box my={2}>
-          <Typography sx={styles.text}>
-            Need an account?
-            <Link to="/auth/register">Register</Link>
-          </Typography>
-        </Box>
       </form>
 
+      <Divider
+        sx={{
+          mt: 3,
+          color: '#EC407A',
+          fontSize: 12,
+          '&::before,&::after': {
+            borderColor: 'rgb(255 255 255 / 12%)',
+          },
+        }}
+      >
+        or
+      </Divider>
+      <Box sx={{ textAlign: 'center' }}>
+        <GoogleButton />
+      </Box>
+      <Box my={1}>
+        <Typography sx={styles.text} textAlign="center">
+          Need an account?
+          <Link to="/auth/register">Register</Link>
+        </Typography>
+      </Box>
       <MDialog
         type="ok"
         position="center"

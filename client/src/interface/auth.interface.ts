@@ -5,6 +5,13 @@ export interface LoginData {
   password: string;
 }
 
+export interface GoogleLoginData {
+  email: string;
+  googleId: string;
+  imageUrl?: string;
+  name: string;
+}
+
 export interface RegisterData {
   email: string;
   name: string;

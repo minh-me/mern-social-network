@@ -59,6 +59,23 @@ const login = catchAsync(async (req, res) => {
 })
 
 /**
+ * Google login
+ * @POST api/auth/google
+ * @access public
+ */
+const google = catchAsync(async (req, res) => {
+  // Login
+  const { rf_token, ac_token, user } = await authService.loginWithGoogle(
+    req.body
+  )
+
+  // store refresh token
+  res.cookie('_apprftoken', rf_token, config.cookie)
+
+  res.send({ ac_token, user })
+})
+
+/**
  * Get access token
  * @GET api/auth/access-token
  * @access private
@@ -139,4 +156,5 @@ export {
   forgotPassword,
   resetPassword,
   logout,
+  google,
 }

@@ -16,6 +16,7 @@ router.post(
   authController.activate
 )
 router.post('/login', validate(authValidation.login), authController.login)
+router.post('/google', validate(authValidation.google), authController.google)
 router.get('/rf_token', authController.getRefreshToken)
 router.post(
   '/forgot_pass',

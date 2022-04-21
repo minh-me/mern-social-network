@@ -16,16 +16,13 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      index: true,
       required: true,
-      unique: true,
       trim: true,
       lowercase: true,
       match: [emailRegex, transValidations.email_incorrect],
     },
     password: {
       type: String,
-      required: true,
       trim: true,
       match: [passwordRegex, transValidations.password_incorrect],
     },
@@ -39,7 +36,10 @@ const userSchema = mongoose.Schema(
     },
     coverPhoto: String,
     profilePic: String,
-    authKey: String,
+    googleId: {
+      type: String,
+      index: true,
+    },
   },
   {
     timestamps: true,

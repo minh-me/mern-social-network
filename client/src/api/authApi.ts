@@ -1,11 +1,18 @@
 import { client } from 'utils';
-import { LoginData, LoginResponse, RegisterData } from 'interface';
+import { GoogleLoginData, LoginData, LoginResponse, RegisterData } from 'interface';
 import axiosInstance from 'utils/axiosInstance';
 
 const authUrl = '/api/auth';
 export const authApi = {
   login(data: LoginData): Promise<LoginResponse> {
     return client.post(`${authUrl}/login`, data, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+  },
+
+  googleLogin(data: GoogleLoginData): Promise<LoginResponse> {
+    return client.post(`${authUrl}/google`, data, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
@@ -43,7 +50,6 @@ export const authApi = {
       }
     );
   },
-
   logout() {
     return axiosInstance.post(
       `${authUrl}/logout`,
