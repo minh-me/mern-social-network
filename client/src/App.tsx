@@ -12,11 +12,6 @@ import {
 } from 'pages';
 import { Activate, ResetPassword, SignIn, SignUp } from 'pages/auth';
 import { ProtectedRoute } from 'context/ProtectedRoute';
-import { storage } from 'utils';
-import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
-import { useAppContext } from 'context/useAppContext';
-import { addAuth } from 'context/actions';
 
 function App() {
   return (

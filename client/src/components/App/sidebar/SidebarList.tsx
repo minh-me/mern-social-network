@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -9,7 +9,7 @@ import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Box, Link, Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import { useState } from 'react';
 import { MDialog } from 'components/Common/Modal';
 import { useLogout } from 'RQhooks';
@@ -17,9 +17,11 @@ import { useLogout } from 'RQhooks';
 const SidebarList = () => {
   const [openModal, setOpenModal] = useState(false);
   const { mutateAsync } = useLogout();
-  const handleClose = () => {
-    mutateAsync();
+  const navigate = useNavigate();
+  const handleClose = async () => {
+    await mutateAsync();
     setOpenModal(false);
+    navigate('/auth', { replace: true });
   };
   return (
     <List
