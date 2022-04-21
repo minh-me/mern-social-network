@@ -26,10 +26,14 @@ export const SignIn = () => {
   });
 
   const token = storage.getToken();
+  const navigate = useNavigate();
 
-  const { mutate: login, isLoading: isLogging } = useLogin();
+  const { mutateAsync: login, isLoading: isLogging } = useLogin();
   const { mutateAsync: forgotPassword, isLoading } = useForgotPassword();
-  const onSubmit: SubmitHandler<LoginData> = (data) => login(data);
+  const onSubmit: SubmitHandler<LoginData> = async (data) => {
+    await login(data);
+    navigate('/', { replace: true });
+  };
 
   const [openModal, setOpenModal] = useState(false);
   const handleClickForgotPass = async () => {
@@ -43,7 +47,6 @@ export const SignIn = () => {
     }
   };
 
-  const navigate = useNavigate();
   useEffect(() => {
     if (!!token) navigate('/', { replace: true });
   }, [token, navigate]);

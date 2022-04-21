@@ -17,7 +17,8 @@ export const Activate = () => {
       }
     };
     if (token) activeAccount();
-  }, [token]);
+  }, [token, navigate, mutateAsync]);
+
   const handleClick = () => {
     navigate('/auth');
   };
