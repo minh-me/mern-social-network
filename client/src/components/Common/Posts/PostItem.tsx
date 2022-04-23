@@ -1,15 +1,13 @@
-import { FC } from 'react';
+import { FC, useRef, memo } from 'react';
 import { Avatar, Box } from '@mui/material';
-import { userFroms } from 'pages/search';
 import { PostHeader, PostContent, PostFooter } from './components';
 import { Post } from 'interface';
 
-const user = userFroms[0];
 type PostItemProps = {
   post: Post;
 };
 
-export const PostItem: FC<PostItemProps> = ({ post }) => {
+export const PostItem: FC<PostItemProps> = memo(({ post }) => {
   return (
     <Box
       px={2}
@@ -23,11 +21,15 @@ export const PostItem: FC<PostItemProps> = ({ post }) => {
       }}
     >
       {/* Avatar */}
-      <Avatar src={post.user.profilePic} sx={{ border: '1px solid white' }} alt={post.user.name} />
+      <Avatar
+        src={post.postedBy.profilePic}
+        sx={{ border: '1px solid white' }}
+        alt={post.postedBy.name}
+      />
 
       {/* User info */}
       <Box px={2} sx={{ width: '100%' }}>
-        <PostHeader user={post.user} postCreated={post.createdAt} />
+        <PostHeader user={post.postedBy} postCreated={post.createdAt} />
 
         {/* Post Content */}
         <PostContent text={post.text} imageUrl={post.image} />
@@ -37,4 +39,4 @@ export const PostItem: FC<PostItemProps> = ({ post }) => {
       </Box>
     </Box>
   );
-};
+});
