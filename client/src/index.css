@@ -7,3 +7,14 @@ body {
   background: #1d1927;
   color: white;
 }
+
+.fb-btn {
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  padding: 12px;
+  margin-top: 2px;
+  cursor: pointer;
+}

@@ -13,7 +13,7 @@ import { useForgotPassword, useLogin } from 'RQhooks';
 import { LoadingButton } from '@mui/lab';
 import { storage } from 'utils';
 import { pink } from '@mui/material/colors';
-import { GoogleButton } from 'components/Common/Buttons';
+import { FacebookLoginButton, GoogleButton } from 'components/Common/Buttons';
 
 const defaultValues: LoginData = {
   email: '',
@@ -107,8 +107,9 @@ export const SignIn = () => {
       >
         or
       </Divider>
-      <Box sx={{ textAlign: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
         <GoogleButton />
+        <FacebookLoginButton />
       </Box>
       <Box my={1}>
         <Typography sx={styles.text} textAlign="center">
