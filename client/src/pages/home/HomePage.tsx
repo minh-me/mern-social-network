@@ -1,9 +1,11 @@
-import { Box } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 import { Title } from 'components/App';
 import { CreatePostForm, PostList } from 'components/Common';
 import { userFroms } from 'pages/search';
 import { Post } from 'interface';
-import { useAppContext } from 'context/useAppContext';
+import { useInfinitePosts } from 'RQhooks/post.rq';
+import { useInView } from 'react-intersection-observer';
+import { useEffect } from 'react';
 
 const user = userFroms[0];
 
@@ -32,6 +34,14 @@ export const posts: Post[] = [
 ];
 
 export const HomePage = () => {
+  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } = useInfinitePosts();
+  const { ref, inView } = useInView();
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage]);
+
   return (
     <>
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
@@ -52,7 +62,16 @@ export const HomePage = () => {
       </Box>
 
       {/* PostList */}
-      <PostList posts={posts} />
+      {data?.pages && <PostList data={data} />}
+
+      <div>{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
+      <Box mt={5} sx={{ display: 'flex', justifyContent: 'center' }}>
+        {isFetchingNextPage ? (
+          <CircularProgress size={25} />
+        ) : hasNextPage ? (
+          <Button ref={ref}>Load more</Button>
+        ) : null}
+      </Box>
     </>
   );
 };

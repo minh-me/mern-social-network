@@ -4,3 +4,4 @@ export * from './notifications/NotificationItem';
 export * from './Posts';
 export * from './Inbox';
 export * from './Forms';
+export * from './Profile';
