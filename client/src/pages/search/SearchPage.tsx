@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import { Title } from 'components/App';
-import { Box } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 import { Tab } from 'components/Common/Buttons/Tab';
 import { PostList, UserList } from 'components/Common';
 import { User, Post } from 'interface';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FormSearch } from './FormSearch';
+import { useInfinitePosts } from 'RQhooks/post.rq';
+import { useInView } from 'react-intersection-observer';
 
 export const userFroms: User[] = [
   {
@@ -76,6 +78,14 @@ export const SearchPage = () => {
   const navigate = useNavigate();
   const queryValue = location.search.split('=')[1];
 
+  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } = useInfinitePosts();
+  const { ref, inView } = useInView();
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage]);
+
   useEffect(() => {
     console.log({ queryValue });
   }, [queryValue]);
@@ -112,7 +122,20 @@ export const SearchPage = () => {
       <Box sx={{ borderBottom: '1px solid #38444d' }} my={2} mt={4} />
 
       {/* Result */}
-      {isSelectedPosts ? <PostList posts={posts} /> : <UserList users={userFroms} />}
+      {!isSelectedPosts && <UserList users={userFroms} />}
+      {isSelectedPosts && (
+        <>
+          {data?.pages && <PostList data={data} />}
+          <div>{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
+          <Box mt={5} sx={{ display: 'flex', justifyContent: 'center' }}>
+            {isFetchingNextPage ? (
+              <CircularProgress size={25} />
+            ) : hasNextPage ? (
+              <Button ref={ref}>Load more</Button>
+            ) : null}
+          </Box>
+        </>
+      )}
     </>
   );
 };

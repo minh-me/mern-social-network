@@ -1,6 +1,7 @@
 import { Avatar, Button, TextField } from '@mui/material';
 import { useState } from 'react';
 import { CreatePostFormModal } from 'components/Common/Modal';
+
 const userFrom = {
   profilePic:
     'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
