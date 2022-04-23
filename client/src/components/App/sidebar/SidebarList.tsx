@@ -13,13 +13,20 @@ import { Link, Typography } from '@mui/material';
 import { useState } from 'react';
 import { MDialog } from 'components/Common/Modal';
 import { useLogout } from 'RQhooks';
+import { useGoogleLogout } from 'react-google-login';
 
 const SidebarList = () => {
   const [openModal, setOpenModal] = useState(false);
   const { mutateAsync } = useLogout();
   const navigate = useNavigate();
+
+  const { signOut } = useGoogleLogout({
+    clientId: '679275323194-0m8bkvm059v14kcepq57l873v8lm7r37.apps.googleusercontent.com',
+  });
+
   const handleClose = async () => {
     await mutateAsync();
+    signOut();
     setOpenModal(false);
     navigate('/auth', { replace: true });
   };
