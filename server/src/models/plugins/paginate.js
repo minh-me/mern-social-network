@@ -66,7 +66,7 @@ const paginate = schema => {
     sort = sort.split(',').join(' ')
 
     // Pagination
-    const skip = (page - 1) * limit
+    const skip = (+page - 1) * limit
 
     // Finding resource
     let query = this.find(filter)
@@ -109,7 +109,7 @@ const paginate = schema => {
     return {
       [labelDocs]: docs,
       info: {
-        [labelPage]: page,
+        [labelPage]: +page,
         [labelTotalPages]: Math.ceil(totalDocs / limit),
         [labelLimit]: limit,
         [labelTotalDocs]: totalDocs,
