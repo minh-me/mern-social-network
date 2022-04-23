@@ -47,7 +47,7 @@ const posts: Post[] = [
     id: '123',
     text: 'thứ 5, ngày 17 tháng 2 năm 202',
     createdAt: '2022-04-06T04:28:09.879Z',
-    user: userFroms[0],
+    postedBy: userFroms[0],
   },
   {
     id: '1234',
@@ -55,13 +55,13 @@ const posts: Post[] = [
     createdAt: '2022-04-06T04:28:09.879Z',
     image:
       'https://res.cloudinary.com/djvd6zhbg/image/upload/v1645065070/postImage/fik7evjfx3bg0a5tzweq.png',
-    user: userFroms[1],
+    postedBy: userFroms[1],
   },
   {
     id: '1235',
     text: 'thứ 23, ngày 17 tháng 2 năm 202',
     createdAt: '2022-04-06T04:28:09.879Z',
-    user: userFroms[0],
+    postedBy: userFroms[0],
   },
 ];
 
