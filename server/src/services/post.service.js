@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors'
 import { Post } from '../models'
+import * as updateService from './upload.service'
 
 /**
  * Get posts by query(filter, options)
@@ -58,6 +59,9 @@ const updatePostById = async (postId, body) => {
  */
 const deletePostById = async postId => {
   const post = await Post.findByIdAndDelete(postId)
+  if (post.image) {
+    updateService.destroy(post.image.id)
+  }
   if (!post) throw new createHttpError.NotFound('Not found post.')
   return post
 }

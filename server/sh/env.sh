@@ -23,9 +23,9 @@ export JWT_ACTIVATE_EXPIRATION=5m
 
 
 # CLOUDINARY
-export CLOUD_NAME=djvd6zhbg
-export CLOUD_API_KEY=849999119615753
-export CLOUD_API_SECRET=X_g1A1Y2E1s9bGeuFaALttvOeLg
+export CLOUD_NAME=dvnmolznq
+export CLOUD_API_KEY=974881534354895
+export CLOUD_API_SECRET=PfIbFwRWDOiNlDd_E_XENdKyNsA
 
 # SMTP configuration options for the email service
 export SMTP_HOST=smtp.gmail.com

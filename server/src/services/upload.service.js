@@ -79,10 +79,10 @@ const uploadPostImage = async path => {
  * @param {string} cloudinary_id
  * @returns
  */
-export const destroy = async cloudinary_id => {
+const destroy = async cloudinary_id => {
   const result = await cloudinary.uploader.destroy(cloudinary_id)
   console.log({ result })
   return result
 }
 
-export { upload, uploadAvatar, uploadPostImage }
+export { upload, uploadAvatar, uploadPostImage, destroy }
