@@ -16,11 +16,8 @@ axiosInstance.interceptors.request.use(async (req: AxiosRequestConfig<AxiosReque
   if (!ac_token) {
     ac_token = storage.getToken() || '';
   }
-  req.headers = {
-    Authorization: `Bearer ${ac_token}`,
-    'Content-Type': 'application/json',
-    withCredentials: true,
-  };
+  req.headers = { ...req.headers };
+  req.headers.Authorization = `Bearer ${ac_token}`;
   const user: { exp: number } = jwt_decode(ac_token);
   const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
 
@@ -30,10 +27,7 @@ axiosInstance.interceptors.request.use(async (req: AxiosRequestConfig<AxiosReque
     withCredentials: true,
   });
   storage.setToken(data.ac_token);
-  req.headers = {
-    Authorization: `Bearer ${data.ac_token}`,
-    'Content-Type': 'application/json',
-  };
+  req.headers.Authorization = `Bearer ${data.ac_token}`;
   return req;
 });
 

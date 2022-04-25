@@ -4,7 +4,13 @@ import { paginate, toJSON } from './plugins'
 const postSchema = Schema(
   {
     text: String,
-    image: String,
+    image: {
+      url: String,
+      id: String,
+      thumb1: String,
+      thumb2: String,
+      main: String,
+    },
     postedBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',

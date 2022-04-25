@@ -1,7 +1,7 @@
 import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
-import { postService } from '../services'
+import { postService, uploadService } from '../services'
 import { tranSuccess } from '../_lang/en'
 
 /**
@@ -10,8 +10,13 @@ import { tranSuccess } from '../_lang/en'
  * @access private
  */
 const createPost = catchAsync(async (req, res) => {
+  const item = req.body
+  if (req.file) {
+    const url = await uploadService.uploadPostImage(req.file.path)
+    item.image = url
+  }
   const post = await postService.createPost({
-    ...req.body,
+    ...item,
     postedBy: req.user.id,
   })
   res.status(201).json(post)

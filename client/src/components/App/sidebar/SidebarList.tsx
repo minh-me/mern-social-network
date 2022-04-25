@@ -26,8 +26,8 @@ const SidebarList = () => {
 
   const handleClose = async () => {
     await mutateAsync();
-    signOut();
     setOpenModal(false);
+    signOut();
     navigate('/auth', { replace: true });
   };
   return (
@@ -106,7 +106,8 @@ const SidebarList = () => {
       <MDialog
         position="center"
         title="Đăng xuất tài khoản?"
-        onClose={handleClose}
+        onClose={() => setOpenModal(false)}
+        confirmButton={handleClose}
         open={openModal}
         textAlign="center"
       >

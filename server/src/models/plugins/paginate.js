@@ -38,8 +38,8 @@ const paginate = schema => {
       docs: 'results',
       totalDocs: 'totalResults',
     },
-    select: '-createAt',
-    sort: '',
+    select: '',
+    sort: '-createdAt',
     page: 1,
     limit: 10,
   }

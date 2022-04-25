@@ -15,14 +15,14 @@ export const posts: Post[] = [
     text: 'thứ 5, ngày 17 tháng 2 năm 202',
     createdAt: '2022-04-06T04:28:09.879Z',
     postedBy: user,
-    image: user.profilePic,
+    // image: user.profilePic,
   },
   {
     id: '1234',
     text: 'thứ 523, ngày 17 tháng 2 năm 202',
     createdAt: '2022-04-06T04:28:09.879Z',
-    image:
-      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1645065070/postImage/fik7evjfx3bg0a5tzweq.png',
+    // image:
+    //   'https://res.cloudinary.com/djvd6zhbg/image/upload/v1645065070/postImage/fik7evjfx3bg0a5tzweq.png',
     postedBy: user,
   },
   {

@@ -29,3 +29,23 @@ export const upload = (req, res, next) => {
   // success
   next()
 }
+
+export const uploadPostImage = (req, res, next) => {
+  if (typeof req.file === 'undefined' && typeof req.body === 'undefined')
+    throw new createHttpError.BadRequest(transErrors.upload_issue)
+
+  if (req.file) {
+    const image = req.file.path
+    if (!config.app.image_types.includes(req.file.mimetype)) {
+      fs.unlinkSync(image)
+      throw new createHttpError.BadRequest(transErrors.upload_not_supported)
+    }
+
+    if (req.file.size > config.app.upload_limit_size) {
+      fs.unlinkSync(image)
+      throw new createHttpError.BadRequest(transErrors.upload_limit_size)
+    }
+  }
+
+  next()
+}

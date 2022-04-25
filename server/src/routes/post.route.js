@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { validate, auth } from '../middlewares'
+import { validate, auth, uploadStorage, uploadPostImage } from '../middlewares'
 import { postValidation } from '../validations'
 import { postController } from '../controllers'
 
@@ -7,7 +7,13 @@ const router = new Router()
 
 router
   .route('/')
-  .post(auth(), validate(postValidation.createPost), postController.createPost)
+  .post(
+    auth(),
+    uploadStorage.single('image'),
+    uploadPostImage,
+    validate(postValidation.createPost),
+    postController.createPost
+  )
   .get(validate(postValidation.getPosts), postController.getPosts)
 
 router

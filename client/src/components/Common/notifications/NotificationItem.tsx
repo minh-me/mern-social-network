@@ -46,7 +46,8 @@ export const NotificationItem: FC<NotiProps> = ({
         type="delete"
         entityId="123!"
         title="Xóa thông báo!"
-        onClose={handleClose}
+        confirmButton={handleClose}
+        onClose={() => setOpenModal(false)}
         open={openModal}
       >
         Xóa thông báo này khỏi mục thông báo của bạn?
