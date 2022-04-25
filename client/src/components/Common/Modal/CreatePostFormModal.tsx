@@ -17,6 +17,8 @@ import { toast } from 'react-toastify';
 import { UserInfo } from '../Users';
 import { Image } from '../Images';
 import { postSchema } from 'validations';
+import { useCreatePost } from 'RQhooks/post.rq';
+import { LoadingButton } from '@mui/lab';
 
 type ModalProps = {
   open: boolean;
@@ -42,14 +44,17 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen, user }) => 
     resolver: yupResolver(postSchema),
     mode: 'onChange',
   });
-
+  const { mutateAsync, isLoading } = useCreatePost();
   const handleClose = () => {
     reset();
     setOpen(false);
   };
 
-  const onSubmit: SubmitHandler<InputProps> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<InputProps> = async (data) => {
+    const formData = new FormData();
+    formData.append('text', data.text);
+    if (data.image) formData.append('image', data.image[0]);
+    await mutateAsync(formData);
     toast.success(`🦄 Create post success!`);
     handleClose();
   };
@@ -112,17 +117,19 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen, user }) => 
 
         {/* Button Post */}
         <DialogActions sx={{ background: '#15202b' }}>
-          <Button
-            fullWidth
-            disabled={!dirtyFields['text'] || Boolean(errors.text?.message)}
-            sx={styles.button}
+          <LoadingButton
+            loadingIndicator="Post..."
+            loading={isLoading}
             variant="contained"
             size="small"
             type="submit"
             form="createPostForm"
+            fullWidth
+            sx={styles.button}
+            disabled={!dirtyFields['text'] || Boolean(errors.text?.message)}
           >
             Post
-          </Button>
+          </LoadingButton>
         </DialogActions>
       </Dialog>
     </>
@@ -142,8 +149,10 @@ const styles = {
       background: pink[400],
     },
     '&:disabled': {
-      backgroundColor: '#b5496b',
-      color: 'white',
+      background: pink[400],
+      div: {
+        color: 'white',
+      },
     },
   },
   textarea: {

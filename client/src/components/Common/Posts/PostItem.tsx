@@ -32,7 +32,7 @@ export const PostItem: FC<PostItemProps> = memo(({ post }) => {
         <PostHeader user={post.postedBy} postCreated={post.createdAt} />
 
         {/* Post Content */}
-        <PostContent text={post.text} imageUrl={post.image} />
+        <PostContent text={post.text} imageUrl={post.image?.main || post.image?.url} />
 
         {/* post footer */}
         <PostFooter />

@@ -4,7 +4,13 @@ import { User } from './user.interface';
 export interface Post {
   id: string;
   text: string;
-  image?: string;
+  image?: {
+    url: string;
+    main?: string;
+    thumb2?: string;
+    thumb1?: string;
+    id?: string;
+  };
   postedBy: User;
   pinned?: boolean;
   likes?: [string];

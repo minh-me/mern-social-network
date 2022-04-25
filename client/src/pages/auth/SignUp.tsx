@@ -87,6 +87,7 @@ export const SignUp = () => {
       <MDialog
         type="ok"
         position="center"
+        confirmButton={() => setOpenModal(false)}
         onClose={() => setOpenModal(false)}
         open={openModal}
         title="Đã gửi hướng dẫn"

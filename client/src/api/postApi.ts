@@ -14,15 +14,15 @@ export const postApi = {
   },
 
   createPost(post: {}) {
-    return axios.post(`${postUrl}`, post, {
-      headers: { 'Content-Type': 'application/json' },
+    return axiosInstance.post(`${postUrl}`, post, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
   },
 
   updatePost(postId: string, post: {}) {
-    return axios.post(`${postUrl}/${postId}`, post, {
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return axios.post(`${postUrl}/${postId}`, post);
   },
 
   deletePost(postId: string) {

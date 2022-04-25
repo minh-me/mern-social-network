@@ -122,6 +122,7 @@ export const SignIn = () => {
         position="center"
         onClose={() => setOpenModal(false)}
         open={openModal}
+        confirmButton={() => setOpenModal(false)}
         title="Đã gửi hướng dẫn"
       >
         <>

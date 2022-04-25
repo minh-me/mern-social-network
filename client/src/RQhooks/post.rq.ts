@@ -3,7 +3,7 @@ import { postApi } from 'api/postApi';
 import { userApi } from 'api/userApi';
 import { addAuth, addUser } from 'context/actions';
 import { useAppContext } from 'context/useAppContext';
-import { useInfiniteQuery, useMutation, useQuery } from 'react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
 import { storage } from 'utils';
 import { handlerError } from 'utils/handleError';
@@ -16,5 +16,22 @@ export const useInfinitePosts = () => {
       }
       return lastPage.info.page + 1;
     },
+  });
+};
+
+export const useCreatePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation(postApi.createPost, {
+    onSuccess: (data) => {
+      console.log({ data });
+    },
+    onError: handlerError,
+    onSettled: () =>
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          console.log({ query });
+          return query.queryKey.toString().startsWith('posts');
+        },
+      }),
   });
 };

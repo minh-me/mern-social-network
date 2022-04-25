@@ -11,6 +11,7 @@ type ModalProps = {
   title: string;
   open: boolean;
   onClose: Function;
+  confirmButton: Function;
   entityId?: string;
   children: JSX.Element[] | JSX.Element | string;
   type?: 'delete' | 'ok';
@@ -25,6 +26,7 @@ export const MDialog: FC<ModalProps> = ({
   open,
   children,
   onClose,
+  confirmButton,
   entityId,
   textAlign = 'left',
 }) => {
@@ -43,11 +45,16 @@ export const MDialog: FC<ModalProps> = ({
       </DialogContent>
       <DialogActions sx={{ background: '#2f3136' }}>
         {type === 'delete' ? (
-          <Button size="small" color="error" variant="contained" onClick={() => onClose(entityId)}>
+          <Button
+            size="small"
+            color="error"
+            variant="contained"
+            onClick={() => confirmButton(entityId)}
+          >
             Xóa
           </Button>
         ) : (
-          <Button sx={styles.button} variant="contained" onClick={() => onClose(entityId)}>
+          <Button sx={styles.button} variant="contained" onClick={() => confirmButton(entityId)}>
             Okay!
           </Button>
         )}

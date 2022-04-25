@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Title } from 'components/App';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { CoverPhoto, PostList, ProfilePic, UserList } from 'components/Common';
@@ -6,7 +6,7 @@ import { FollowButton, IconsButtonOutlined, Tab } from 'components/Common/Button
 import LocalPostOfficeRoundedIcon from '@mui/icons-material/LocalPostOfficeRounded';
 import { blueGrey, grey, pink } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
-import { Post, User } from 'interface';
+import { User } from 'interface';
 import { useInfinitePosts } from 'RQhooks/post.rq';
 import { useInView } from 'react-intersection-observer';
 const userFroms: User[] = [
@@ -42,28 +42,6 @@ const userFroms: User[] = [
     createdAt: '2022-03-08T14:12:58.562Z',
     updatedAt: '2022-03-08T14:25:39.750Z',
     id: '62271fw23646a0588488cd53eb293',
-  },
-];
-const posts: Post[] = [
-  {
-    id: '123',
-    text: 'thứ 5, ngày 17 tháng 2 năm 202',
-    createdAt: '2022-04-06T04:28:09.879Z',
-    postedBy: userFroms[0],
-  },
-  {
-    id: '1234',
-    text: 'thứ 523, ngày 17 tháng 2 năm 202',
-    createdAt: '2022-04-06T04:28:09.879Z',
-    image:
-      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1645065070/postImage/fik7evjfx3bg0a5tzweq.png',
-    postedBy: userFroms[1],
-  },
-  {
-    id: '1235',
-    text: 'thứ 23, ngày 17 tháng 2 năm 202',
-    createdAt: '2022-04-06T04:28:09.879Z',
-    postedBy: userFroms[0],
   },
 ];
 
