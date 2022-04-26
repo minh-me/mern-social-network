@@ -2,9 +2,6 @@ import { Grid, Box } from '@mui/material';
 import { blueGrey } from '@mui/material/colors';
 import { Sidebar } from '../App';
 import { Outlet } from 'react-router-dom';
-import { FormSearch } from 'components/Common/Forms';
-import { PostList, UserList } from 'components/Common';
-import { posts, userFroms } from 'pages';
 import { styleScroll } from 'utils';
 
 export const MainLayout = () => {
@@ -53,7 +50,7 @@ export const MainLayout = () => {
           {/* <FormSearch fontSize={14} /> */}
         </Box>
         <Box px={1}>
-          <UserList users={userFroms} />
+          {/* <UserList users={userFroms} /> */}
           {/* <PostList posts={posts} /> */}
         </Box>
       </Grid>

@@ -16,6 +16,13 @@ router
   )
   .get(validate(postValidation.getPosts), postController.getPosts)
 
+router.get(
+  '/me',
+  auth(),
+  validate(postValidation.getPosts),
+  postController.getMyPosts
+)
+
 router
   .route('/:postId')
   .get(validate(postValidation.getPost), postController.getPost)

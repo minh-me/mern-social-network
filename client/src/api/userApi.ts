@@ -9,7 +9,7 @@ export const userApi = {
   },
 
   getUsers({ pageParam = 1 }): Promise<UsersResponse> {
-    return axios.get(`${userUrl}`, {
+    return axiosInstance.get(`${userUrl}`, {
       params: {
         page: pageParam,
         limit: 1,
