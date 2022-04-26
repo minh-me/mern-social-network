@@ -20,7 +20,6 @@ axiosInstance.interceptors.request.use(async (req: AxiosRequestConfig<AxiosReque
   req.headers.Authorization = `Bearer ${ac_token}`;
   const user: { exp: number } = jwt_decode(ac_token);
   const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
-
   if (!isExpired) return req;
 
   const data: LoginResponse = await axios.get(`/api/auth/rf_token`, {

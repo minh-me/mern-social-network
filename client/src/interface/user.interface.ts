@@ -22,12 +22,16 @@ export interface UserResponse {
   email: string;
   role: 'admin' | 'user';
 
+  dateOfBirth?: string;
+  coverPhoto?: string;
+  profilePic: string;
+  authKey?: string;
+
+  follwers?: string[];
+  following?: string[];
+
   createdAt?: string;
   updatedAt?: string;
-  dateOfBirth?: string;
-  coverPhoto?: String;
-  profilePic?: String;
-  authKey?: String;
 }
 
 export interface UsersResponse {

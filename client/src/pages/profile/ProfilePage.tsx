@@ -1,54 +1,19 @@
 import { useEffect } from 'react';
-import { Title } from 'components/App';
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import { CoverPhoto, PostList, ProfilePic, UserList } from 'components/Common';
-import { FollowButton, IconsButtonOutlined, Tab } from 'components/Common/Buttons';
+import { useInfiniteMyPosts } from 'RQhooks/post.rq';
 import LocalPostOfficeRoundedIcon from '@mui/icons-material/LocalPostOfficeRounded';
 import { blueGrey, grey, pink } from '@mui/material/colors';
+
+import { CoverPhoto, PostList, ProfilePic } from 'components/Common';
+import { Title } from 'components/App';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import { FollowButton, IconsButtonOutlined, Tab } from 'components/Common/Buttons';
 import { Link } from 'react-router-dom';
-import { User } from 'interface';
-import { useInfinitePosts } from 'RQhooks/post.rq';
 import { useInView } from 'react-intersection-observer';
 import { PostImageSkeleton, PostSkeleton, PostTextSkeleton } from 'components/Common/Variants';
-const userFroms: User[] = [
-  {
-    profilePic:
-      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
-    name: 'Minh Chìu',
-    username: 'minchiu',
-    email: 'minhch.vn@gmail.com',
-    role: 'admin',
-    createdAt: '2022-03-08T14:12:58.562Z',
-    updatedAt: '2022-03-08T14:25:39.750Z',
-    id: '6227646a0588488cd53eb293',
-  },
-  {
-    profilePic:
-      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
-    name: 'Minh Chìu',
-    username: 'minchiu',
-    email: 'minhch.vn@gmail.com',
-    role: 'admin',
-    createdAt: '2022-03-08T14:12:58.562Z',
-    updatedAt: '2022-03-08T14:25:39.750Z',
-    id: '12123123',
-  },
-  {
-    profilePic:
-      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
-    name: 'Minh Chìu',
-    username: 'minchiu',
-    email: 'minhch.vn@gmail.com',
-    role: 'admin',
-    createdAt: '2022-03-08T14:12:58.562Z',
-    updatedAt: '2022-03-08T14:25:39.750Z',
-    id: '62271fw23646a0588488cd53eb293',
-  },
-];
 
 export const ProfilePage = () => {
+  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } = useInfiniteMyPosts();
   const isSelectedPosts = true;
-  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } = useInfinitePosts();
   const { ref, inView } = useInView();
   useEffect(() => {
     if (inView) {
@@ -113,7 +78,7 @@ export const ProfilePage = () => {
         Nothing to show.
       </Typography>
 
-      {!isSelectedPosts && <UserList users={userFroms} />}
+      {/* {!isSelectedPosts && <UserList data={userFroms} />} */}
       {isSelectedPosts && (
         <>
           {/* PostList */}

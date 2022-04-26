@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Avatar, Box, Link, Typography } from '@mui/material';
-import { User } from 'interface';
+import { UserResponse } from 'interface';
 import { FollowButton } from '../Buttons';
 
 interface UserItemProps {
-  user: User;
+  user: UserResponse;
 }
 
 export const UserItem: FC<UserItemProps> = ({ user }) => {
@@ -17,7 +17,7 @@ export const UserItem: FC<UserItemProps> = ({ user }) => {
           {user.name}
         </Link>
         <Typography fontSize={12} color="#999ea3" component="p">
-          @{user.username}
+          @{user.email.split('@')[0]}
         </Typography>
         <Typography fontSize={12} color="#999ea3" component="span">
           {user?.follwers?.length} followers

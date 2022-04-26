@@ -34,6 +34,20 @@ const getPosts = catchAsync(async (req, res) => {
   const result = await postService.queryPosts(filter, options)
   res.send(result)
 })
+/**
+ * Get all posts
+ * @GET api/posts
+ * @access public
+ */
+const getMyPosts = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['text'])
+  const options = pick(req.query, ['sort', 'select', 'sortBy', 'limit', 'page'])
+  filter.postedBy = req.user.id
+  options.populate = 'postedBy'
+  const result = await postService.queryPosts(filter, options)
+  console.log({ result })
+  res.send(result)
+})
 
 /**
  * Get a post by post id
@@ -68,4 +82,4 @@ const deletePost = catchAsync(async (req, res) => {
   res.send(post)
 })
 
-export { createPost, getPosts, getPost, updatePost, deletePost }
+export { createPost, getPosts, getPost, updatePost, deletePost, getMyPosts }

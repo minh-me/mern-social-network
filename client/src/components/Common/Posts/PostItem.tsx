@@ -1,4 +1,4 @@
-import { FC, useRef, memo } from 'react';
+import { FC, memo } from 'react';
 import { Avatar, Box } from '@mui/material';
 import { PostHeader, PostContent, PostFooter } from './components';
 import { Post } from 'interface';

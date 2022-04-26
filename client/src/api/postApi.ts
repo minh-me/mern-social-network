@@ -13,6 +13,15 @@ export const postApi = {
     });
   },
 
+  getMyPosts({ pageParam = 1 }): Promise<PostsResponse> {
+    return axiosInstance.get(`${postUrl}/me`, {
+      params: {
+        page: pageParam,
+        limit: 1,
+      },
+    });
+  },
+
   getPost(postId: string) {
     return axios.get(`${postUrl}/${postId}`);
   },

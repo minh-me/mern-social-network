@@ -5,7 +5,7 @@ import { UserItem } from 'components/Common';
 import { userFroms } from 'pages/search';
 
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { User } from 'interface';
+import { UserResponse } from 'interface';
 import { LabelUsers } from './LabelUsers';
 import { pink } from '@mui/material/colors';
 
@@ -67,7 +67,7 @@ export const NewChatPage = () => {
       </form>
 
       {/* Users List */}
-      {userFroms.map((user: User) => (
+      {userFroms.map((user: UserResponse) => (
         <Box
           onClick={() => handleAddSelectedUsers({ id: user.id, name: user.name })}
           key={user.id}
