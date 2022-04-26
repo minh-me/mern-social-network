@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { UserResponse } from 'interface';
+import { UserResponse, UsersResponse } from 'interface';
 import axiosInstance from 'utils/axiosInstance';
 
 const userUrl = '/api/users';
@@ -8,8 +8,13 @@ export const userApi = {
     return axiosInstance.get(`${userUrl}/profile`);
   },
 
-  getUsers(filter: {}) {
-    return axios.get(`${userUrl}${filter}`);
+  getUsers({ pageParam = 1 }): Promise<UsersResponse> {
+    return axios.get(`${userUrl}`, {
+      params: {
+        page: pageParam,
+        limit: 1,
+      },
+    });
   },
 
   getUser(userId: string) {

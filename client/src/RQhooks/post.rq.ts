@@ -8,7 +8,11 @@ import { toast } from 'react-toastify';
 import { storage } from 'utils';
 import { handlerError } from 'utils/handleError';
 
-export const useInfinitePosts = () => {
+type options = {
+  enable?: boolean;
+};
+
+export const useInfinitePosts = (params?: options) => {
   return useInfiniteQuery('posts', postApi.getPosts, {
     getNextPageParam: (lastPage) => {
       if (lastPage?.info?.page >= lastPage.info.totalPages) {
@@ -16,8 +20,11 @@ export const useInfinitePosts = () => {
       }
       return lastPage.info.page + 1;
     },
+    ...params,
   });
 };
+
+export const usePosts = () => {};
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient();

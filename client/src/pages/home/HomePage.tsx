@@ -1,6 +1,12 @@
 import { Box, Button, CircularProgress } from '@mui/material';
 import { Title } from 'components/App';
 import { CreatePostForm, PostList } from 'components/Common';
+import {
+  PostSkeleton,
+  PostTextSkeleton,
+  PostImageSkeleton,
+  PostFormSkeleton,
+} from 'components/Common/Variants';
 import { userFroms } from 'pages/search';
 import { Post } from 'interface';
 import { useInfinitePosts } from 'RQhooks/post.rq';
@@ -47,7 +53,6 @@ export const HomePage = () => {
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
         <Title title="Home" />
       </Box>
-
       <Box
         py={2}
         px={2}
@@ -60,11 +65,17 @@ export const HomePage = () => {
       >
         <CreatePostForm />
       </Box>
-
       {/* PostList */}
       {data?.pages && <PostList data={data} />}
-
-      <div>{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
+      <div>
+        {isFetching && !isFetchingNextPage ? (
+          <>
+            <PostSkeleton />
+            <PostTextSkeleton />
+            <PostImageSkeleton />
+          </>
+        ) : null}
+      </div>
       <Box mt={5} sx={{ display: 'flex', justifyContent: 'center' }}>
         {isFetchingNextPage ? (
           <CircularProgress size={25} />

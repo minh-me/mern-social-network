@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { User } from 'interface';
 import { useInfinitePosts } from 'RQhooks/post.rq';
 import { useInView } from 'react-intersection-observer';
+import { PostImageSkeleton, PostSkeleton, PostTextSkeleton } from 'components/Common/Variants';
 const userFroms: User[] = [
   {
     profilePic:
@@ -118,7 +119,15 @@ export const ProfilePage = () => {
           {/* PostList */}
           {data?.pages && <PostList data={data} />}
 
-          <div>{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
+          <div>
+            {isFetching && !isFetchingNextPage ? (
+              <>
+                <PostSkeleton />
+                <PostTextSkeleton />
+                <PostImageSkeleton />
+              </>
+            ) : null}
+          </div>
           <Box mt={5} sx={{ display: 'flex', justifyContent: 'center' }}>
             {isFetchingNextPage ? (
               <CircularProgress size={25} />
