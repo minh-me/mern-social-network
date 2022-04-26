@@ -5,8 +5,12 @@ import axiosInstance from 'utils/axiosInstance';
 const postUrl = '/api/posts';
 export const postApi = {
   getPosts({ pageParam = 1 }): Promise<PostsResponse> {
-    console.log({ pageParam });
-    return axiosInstance.get(`${postUrl}?page=${pageParam}&limit=1`);
+    return axiosInstance.get(`${postUrl}`, {
+      params: {
+        page: pageParam,
+        limit: 1,
+      },
+    });
   },
 
   getPost(postId: string) {

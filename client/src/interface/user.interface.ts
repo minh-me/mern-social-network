@@ -1,3 +1,5 @@
+import { Info } from './paginate.inteface';
+
 export interface User {
   id: string;
   name: string;
@@ -26,4 +28,9 @@ export interface UserResponse {
   coverPhoto?: String;
   profilePic?: String;
   authKey?: String;
+}
+
+export interface UsersResponse {
+  info: Info;
+  users: UserResponse[];
 }
