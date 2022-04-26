@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import SidebarList from './SidebarList';
 import Logo from './Logo';
+import { SidebarListIcons } from './SidebarListIcons';
 
 type Props = {};
 
@@ -10,7 +11,26 @@ export const Sidebar = (props: Props) => {
       {/* Logo */}
       <Logo />
       {/* Sidebar Item */}
-      <SidebarList />
+      <Box
+        sx={{
+          display: {
+            sm: 'none',
+            md: 'inherit',
+          },
+        }}
+      >
+        <SidebarList />
+      </Box>
+      <Box
+        sx={{
+          display: {
+            sm: 'inherit',
+            md: 'none',
+          },
+        }}
+      >
+        <SidebarListIcons />
+      </Box>
     </Box>
   );
 };

@@ -20,13 +20,6 @@ export const PostItem: FC<PostItemProps> = memo(({ post }) => {
         borderBottom: '1px solid #38444d',
       }}
     >
-      {/* Avatar */}
-      <Avatar
-        src={post.postedBy.profilePic}
-        sx={{ border: '1px solid white' }}
-        alt={post.postedBy.name}
-      />
-
       {/* User info */}
       <Box px={2} sx={{ width: '100%' }}>
         <PostHeader user={post.postedBy} postCreated={post.createdAt} />
