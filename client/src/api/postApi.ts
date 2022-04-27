@@ -4,8 +4,8 @@ import axiosInstance from 'utils/axiosInstance';
 
 const postUrl = '/api/posts';
 export const postApi = {
-  getPosts({ pageParam = 1 }): Promise<PostsResponse> {
-    return axiosInstance.get(`${postUrl}`, {
+  getPosts({ pageParam = 1, queryKey = ['posts'] }): Promise<PostsResponse> {
+    return axiosInstance.get(`${postUrl}/${queryKey[1] || ''}`, {
       params: {
         page: pageParam,
         limit: 1,

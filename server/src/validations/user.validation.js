@@ -13,6 +13,7 @@ const createUser = {
 }
 
 const getUsers = {
+  search: yup.string(),
   name: yup.string(),
   email: yup.string().email(),
   role: yup.string(),

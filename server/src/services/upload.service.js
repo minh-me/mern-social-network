@@ -68,9 +68,6 @@ const uploadPostImage = async path => {
   return {
     url: result.secure_url,
     id: result.public_id,
-    thumb1: reSizeImage(result.public_id, 200, 200),
-    main: reSizeImage(result.public_id, 500, 500),
-    thumb2: reSizeImage(result.public_id, 300, 300),
   }
 }
 
@@ -81,7 +78,6 @@ const uploadPostImage = async path => {
  */
 const destroy = async cloudinary_id => {
   const result = await cloudinary.uploader.destroy(cloudinary_id)
-  console.log({ result })
   return result
 }
 

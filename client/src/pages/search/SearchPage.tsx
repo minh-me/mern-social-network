@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useRef } from 'react';
 import { Title } from 'components/App';
 import { Box, Button, CircularProgress } from '@mui/material';
 import { Tab } from 'components/Common/Buttons/Tab';
@@ -49,29 +49,33 @@ export const SearchPage = () => {
   const location = useLocation();
   const selectedTab = location.pathname.split('/').slice(-1)[0] as 'posts' | 'users';
   const isSelectedPosts = selectedTab === 'posts';
-  const queryKey = isSelectedPosts ? 'text' : 'name';
   const navigate = useNavigate();
-  const queryValue = location.search.split('=')[1];
+  const { search } = location;
 
-  const posts = useInfinitePosts({ enabled: isSelectedPosts });
-  const users = useInfiniteUsers({ enabled: isSelectedPosts });
+  const posts = useInfinitePosts({
+    search: search,
+    enabled: isSelectedPosts,
+    cacheTime: search ? 2000 : 5 * 60 * 1000,
+  });
 
-  console.log({ posts, users, isSelectedPosts });
-
-  useEffect(() => {
-    console.log({ queryValue });
-  }, [queryValue]);
+  const users = useInfiniteUsers({
+    enabled: !isSelectedPosts,
+    search: search,
+    cacheTime: search ? 2000 : 5 * 60 * 1000,
+  });
+  const ref = useRef(0);
 
   return (
     <>
       {/* Title */}
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
         <Title title="Search" />
+        {ref.current++}
       </Box>
 
       {/* Form search */}
       <Box px={10} my={3} sx={{ maxWidth: '100%' }}>
-        <FormSearch queryKey={queryKey} />
+        <FormSearch name="search" />
       </Box>
 
       {/* Tab control */}

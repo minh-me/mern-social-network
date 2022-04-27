@@ -14,19 +14,22 @@ export const Tab: FC<Props> = ({ active, text, onClick, ...rest }) => {
       onClick={onClick}
       fullWidth
       variant="outlined"
+      disabled={active}
       sx={{
-        backgroundColor: active ? '#192734' : '',
-        color: active ? '#f91880' : '#8899a6',
         borderRadius: 20,
+        color: '#8899a6',
         transition: 'all 300ms ease-in-out',
-        fontWeight: 600,
-        borderColor: active ? 'inherit' : 'transparent',
+        borderColor: 'transparent',
+        textTransform: 'capitalize',
         fontSize: 18,
-        '&:hover': {
+        fontWeight: 600,
+        '&:disabled': {
+          borderColor: 'inherit',
+        },
+        '&:hover, &:disabled': {
           backgroundColor: '#192734',
           color: '#f91880',
         },
-        textTransform: 'capitalize',
         ...rest,
       }}
     >
