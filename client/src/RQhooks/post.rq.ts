@@ -4,11 +4,15 @@ import { handlerError } from 'utils/handleError';
 
 type options = {
   enabled?: boolean;
+  cacheTime?: number;
+  search?: string;
 };
 
 export const useInfinitePosts = (params?: options) => {
-  console.log({ params });
-  return useInfiniteQuery('posts', postApi.getPosts, {
+  const queryKey = ['posts'];
+  if (params?.search) queryKey.push(params.search);
+
+  return useInfiniteQuery(queryKey, postApi.getPosts, {
     getNextPageParam: (lastPage) => {
       if (lastPage?.info?.page >= lastPage.info.totalPages) {
         return undefined;
@@ -16,6 +20,8 @@ export const useInfinitePosts = (params?: options) => {
       return lastPage.info.page + 1;
     },
     ...params,
+
+    onError: handlerError,
   });
 };
 

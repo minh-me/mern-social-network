@@ -9,6 +9,7 @@ const createPost = {
 }
 
 const getPosts = {
+  search: yup.string(),
   text: yup.string(),
   page: yup.number().integer(),
   limit: yup.number().integer(),

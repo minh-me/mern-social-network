@@ -1,7 +1,7 @@
+import { FC, memo, useEffect, useRef } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';
-import { FC } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { FormInputSearch } from 'components/Common';
 
@@ -9,25 +9,31 @@ const searchSchema = yup.object({
   text: yup.string().required().trim().label('Search'),
 });
 
-type Props = { queryKey: 'name' | 'text' };
 type InputProps = { text: string };
+type Props = { name: string };
 
-export const FormSearch: FC<Props> = ({ queryKey }) => {
+export const FormSearch: FC<Props> = memo(({ name }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const queryValue = searchParams.get(queryKey) || '';
+  const queryValue = searchParams.get(name) || '';
+  const ref = useRef<number>(0);
 
-  const { control, handleSubmit } = useForm<InputProps>({
+  const { control, handleSubmit, reset } = useForm<InputProps>({
     defaultValues: { text: queryValue },
     resolver: yupResolver(searchSchema),
   });
 
   const onSearch: SubmitHandler<InputProps> = (data) => {
-    setSearchParams({ [queryKey]: data.text });
+    setSearchParams({ [name]: data.text });
   };
+
+  useEffect(() => {
+    reset({ text: queryValue });
+  }, [queryValue, reset]);
 
   return (
     <form onSubmit={handleSubmit(onSearch)}>
+      <h1>{ref.current++}</h1>
       <FormInputSearch autoFocus={true} control={control} name="text" />
     </form>
   );
-};
+});

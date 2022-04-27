@@ -59,7 +59,7 @@ const updatePostById = async (postId, body) => {
  */
 const deletePostById = async postId => {
   const post = await Post.findByIdAndDelete(postId)
-  if (post.image) {
+  if (post?.image) {
     updateService.destroy(post.image.id)
   }
   if (!post) throw new createHttpError.NotFound('Not found post.')

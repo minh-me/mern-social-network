@@ -76,7 +76,10 @@ userSchema.methods = {
 userSchema.plugin(toJSON)
 userSchema.plugin(paginate)
 
+userSchema.index({ name: 'text', email: 'text' })
+
 /**
  * @typedef User
  */
 export const User = mongoose.model('User', userSchema)
+User.createIndexes()

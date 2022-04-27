@@ -68,6 +68,9 @@ const paginate = schema => {
     // Pagination
     const skip = (+page - 1) * limit
 
+    if (filter.search) filter.$text = { $search: filter.search }
+    delete filter.search
+
     // Finding resource
     let query = this.find(filter)
       .select(select)

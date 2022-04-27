@@ -2,7 +2,6 @@ import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
 import { postService, uploadService } from '../services'
-import { tranSuccess } from '../_lang/en'
 
 /**
  * Create a post
@@ -28,8 +27,10 @@ const createPost = catchAsync(async (req, res) => {
  * @access public
  */
 const getPosts = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['text'])
+  const filter = pick(req.query, ['text', 'search'])
   const options = pick(req.query, ['sort', 'select', 'sortBy', 'limit', 'page'])
+
+  // if (req.query.search) filter.$text = { $search: req.query.search }
   options.populate = 'postedBy'
   const result = await postService.queryPosts(filter, options)
   res.send(result)

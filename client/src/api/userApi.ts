@@ -8,8 +8,8 @@ export const userApi = {
     return axiosInstance.get(`${userUrl}/profile`);
   },
 
-  getUsers({ pageParam = 1 }): Promise<UsersResponse> {
-    return axiosInstance.get(`${userUrl}`, {
+  getUsers({ pageParam = 1, queryKey = ['users'] }): Promise<UsersResponse> {
+    return axiosInstance.get(`${userUrl}/${queryKey[1] || ''}`, {
       params: {
         page: pageParam,
         limit: 1,
