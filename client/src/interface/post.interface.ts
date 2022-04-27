@@ -6,9 +6,6 @@ export interface Post {
   text: string;
   image?: {
     url: string;
-    main?: string;
-    thumb2?: string;
-    thumb1?: string;
     id?: string;
   };
   postedBy: User;
