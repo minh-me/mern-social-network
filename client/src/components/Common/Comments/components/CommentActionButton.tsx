@@ -8,7 +8,7 @@ type Props = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export const ButtonAction: FC<Props> = ({ children, sx, onClick }) => {
+export const CommentActionButton: FC<Props> = ({ children, sx, onClick }) => {
   return (
     <Typography
       sx={{

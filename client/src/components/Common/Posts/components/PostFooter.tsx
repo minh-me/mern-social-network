@@ -1,25 +1,25 @@
 import { FC } from 'react';
 import { Box } from '@mui/material';
 import { Post, User } from 'interface';
-import { LikeButton, CommentButton, ShareButton } from 'components/Common/Buttons';
+import { LikePostButton, CommentPostButton, SharePostButton } from 'components/Common/Buttons';
 
 type Props = {
-  comments?: User[];
-  shares?: Post[];
-  likes?: User[];
+  comments?: string[];
+  shares?: string[];
+  likes?: string[];
 };
 
 export const PostFooter: FC<Props> = ({ comments, shares, likes }) => {
   return (
     <Box mt={2} sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
       {/* favorite */}
-      <LikeButton />
+      <LikePostButton likes={likes} />
 
       {/* comments */}
-      <CommentButton />
+      <CommentPostButton comments={comments} />
 
       {/* share */}
-      <ShareButton />
+      <SharePostButton shares={shares} />
     </Box>
   );
 };

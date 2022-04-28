@@ -1,13 +1,13 @@
-import { ButtonPost } from './ButtonPost';
+import { PostActionButton } from './PostActionButton';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 
-export const CommentButton = ({ isActive = false }) => {
+export const CommentPostButton = ({ isActive = false, comments = [''] }) => {
   const likeHandler = () => {
     console.log('Liked');
   };
 
   return (
-    <ButtonPost
+    <PostActionButton
       sx={{
         mx: 1,
         px: 1,
@@ -18,7 +18,7 @@ export const CommentButton = ({ isActive = false }) => {
         },
       }}
       onClick={likeHandler}
-      nums={12}
+      nums={comments.length || null}
       startIcon={<ChatBubbleOutlineRoundedIcon />}
     />
   );
