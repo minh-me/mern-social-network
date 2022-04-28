@@ -236,3 +236,12 @@ export const PostImageSkeleton = () => {
     </Box>
   );
 };
+
+export const PostListSkeleton = () => {
+  return (
+    <>
+      <PostSkeleton />
+      <PostTextSkeleton />
+    </>
+  );
+};

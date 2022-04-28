@@ -1,7 +1,24 @@
 import { FC, memo } from 'react';
-import { Avatar, Box } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  FormControl,
+  InputAdornment,
+  InputBase,
+  IconButton,
+  Avatar,
+  Typography,
+} from '@mui/material';
 import { PostHeader, PostContent, PostFooter } from './components';
 import { Post } from 'interface';
+import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
+import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
+import GifOutlinedIcon from '@mui/icons-material/GifOutlined';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
+import { CommentInput, CommentList } from '../Comments';
 
 type PostItemProps = {
   post: Post;
@@ -29,6 +46,14 @@ export const PostItem: FC<PostItemProps> = memo(({ post }) => {
 
         {/* post footer */}
         <PostFooter />
+        <Divider sx={{ bgcolor: '#38444d', my: 2 }} />
+
+        {/* Comment */}
+
+        <Box my={2}>
+          <CommentInput />
+          <CommentList />
+        </Box>
       </Box>
     </Box>
   );

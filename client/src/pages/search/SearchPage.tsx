@@ -9,6 +9,9 @@ import { FormSearch } from './FormSearch';
 import { useInfinitePosts } from 'RQhooks/post.rq';
 import { useInfiniteUsers } from 'RQhooks';
 
+import { Tab_PostList } from './Tab_PostList';
+import { Tab_UserList } from './Tab_UserList';
+
 export const userFroms: UserResponse[] = [
   {
     profilePic:
@@ -52,25 +55,11 @@ export const SearchPage = () => {
   const navigate = useNavigate();
   const { search } = location;
 
-  const posts = useInfinitePosts({
-    search: search,
-    enabled: isSelectedPosts,
-    cacheTime: search ? 2000 : 5 * 60 * 1000,
-  });
-
-  const users = useInfiniteUsers({
-    enabled: !isSelectedPosts,
-    search: search,
-    cacheTime: search ? 2000 : 5 * 60 * 1000,
-  });
-  const ref = useRef(0);
-
   return (
     <>
       {/* Title */}
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
         <Title title="Search" />
-        {ref.current++}
       </Box>
 
       {/* Form search */}
@@ -80,56 +69,16 @@ export const SearchPage = () => {
 
       {/* Tab control */}
       <Box mx={3} sx={{ display: 'flex', alignItems: 'center' }}>
-        <Tab
-          onClick={() => {
-            navigate('/search/users');
-          }}
-          text="Users"
-          active={!isSelectedPosts}
-        />
-        <Tab
-          onClick={() => {
-            navigate('/search/posts');
-          }}
-          text="Posts"
-          active={isSelectedPosts}
-        />
+        <Tab onClick={() => navigate('/search/users')} text="Users" active={!isSelectedPosts} />
+        <Tab onClick={() => navigate('/search/posts')} text="Posts" active={isSelectedPosts} />
       </Box>
       <Box sx={{ borderBottom: '1px solid #38444d' }} my={2} mt={4} />
 
       {/* result users */}
-      {!isSelectedPosts && (
-        <>
-          {users.data?.pages && <UserList data={users.data} />}
-
-          {users.isFetching && !users.isFetchingNextPage ? 'Fetching...' : null}
-
-          <Box mt={2} mb={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-            {users.isFetchingNextPage ? (
-              <CircularProgress size={25} />
-            ) : users.hasNextPage ? (
-              <Button onClick={() => users.fetchNextPage()}>Load more</Button>
-            ) : null}
-          </Box>
-        </>
-      )}
+      {!isSelectedPosts && <Tab_UserList search={search} />}
 
       {/* result posts */}
-      {isSelectedPosts && (
-        <>
-          {posts.data?.pages && <PostList data={posts.data} />}
-
-          {posts.isFetching && !posts.isFetchingNextPage ? 'Fetching...' : null}
-
-          <Box mt={2} mb={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-            {posts.isFetchingNextPage ? (
-              <CircularProgress size={25} />
-            ) : posts.hasNextPage ? (
-              <Button onClick={() => posts.fetchNextPage()}>Load more</Button>
-            ) : null}
-          </Box>
-        </>
-      )}
+      {isSelectedPosts && <Tab_PostList search={search} />}
     </>
   );
 };

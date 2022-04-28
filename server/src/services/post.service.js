@@ -14,7 +14,6 @@ const queryPosts = async (filter, options) => {
     page: 'page',
     totalPages: 'totalPages',
     limit: 'limit',
-    totalDocs: 'totalPosts',
   }
   options = { ...options, customLabels }
   const posts = await Post.paginate(filter, options)

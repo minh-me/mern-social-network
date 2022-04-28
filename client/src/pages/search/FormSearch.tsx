@@ -15,7 +15,6 @@ type Props = { name: string };
 export const FormSearch: FC<Props> = memo(({ name }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryValue = searchParams.get(name) || '';
-  const ref = useRef<number>(0);
 
   const { control, handleSubmit, reset } = useForm<InputProps>({
     defaultValues: { text: queryValue },
@@ -32,7 +31,6 @@ export const FormSearch: FC<Props> = memo(({ name }) => {
 
   return (
     <form onSubmit={handleSubmit(onSearch)}>
-      <h1>{ref.current++}</h1>
       <FormInputSearch autoFocus={true} control={control} name="text" />
     </form>
   );
