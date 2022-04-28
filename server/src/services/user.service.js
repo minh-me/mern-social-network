@@ -13,7 +13,6 @@ const queryUsers = async (filter, options) => {
     page: 'page',
     totalPages: 'totalPages',
     limit: 'limit',
-    totalDocs: 'totalUsers',
   }
   options = { ...options, customLabels }
   const users = await User.paginate(filter, options)

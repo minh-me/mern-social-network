@@ -16,7 +16,6 @@ export const UserList: FC<UserListProps> = ({ data, sx }) => {
           <Box
             key={user.id}
             py={2}
-            px={2}
             sx={{
               display: 'flex',
               alignItems: 'center',
