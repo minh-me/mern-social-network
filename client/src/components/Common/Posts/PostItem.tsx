@@ -18,7 +18,7 @@ import GifOutlinedIcon from '@mui/icons-material/GifOutlined';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import { CommentInput, CommentList } from '../Comments';
+import { CommentList } from '../Comments';
 
 type PostItemProps = {
   post: Post;
@@ -49,11 +49,7 @@ export const PostItem: FC<PostItemProps> = memo(({ post }) => {
         <Divider sx={{ bgcolor: '#38444d', my: 2 }} />
 
         {/* Comment */}
-
-        <Box my={2}>
-          <CommentInput />
-          <CommentList />
-        </Box>
+        <CommentList />
       </Box>
     </Box>
   );

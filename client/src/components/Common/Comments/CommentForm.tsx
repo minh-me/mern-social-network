@@ -3,7 +3,7 @@ import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
 import styled from '@emotion/styled';
 
-export const CommentInput = () => {
+export const CommentForm = () => {
   return (
     <Box my={2} sx={{ display: 'flex', alignItems: 'center' }}>
       <Avatar
