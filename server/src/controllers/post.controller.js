@@ -1,7 +1,7 @@
 import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
-import { postService, uploadService } from '../services'
+import { postService, uploadService, userService } from '../services'
 
 /**
  * Create a post
@@ -83,4 +83,37 @@ const deletePost = catchAsync(async (req, res) => {
   res.send(post)
 })
 
-export { createPost, getPosts, getPost, updatePost, deletePost, getMyPosts }
+/**
+ * Like post
+ * @Patch api/posts/:postId/like
+ * @access private
+ */
+const likePost = catchAsync(async (req, res) => {
+  const { postId } = req.params
+  const user = req.user
+
+  const isLiked = user.likes && user.likes.includes(postId)
+  const options = isLiked ? '$pull' : '$addToSet'
+
+  const postUpdated = await postService.updatePostById(postId, {
+    [options]: { likes: user.id },
+  })
+
+  const userUpdated = await userService.updateById(user.id, {
+    [options]: { likes: postId },
+  })
+
+  req.user = userUpdated
+
+  res.send(postUpdated)
+})
+
+export {
+  createPost,
+  getPosts,
+  getPost,
+  updatePost,
+  deletePost,
+  getMyPosts,
+  likePost,
+}

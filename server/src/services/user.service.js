@@ -103,6 +103,19 @@ const updateUserById = async (userId, body) => {
 }
 
 /**
+ * Update One
+ * @param {ObjectId} userId
+ * @param {*} body
+ * @returns {Promise<user>}
+ */
+
+const updateById = async (userId, body) => {
+  const user = await User.findByIdAndUpdate(userId, body, { new: true })
+  if (!user) throw createError.NotFound('Not found user.')
+  return user
+}
+
+/**
  * Update user by id
  * @param {ObjectId} userId
  * @param {Object} body
@@ -142,4 +155,5 @@ export {
   updateUserPasswordById,
   getUserByGoogleId,
   createUserByGoogle,
+  updateById,
 }

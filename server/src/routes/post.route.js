@@ -22,7 +22,12 @@ router.get(
   validate(postValidation.getPosts),
   postController.getMyPosts
 )
-
+router.patch(
+  '/:postId/like',
+  auth(),
+  validate(postValidation.deletePost),
+  postController.likePost
+)
 router
   .route('/:postId')
   .get(validate(postValidation.getPost), postController.getPost)

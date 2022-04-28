@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import bcrypt from 'bcryptjs'
 import { roles } from '../config'
 import { transValidations } from '../_lang/en'
@@ -7,7 +7,7 @@ import { toJSON, paginate } from './plugins'
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z]).{6,}$/
 
-const userSchema = mongoose.Schema(
+const userSchema = Schema(
   {
     name: {
       type: String,
@@ -40,6 +40,8 @@ const userSchema = mongoose.Schema(
       type: String,
       index: true,
     },
+
+    likes: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
   },
   {
     timestamps: true,
