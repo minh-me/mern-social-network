@@ -47,7 +47,7 @@ const createPost = async postBody => {
  */
 const updatePostById = async (postId, body) => {
   const post = await Post.findByIdAndUpdate(postId, body, { new: true })
-  if (!post) throw new createHttpError('Not found post.')
+  if (!post) throw new createHttpError.NotFound('Not found post.')
   return post
 }
 

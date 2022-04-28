@@ -14,12 +14,12 @@ import { PostImageSkeleton, PostSkeleton, PostTextSkeleton } from 'components/Co
 export const ProfilePage = () => {
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } = useInfiniteMyPosts();
   const isSelectedPosts = true;
-  const { ref, inView } = useInView();
-  useEffect(() => {
-    if (inView) {
-      fetchNextPage();
-    }
-  }, [inView, fetchNextPage]);
+  // const { ref, inView } = useInView();
+  // useEffect(() => {
+  //   if (inView) {
+  //     fetchNextPage();
+  //   }
+  // }, [inView, fetchNextPage]);
 
   return (
     <>
@@ -97,7 +97,7 @@ export const ProfilePage = () => {
             {isFetchingNextPage ? (
               <CircularProgress size={25} />
             ) : hasNextPage ? (
-              <Button ref={ref}>Load more</Button>
+              <Button>Load more</Button>
             ) : null}
           </Box>
         </>
