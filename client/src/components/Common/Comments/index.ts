@@ -1,3 +1,3 @@
 export * from './CommentList';
 export * from './CommentItem';
-export * from './CommentInput';
+export * from './CommentForm';

@@ -5,6 +5,7 @@ import { LikeCommentButton } from './components/LikeCommentButton';
 import { CommentAvatar } from './components/CommentAvatar';
 import { CommentName } from './components/CommentName';
 import { CommentText } from './components/CommentText';
+import { CommentForm } from './CommentForm';
 
 export const CommentItem = () => {
   return (
@@ -24,6 +25,7 @@ export const CommentItem = () => {
           </Box>
         </Box>
       </Box>
+      {/* <CommentForm /> */}
     </Box>
   );
 };
