@@ -1,14 +1,14 @@
-import { ButtonPost } from './ButtonPost';
+import { PostActionButton } from './PostActionButton';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import { pink } from '@mui/material/colors';
 
-export const LikeButton = ({ isActive = false }) => {
+export const LikePostButton = ({ isActive = false, likes = [''] }) => {
   const likeHandler = () => {
     console.log('Liked');
   };
 
   return (
-    <ButtonPost
+    <PostActionButton
       sx={{
         mx: 1,
         px: 1,
@@ -19,7 +19,7 @@ export const LikeButton = ({ isActive = false }) => {
         },
       }}
       onClick={likeHandler}
-      nums={12}
+      nums={likes.length || null}
       startIcon={<FavoriteBorderRoundedIcon />}
     />
   );

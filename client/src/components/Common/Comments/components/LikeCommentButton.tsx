@@ -1,7 +1,7 @@
-import { ButtonAction } from './ButtonAction';
+import { CommentActionButton } from './CommentActionButton';
 
 type Props = {};
 
 export const LikeCommentButton = (props: Props) => {
-  return <ButtonAction>Thích</ButtonAction>;
+  return <CommentActionButton>Thích</CommentActionButton>;
 };

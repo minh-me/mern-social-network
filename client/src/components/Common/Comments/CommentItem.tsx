@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { ButtonAction } from './components/ButtonAction';
+import { CommentActionButton } from './components/CommentActionButton';
 import { ReplyCommentButton } from './components/ReplyCommentButton';
 import { LikeCommentButton } from './components/LikeCommentButton';
 import { CommentAvatar } from './components/CommentAvatar';
@@ -21,7 +21,7 @@ export const CommentItem = () => {
           <Box sx={{ display: 'flex', mt: '4px' }}>
             <LikeCommentButton />
             <ReplyCommentButton />
-            <ButtonAction>15 giờ</ButtonAction>
+            <CommentActionButton>15 giờ</CommentActionButton>
           </Box>
         </Box>
       </Box>
