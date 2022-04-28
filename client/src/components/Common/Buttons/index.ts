@@ -3,4 +3,7 @@ export * from './ButtonPost';
 export * from './GoogleButton';
 export * from './FacebookLoginButton';
 export * from './FollowButton';
+export * from './LikeButton';
+export * from './ShareButton';
+export * from './CommentButton';
 export * from './IconsButtonOutlined';

@@ -24,7 +24,7 @@ export const MainLayout = () => {
       >
         <Sidebar />
       </Grid>
-      <Grid item xs={12} lg={7} md={7} sm={10} sx={{ borderRight: 1, borderColor: blueGrey[800] }}>
+      <Grid item xs={12} lg={6} md={6} sm={10} sx={{ borderRight: 1, borderColor: blueGrey[800] }}>
         <Box
           sx={{
             maxHeight: '100vh',
