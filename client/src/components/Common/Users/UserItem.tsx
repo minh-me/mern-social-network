@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Avatar, Box, Link, Typography } from '@mui/material';
-import { UserResponse } from 'interface';
+import { User } from 'interface';
 import { FollowButton } from '../Buttons';
 
 interface UserItemProps {
-  user: UserResponse;
+  user: User;
 }
 
 export const UserItem: FC<UserItemProps> = ({ user }) => {

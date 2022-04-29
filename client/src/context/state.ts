@@ -1,8 +1,8 @@
-import { UserResponse } from 'interface';
+import { User } from 'interface';
 
 export interface AppState {
   auth: { token: string | null };
-  user: UserResponse | null;
+  user: User | null;
 }
 
 export const initialAppState: AppState = {

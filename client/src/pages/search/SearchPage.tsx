@@ -1,52 +1,13 @@
 import { useRef } from 'react';
 import { Title } from 'components/App';
-import { Box, Button, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 import { Tab } from 'components/Common/Buttons/Tab';
-import { PostList, UserList } from 'components/Common';
-import { UserResponse } from 'interface';
+
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FormSearch } from './FormSearch';
-import { useInfiniteUsers } from 'RQhooks';
-
 import { Tab_PostList } from './Tab_PostList';
 import { Tab_UserList } from './Tab_UserList';
 
-export const userFroms: UserResponse[] = [
-  {
-    profilePic:
-      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
-    name: 'Minh Chìu',
-    email: 'minhch.vn@gmail.com',
-    role: 'admin',
-    createdAt: '2022-03-08T14:12:58.562Z',
-    updatedAt: '2022-03-08T14:25:39.750Z',
-    id: '6227646a0588488cd53eb293',
-  },
-  {
-    profilePic:
-      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
-    name: 'Minh Chìu',
-    email: 'minhch.vn@gmail.com',
-    role: 'admin',
-    createdAt: '2022-03-08T14:12:58.562Z',
-    updatedAt: '2022-03-08T14:25:39.750Z',
-    id: '12123123',
-  },
-  {
-    profilePic:
-      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
-    name: 'Minh Chìu',
-    email: 'minhch.vn@gmail.com',
-    role: 'admin',
-    createdAt: '2022-03-08T14:12:58.562Z',
-    updatedAt: '2022-03-08T14:25:39.750Z',
-    id: '62271fw23646a0588488cd53eb293',
-  },
-];
-
-export type SearchProps = {
-  text: string;
-};
 export const SearchPage = () => {
   const location = useLocation();
   const selectedTab = location.pathname.split('/').slice(-1)[0] as 'posts' | 'users';
@@ -54,6 +15,7 @@ export const SearchPage = () => {
   const navigate = useNavigate();
   const { search } = location;
   const ref = useRef(0);
+
   return (
     <>
       {/* Title */}

@@ -2,12 +2,44 @@ import React, { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { Title } from 'components/App';
 import { UserItem } from 'components/Common';
-import { userFroms } from 'pages/search';
 
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { UserResponse } from 'interface';
+import { User } from 'interface';
 import { LabelUsers } from './LabelUsers';
 import { pink } from '@mui/material/colors';
+
+export const userFroms: User[] = [
+  {
+    profilePic:
+      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+    name: 'Minh Chìu',
+    email: 'minhch.vn@gmail.com',
+    role: 'admin',
+    createdAt: '2022-03-08T14:12:58.562Z',
+    updatedAt: '2022-03-08T14:25:39.750Z',
+    id: '6227646a0588488cd53eb293',
+  },
+  {
+    profilePic:
+      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+    name: 'Minh Chìu',
+    email: 'minhch.vn@gmail.com',
+    role: 'admin',
+    createdAt: '2022-03-08T14:12:58.562Z',
+    updatedAt: '2022-03-08T14:25:39.750Z',
+    id: '12123123',
+  },
+  {
+    profilePic:
+      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+    name: 'Minh Chìu',
+    email: 'minhch.vn@gmail.com',
+    role: 'admin',
+    createdAt: '2022-03-08T14:12:58.562Z',
+    updatedAt: '2022-03-08T14:25:39.750Z',
+    id: '62271fw23646a0588488cd53eb293',
+  },
+];
 
 interface InputProps {
   text: string;
@@ -67,7 +99,7 @@ export const NewChatPage = () => {
       </form>
 
       {/* Users List */}
-      {userFroms.map((user: UserResponse) => (
+      {userFroms.map((user: User) => (
         <Box
           onClick={() => handleAddSelectedUsers({ id: user.id, name: user.name })}
           key={user.id}

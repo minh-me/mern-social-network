@@ -1,15 +1,14 @@
-import { FC } from 'react';
 import { Box, IconButton } from '@mui/material';
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
+
+import { User } from 'interface';
 import { Title } from 'components/App';
 import { NotificationItem } from 'components/Common';
-import { User } from 'interface';
 
 const userFrom: User = {
   profilePic:
     'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
   name: 'minh',
-  username: 'minhchiu',
   email: 'minhch.vn@gmail.com',
   role: 'admin',
   createdAt: '2022-03-08T14:12:58.562Z',
@@ -19,7 +18,6 @@ const userFrom: User = {
 
 const userTo: User = {
   name: 'minh',
-  username: 'minhchiu',
   email: 'minhch.vn@gmail.com',
   role: 'admin',
   createdAt: '2022-03-08T14:12:58.562Z',

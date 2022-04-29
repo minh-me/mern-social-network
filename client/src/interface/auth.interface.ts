@@ -1,4 +1,4 @@
-import { UserResponse } from './user.interface';
+import { User } from './user.interface';
 
 export interface LoginData {
   email: string;
@@ -25,7 +25,7 @@ export interface PasswordData {
 
 export interface LoginResponse {
   ac_token: string;
-  user: UserResponse;
+  user: User;
 }
 
 export interface AccessToken {
