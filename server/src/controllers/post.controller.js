@@ -28,7 +28,7 @@ const createPost = catchAsync(async (req, res) => {
  */
 const getPosts = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['text', 'search'])
-  const options = pick(req.query, ['sort', 'select', 'sortBy', 'limit', 'page'])
+  const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
   // if (req.query.search) filter.$text = { $search: req.query.search }
   options.populate = 'postedBy'
@@ -42,7 +42,7 @@ const getPosts = catchAsync(async (req, res) => {
  */
 const getMyPosts = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['text'])
-  const options = pick(req.query, ['sort', 'select', 'sortBy', 'limit', 'page'])
+  const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
   filter.postedBy = req.user.id
   options.populate = 'postedBy'
   const result = await postService.queryPosts(filter, options)

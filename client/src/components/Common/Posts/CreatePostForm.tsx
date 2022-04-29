@@ -1,4 +1,4 @@
-import { Avatar, Button, TextField } from '@mui/material';
+import { Avatar, Box, Button, TextField } from '@mui/material';
 import { useState } from 'react';
 import { CreatePostFormModal } from 'components/Common/Modal';
 
@@ -29,21 +29,32 @@ export const CreatePostForm = (props: Props) => {
 
   return (
     <>
-      <Avatar alt={userFrom.name} src={userFrom.profilePic} sx={styles.avatar} />
-      <TextField
-        variant="standard"
-        fullWidth
-        value={''}
-        onClick={handleClickOpen}
-        placeholder="What's happending?"
-        sx={styles.textField}
-        InputProps={{ disableUnderline: true }}
-      />
-      <Button sx={styles.button} disabled={true} variant="contained">
-        Post
-      </Button>
+      <Box
+        py={2}
+        px={2}
+        sx={{
+          borderBottom: '8px solid #38444d',
+          minHeight: 98,
+          display: 'flex',
+          alignItems: 'start',
+        }}
+      >
+        <Avatar alt={userFrom.name} src={userFrom.profilePic} sx={styles.avatar} />
+        <TextField
+          variant="standard"
+          fullWidth
+          value={''}
+          onClick={handleClickOpen}
+          placeholder="What's happending?"
+          sx={styles.textField}
+          InputProps={{ disableUnderline: true }}
+        />
+        <Button sx={styles.button} disabled={true} variant="contained">
+          Post
+        </Button>
 
-      <CreatePostFormModal open={open} setOpen={setOpen} user={userFrom} />
+        <CreatePostFormModal open={open} setOpen={setOpen} user={userFrom} />
+      </Box>
     </>
   );
 };

@@ -29,7 +29,10 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       const user = await userApi.getProfile();
       dispatch(addUser(user));
     };
-    if (!!token) getProfile();
+    if (!!token) {
+      getProfile();
+      storage.setToken(token);
+    }
   }, [token, dispatch]);
 
   if (!token) {

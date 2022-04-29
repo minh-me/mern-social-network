@@ -1,25 +1,15 @@
 import axios from 'axios';
-import { PostsResponse } from 'interface';
+import { Post, PostsResponse } from 'interface';
 import axiosInstance from 'utils/axiosInstance';
 
 const postUrl = '/api/posts';
 export const postApi = {
-  getPosts({ pageParam = 1, queryKey = ['posts'] }): Promise<PostsResponse> {
-    return axiosInstance.get(`${postUrl}/${queryKey[1] || ''}`, {
-      params: {
-        page: pageParam,
-        limit: 1,
-      },
-    });
+  getPosts({ queryKey = ['posts?page=1&limit=1'] }): Promise<PostsResponse> {
+    return axiosInstance.get(`api/${queryKey[0]}`);
   },
 
-  getMyPosts({ pageParam = 1 }): Promise<PostsResponse> {
-    return axiosInstance.get(`${postUrl}/me`, {
-      params: {
-        page: pageParam,
-        limit: 1,
-      },
-    });
+  getMyPosts({ queryKey = ['posts/me?page=1&limit=1'] }): Promise<PostsResponse> {
+    return axiosInstance.get(`api/${queryKey[0]}`);
   },
 
   getPost(postId: string) {
@@ -28,9 +18,7 @@ export const postApi = {
 
   createPost(post: {}) {
     return axiosInstance.post(`${postUrl}`, post, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
 
@@ -40,5 +28,9 @@ export const postApi = {
 
   deletePost(postId: string) {
     return axios.delete(`${postUrl}/${postId}`);
+  },
+
+  likePost(postId: string): Promise<Post> {
+    return axiosInstance.patch(`${postUrl}/${postId}/like`, {});
   },
 };

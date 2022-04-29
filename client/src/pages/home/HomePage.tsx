@@ -1,55 +1,55 @@
-import { Box, Button, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { PostSkeleton, PostTextSkeleton, PostImageSkeleton } from 'components/Common/Variants';
 import { Title } from 'components/App';
 import { CreatePostForm, PostList } from 'components/Common';
-import { useInfinitePosts } from 'RQhooks/post.rq';
+import { usePosts } from 'RQhooks/post.rq';
 import { useInView } from 'react-intersection-observer';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export const HomePage = () => {
-  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } = useInfinitePosts();
+  const [limit, setLimit] = useState(8);
   const { ref, inView } = useInView();
+  const { data, isLoading, isFetching } = usePosts({ limit }, { cacheTime: 0 });
+
   useEffect(() => {
-    if (inView) {
-      fetchNextPage();
+    if (data?.info.totalResults && data.info.totalResults > limit && inView) {
+      setLimit((prev) => prev + 6);
     }
-  }, [inView, fetchNextPage]);
+  }, [inView, data?.info.totalResults, limit]);
 
   return (
     <>
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
         <Title title="Home" />
       </Box>
-      <Box
-        py={2}
-        px={2}
-        sx={{
-          borderBottom: '8px solid #38444d',
-          minHeight: 98,
-          display: 'flex',
-          alignItems: 'start',
-        }}
-      >
-        <CreatePostForm />
-      </Box>
+
+      <CreatePostForm />
+
       {/* PostList */}
-      {data?.pages && <PostList data={data} />}
-      <div>
-        {isFetching && !isFetchingNextPage ? (
-          <>
-            <PostSkeleton />
-            <PostTextSkeleton />
-            <PostImageSkeleton />
-          </>
-        ) : null}
-      </div>
+      {isLoading ? (
+        <>
+          <PostSkeleton />
+          <PostTextSkeleton />
+          <PostImageSkeleton />
+        </>
+      ) : (
+        data && <PostList data={data} />
+      )}
+
+      {/* Button  */}
       <Box mt={5} sx={{ display: 'flex', justifyContent: 'center' }}>
-        {isFetchingNextPage ? (
+        {isFetching ? (
           <CircularProgress size={25} />
-        ) : hasNextPage ? (
+        ) : data?.info && data?.info.totalResults > limit ? (
           <Button ref={ref}>Load more</Button>
         ) : null}
       </Box>
+
+      {data?.posts && data?.posts.length === 0 && (
+        <Typography textAlign="center" fontSize={16}>
+          Nothing to show.
+        </Typography>
+      )}
     </>
   );
 };

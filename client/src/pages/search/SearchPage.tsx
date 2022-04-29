@@ -6,7 +6,6 @@ import { PostList, UserList } from 'components/Common';
 import { UserResponse } from 'interface';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FormSearch } from './FormSearch';
-import { useInfinitePosts } from 'RQhooks/post.rq';
 import { useInfiniteUsers } from 'RQhooks';
 
 import { Tab_PostList } from './Tab_PostList';
@@ -54,12 +53,13 @@ export const SearchPage = () => {
   const isSelectedPosts = selectedTab === 'posts';
   const navigate = useNavigate();
   const { search } = location;
-
+  const ref = useRef(0);
   return (
     <>
       {/* Title */}
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
         <Title title="Search" />
+        {ref.current++}
       </Box>
 
       {/* Form search */}
