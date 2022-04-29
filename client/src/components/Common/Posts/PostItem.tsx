@@ -30,7 +30,12 @@ export const PostItem: FC<PostItemProps> = memo(({ post }) => {
 
         {/* post footer */}
 
-        <PostFooter likes={post?.likes} comments={post?.comments} shares={post?.retweetUsers} />
+        <PostFooter
+          postId={post?.id}
+          likes={post?.likes}
+          comments={post?.comments}
+          shares={post?.retweetUsers}
+        />
         {/* Comment */}
         {/* <Box>
           <Divider sx={{ bgcolor: '#38444d', my: 2 }} />

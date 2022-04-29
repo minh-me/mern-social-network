@@ -1,118 +1,74 @@
-import { useEffect } from 'react';
-import { useInfiniteMyPosts } from 'RQhooks/post.rq';
-import LocalPostOfficeRoundedIcon from '@mui/icons-material/LocalPostOfficeRounded';
-import { blueGrey, grey, pink } from '@mui/material/colors';
-
-import { CoverPhoto, PostList, ProfilePic } from 'components/Common';
-import { Title } from 'components/App';
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import { FollowButton, IconsButtonOutlined, Tab } from 'components/Common/Buttons';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Box, Button, CircularProgress, Typography, Divider } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
-import { PostImageSkeleton, PostSkeleton, PostTextSkeleton } from 'components/Common/Variants';
+
+import { Title } from 'components/App';
+import { useMyPosts } from 'RQhooks/post.rq';
+import { PostList } from 'components/Common';
+import { Tab } from 'components/Common/Buttons';
+import { PostSkeleton } from 'components/Common/Variants';
+import { ProfileHeader } from './ProfileHeader';
+import { ProfileButtons } from './ProfileButtons';
+import { ProfileInfo } from './ProfileInfo';
+import { ProfileFollowers } from './ProfileFollowers';
 
 export const ProfilePage = () => {
-  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } = useInfiniteMyPosts();
   const isSelectedPosts = true;
-  // const { ref, inView } = useInView();
-  // useEffect(() => {
-  //   if (inView) {
-  //     fetchNextPage();
-  //   }
-  // }, [inView, fetchNextPage]);
+
+  const [limit, setLimit] = useState(8);
+  const { ref, inView } = useInView();
+  const { data, isLoading, isFetching } = useMyPosts({ limit });
+
+  useEffect(() => {
+    if (data?.info.totalResults && data.info.totalResults > limit && inView) {
+      setLimit((prev) => prev + 6);
+    }
+  }, [inView, data?.info.totalResults, limit]);
 
   return (
     <>
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
         <Title title="Profile" />
       </Box>
+
+      {/* Header */}
       <Box>
-        {/* Images */}
-        <Box sx={{ height: '200px', position: 'relative' }}>
-          <CoverPhoto />
-          <Box sx={{ position: 'absolute', bottom: '-40px', left: 16 }}>
-            <ProfilePic />
-          </Box>
-        </Box>
-        {/* Profile buttons */}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} px={2} mt={2}>
-          <IconsButtonOutlined>
-            <LocalPostOfficeRoundedIcon fontSize="small" />
-          </IconsButtonOutlined>
-          <FollowButton isActive={true} />
-        </Box>
-
-        {/* Info */}
-        <Box mt={2} px={2}>
-          <Typography fontSize={22} textTransform="capitalize" color={pink[500]} fontWeight={600}>
-            Minh Chìu
-          </Typography>
-          <Typography fontSize={14} color={grey[500]}>
-            @minh.mchiu
-          </Typography>
-        </Box>
-
-        {/* Numbers followers */}
-        <Box px={2} sx={{ display: 'flex' }}>
-          <Typography component={Link} to="/" sx={styles.numbersFollow}>
-            <Typography component="span" fontWeight={600}>
-              0
-            </Typography>{' '}
-            Following
-          </Typography>
-          <Typography component={Link} to="/" sx={styles.numbersFollow}>
-            <Typography component="span" fontWeight={600}>
-              3
-            </Typography>{' '}
-            Followers
-          </Typography>
-        </Box>
+        <ProfileHeader />
+        <ProfileButtons />
+        <ProfileInfo />
+        <ProfileFollowers />
       </Box>
+
       {/* Tab control */}
       <Box mt={4} mx={3} sx={{ display: 'flex', alignItems: 'center' }}>
         <Tab onClick={() => console.log('Clicked!')} text="Posts" active={true} />
         <Tab onClick={() => console.log('Clicked!')} text="Replies" active={!true} />
       </Box>
-      <Box sx={{ borderBottom: '1px solid #38444d' }} my={2} mt={4} />
-      <Typography textAlign="center" fontSize={16}>
-        Nothing to show.
-      </Typography>
+
+      <Divider sx={{ borderBottom: '1px solid #38444d', my: 2, mt: 4 }} />
 
       {/* {!isSelectedPosts && <UserList data={userFroms} />} */}
       {isSelectedPosts && (
         <>
           {/* PostList */}
-          {data?.pages && <PostList data={data} />}
+          {isLoading ? <PostSkeleton /> : data && <PostList data={data} />}
 
-          <div>
-            {isFetching && !isFetchingNextPage ? (
-              <>
-                <PostSkeleton />
-                <PostTextSkeleton />
-                <PostImageSkeleton />
-              </>
-            ) : null}
-          </div>
+          {/* Button  */}
           <Box mt={5} sx={{ display: 'flex', justifyContent: 'center' }}>
-            {isFetchingNextPage ? (
+            {isFetching ? (
               <CircularProgress size={25} />
-            ) : hasNextPage ? (
-              <Button>Load more</Button>
+            ) : data?.info && data?.info.totalResults > limit ? (
+              <Button ref={ref}>Load more</Button>
             ) : null}
           </Box>
+
+          {data?.posts && data?.posts.length === 0 && (
+            <Typography textAlign="center" fontSize={16}>
+              Nothing to show.
+            </Typography>
+          )}
         </>
       )}
     </>
   );
-};
-
-const styles = {
-  numbersFollow: {
-    transition: 'all 0.3s',
-    textDecoration: 'none',
-    color: blueGrey[400],
-    mr: 2,
-    fontSize: 15,
-    '&:hover': { color: pink[400], textDecoration: 'underline' },
-  },
 };

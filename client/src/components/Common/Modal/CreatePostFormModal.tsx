@@ -82,7 +82,12 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen, user }) => 
                 control={control}
                 name="text"
                 render={({ field }) => (
-                  <textarea {...field} placeholder="What's happending?" style={styles.textarea} />
+                  <textarea
+                    {...field}
+                    autoFocus
+                    placeholder="What's happending?"
+                    style={styles.textarea}
+                  />
                 )}
               />
 

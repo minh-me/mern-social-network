@@ -24,7 +24,7 @@ const createComment = catchAsync(async (req, res) => {
  */
 const getComments = catchAsync(async (req, res) => {
   const filter = pick(req.query, [])
-  const options = pick(req.query, ['sort', 'select', 'sortBy', 'limit', 'page'])
+  const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
   const result = await commentService.queryComments(filter, options)
   res.send(result)
 })

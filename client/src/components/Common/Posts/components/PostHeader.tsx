@@ -14,7 +14,11 @@ export const PostHeader: FC<PostAuthorProps> = ({ user, postCreated }) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
       {/* Avatar */}
-      <Avatar src={user.profilePic} sx={{ border: '1px solid white', mr: 1 }} alt={user.name} />
+      <Avatar
+        src={user.profilePic}
+        sx={{ border: '1px solid white', mr: 1, height: '34px', width: '34px' }}
+        alt={user.name}
+      />
 
       <Box>
         <Box sx={{ display: 'flex' }}>
