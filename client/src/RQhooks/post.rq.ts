@@ -1,4 +1,5 @@
 import { postApi } from 'api/postApi';
+import { AxiosError } from 'axios';
 import { useAppContext } from 'context/useAppContext';
 import { Post, PostsResponse, UserResponse } from 'interface';
 import { InfiniteData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
@@ -32,23 +33,11 @@ export const usePosts = (
 export const useMyPosts = ({ page = 1, limit = 1, sort = '-createdAt' }, options?: options) => {
   const queryClient = useQueryClient();
   const queryKey = `posts/me?page=${page}&limit=${limit}&sort=${sort}`;
-  queryClient.setQueryData('myPostsKey', queryKey);
+  queryClient.setQueryData('postsKey', queryKey);
 
   return useQuery(queryKey, postApi.getPosts, {
     ...options,
     onError: handlerError,
-  });
-};
-
-export const useInfiniteMyPosts = (params?: options) => {
-  return useInfiniteQuery('my-posts', postApi.getMyPosts, {
-    getNextPageParam: (lastPage) => {
-      if (lastPage?.info?.page >= lastPage.info.totalPages) {
-        return undefined;
-      }
-      return lastPage.info.page + 1;
-    },
-    ...params,
   });
 };
 
@@ -62,7 +51,6 @@ export const useCreatePost = () => {
     onSettled: () =>
       queryClient.invalidateQueries({
         predicate: (query) => {
-          console.log({ query });
           return query.queryKey.toString().startsWith('posts');
         },
       }),
@@ -74,31 +62,40 @@ export const useLikePost = () => {
   const {
     state: { user },
   } = useAppContext();
+  const postsKey = queryClient.getQueryData<string>('postsKey');
+
   return useMutation(postApi.likePost, {
     onMutate: (postId) => {
-      const postsKey = queryClient.getQueryData<string>('postsKey');
-
       if (!postsKey || !user?.id) return;
 
-      queryClient.setQueryData<PostsResponse | undefined>(postsKey, (oldData: any) => {
-        const newPosts = oldData?.posts.map((post: Post) => {
-          if (post.id === postId) {
-            if (post.likes?.includes(user.id)) {
-              post.likes?.splice(post.likes.indexOf(user.id), 1);
-              return post;
-            }
-
-            return { ...post, likes: post.likes?.concat(user.id) };
-          }
-
-          return post;
-        });
-
-        return { ...oldData, posts: newPosts };
+      queryClient.setQueryData(postsKey, (oldData: any) => {
+        return updatePostLikes(oldData, postId, user.id);
       });
     },
 
     onSuccess: () => {},
-    onError: handlerError,
+    onError: (err: Error | AxiosError<any, any>, postId) => {
+      if (!postsKey || !user?.id) return;
+
+      queryClient.setQueryData(postsKey, (oldData: any) => {
+        return updatePostLikes(oldData, postId, user.id);
+      });
+      handlerError(err);
+    },
   });
+};
+
+const updatePostLikes = (oldData: any, postId: string, userId: string) => {
+  const newPosts = oldData?.posts.map((post: Post) => {
+    if (post.id === postId) {
+      if (post.likes?.includes(userId)) {
+        const likes = post.likes.filter((id) => id !== userId);
+        return { ...post, likes: likes };
+      }
+      return { ...post, likes: post.likes?.concat(userId) };
+    }
+    return post;
+  });
+
+  return { ...oldData, posts: newPosts };
 };

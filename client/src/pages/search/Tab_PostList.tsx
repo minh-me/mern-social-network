@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useRef, useState } from 'react';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { PostList } from 'components/Common';
 import { PostSkeleton } from 'components/Common/Variants';
@@ -7,18 +6,12 @@ import { PostSkeleton } from 'components/Common/Variants';
 import { usePosts } from 'RQhooks';
 
 export const Tab_PostList = ({ search = '' }) => {
-  const [limit, setLimit] = useState(8);
-  const { ref, inView } = useInView();
+  const [limit, setLimit] = useState(6);
   const { data, isLoading, isFetching } = usePosts(
     { limit, search },
     { cacheTime: search ? 1500 : 5 * 60 * 1000 }
   );
 
-  useEffect(() => {
-    if (data?.info.totalResults && data.info.totalResults > limit && inView) {
-      setLimit((prev) => prev + 6);
-    }
-  }, [inView, data?.info.totalResults, limit]);
   const countRef = useRef(0);
   return (
     <>
@@ -31,7 +24,7 @@ export const Tab_PostList = ({ search = '' }) => {
         {isFetching ? (
           <CircularProgress size={25} />
         ) : data?.info && data?.info.totalResults > limit ? (
-          <Button ref={ref}>Load more</Button>
+          <Button onClick={() => setLimit((prevLimit) => prevLimit + 6)}>Load more</Button>
         ) : null}
       </Box>
 

@@ -4,13 +4,13 @@ import { Title } from 'components/App';
 import { CreatePostForm, PostList } from 'components/Common';
 import { usePosts } from 'RQhooks/post.rq';
 import { useInView } from 'react-intersection-observer';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const HomePage = () => {
   const [limit, setLimit] = useState(8);
   const { ref, inView } = useInView();
-  const { data, isLoading, isFetching } = usePosts({ limit }, { cacheTime: 0 });
-
+  const { data, isLoading, isFetching } = usePosts({ limit });
+  const countRef = useRef(0);
   useEffect(() => {
     if (data?.info.totalResults && data.info.totalResults > limit && inView) {
       setLimit((prev) => prev + 6);
@@ -20,7 +20,7 @@ export const HomePage = () => {
   return (
     <>
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
-        <Title title="Home" />
+        <Title title="Home" /> {countRef.current++}
       </Box>
 
       <CreatePostForm />
