@@ -1,7 +1,7 @@
 import { postApi } from 'api/postApi';
 import { AxiosError } from 'axios';
 import { useAppContext } from 'context/useAppContext';
-import { Post, PostsResponse, UserResponse } from 'interface';
+import { Post, PostsResponse } from 'interface';
 import { InfiniteData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
 import { DataUpdateFunction, Updater } from 'react-query/types/core/utils';
 import { handlerError } from 'utils/handleError';
@@ -17,10 +17,9 @@ export const usePosts = (
   options?: options
 ) => {
   const queryClient = useQueryClient();
+  const searchQuery = search ? `&search=${search}` : '';
 
-  const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}${
-    search ? `&search=${search}` : ''
-  }`;
+  const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}${searchQuery}`;
 
   queryClient.setQueryData('postsKey', queryKey);
 

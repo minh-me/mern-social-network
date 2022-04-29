@@ -1,11 +1,10 @@
 import { styled } from '@mui/material/styles';
-import { FormControl, IconButton, InputAdornment, InputBase, OutlinedInput } from '@mui/material';
+import { FormControl, IconButton, InputAdornment, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Control, Controller } from 'react-hook-form';
-import { SearchProps } from 'pages';
 
 type Props = {
-  control: Control<SearchProps, any>;
+  control: Control<{ text: string }, any>;
   name: string;
 };
 const Input = styled(InputBase)(() => ({

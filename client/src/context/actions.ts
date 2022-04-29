@@ -1,4 +1,4 @@
-import { UserResponse } from 'interface';
+import { User } from 'interface';
 import { ActionType, AddAuth, AddUser, ResetAppState } from './actionTypes';
 
 export const addAuth = (token: string): AddAuth => {
@@ -8,7 +8,7 @@ export const addAuth = (token: string): AddAuth => {
   };
 };
 
-export const addUser = (user: UserResponse): AddUser => {
+export const addUser = (user: User): AddUser => {
   return {
     type: ActionType.AddUser,
     payload: user,

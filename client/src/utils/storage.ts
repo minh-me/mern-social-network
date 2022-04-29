@@ -1,4 +1,4 @@
-import { UserResponse } from 'interface';
+import { User } from 'interface';
 
 export const storage = {
   getToken: () => localStorage.getItem('ac_token'),
@@ -6,6 +6,6 @@ export const storage = {
   clearToken: () => localStorage.removeItem('ac_token'),
   getUser: () =>
     localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : null,
-  setUser: (user: UserResponse) => localStorage.setItem('user', JSON.stringify(user)),
+  setUser: (user: User) => localStorage.setItem('user', JSON.stringify(user)),
   clearUser: () => localStorage.removeItem('user'),
 };

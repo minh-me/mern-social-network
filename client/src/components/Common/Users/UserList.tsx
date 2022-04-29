@@ -1,32 +1,27 @@
-import { Box, SxProps, Theme } from '@mui/material';
-import { UsersResponse, UserResponse } from 'interface';
+import { Box } from '@mui/material';
+import { User } from 'interface';
 import { FC } from 'react';
-import { InfiniteData } from 'react-query';
 import { UserItem } from './UserItem';
 type UserListProps = {
-  data: InfiniteData<UsersResponse>;
-  sx?: SxProps<Theme>;
+  users: User[];
 };
 
-export const UserList: FC<UserListProps> = ({ data, sx }) => {
+export const UserList: FC<UserListProps> = ({ users }) => {
   return (
     <>
-      {data.pages.map((page) => {
-        return page.users.map((user: UserResponse) => (
-          <Box
-            key={user.id}
-            py={2}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              borderBottom: '1px solid #38444d',
-              ...sx,
-            }}
-          >
-            <UserItem key={user.id} user={user} />
-          </Box>
-        ));
-      })}
+      {users.map((user) => (
+        <Box
+          key={user.id}
+          py={2}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            borderBottom: '1px solid #38444d',
+          }}
+        >
+          <UserItem key={user.id} user={user} />
+        </Box>
+      ))}
     </>
   );
 };

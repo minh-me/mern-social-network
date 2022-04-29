@@ -1,4 +1,4 @@
-import { UserResponse } from 'interface';
+import { User } from 'interface';
 
 export enum ActionType {
   AddAuth,
@@ -13,7 +13,7 @@ export interface AddAuth {
 
 export interface AddUser {
   type: ActionType.AddUser;
-  payload: UserResponse;
+  payload: User;
 }
 
 export interface ResetAppState {
