@@ -1,14 +1,14 @@
 import { postApi } from 'api/postApi';
 import { AxiosError } from 'axios';
 import { useAppContext } from 'context/useAppContext';
-import { Post, PostsResponse } from 'interface';
-import { InfiniteData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query';
-import { DataUpdateFunction, Updater } from 'react-query/types/core/utils';
+import { Post } from 'interface';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { handlerError } from 'utils/handleError';
 
 type options = {
   enabled?: boolean;
   cacheTime?: number;
+  staleTime?: number;
   search?: string;
 };
 
@@ -20,7 +20,7 @@ export const usePosts = (
   const searchQuery = search ? `&search=${search}` : '';
 
   const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}${searchQuery}`;
-
+  console.log({ homeKey: queryKey });
   queryClient.setQueryData('postsKey', queryKey);
 
   return useQuery(queryKey, postApi.getPosts, {
@@ -31,7 +31,9 @@ export const usePosts = (
 
 export const useMyPosts = ({ page = 1, limit = 1, sort = '-createdAt' }, options?: options) => {
   const queryClient = useQueryClient();
+
   const queryKey = `posts/me?page=${page}&limit=${limit}&sort=${sort}`;
+  console.log({ myKey: queryKey });
   queryClient.setQueryData('postsKey', queryKey);
 
   return useQuery(queryKey, postApi.getPosts, {
@@ -42,17 +44,17 @@ export const useMyPosts = ({ page = 1, limit = 1, sort = '-createdAt' }, options
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
+  const postsKey = queryClient.getQueryData('postsKey');
+
   return useMutation(postApi.createPost, {
-    onSuccess: (data) => {
-      console.log({ data });
-    },
     onError: handlerError,
-    onSettled: () =>
-      queryClient.invalidateQueries({
+    onSettled: () => {
+      return queryClient.invalidateQueries({
         predicate: (query) => {
-          return query.queryKey.toString().startsWith('posts');
+          return query.queryKey === postsKey;
         },
-      }),
+      });
+    },
   });
 };
 
@@ -80,6 +82,11 @@ export const useLikePost = () => {
         return updatePostLikes(oldData, postId, user.id);
       });
       handlerError(err);
+    },
+    onSettled: () => {
+      return queryClient.invalidateQueries({
+        predicate: (query) => query.queryKey.toString().startsWith('posts'),
+      });
     },
   });
 };

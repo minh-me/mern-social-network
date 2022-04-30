@@ -54,8 +54,11 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen, user }) => 
     const formData = new FormData();
     formData.append('text', data.text);
     if (data.image) formData.append('image', data.image[0]);
-    await mutateAsync(formData);
-    toast.success(`🦄 Create post success!`);
+    await toast.promise(mutateAsync(formData), {
+      pending: 'Posting in progress...',
+      // success: 'Post created successfully 👌',
+      error: 'Post created failed 🤯',
+    });
     handleClose();
   };
 
