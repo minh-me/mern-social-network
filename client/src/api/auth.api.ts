@@ -1,17 +1,17 @@
 import { client } from 'utils';
-import { GoogleLoginData, LoginData, LoginResponse, RegisterData } from 'interface';
+import { GoogleLoginData, LoginData, AuthResponse, RegisterData } from 'interface';
 import axiosInstance from 'utils/axiosInstance';
 
 const authUrl = '/api/auth';
 export const authApi = {
-  login(data: LoginData): Promise<LoginResponse> {
+  login(data: LoginData): Promise<AuthResponse> {
     return client.post(`${authUrl}/login`, data, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
   },
 
-  googleLogin(data: GoogleLoginData): Promise<LoginResponse> {
+  googleLogin(data: GoogleLoginData): Promise<AuthResponse> {
     return client.post(`${authUrl}/google`, data, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
@@ -23,11 +23,13 @@ export const authApi = {
       headers: { 'Content-Type': 'application/json' },
     });
   },
+
   activeAccount(token: string): Promise<{ message: string }> {
     return client.post(`${authUrl}/activation`, {
       activation_token: token,
     });
   },
+
   forgotPassword(email: string) {
     return client.post(
       `${authUrl}/forgot_pass`,
@@ -36,8 +38,7 @@ export const authApi = {
     );
   },
 
-  resetPassword(data: { password: string; reset_token: string }): Promise<LoginResponse> {
-    console.log({ data });
+  resetPassword(data: { password: string; reset_token: string }): Promise<AuthResponse> {
     return client.post(
       `${authUrl}/reset_pass`,
       { password: data.password },
@@ -52,18 +53,10 @@ export const authApi = {
   },
 
   logout() {
-    return axiosInstance.post(
-      `${authUrl}/logout`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
+    return axiosInstance.post(`${authUrl}/logout`, {}, { withCredentials: true });
   },
 
-  getRefreshToken(): Promise<{ ac_token: string }> {
-    return client.get(`${authUrl}/rf_token`, {
-      withCredentials: true,
-    });
+  getRefreshToken(): Promise<AuthResponse> {
+    return client.get(`${authUrl}/rf_token`, { withCredentials: true });
   },
 };

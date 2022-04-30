@@ -1,4 +1,4 @@
-import { userApi } from 'api/userApi';
+import { userApi } from 'api/user.api';
 import { useQuery, useQueryClient } from 'react-query';
 import { handlerError } from 'utils/handleError';
 

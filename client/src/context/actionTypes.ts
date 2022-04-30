@@ -1,23 +1,17 @@
-import { User } from 'interface';
+import { AuthResponse } from 'interface';
 
 export enum ActionType {
   AddAuth,
-  AddUser,
   Reset,
 }
 
 export interface AddAuth {
   type: ActionType.AddAuth;
-  payload: { token: string };
-}
-
-export interface AddUser {
-  type: ActionType.AddUser;
-  payload: User;
+  payload: AuthResponse;
 }
 
 export interface ResetAppState {
   type: ActionType.Reset;
 }
 
-export type AppActions = AddAuth | AddUser | ResetAppState;
+export type AppActions = AddAuth | ResetAppState;

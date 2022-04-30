@@ -1,4 +1,4 @@
-import { postApi } from 'api/postApi';
+import { postApi } from 'api/post.api';
 import { AxiosError } from 'axios';
 import { useAppContext } from 'context/useAppContext';
 import { Post } from 'interface';
@@ -59,25 +59,25 @@ export const useCreatePost = () => {
 export const useLikePost = () => {
   const queryClient = useQueryClient();
   const {
-    state: { user },
+    state: { auth },
   } = useAppContext();
   const postsKey = queryClient.getQueryData<string>('postsKey');
 
   return useMutation(postApi.likePost, {
     onMutate: (postId) => {
-      if (!postsKey || !user?.id) return;
+      if (!postsKey || !auth?.user.id) return;
 
       queryClient.setQueryData(postsKey, (oldData: any) => {
-        return updatePostLikes(oldData, postId, user.id);
+        return updatePostLikes(oldData, postId, auth?.user.id);
       });
     },
 
     onSuccess: () => {},
     onError: (err: Error | AxiosError<any, any>, postId) => {
-      if (!postsKey || !user?.id) return;
+      if (!postsKey || !auth?.user.id) return;
 
       queryClient.setQueryData(postsKey, (oldData: any) => {
-        return updatePostLikes(oldData, postId, user.id);
+        return updatePostLikes(oldData, postId, auth?.user.id);
       });
       handlerError(err);
     },

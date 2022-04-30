@@ -58,6 +58,7 @@ const login = catchAsync(async (req, res) => {
   console.log({ user })
   res.send({
     user: {
+      id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
@@ -83,6 +84,7 @@ const google = catchAsync(async (req, res) => {
 
   res.send({
     user: {
+      id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
@@ -116,6 +118,7 @@ const getRefreshToken = catchAsync(async (req, res, next) => {
   // access success
   return res.send({
     user: {
+      id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
@@ -160,6 +163,7 @@ const resetPassword = catchAsync(async (req, res) => {
   // reset success
   res.send({
     user: {
+      id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
