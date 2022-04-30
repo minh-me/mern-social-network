@@ -78,7 +78,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     maxWidth: '100%',
-    maxHeight: '80%',
-    my: 2,
+    maxHeight: '200px',
+    mt: 2,
   },
 };

@@ -13,5 +13,6 @@ export const uploadSchema = yup.object({
       'This file is not supported.(file support: jpg,jpeg,git,png)',
       (value: FileList) => (value ? SUPPORTED_FORMATS.includes(value[0].type) : true)
     )
+    .required()
     .label('Image'),
 });

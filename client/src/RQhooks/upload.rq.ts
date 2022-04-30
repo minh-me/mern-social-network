@@ -16,3 +16,18 @@ export const useUploadCoverPhoto = () => {
     },
   });
 };
+
+export const useUploadProfilePic = () => {
+  const queryClient = useQueryClient();
+  return useMutation('upload_profile_pic', uploadApi.uploadProfilePic, {
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: handlerError,
+    onSettled: () => {
+      return queryClient.invalidateQueries({
+        predicate: (query) => query.queryKey === 'profile',
+      });
+    },
+  });
+};
