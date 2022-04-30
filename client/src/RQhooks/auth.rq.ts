@@ -1,6 +1,6 @@
 import { authApi } from 'api/auth.api';
 import { addAuth, resetAppState } from 'context/actions';
-import { useAppContext } from 'context/useAppContext';
+import { useAppContext } from 'hooks/useAppContext';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
 import { storage } from 'utils';

@@ -2,7 +2,7 @@ import { PostActionButton } from './PostActionButton';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import { pink } from '@mui/material/colors';
 import { useLikePost } from 'RQhooks';
-import { useAppContext } from 'context/useAppContext';
+import { useAppContext } from 'hooks/useAppContext';
 
 export const LikePostButton = ({ likes = [''], postId = '' }) => {
   const {

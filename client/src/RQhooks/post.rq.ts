@@ -1,6 +1,6 @@
 import { postApi } from 'api/post.api';
 import { AxiosError } from 'axios';
-import { useAppContext } from 'context/useAppContext';
+import { useAppContext } from 'hooks/useAppContext';
 import { Post } from 'interface';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { handlerError } from 'utils/handleError';

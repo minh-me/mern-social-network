@@ -46,7 +46,6 @@ const getMyPosts = catchAsync(async (req, res) => {
   filter.postedBy = req.user.id
   options.populate = 'postedBy'
   const result = await postService.queryPosts(filter, options)
-  console.log({ result })
   res.send(result)
 })
 
