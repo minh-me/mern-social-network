@@ -1,6 +1,7 @@
 import createError from 'http-errors'
 import { tokenService } from '.'
 import { transErrors } from '../_lang/en'
+import pick from '../utils/pick'
 import {
   createUserByGoogle,
   getUserByEmail,
@@ -18,7 +19,7 @@ const loginWithEmailAndPassword = async (email, password) => {
   if (!user || !(await user.isPasswordMatch(password)))
     throw new createError.Unauthorized(transErrors.login_failed)
 
-  const { ac_token, rf_token } = await tokenService.generateAuthToken(user.id)
+  const { ac_token, rf_token } = await tokenService.authToken(user.id)
   // refresh token
   delete user.password
   return { user, ac_token, rf_token }
@@ -34,7 +35,7 @@ const loginWithGoogle = async googleData => {
 
   if (!user) user = await createUserByGoogle(googleData)
 
-  const { ac_token, rf_token } = await tokenService.generateAuthToken(user.id)
+  const { ac_token, rf_token } = await tokenService.authToken(user.id)
 
   delete user.password
 

@@ -39,7 +39,11 @@ export const CreatePostForm = (props: Props) => {
           alignItems: 'start',
         }}
       >
-        <Avatar alt={userFrom.name} src={userFrom.profilePic} sx={styles.avatar} />
+        <Avatar
+          alt={userFrom.name}
+          src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+          sx={styles.avatar}
+        />
         <TextField
           variant="standard"
           fullWidth
