@@ -13,6 +13,7 @@ import { styles } from './styles';
 import { storage } from 'utils';
 import { useRegister } from 'RQhooks';
 import { LoadingButton } from '@mui/lab';
+import { toast } from 'react-toastify';
 
 const defaultValues: RegisterData = {
   email: '',
@@ -32,7 +33,9 @@ export const SignUp = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const onSubmit: SubmitHandler<RegisterData> = async (data) => {
-    await mutateAsync(data);
+    await toast.promise(mutateAsync(data), {
+      pending: 'Sign Up...',
+    });
     setOpenModal(true);
   };
   const token = storage.getToken();

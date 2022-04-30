@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { MDialog } from 'components/Common/Modal';
 import { useLogout } from 'RQhooks';
 import { useGoogleLogout } from 'react-google-login';
+import { toast } from 'react-toastify';
 
 const SidebarList = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -25,7 +26,9 @@ const SidebarList = () => {
   });
 
   const handleClose = async () => {
-    await mutateAsync();
+    await toast.promise(mutateAsync(), {
+      pending: 'Logout...',
+    });
     setOpenModal(false);
     signOut();
     navigate('/auth', { replace: true });

@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Box, Button, CircularProgress } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
 import { limitPosts } from 'contants/pagination';
-import { useLimitRef } from 'hooks/useLimitRef';
 
 type Props = {
   isFetching: boolean;
@@ -24,7 +23,6 @@ export const LoadMoreButton = ({ isFetching, totalResults, limit, setLimit }: Pr
 };
 
 export const LoadMoreInView = ({ isFetching, totalResults, limit, setLimit }: Props) => {
-  console.log({ isFetching });
   const { ref, inView } = useInView();
   useEffect(() => {
     if (!isFetching && inView) {

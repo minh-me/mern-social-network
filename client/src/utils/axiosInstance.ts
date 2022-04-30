@@ -25,6 +25,7 @@ axiosInstance.interceptors.request.use(async (req: AxiosRequestConfig<AxiosReque
   const data: LoginResponse = await axios.get(`/api/auth/rf_token`, {
     withCredentials: true,
   });
+  console.log({ data: data.ac_token });
   storage.setToken(data.ac_token);
   req.headers.Authorization = `Bearer ${data.ac_token}`;
   return req;
