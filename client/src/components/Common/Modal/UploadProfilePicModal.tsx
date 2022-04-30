@@ -5,7 +5,7 @@ import { SubmitHandler } from 'react-hook-form';
 import { UserInfo } from '../Users';
 import { LoadingButton } from '@mui/lab';
 import { ImageUploadForm, ImageUploadFormProps } from '../Forms';
-import { useUploadCoverPhoto } from 'RQhooks';
+import { useUploadProfilePic } from 'RQhooks';
 import { toast } from 'react-toastify';
 
 type ModalProps = {
@@ -13,18 +13,18 @@ type ModalProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const UploadCoverPhotoModal: FC<ModalProps> = ({ open, setOpen }) => {
-  const { mutateAsync, isLoading } = useUploadCoverPhoto();
+export const UploadProfilePicModal: FC<ModalProps> = ({ open, setOpen }) => {
+  const { mutateAsync, isLoading } = useUploadProfilePic();
   const handleClose = () => {
     setOpen(false);
   };
 
   const onSubmit: SubmitHandler<ImageUploadFormProps> = async (data) => {
     const formData = new FormData();
-    formData.append('coverPhoto', data.image[0]);
+    formData.append('avatar', data.image[0]);
     await toast.promise(mutateAsync(formData), {
       pending: 'Upload...',
-      success: 'Updated cover photo successfully!',
+      success: 'Updated profile picture successfully!',
     });
     handleClose();
   };
@@ -32,13 +32,13 @@ export const UploadCoverPhotoModal: FC<ModalProps> = ({ open, setOpen }) => {
   return (
     <>
       <Dialog sx={{ bottom: 'inherit' }} scroll="paper" open={open} onClose={handleClose}>
-        <DialogTitle sx={styles.title}>Change Cover Photo</DialogTitle>
+        <DialogTitle sx={styles.title}>Chnage Avatar</DialogTitle>
         <DialogContent sx={styles.contentContainer}>
           {/* User info */}
           <UserInfo />
 
           {/* Input container */}
-          <ImageUploadForm formId="coverPhoto" onSubmit={onSubmit} />
+          <ImageUploadForm formId="uploadProfilePic" onSubmit={onSubmit} />
         </DialogContent>
 
         {/* Button Post */}
@@ -49,7 +49,7 @@ export const UploadCoverPhotoModal: FC<ModalProps> = ({ open, setOpen }) => {
             variant="contained"
             size="small"
             type="submit"
-            form="coverPhoto"
+            form="uploadProfilePic"
             fullWidth
             sx={styles.button}
           >

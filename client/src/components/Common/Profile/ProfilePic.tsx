@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import PhotoCameraRoundedIcon from '@mui/icons-material/PhotoCameraRounded';
 import { pink } from '@mui/material/colors';
 
+import { UploadProfilePicModal } from '../Modal';
+
 export const ProfilePic = ({ profilePic = '' }) => {
+  const [open, setOpen] = useState(false);
   return (
     <Box
       sx={{
@@ -28,6 +32,7 @@ export const ProfilePic = ({ profilePic = '' }) => {
     >
       <img src={profilePic} alt="Profile Pic" />
       <IconButton
+        onClick={() => setOpen(true)}
         sx={{
           position: 'absolute',
           svg: {
@@ -42,6 +47,8 @@ export const ProfilePic = ({ profilePic = '' }) => {
       >
         <PhotoCameraRoundedIcon fontSize="large" />
       </IconButton>
+
+      <UploadProfilePicModal open={open} setOpen={setOpen} />
     </Box>
   );
 };

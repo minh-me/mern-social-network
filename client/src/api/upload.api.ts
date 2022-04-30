@@ -9,4 +9,9 @@ export const uploadApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
+  uploadProfilePic(image: {}): Promise<UploadSingleResponse> {
+    return axiosInstance.post(`${uploadUrl}/avatar`, image, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
 };
