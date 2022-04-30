@@ -50,6 +50,7 @@ export const authApi = {
       }
     );
   },
+
   logout() {
     return axiosInstance.post(
       `${authUrl}/logout`,
@@ -58,5 +59,11 @@ export const authApi = {
         withCredentials: true,
       }
     );
+  },
+
+  getRefreshToken(): Promise<{ ac_token: string }> {
+    return client.get(`${authUrl}/rf_token`, {
+      withCredentials: true,
+    });
   },
 };

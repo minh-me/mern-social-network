@@ -20,7 +20,6 @@ export const usePosts = (
   const searchQuery = search ? `&search=${search}` : '';
 
   const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}${searchQuery}`;
-  console.log({ homeKey: queryKey });
   queryClient.setQueryData('postsKey', queryKey);
 
   return useQuery(queryKey, postApi.getPosts, {
@@ -33,7 +32,6 @@ export const useMyPosts = ({ page = 1, limit = 1, sort = '-createdAt' }, options
   const queryClient = useQueryClient();
 
   const queryKey = `posts/me?page=${page}&limit=${limit}&sort=${sort}`;
-  console.log({ myKey: queryKey });
   queryClient.setQueryData('postsKey', queryKey);
 
   return useQuery(queryKey, postApi.getPosts, {

@@ -14,6 +14,7 @@ import { LoadingButton } from '@mui/lab';
 import { storage } from 'utils';
 import { pink } from '@mui/material/colors';
 import { FacebookLoginButton, GoogleButton } from 'components/Common/Buttons';
+import { toast } from 'react-toastify';
 
 const defaultValues: LoginData = {
   email: '',
@@ -42,7 +43,9 @@ export const SignIn = () => {
     try {
       const email = getValues('email');
       await emailSchema.validate({ email });
-      await forgotPassword(email);
+      await toast.promise(forgotPassword(email), {
+        pending: 'Send mail ...',
+      });
       setOpenModal(true);
     } catch (error) {
       setError('email', error as ErrorOption);

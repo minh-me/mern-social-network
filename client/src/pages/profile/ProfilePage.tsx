@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Box, Button, CircularProgress, Typography, Divider } from '@mui/material';
-import { useInView } from 'react-intersection-observer';
+import { useState } from 'react';
+import { Box, Typography, Divider } from '@mui/material';
 
 import { LoadMoreInView, Title } from 'components/App';
 import { useMyPosts } from 'RQhooks/post.rq';

@@ -1,8 +1,12 @@
+import { authApi } from 'api/authApi';
 import { userApi } from 'api/userApi';
+import { User } from 'interface';
 import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { storage } from 'utils';
+import { __String } from 'typescript';
+import { client, storage } from 'utils';
+import axiosInstance from 'utils/axiosInstance';
 import { addAuth, addUser } from './actions';
 import { useAppContext } from './useAppContext';
 
@@ -12,28 +16,37 @@ type ProtectedRouteProps = {
 };
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const {
+    state: { auth },
+    dispatch,
+  } = useAppContext();
+
   const token = storage.getToken();
-  const { dispatch } = useAppContext();
+  console.log({ token });
   useEffect(() => {
-    if (!!token) {
-      dispatch(addAuth(token));
+    const refreshToken = async () => {
+      const { ac_token } = await authApi.getRefreshToken();
+      storage.setToken(ac_token);
+
+      dispatch(addAuth(ac_token));
       toast.success(`Hi ${storage.getUser().name}, Have a nice day!`, {
         position: 'bottom-right',
       });
-      return;
-    }
-  }, [token, dispatch]);
+    };
+
+    if (!!token) refreshToken();
+  }, []);
 
   useEffect(() => {
     const getProfile = async () => {
-      const user = await userApi.getProfile();
+      const user: User = await userApi.getProfile();
       dispatch(addUser(user));
     };
-    if (!!token) {
+    console.log({ auth_token: auth.token });
+    if (!!auth.token) {
       getProfile();
-      storage.setToken(token);
     }
-  }, [token, dispatch]);
+  }, [auth.token, dispatch]);
 
   if (!token) {
     return <Navigate to="/auth" />;
