@@ -35,7 +35,11 @@ const userSchema = Schema(
       type: Date,
     },
     coverPhoto: String,
-    profilePic: String,
+    profilePic: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/dvnmolznq/image/upload/v1651309698/avatar/h65dgi9kmuusnuzoi5pb.png',
+    },
     googleId: {
       type: String,
       index: true,

@@ -8,6 +8,7 @@ import {
   tokenService,
   emailService,
 } from '../services'
+import pick from '../utils/pick'
 
 /**
  * Register user
@@ -15,7 +16,7 @@ import {
  * @access public
  */
 const register = catchAsync(async (req, res) => {
-  const activation_token = await tokenService.generateActivationToken(req.body)
+  const activation_token = await tokenService.activationToken(req.body)
 
   await emailService.sendEmailRegister(req.body.email, activation_token)
   // registration success
@@ -54,8 +55,16 @@ const login = catchAsync(async (req, res) => {
 
   // store refresh token
   res.cookie('_apprftoken', rf_token, config.cookie)
-
-  res.send({ ac_token, user })
+  console.log({ user })
+  res.send({
+    user: {
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      profilePic: user.profilePic,
+    },
+    ac_token,
+  })
 })
 
 /**
@@ -72,7 +81,15 @@ const google = catchAsync(async (req, res) => {
   // store refresh token
   res.cookie('_apprftoken', rf_token, config.cookie)
 
-  res.send({ ac_token, user })
+  res.send({
+    user: {
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      profilePic: user.profilePic,
+    },
+    ac_token,
+  })
 })
 
 /**
@@ -91,13 +108,21 @@ const getRefreshToken = catchAsync(async (req, res, next) => {
   const user = await userService.getUserById(userId)
 
   // create access token
-  const { ac_token, rf_token } = await tokenService.generateAuthToken(user.id)
+  const { ac_token, rf_token } = await tokenService.authToken(user.id)
 
   // store refresh token
   res.cookie('_apprftoken', rf_token, config.cookie)
 
   // access success
-  return res.send({ ac_token })
+  return res.send({
+    user: {
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      profilePic: user.profilePic,
+    },
+    ac_token,
+  })
 })
 
 /**
@@ -110,7 +135,7 @@ const forgotPassword = catchAsync(async (req, res, next) => {
   const user = await userService.getUserByEmail(req.body.email)
   if (!user) return next(createHttpError.NotFound(transErrors.email_undefined))
 
-  const ac_token = await tokenService.generateAccessToken(user.id)
+  const ac_token = await tokenService.accessToken(user.id)
 
   // send email
   await emailService.sendEmailResetPassword(req.body.email, ac_token, user.name)
@@ -127,13 +152,21 @@ const forgotPassword = catchAsync(async (req, res, next) => {
 const resetPassword = catchAsync(async (req, res) => {
   const user = await userService.updateUserPasswordById(req.user.id, req.body)
 
-  const { ac_token, rf_token } = await tokenService.generateAuthToken(user.id)
+  const { ac_token, rf_token } = await tokenService.authToken(user.id)
 
   // store refresh token
   res.cookie('_apprftoken', rf_token, config.cookie)
 
   // reset success
-  res.send({ ac_token, user })
+  res.send({
+    user: {
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      profilePic: user.profilePic,
+    },
+    ac_token,
+  })
 })
 
 /**

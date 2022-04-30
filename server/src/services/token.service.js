@@ -48,7 +48,7 @@ const verifyToken = (token, secretKey) => {
  * @param {object} user
  * @returns
  */
-const generateActivationToken = async userBody => {
+const activationToken = async userBody => {
   const user = await userService.getUserByEmail(userBody.email)
   if (user) throw new httpError.BadRequest(transErrors.account_in_use)
 
@@ -65,7 +65,7 @@ const generateActivationToken = async userBody => {
  * @param {string} userId
  * @returns {Promise<token>}
  */
-const generateRefreshToken = async userId => {
+const refreshToken = async userId => {
   return generateToken(
     { sub: userId },
     config.jwt.refreshSecret,
@@ -78,7 +78,7 @@ const generateRefreshToken = async userId => {
  * @param {string} userId
  * @returns {Promise<token>}
  */
-const generateAccessToken = async userId => {
+const accessToken = async userId => {
   return generateToken(
     { sub: userId },
     config.jwt.accessSecret,
@@ -91,10 +91,10 @@ const generateAccessToken = async userId => {
  * @param {string} userId
  * @returns {Promise<token>}
  */
-const generateAuthToken = async userId => {
+const authToken = async userId => {
   const [ac_token, rf_token] = await Promise.all([
-    generateAccessToken(userId),
-    generateRefreshToken(userId),
+    accessToken(userId),
+    refreshToken(userId),
   ])
   return {
     ac_token,
@@ -107,7 +107,7 @@ const generateAuthToken = async userId => {
  * @param {string} userId
  * @returns {Promise<token>}
  */
-const generateResetPasswordToken = async email => {
+const resetPasswordToken = async email => {
   const user = await userService.getUserByEmail(email)
   if (!user) throw httpError.BadRequest(transErrors.email_undefined)
   const token = await generateToken(
@@ -138,13 +138,13 @@ const verifyRefreshToken = async token => {
 }
 
 export {
+  authToken,
+  accessToken,
+  activationToken,
   generateToken,
+  resetPasswordToken,
+  refreshToken,
   verifyToken,
-  generateActivationToken,
-  generateRefreshToken,
-  generateAccessToken,
-  generateResetPasswordToken,
   verifyActivationToken,
   verifyRefreshToken,
-  generateAuthToken,
 }
