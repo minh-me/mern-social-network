@@ -10,16 +10,14 @@ import { ProfileHeader } from './ProfileHeader';
 import { ProfileButtons } from './ProfileButtons';
 import { ProfileInfo } from './ProfileInfo';
 import { ProfileFollowers } from './ProfileFollowers';
-import { useAppContext } from 'context/useAppContext';
+import { useAppContext } from 'hooks/useAppContext';
+import { Tab_MyPostList } from './Tab_MyPostList';
 
 export const ProfilePage = () => {
   const {
     state: { auth },
   } = useAppContext();
   const isSelectedPosts = true;
-
-  const [limit, setLimit] = useState(8);
-  const { data, isLoading, isFetching } = useMyPosts({ limit });
 
   return (
     <>
@@ -44,29 +42,7 @@ export const ProfilePage = () => {
       <Divider sx={{ borderBottom: '1px solid #38444d', my: 2, mt: 4 }} />
 
       {/* {!isSelectedPosts && <UserList data={userFroms} />} */}
-      {isSelectedPosts && (
-        <>
-          {/* PostList */}
-          {isLoading && isFetching ? <PostSkeleton /> : data && <PostList data={data} />}
-
-          {/* Button  */}
-          {data?.info && (
-            <LoadMoreInView
-              isFetching={isFetching}
-              limit={limit}
-              setLimit={setLimit}
-              totalResults={data.info.totalResults}
-            />
-          )}
-
-          {/* Entries is empty */}
-          {data?.posts && data?.posts.length === 0 && (
-            <Typography textAlign="center" fontSize={16}>
-              Nothing to show.
-            </Typography>
-          )}
-        </>
-      )}
+      {isSelectedPosts && <Tab_MyPostList />}
     </>
   );
 };

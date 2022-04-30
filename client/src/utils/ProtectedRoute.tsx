@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { useAppContext } from '../context/useAppContext';
+import { useAppContext } from '../hooks/useAppContext';
 import { addAuth } from '../context/actions';
 
 import { storage } from 'utils';
@@ -16,7 +16,6 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { dispatch } = useAppContext();
 
   const token = storage.getToken();
-  console.log({ token });
   useEffect(() => {
     const refreshToken = async () => {
       const data = await authApi.getRefreshToken();
@@ -25,13 +24,13 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
       dispatch(addAuth(data));
 
-      toast.success(`Hi ${storage.getUser().name}, Have a nice day!`, {
+      toast.success(`Hi ${data.user.name}, Have a nice day!`, {
         position: 'bottom-right',
       });
     };
 
-    if (!!token) refreshToken();
-  }, []);
+    refreshToken();
+  }, [dispatch]);
 
   if (!token) {
     return <Navigate to="/auth" />;
