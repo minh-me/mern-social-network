@@ -9,7 +9,9 @@ type options = {
 };
 
 export const useGetPofile = () => {
-  return useQuery('profile', userApi.getProfile);
+  return useQuery('profile', userApi.getProfile, {
+    onError: handlerError,
+  });
 };
 
 export const useUsers = (

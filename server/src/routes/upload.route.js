@@ -12,4 +12,12 @@ router.post(
   uploadController.uploadAvatar
 )
 
+router.post(
+  '/cover_photo',
+  auth(),
+  uploadStorage.single('coverPhoto'),
+  upload,
+  uploadController.uploadCoverPhoto
+)
+
 export default router

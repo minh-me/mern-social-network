@@ -2,9 +2,12 @@ import { Box, Typography } from '@mui/material';
 import { blueGrey, pink } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 
-type Props = {};
+type Props = {
+  followers?: string[];
+  following?: string[];
+};
 
-export const ProfileFollowers = (props: Props) => {
+export const ProfileFollowers = ({ followers, following }: Props) => {
   return (
     <Box px={2} sx={{ display: 'flex' }}>
       <Typography
@@ -21,7 +24,7 @@ export const ProfileFollowers = (props: Props) => {
         }}
       >
         <Typography component="span" fontWeight={600}>
-          0
+          {following && following.length}
         </Typography>{' '}
         Following
       </Typography>
@@ -38,7 +41,7 @@ export const ProfileFollowers = (props: Props) => {
         }}
       >
         <Typography component="span" fontWeight={600}>
-          3
+          {followers && followers.length}
         </Typography>{' '}
         Followers
       </Typography>

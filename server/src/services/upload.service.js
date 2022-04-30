@@ -31,7 +31,7 @@ export const reSizeImage = (cloudinary_id, height, width) => {
   return cloudinary.url(cloudinary_id, {
     height,
     width,
-    crop: 'scale',
+    crop: 'fill',
     format: 'jpg',
   })
 }
@@ -48,8 +48,28 @@ const uploadAvatar = async path => {
     height: 150,
     crop: 'fill',
   }
-  const avatar = await upload(path, options)
-  return avatar.secure_url
+  const result = await upload(path, options)
+  return {
+    url: result.secure_url,
+    id: result.public_id,
+  }
+}
+
+/**
+ * Upload file to cloudinary
+ * @param {string} path link to file image in local
+ *  @returns {Promise<url>}
+ */
+const uploadCoverPhoto = async path => {
+  const options = {
+    folder: 'cover_images',
+    crop: 'fill',
+  }
+  const result = await upload(path, options)
+  return {
+    url: result.secure_url,
+    id: result.public_id,
+  }
 }
 
 /**
@@ -81,4 +101,4 @@ const destroy = async cloudinary_id => {
   return result
 }
 
-export { upload, uploadAvatar, uploadPostImage, destroy }
+export { upload, uploadAvatar, uploadPostImage, destroy, uploadCoverPhoto }

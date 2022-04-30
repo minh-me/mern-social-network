@@ -1,7 +1,8 @@
 import { Box, IconButton } from '@mui/material';
 import PhotoCameraRoundedIcon from '@mui/icons-material/PhotoCameraRounded';
 import { pink } from '@mui/material/colors';
-export const ProfilePic = () => {
+
+export const ProfilePic = ({ profilePic = '' }) => {
   return (
     <Box
       sx={{
@@ -25,10 +26,7 @@ export const ProfilePic = () => {
         },
       }}
     >
-      <img
-        src="https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png"
-        alt="Profile Pic"
-      />
+      <img src={profilePic} alt="Profile Pic" />
       <IconButton
         sx={{
           position: 'absolute',

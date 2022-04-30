@@ -6,3 +6,4 @@ export * from './comment.interface';
 export * from './message.interface';
 export * from './notification.interface';
 export * from './paginate.inteface';
+export * from './upload.interface';

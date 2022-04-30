@@ -1,4 +1,5 @@
 import createError from 'http-errors'
+import { uploadService } from '.'
 import { User } from '../models'
 
 /**
@@ -116,6 +117,37 @@ const updateById = async (userId, body) => {
 }
 
 /**
+ * Remove old avatar and update new avatar
+ * @param {ObjectId} userId
+ * @param {Object} avatar
+ * @returns
+ */
+const updateProfilePic = async (userId, avatar) => {
+  const user = await User.findByIdAndUpdate(userId, avatar).select('+avatar.id')
+  if (user.avatar.id) {
+    await uploadService.destroy(user.avatar.id)
+  }
+  return user
+}
+
+/**
+ * Remove old avatar and update new avatar
+ * @param {ObjectId} userId
+ * @param {Object} coverPhoto
+ * @returns
+ */
+const updateCoverPhoto = async (userId, coverPhoto) => {
+  const user = await User.findByIdAndUpdate(userId, coverPhoto).select(
+    '+coverPhoto.id'
+  )
+  console.log({ user })
+  if (user.coverPhoto.id) {
+    await uploadService.destroy(user.coverPhoto.id)
+  }
+  return user
+}
+
+/**
  * Update user by id
  * @param {ObjectId} userId
  * @param {Object} body
@@ -156,4 +188,6 @@ export {
   getUserByGoogleId,
   createUserByGoogle,
   updateById,
+  updateProfilePic,
+  updateCoverPhoto,
 }
