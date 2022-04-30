@@ -1,21 +1,23 @@
-import { FC } from 'react';
 import { Avatar, Box, Typography } from '@mui/material';
-import { User } from 'interface';
+import { useAppContext } from 'hooks/useAppContext';
 
-type Props = {
-  user: User;
-};
-
-export const UserInfo: FC<Props> = ({ user }) => {
+export const UserInfo = () => {
+  const {
+    state: { auth },
+  } = useAppContext();
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Avatar src={user.profilePic} sx={{ border: '2px solid white' }} alt={user.name} />
+      <Avatar
+        src={auth?.user.profilePic.url}
+        sx={{ border: '2px solid white' }}
+        alt={auth?.user.name}
+      />
       <Box px={1}>
         <Typography color="#f91880" fontWeight={700} fontSize={16} component="p">
-          {user.name}
+          {auth?.user.name}
         </Typography>
         <Typography fontSize={13} color="#999ea3" component="p">
-          @{user.name}.mchiu
+          @{auth?.user.email.split('@')[0]}
         </Typography>
       </Box>
     </Box>

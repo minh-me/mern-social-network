@@ -34,11 +34,18 @@ const userSchema = Schema(
     dateOfBirth: {
       type: Date,
     },
-    coverPhoto: String,
+    coverPhoto: {
+      id: { type: String, select: false },
+      url: String,
+    },
     profilePic: {
-      type: String,
-      default:
-        'https://res.cloudinary.com/dvnmolznq/image/upload/v1651309698/avatar/h65dgi9kmuusnuzoi5pb.png',
+      type: {
+        id: { type: String, select: false },
+        url: String,
+      },
+      default: {
+        url: 'https://res.cloudinary.com/dvnmolznq/image/upload/v1651309698/avatar/h65dgi9kmuusnuzoi5pb.png',
+      },
     },
     googleId: {
       type: String,

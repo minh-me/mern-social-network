@@ -11,7 +11,7 @@ export const UserItem: FC<UserItemProps> = ({ user }) => {
   const isFollowing = user.following?.includes('currentUserId');
   return (
     <Box sx={styles.container}>
-      <Avatar src={user.profilePic} sx={{ border: '1px solid white' }} alt={user.name} />
+      <Avatar src={user.profilePic.url} sx={{ border: '1px solid white' }} alt={user.name} />
       <Box px={2} sx={{ display: 'flex', alignItems: 'start', flexDirection: 'column', flex: 1 }}>
         <Link sx={styles.textName} underline="hover">
           {user.name}

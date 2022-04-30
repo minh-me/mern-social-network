@@ -4,8 +4,9 @@ import { CreatePostFormModal } from 'components/Common/Modal';
 import { User } from 'interface';
 
 const userFrom: User = {
-  profilePic:
-    'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+  profilePic: {
+    url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+  },
   name: 'minh',
   email: 'minhch.vn@gmail.com',
   role: 'admin',
@@ -14,17 +15,11 @@ const userFrom: User = {
   id: '6227646a0588488cd53eb293',
 };
 
-type Props = {};
-
-export const CreatePostForm = (props: Props) => {
+export const CreatePostForm = () => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   return (
@@ -57,7 +52,7 @@ export const CreatePostForm = (props: Props) => {
           Post
         </Button>
 
-        <CreatePostFormModal open={open} setOpen={setOpen} user={userFrom} />
+        <CreatePostFormModal open={open} setOpen={setOpen} />
       </Box>
     </>
   );

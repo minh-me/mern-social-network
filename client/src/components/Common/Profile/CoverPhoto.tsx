@@ -1,7 +1,11 @@
 import { Box, IconButton } from '@mui/material';
 import PhotoCameraRoundedIcon from '@mui/icons-material/PhotoCameraRounded';
 import { pink } from '@mui/material/colors';
-export const CoverPhoto = () => {
+import { UploadCoverPhotoModal } from '../Modal';
+import { useState } from 'react';
+
+export const CoverPhoto = ({ coverPhoto = '' }) => {
+  const [open, setOpen] = useState(false);
   return (
     <Box
       sx={{
@@ -22,11 +26,9 @@ export const CoverPhoto = () => {
         },
       }}
     >
-      <img
-        src="https://res.cloudinary.com/djvd6zhbg/image/upload/v1647778887/coverPhoto/c5dprvz61m6tx8rjxacl.png"
-        alt="Cover photo"
-      />
+      {coverPhoto && <img src={coverPhoto} alt={coverPhoto} />}
       <IconButton
+        onClick={() => setOpen(true)}
         sx={{
           position: 'absolute',
           svg: {
@@ -41,6 +43,8 @@ export const CoverPhoto = () => {
       >
         <PhotoCameraRoundedIcon fontSize="large" />
       </IconButton>
+
+      <UploadCoverPhotoModal open={open} setOpen={setOpen} />
     </Box>
   );
 };

@@ -1,6 +1,6 @@
 import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack';
 import { Box } from '@mui/system';
+import { ButtonSekeleton } from './ButtonSkeleton';
 const bgColor = '#6c6c6c';
 
 export const UserSkeleton = () => {
@@ -14,18 +14,15 @@ export const UserSkeleton = () => {
         <Skeleton width={80} height={18} sx={{ mr: '4px', bgcolor: bgColor }} variant="text" />
         <Skeleton width={80} height={15} sx={{ mr: '4px', bgcolor: bgColor }} variant="text" />
       </Box>
-      <Skeleton
-        width={68}
-        height={38}
-        sx={{ mr: '4px', bgcolor: bgColor, borderRadius: 8 }}
-        variant="rectangular"
-      />
+
+      <ButtonSekeleton />
     </Box>
   );
 };
 
 export const UserListSkeleton = () => (
   <>
-    <UserSkeleton /> <UserSkeleton />
+    <UserSkeleton />
+    <UserSkeleton />
   </>
 );

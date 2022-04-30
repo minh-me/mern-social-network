@@ -24,7 +24,7 @@ export const NotificationItem: FC<NotiProps> = ({
 
   return (
     <Box sx={styles.itemContainer}>
-      <Avatar alt={userFrom.name} src={userFrom.profilePic} />
+      <Avatar alt={userFrom.name} src={userFrom.profilePic.url} />
       <Box sx={{ flex: 1 }}>
         <Typography component="span" fontSize={16} fontWeight={600} mx={1}>
           {userFrom.name}

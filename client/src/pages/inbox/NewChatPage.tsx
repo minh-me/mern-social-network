@@ -10,8 +10,9 @@ import { pink } from '@mui/material/colors';
 
 export const userFroms: User[] = [
   {
-    profilePic:
-      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+    profilePic: {
+      url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+    },
     name: 'Minh Chìu',
     email: 'minhch.vn@gmail.com',
     role: 'admin',
@@ -20,8 +21,9 @@ export const userFroms: User[] = [
     id: '6227646a0588488cd53eb293',
   },
   {
-    profilePic:
-      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+    profilePic: {
+      url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+    },
     name: 'Minh Chìu',
     email: 'minhch.vn@gmail.com',
     role: 'admin',
@@ -30,8 +32,9 @@ export const userFroms: User[] = [
     id: '12123123',
   },
   {
-    profilePic:
-      'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+    profilePic: {
+      url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+    },
     name: 'Minh Chìu',
     email: 'minhch.vn@gmail.com',
     role: 'admin',

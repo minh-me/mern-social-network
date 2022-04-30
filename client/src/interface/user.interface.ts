@@ -7,8 +7,12 @@ export interface User {
 
   role?: 'admin' | 'user';
   dateOfBirth?: string;
-  coverPhoto?: string;
-  profilePic: string;
+  coverPhoto?: {
+    url: string;
+  };
+  profilePic: {
+    url: string;
+  };
   authKey?: string;
 
   follwers?: string[];

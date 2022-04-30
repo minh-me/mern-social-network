@@ -6,8 +6,9 @@ import { Title } from 'components/App';
 import { NotificationItem } from 'components/Common';
 
 const userFrom: User = {
-  profilePic:
-    'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+  profilePic: {
+    url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+  },
   name: 'minh',
   email: 'minhch.vn@gmail.com',
   role: 'admin',
@@ -23,8 +24,9 @@ const userTo: User = {
   createdAt: '2022-03-08T14:12:58.562Z',
   updatedAt: '2022-03-08T14:25:39.750Z',
   id: '6227646a0588488cd53eb293',
-  profilePic:
-    'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+  profilePic: {
+    url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
+  },
 };
 
 const notification = {

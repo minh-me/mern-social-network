@@ -1,18 +1,9 @@
 import { FC, useEffect } from 'react';
-import {
-  Box,
-  Button,
-  IconButton,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from '@mui/material';
+import { Box, IconButton, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import pink from '@mui/material/colors/pink';
 import ImageIcon from '@mui/icons-material/Image';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { User } from 'interface';
 import { toast } from 'react-toastify';
 import { UserInfo } from '../Users';
 import { Image } from '../Images';
@@ -23,7 +14,6 @@ import { LoadingButton } from '@mui/lab';
 type ModalProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  user: User;
 };
 
 interface InputProps {
@@ -31,7 +21,7 @@ interface InputProps {
   text: string;
 }
 
-export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen, user }) => {
+export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
   const {
     control,
     handleSubmit,
@@ -75,7 +65,7 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen, user }) => 
         <DialogTitle sx={styles.title}>Create Post</DialogTitle>
         <DialogContent sx={styles.contentContainer}>
           {/* User info */}
-          <UserInfo user={user} />
+          <UserInfo />
 
           {/* Input container */}
           <form id="createPostForm" onSubmit={handleSubmit(onSubmit)}>
@@ -177,8 +167,9 @@ const styles = {
   },
   formContainer: { display: 'flex', justifyContent: 'space-between' },
   previewContainer: {
-    margin: '0 auto',
-    maxWidth: '400px',
-    maxHeight: '400px',
+    display: 'flex',
+    justifyContent: 'center',
+    maxWidth: '100%',
+    maxHeight: '80%',
   },
 };
