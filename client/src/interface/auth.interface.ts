@@ -23,9 +23,15 @@ export interface PasswordData {
   password: string;
 }
 
-export interface LoginResponse {
+export interface AuthResponse {
   ac_token: string;
-  user: User;
+  user: {
+    id: string;
+    name: string;
+    role: string;
+    email: string;
+    profilePic: string;
+  };
 }
 
 export interface AccessToken {

@@ -14,7 +14,7 @@ import { useAppContext } from 'context/useAppContext';
 
 export const ProfilePage = () => {
   const {
-    state: { user },
+    state: { auth },
   } = useAppContext();
   const isSelectedPosts = true;
 

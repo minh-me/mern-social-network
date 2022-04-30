@@ -1,17 +1,10 @@
-import { User } from 'interface';
-import { ActionType, AddAuth, AddUser, ResetAppState } from './actionTypes';
+import { AuthResponse } from 'interface';
+import { ActionType, AddAuth, ResetAppState } from './actionTypes';
 
-export const addAuth = (token: string): AddAuth => {
+export const addAuth = (auth: AuthResponse): AddAuth => {
   return {
     type: ActionType.AddAuth,
-    payload: { token },
-  };
-};
-
-export const addUser = (user: User): AddUser => {
-  return {
-    type: ActionType.AddUser,
-    payload: user,
+    payload: auth,
   };
 };
 

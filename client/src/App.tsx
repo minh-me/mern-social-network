@@ -11,7 +11,7 @@ import {
   SearchPage,
 } from 'pages';
 import { Activate, ResetPassword, SignIn, SignUp } from 'pages/auth';
-import { ProtectedRoute } from 'context/ProtectedRoute';
+import { ProtectedRoute } from 'utils/ProtectedRoute';
 
 function App() {
   return (

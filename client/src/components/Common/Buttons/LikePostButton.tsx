@@ -6,11 +6,11 @@ import { useAppContext } from 'context/useAppContext';
 
 export const LikePostButton = ({ likes = [''], postId = '' }) => {
   const {
-    state: { user },
+    state: { auth },
   } = useAppContext();
   const { mutate } = useLikePost();
 
-  const isLiked = likes.includes(user?.id as string);
+  const isLiked = likes.includes(auth?.user.id as string);
 
   const likeHandler = () => mutate(postId);
 

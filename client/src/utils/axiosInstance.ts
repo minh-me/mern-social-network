@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders } from 'a
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
 import { storage } from './storage';
-import { LoginResponse } from 'interface';
+import { AuthResponse } from 'interface';
 
 let ac_token = storage.getToken() || '';
 
@@ -18,16 +18,18 @@ axiosInstance.interceptors.request.use(async (req: AxiosRequestConfig<AxiosReque
   }
   req.headers = { ...req.headers };
   req.headers.Authorization = `Bearer ${ac_token}`;
-  const user: { exp: number } = jwt_decode(ac_token);
+  const user: { exp: number; sub: string; iat: string } = jwt_decode(ac_token);
+
   const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
   if (!isExpired) return req;
 
-  const data: LoginResponse = await axios.get(`/api/auth/rf_token`, {
+  const data: AuthResponse = await axios.get(`/api/auth/rf_token`, {
     withCredentials: true,
   });
-  console.log({ data: data.ac_token });
+
   storage.setToken(data.ac_token);
   req.headers.Authorization = `Bearer ${data.ac_token}`;
+
   return req;
 });
 

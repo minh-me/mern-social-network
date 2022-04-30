@@ -1,5 +1,5 @@
-import { authApi } from 'api/authApi';
-import { addAuth, addUser, resetAppState } from 'context/actions';
+import { authApi } from 'api/auth.api';
+import { addAuth, resetAppState } from 'context/actions';
 import { useAppContext } from 'context/useAppContext';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
@@ -10,13 +10,8 @@ export const useLogin = () => {
   const { dispatch } = useAppContext();
   return useMutation(authApi.login, {
     onSuccess: (data) => {
-      const { ac_token, user } = data;
-
-      dispatch(addAuth(ac_token));
-      dispatch(addUser(user));
-
-      storage.setToken(ac_token);
-      storage.setUser(user);
+      dispatch(addAuth(data));
+      storage.setToken(data.ac_token);
     },
     onError: handlerError,
   });
@@ -26,13 +21,8 @@ export const useLoginWithGoogle = () => {
   const { dispatch } = useAppContext();
   return useMutation(authApi.googleLogin, {
     onSuccess: (data) => {
-      const { ac_token, user } = data;
-
-      dispatch(addAuth(ac_token));
-      dispatch(addUser(user));
-
-      storage.setToken(ac_token);
-      storage.setUser(user);
+      dispatch(addAuth(data));
+      storage.setToken(data.ac_token);
     },
     onError: handlerError,
   });
@@ -69,13 +59,8 @@ export const useResetPassword = () => {
   const { dispatch } = useAppContext();
   return useMutation(authApi.resetPassword, {
     onSuccess: (data) => {
-      const { ac_token, user } = data;
-
-      dispatch(addAuth(ac_token));
-      dispatch(addUser(user));
-
-      storage.setToken(ac_token);
-      storage.setUser(user);
+      dispatch(addAuth(data));
+      storage.setToken(data.ac_token);
     },
     onError: handlerError,
   });
@@ -88,7 +73,6 @@ export const useLogout = () => {
     onSuccess: () => {
       dispatch(resetAppState());
       storage.clearToken();
-      storage.clearUser();
     },
     onError: handlerError,
   });
