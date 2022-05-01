@@ -17,15 +17,16 @@ router
   .get(validate(postValidation.getPosts), postController.getPosts)
 
 router.get(
-  '/me',
+  '/:postedBy/postedBy',
   auth(),
   validate(postValidation.getPosts),
-  postController.getMyPosts
+  postController.getPostByPostedBy
 )
+
 router.patch(
   '/:postId/like',
   auth(),
-  validate(postValidation.deletePost),
+  validate(postValidation.postIdParams),
   postController.likePost
 )
 router

@@ -64,5 +64,29 @@ const deletePostById = async postId => {
   if (!post) throw new createHttpError.NotFound('Not found post.')
   return post
 }
+/**
+ * Delte many posts
+ * @param {Object} filter
+ * @returns {Promise<acknowledged: boolean, deletedCount: number>}
+ */
+const deletePosts = async filter => {
+  const posts = await Post.find(filter)
+  posts.forEach(post => {
+    if (post?.image) {
+      updateService.destroy(post.image.id)
+    }
+  })
 
-export { createPost, queryPosts, getPostById, updatePostById, deletePostById }
+  const result = await Post.deleteMany(filter)
+
+  return result
+}
+
+export {
+  createPost,
+  queryPosts,
+  getPostById,
+  updatePostById,
+  deletePostById,
+  deletePosts,
+}

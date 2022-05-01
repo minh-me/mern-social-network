@@ -1,11 +1,15 @@
 import { Button } from '@mui/material';
 import { pink } from '@mui/material/colors';
 
-export const FollowButton = ({ isActive = false }) => {
+export const FollowButton = ({ isActive = false, userId = '' }) => {
+  const handleClick = () => {
+    console.log('Clicked follow');
+  };
   return (
     <Button
       sx={isActive ? styles.buttonFollowing : styles.buttonFollow}
       variant={isActive ? 'contained' : 'outlined'}
+      onClick={handleClick}
     >
       {isActive ? 'Following' : 'Follow'}
     </Button>

@@ -11,6 +11,9 @@ const createPost = {
 const getPosts = {
   search: yup.string(),
   text: yup.string(),
+  postedBy: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
   page: yup.number().integer(),
   limit: yup.number().integer(),
   sort: yup.string(),
@@ -44,5 +47,10 @@ const deletePost = {
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
 }
-
-export { createPost, getPosts, getPost, updatePost, deletePost }
+const postIdParams = {
+  postId: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
+    .required(),
+}
+export { createPost, getPosts, getPost, updatePost, deletePost, postIdParams }

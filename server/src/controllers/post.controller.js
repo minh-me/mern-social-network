@@ -30,7 +30,6 @@ const getPosts = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['text', 'search'])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
-  // if (req.query.search) filter.$text = { $search: req.query.search }
   options.populate = 'postedBy'
   const result = await postService.queryPosts(filter, options)
   res.send(result)
@@ -40,10 +39,10 @@ const getPosts = catchAsync(async (req, res) => {
  * @GET api/posts
  * @access public
  */
-const getMyPosts = catchAsync(async (req, res) => {
+const getPostByPostedBy = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['text'])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
-  filter.postedBy = req.user.id
+  filter.postedBy = req.params.postedBy
   options.populate = 'postedBy'
   const result = await postService.queryPosts(filter, options)
   res.send(result)
@@ -113,6 +112,6 @@ export {
   getPost,
   updatePost,
   deletePost,
-  getMyPosts,
   likePost,
+  getPostByPostedBy,
 }

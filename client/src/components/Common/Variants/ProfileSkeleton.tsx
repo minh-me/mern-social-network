@@ -47,6 +47,7 @@ export const ProfileHeaderSkeleton = () => {
         <ButtonSekeleton />
       </Box>
       <ProfileInfoSkeleton />
+      <TabsSekeleton />
     </Box>
   );
 };

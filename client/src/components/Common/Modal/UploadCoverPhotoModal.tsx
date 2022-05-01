@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Box } from '@mui/material';
 import pink from '@mui/material/colors/pink';
 import { SubmitHandler } from 'react-hook-form';
 import { UserInfo } from '../Users';

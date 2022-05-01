@@ -17,7 +17,7 @@ export const UserItem: FC<UserItemProps> = ({ user }) => {
           {user.name}
         </Link>
         <Typography fontSize={12} color="#999ea3" component="p">
-          @{user.email.split('@')[0]}
+          @{user.username}
         </Typography>
         <Typography fontSize={12} color="#999ea3" component="span">
           {user?.follwers?.length} followers

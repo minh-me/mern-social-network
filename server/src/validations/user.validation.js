@@ -30,6 +30,10 @@ const getUser = {
     .required(),
 }
 
+const getUserByUsername = {
+  username: yup.string().required(),
+}
+
 const updateUser = {
   userId: yup
     .string()
@@ -61,4 +65,12 @@ const updateProfile = {
   }),
 }
 
-export { createUser, getUsers, getUser, updateUser, deleteUser, updateProfile }
+export {
+  createUser,
+  getUsers,
+  getUser,
+  updateUser,
+  deleteUser,
+  updateProfile,
+  getUserByUsername,
+}

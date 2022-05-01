@@ -11,7 +11,7 @@ export const useUploadCoverPhoto = () => {
     onError: handlerError,
     onSettled: () => {
       return queryClient.invalidateQueries({
-        predicate: (query) => query.queryKey === 'profile',
+        predicate: (query) => query.queryKey === 'users/profile',
       });
     },
   });
@@ -26,7 +26,7 @@ export const useUploadProfilePic = () => {
     onError: handlerError,
     onSettled: () => {
       return queryClient.invalidateQueries({
-        predicate: (query) => query.queryKey === 'profile',
+        predicate: (query) => query.queryKey === 'users/profile',
       });
     },
   });

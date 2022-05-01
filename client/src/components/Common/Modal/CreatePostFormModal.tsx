@@ -21,19 +21,17 @@ interface InputProps {
   text: string;
 }
 
+const defaultValues = { text: '', image: undefined };
+
 export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
-  const {
-    control,
-    handleSubmit,
-    watch,
-    reset,
-    resetField,
-    formState: { errors, dirtyFields },
-  } = useForm<InputProps>({
-    defaultValues: { text: '', image: undefined },
+  const methods = useForm<InputProps>({
+    defaultValues,
     resolver: yupResolver(postSchema),
     mode: 'onChange',
   });
+
+  const { control, handleSubmit, watch, reset, resetField, formState } = methods;
+
   const { mutateAsync, isLoading } = useCreatePost();
   const handleClose = () => {
     reset();
@@ -53,11 +51,11 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
   };
 
   useEffect(() => {
-    if (errors?.image) {
-      toast.error(`🦄 ${errors.image.message}!`);
+    if (formState.errors?.image) {
+      toast.error(`🦄 ${formState.errors.image.message}!`);
     }
     resetField('image');
-  }, [errors?.image, resetField]);
+  }, [formState.errors?.image, resetField]);
 
   return (
     <>
@@ -84,7 +82,8 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
                 )}
               />
 
-              {/* Image */}
+              {/* -------------------------------- */}
+              {/* --------Start Image Upload-------- */}
               <Controller
                 control={control}
                 name="image"
@@ -110,6 +109,8 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
                 <Image url={URL.createObjectURL(watch('image')[0])} />
               </Box>
             )}
+            {/* --------End Image Upload-------- */}
+            {/* -------------------------------- */}
           </form>
         </DialogContent>
 
@@ -124,7 +125,7 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
             form="createPostForm"
             fullWidth
             sx={styles.button}
-            disabled={!dirtyFields['text'] || Boolean(errors.text?.message)}
+            disabled={!formState.dirtyFields['text'] || Boolean(formState.errors.text?.message)}
           >
             Post
           </LoadingButton>

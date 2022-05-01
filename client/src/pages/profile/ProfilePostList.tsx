@@ -1,15 +1,15 @@
 import { useRef, useState } from 'react';
 import { Typography } from '@mui/material';
 
-import { useMyPosts } from 'RQhooks';
+import { usePostsByPostedBy } from 'RQhooks';
 import { limitPosts } from 'contants/pagination';
 import { LoadMoreInView } from 'components/App';
 import { PostList } from 'components/Common';
 import { PostSkeleton } from 'components/Common/Variants';
 
-export const TabMyPostList = () => {
+export const ProfilePostList = ({ userId = '' }) => {
   const [limit, setLimit] = useState(limitPosts);
-  const { data, isLoading, isFetching } = useMyPosts({ limit });
+  const { data, isLoading, isFetching } = usePostsByPostedBy({ userId, limit });
 
   const countRef = useRef(0);
   return (

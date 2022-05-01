@@ -10,6 +10,7 @@ const userFrom: User = {
     url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
   },
   name: 'minh',
+  username: 'minhch.vn',
   email: 'minhch.vn@gmail.com',
   role: 'admin',
   createdAt: '2022-03-08T14:12:58.562Z',
@@ -20,6 +21,7 @@ const userFrom: User = {
 const userTo: User = {
   name: 'minh',
   email: 'minhch.vn@gmail.com',
+  username: 'minhch.vn',
   role: 'admin',
   createdAt: '2022-03-08T14:12:58.562Z',
   updatedAt: '2022-03-08T14:25:39.750Z',

@@ -8,9 +8,13 @@ type options = {
   search?: string;
 };
 
-export const useGetPofile = () => {
-  return useQuery('profile', userApi.getProfile, {
+export const useGetPofile = ({ username = 'profile' }, options?: options) => {
+  const key = username === 'profile' ? 'profile' : `username/${username}`;
+  const queryKey = `users/${key}`;
+
+  return useQuery(queryKey, userApi.getProfile, {
     onError: handlerError,
+    ...options,
   });
 };
 

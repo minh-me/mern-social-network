@@ -7,7 +7,7 @@ import { LoadMoreButton } from 'components/App';
 import { PostList } from 'components/Common';
 import { PostSkeleton } from 'components/Common/Variants';
 
-export const Tab_PostList = ({ search = '' }) => {
+export const TabPostList = ({ search = '' }) => {
   const [limit, setLimit] = useState(limitPosts);
   const { data, isLoading, isFetching } = usePosts(
     { limit, search },

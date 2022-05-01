@@ -14,6 +14,12 @@ const userSchema = Schema(
       required: true,
       trim: true,
     },
+    username: {
+      type: String,
+      trim: true,
+      unique: true,
+      index: true,
+    },
     email: {
       type: String,
       required: true,
@@ -37,6 +43,8 @@ const userSchema = Schema(
     coverPhoto: {
       id: { type: String, select: false },
       url: String,
+      pc: String,
+      mobile: String,
     },
     profilePic: {
       type: {
@@ -71,6 +79,11 @@ userSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 8)
   }
+
+  if (this.isModified('email')) {
+    this.username = this.email.split('@')[0]
+  }
+
   next()
 })
 
@@ -89,7 +102,7 @@ userSchema.methods = {
 userSchema.plugin(toJSON)
 userSchema.plugin(paginate)
 
-userSchema.index({ name: 'text', email: 'text' })
+userSchema.index({ name: 'text', email: 'text', username: 'text' })
 
 /**
  * @typedef User

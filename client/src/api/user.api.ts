@@ -4,8 +4,8 @@ import axiosInstance from 'utils/axiosInstance';
 
 const userUrl = '/api/users';
 export const userApi = {
-  getProfile(): Promise<User> {
-    return axiosInstance.get(`${userUrl}/profile`);
+  getProfile({ queryKey = ['users/profile'] }): Promise<User> {
+    return axiosInstance.get(`api/${queryKey[0]}`);
   },
 
   getUsers({ queryKey = ['users?page=1&limit=1'] }): Promise<UsersResponse> {
