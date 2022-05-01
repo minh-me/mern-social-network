@@ -97,6 +97,40 @@ const updateProfile = catchAsync(async (req, res, next) => {
   res.send(user)
 })
 
+// Followers: danh sách người theo dõi mình
+// Following: danh sách người mình đang theo dõi
+
+// Để follow hoặc unfollow
+// 1. Nếu following của mình tồn tại thì unfollow
+// Ngược lại thì follow
+// 2. Update following của user hiện tại
+// 3. Update followers của user cần [follow or unfollow]
+
+/**
+ * Follow user
+ * @PATCH api/users/:id/follow
+ * @access private
+ */
+const followUser = catchAsync(async (req, res, next) => {
+  const { id } = req.params
+  const user = req.user
+
+  const isFollowing = user.following && user.following.includes(id)
+  const options = isFollowing ? '$pull' : '$addToSet'
+
+  const followUser = await userService.updateById(id, {
+    [options]: { followers: user.id },
+  })
+
+  const userUpdated = await userService.updateById(user.id, {
+    [options]: { following: followUser.id },
+  })
+
+  req.user = userUpdated
+
+  res.send(userUpdated)
+})
+
 export {
   createUser,
   getUsers,
@@ -106,4 +140,5 @@ export {
   getProfile,
   updateProfile,
   getUserByUsername,
+  followUser,
 }
