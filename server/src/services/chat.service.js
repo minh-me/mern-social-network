@@ -13,7 +13,6 @@ const queryChats = async (filter, options) => {
     page: 'page',
     totalPages: 'totalPages',
     limit: 'limit',
-    totalDocs: 'totalChats',
   }
   options = { ...options, customLabels }
   const chats = await Chat.paginate(filter, options)

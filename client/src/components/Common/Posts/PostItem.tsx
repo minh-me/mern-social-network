@@ -10,17 +10,7 @@ type PostItemProps = {
 
 export const PostItem: FC<PostItemProps> = memo(({ post }) => {
   return (
-    <Box
-      px={2}
-      pt={3}
-      pb={2}
-      sx={{
-        display: 'flex',
-        alignItems: 'flex-start',
-        maxWidth: '100%',
-        borderBottom: '1px solid #38444d',
-      }}
-    >
+    <Box sx={styles.container}>
       {/* User info */}
       <Box px={2} sx={{ width: '100%' }}>
         <PostHeader user={post.postedBy} postCreated={post.createdAt} />
@@ -37,11 +27,23 @@ export const PostItem: FC<PostItemProps> = memo(({ post }) => {
           shares={post?.retweetUsers}
         />
         {/* Comment */}
-        {/* <Box>
+        <Box>
           <Divider sx={{ bgcolor: '#38444d', my: 2 }} />
           <CommentList />
-        </Box> */}
+        </Box>
       </Box>
     </Box>
   );
 });
+
+const styles = {
+  container: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    maxWidth: '100%',
+    borderBottom: '1px solid #38444d',
+    px: 2,
+    pt: 3,
+    pb: 2,
+  },
+};

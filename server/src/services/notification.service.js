@@ -13,7 +13,6 @@ const queryNotifications = async (filter, options) => {
     page: 'page',
     totalPages: 'totalPages',
     limit: 'limit',
-    totalDocs: 'totalNotifications',
   }
   options = { ...options, customLabels }
   const notifications = await Notification.paginate(filter, options)
