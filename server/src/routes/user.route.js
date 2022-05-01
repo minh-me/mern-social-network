@@ -22,12 +22,7 @@ router.get(
   userController.getUserByUsername
 )
 
-router.patch(
-  '/:id/follow',
-  auth(),
-  validate(mongodbId),
-  userController.followUser
-)
+router.patch('/:id/follow', auth(), validate(mongodbId), userController.follow)
 
 router
   .route('/')

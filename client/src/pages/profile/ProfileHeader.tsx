@@ -17,7 +17,7 @@ export const ProfileHeader = memo(({ user }: Props) => {
   const {
     state: { auth },
   } = useAppContext();
-
+  console.log({ user });
   const countRef = useRef(0);
   return (
     <>
@@ -35,7 +35,7 @@ export const ProfileHeader = memo(({ user }: Props) => {
             <IconsButtonOutlined>
               <LocalPostOfficeRoundedIcon fontSize="small" />
             </IconsButtonOutlined>
-            <FollowButton userId={user.id} isActive={user?.follwers?.includes(auth.user.id)} />
+            <FollowButton userId={user.id} isActive={user?.followers?.includes(auth.user.id)} />
           </Box>
         </>
       ) : (
@@ -43,7 +43,7 @@ export const ProfileHeader = memo(({ user }: Props) => {
       )}
       <ProfileInfo name={user.name} email={user.email} />
       <ProfileFollowers
-        followers={user?.follwers && user.follwers}
+        followers={user?.followers && user.followers}
         following={user?.following && user.following}
       />
     </>

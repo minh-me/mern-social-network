@@ -10,7 +10,10 @@ import { ProfileHeaderSkeleton } from 'components/Common/Variants';
 
 export const ProfilePage = () => {
   const { username } = useParams();
-  const { data: user, isLoading } = useGetPofile({ username });
+  const { data: user, isLoading } = useGetPofile(
+    { username },
+    { cacheTime: username === 'profile' ? 2 * 60 * 1000 : 5 * 60 * 1000 }
+  );
 
   const [searchParams, setSearchParams] = useSearchParams();
   const isTabReplies = searchParams.get('tab') === 'replies';

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { User } from 'interface';
+import { Link as LinkRoute } from 'react-router-dom';
 import { Avatar, Box, Link, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -14,11 +15,7 @@ export const PostHeader: FC<AuthorPostProps> = ({ user, postCreated }) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
       {/* Avatar */}
-      <Avatar
-        src={user.profilePic.url}
-        sx={{ border: '1px solid white', mr: 1, height: '34px', width: '34px' }}
-        alt={user.name}
-      />
+      <Avatar src={user.profilePic.url} sx={{ border: '1px solid white', mr: 1 }} alt={user.name} />
 
       <Box>
         <Box sx={{ display: 'flex' }}>
@@ -34,11 +31,13 @@ export const PostHeader: FC<AuthorPostProps> = ({ user, postCreated }) => {
               },
             }}
             underline="hover"
+            component={LinkRoute}
+            to={`/users/${user.username}`}
           >
             {user.name}
           </Link>
           <Typography fontSize={12} color="#999ea3" component="p" sx={{ mx: 1 }}>
-            @{user.email?.split('@')[0]}
+            @{user.username}
           </Typography>
         </Box>
         <Typography fontSize={12} color="#686868" component="p">

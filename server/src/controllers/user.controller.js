@@ -111,24 +111,24 @@ const updateProfile = catchAsync(async (req, res, next) => {
  * @PATCH api/users/:id/follow
  * @access private
  */
-const followUser = catchAsync(async (req, res, next) => {
+const follow = catchAsync(async (req, res, next) => {
   const { id } = req.params
   const user = req.user
 
   const isFollowing = user.following && user.following.includes(id)
   const options = isFollowing ? '$pull' : '$addToSet'
 
-  const followUser = await userService.updateById(id, {
+  const userFollow = await userService.updateById(id, {
     [options]: { followers: user.id },
   })
 
   const userUpdated = await userService.updateById(user.id, {
-    [options]: { following: followUser.id },
+    [options]: { following: userFollow.id },
   })
 
   req.user = userUpdated
 
-  res.send(userUpdated)
+  res.send(userFollow)
 })
 
 export {
@@ -140,5 +140,5 @@ export {
   getProfile,
   updateProfile,
   getUserByUsername,
-  followUser,
+  follow,
 }
