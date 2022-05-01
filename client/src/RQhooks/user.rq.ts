@@ -1,5 +1,5 @@
 import { userApi } from 'api/user.api';
-import { useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { handlerError } from 'utils/handleError';
 
 type options = {
@@ -11,7 +11,9 @@ type options = {
 export const useGetPofile = ({ username = 'profile' }, options?: options) => {
   const key = username === 'profile' ? 'profile' : `username/${username}`;
   const queryKey = `users/${key}`;
+  const queryClient = useQueryClient();
 
+  queryClient.setQueryData('profileKey', queryKey);
   return useQuery(queryKey, userApi.getProfile, {
     onError: handlerError,
     ...options,
@@ -32,5 +34,23 @@ export const useUsers = (
   return useQuery(queryKey, userApi.getUsers, {
     ...options,
     onError: handlerError,
+  });
+};
+
+export const useFollow = () => {
+  const queryClient = useQueryClient();
+  const profileKey = queryClient.getQueryData<string>('profileKey');
+
+  return useMutation(userApi.follow, {
+    onError: handlerError,
+    onSuccess: (data) => {
+      console.log({ dataSuccess: data });
+    },
+    onSettled: (data) => {
+      if (!profileKey) return;
+      queryClient.setQueryData(profileKey, () => {
+        return data;
+      });
+    },
   });
 };

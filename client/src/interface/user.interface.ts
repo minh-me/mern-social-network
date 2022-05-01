@@ -18,7 +18,7 @@ export interface User {
   };
   authKey?: string;
 
-  follwers?: string[];
+  followers?: string[];
   following?: string[];
 
   createdAt?: string;

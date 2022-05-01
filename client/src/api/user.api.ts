@@ -31,4 +31,8 @@ export const userApi = {
   deleteUser(userId: string) {
     return axios.delete(`${userUrl}/${userId}`);
   },
+
+  follow(userId: string): Promise<User> {
+    return axiosInstance.patch(`${userUrl}/${userId}/follow`);
+  },
 };

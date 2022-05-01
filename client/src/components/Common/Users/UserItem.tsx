@@ -20,7 +20,7 @@ export const UserItem: FC<UserItemProps> = ({ user }) => {
           @{user.username}
         </Typography>
         <Typography fontSize={12} color="#999ea3" component="span">
-          {user?.follwers?.length} followers
+          {user?.followers?.length} followers
         </Typography>
       </Box>
       <Box>
