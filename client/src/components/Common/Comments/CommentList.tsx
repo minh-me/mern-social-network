@@ -3,10 +3,16 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUp from '@mui/icons-material/ArrowDropUp';
 import { CommentForm } from './CommentForm';
 import { CommentItem } from './CommentItem';
+import { memo } from 'react';
+import { useCommentsByPost } from 'RQhooks';
 
-type Props = {};
+type Props = {
+  postId: string;
+};
 
-export const CommentList = (props: Props) => {
+export const CommentList = memo(({ postId }: Props) => {
+  const { data } = useCommentsByPost({ postId });
+  console.log({ data });
   return (
     <>
       <Box my={2}>
@@ -75,4 +81,4 @@ export const CommentList = (props: Props) => {
       </Box>
     </>
   );
-};
+});

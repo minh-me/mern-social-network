@@ -17,7 +17,7 @@ router
 router.get(
   '/:postId/post',
   auth(),
-  validate(commentValidation.getCommentsByPost),
+  validate(commentValidation.getComments),
   commentController.getCommentsByPost
 )
 

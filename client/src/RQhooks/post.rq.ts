@@ -4,13 +4,7 @@ import { useAppContext } from 'hooks/useAppContext';
 import { Post } from 'interface';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { handlerError } from 'utils/handleError';
-
-type options = {
-  enabled?: boolean;
-  cacheTime?: number;
-  staleTime?: number;
-  search?: string;
-};
+import { options } from './options.type';
 
 export const usePosts = (
   { search = '', page = 1, limit = 1, sort = '-createdAt' },
@@ -23,8 +17,8 @@ export const usePosts = (
   queryClient.setQueryData('postsKey', queryKey);
 
   return useQuery(queryKey, postApi.getPosts, {
-    ...options,
     onError: handlerError,
+    ...options,
   });
 };
 

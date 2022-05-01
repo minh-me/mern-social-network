@@ -1,7 +1,7 @@
 import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
-import { commentService } from '../services'
+import { commentService, postService } from '../services'
 
 /**
  * Create a comment
@@ -13,6 +13,11 @@ const createComment = catchAsync(async (req, res) => {
     ...req.body,
     user: req.user.id,
   })
+
+  await postService.updatePostById(req.body.post, {
+    $push: { comments: comment.id },
+  })
+
   res.status(201).json(comment)
 })
 
@@ -100,6 +105,11 @@ const replyComment = catchAsync(async (req, res) => {
     ...req.body,
     user: req.user.id,
   })
+
+  await postService.updatePostById(req.body.post, {
+    $push: { comments: comment.id },
+  })
+
   res.send(comment)
 })
 
