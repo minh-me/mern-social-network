@@ -1,5 +1,5 @@
 import createError from 'http-errors'
-import { uploadService } from '.'
+import { postService, uploadService } from '.'
 import { User } from '../models'
 
 /**
@@ -37,6 +37,16 @@ const getUserById = async userId => {
  */
 const getUserByEmail = async email => {
   const user = await User.findOne({ email })
+  return user
+}
+
+/**
+ * Find user by email
+ * @param {string} username
+ * @returns {Promise<user>}
+ */
+const getUserByUsername = async username => {
+  const user = await User.findOne({ username })
   return user
 }
 
@@ -123,9 +133,11 @@ const updateById = async (userId, body) => {
  * @returns
  */
 const updateProfilePic = async (userId, avatar) => {
-  const user = await User.findByIdAndUpdate(userId, avatar).select('+avatar.id')
-  if (user.avatar.id) {
-    await uploadService.destroy(user.avatar.id)
+  const user = await User.findByIdAndUpdate(userId, avatar).select(
+    '+profilePic.id'
+  )
+  if (user.profilePic?.id) {
+    await uploadService.destroy(user.profilePic.id)
   }
   return user
 }
@@ -140,8 +152,7 @@ const updateCoverPhoto = async (userId, coverPhoto) => {
   const user = await User.findByIdAndUpdate(userId, coverPhoto).select(
     '+coverPhoto.id'
   )
-  console.log({ user })
-  if (user.coverPhoto.id) {
+  if (user.coverPhoto?.id) {
     await uploadService.destroy(user.coverPhoto.id)
   }
   return user
@@ -173,7 +184,20 @@ const deleteUserById = async userId => {
   if (!user) {
     throw createError.NotFound()
   }
+
+  if (user.coverPhoto?.id) {
+    await uploadService.destroy(user.coverPhoto.id)
+  }
+
+  if (user.profilePic?.id) {
+    await uploadService.destroy(user.profilePic.id)
+  }
+
+  // Delete all posts by posted=user
+  await postService.deletePosts({ postedBy: user.id })
   const result = await user.remove()
+
+  // success
   return result
 }
 
@@ -190,4 +214,5 @@ export {
   updateById,
   updateProfilePic,
   updateCoverPhoto,
+  getUserByUsername,
 }

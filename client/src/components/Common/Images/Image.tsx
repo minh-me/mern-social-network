@@ -13,6 +13,14 @@ export const Image: FC<Props> = memo(({ url, sx }) => {
   }, [url]);
 
   return (
-    <img style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'cover', ...sx }} src={url} />
+    <img
+      style={{
+        maxWidth: '100%',
+        maxHeight: '100%',
+        objectFit: 'cover',
+        ...sx,
+      }}
+      src={url}
+    />
   );
 });

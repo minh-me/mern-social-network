@@ -1,31 +1,51 @@
-import { ProfileHeaderSkeleton } from 'components/Common/Variants';
-import { useRef } from 'react';
-import { useGetPofile } from 'RQhooks';
-import { ProfileButtons } from './components/ProfileButtons';
+import { memo, useRef } from 'react';
+import { Box } from '@mui/material';
+import LocalPostOfficeRoundedIcon from '@mui/icons-material/LocalPostOfficeRounded';
+
+import { useAppContext } from 'hooks/useAppContext';
+import { User } from 'interface';
+import { FollowButton, IconsButtonOutlined } from 'components/Common/Buttons';
 import { ProfileFollowers } from './components/ProfileFollowers';
 import { ProfileInfo } from './components/ProfileInfo';
 import { ProfilePhoto } from './components/ProfilePhoto';
 
-export const ProfileHeader = () => {
-  const { data, isLoading } = useGetPofile();
-  console.log({ data });
+type Props = {
+  user: User;
+};
+
+export const ProfileHeader = memo(({ user }: Props) => {
+  const {
+    state: { auth },
+  } = useAppContext();
+
   const countRef = useRef(0);
   return (
     <>
       {countRef.current++}
-      {isLoading ? (
-        <ProfileHeaderSkeleton />
-      ) : data ? (
+
+      <ProfilePhoto
+        coverPhoto={user?.coverPhoto?.pc || user?.coverPhoto?.url}
+        profilePic={user.profilePic.url}
+      />
+
+      {/* Profile buttons */}
+      {auth?.user && user.id !== auth.user.id ? (
         <>
-          <ProfilePhoto coverPhoto={data?.coverPhoto?.url} profilePic={data.profilePic.url} />
-          <ProfileButtons />
-          <ProfileInfo name={data.name} email={data.email} />
-          <ProfileFollowers
-            followers={data?.follwers && data.follwers}
-            following={data?.following && data.following}
-          />
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} px={2} mt={2}>
+            <IconsButtonOutlined>
+              <LocalPostOfficeRoundedIcon fontSize="small" />
+            </IconsButtonOutlined>
+            <FollowButton userId={user.id} isActive={user?.follwers?.includes(auth.user.id)} />
+          </Box>
         </>
-      ) : null}
+      ) : (
+        <Box my={7} />
+      )}
+      <ProfileInfo name={user.name} email={user.email} />
+      <ProfileFollowers
+        followers={user?.follwers && user.follwers}
+        following={user?.following && user.following}
+      />
     </>
   );
-};
+});

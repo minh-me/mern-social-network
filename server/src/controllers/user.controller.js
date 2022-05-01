@@ -48,6 +48,16 @@ const getUser = catchAsync(async (req, res) => {
 })
 
 /**
+ * Get info user when logged in
+ * @GET api/users/username/:username
+ * @access private
+ */
+const getUserByUsername = catchAsync(async (req, res) => {
+  const user = await userService.getUserByUsername(req.params.username)
+  res.send(user)
+})
+
+/**
  * Update a user by userId
  * @PATCH api/users/:userId
  * @access private
@@ -95,4 +105,5 @@ export {
   deleteUser,
   getProfile,
   updateProfile,
+  getUserByUsername,
 }

@@ -14,9 +14,14 @@ type Props = {
   title?: string;
   formId: string;
   onSubmit: SubmitHandler<ImageUploadFormProps>;
+  previewSize?: {
+    maxWidth?: string;
+    maxHeight?: string;
+    borderRadius?: string;
+  };
 };
 
-export const ImageUploadForm = ({ formId, onSubmit }: Props) => {
+export const ImageUploadForm = ({ formId, onSubmit, previewSize }: Props) => {
   const {
     control,
     handleSubmit,
@@ -60,14 +65,18 @@ export const ImageUploadForm = ({ formId, onSubmit }: Props) => {
             )}
           />
         </Box>
-
-        {/* Image Preview  */}
+      </form>
+      {/* Image Preview  */}
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         {watch('image') && (
-          <Box sx={styles.previewContainer}>
-            <Image url={URL.createObjectURL(watch('image')[0])} />
+          <Box sx={{ ...styles.previewContainer, ...previewSize }}>
+            <Image
+              url={URL.createObjectURL(watch('image')[0])}
+              sx={{ borderRadius: previewSize?.borderRadius ? previewSize?.borderRadius : '4px' }}
+            />
           </Box>
         )}
-      </form>
+      </Box>
     </>
   );
 };
@@ -78,7 +87,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     maxWidth: '100%',
-    maxHeight: '200px',
+    maxHeight: '300px',
     mt: 2,
   },
 };

@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <Routes>
             <Route path="/auth" element={<AuthLayout />}>
               <Route index element={<SignIn />} />
@@ -41,7 +41,7 @@ function App() {
               <Route path="/chat" element={<ChatPage />} />
               <Route path="/chat/new" element={<NewChatPage />} />
               <Route path="/message" element={<MessagePage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/users/:username" element={<ProfilePage />} />
             </Route>
           </Routes>
         </Container>

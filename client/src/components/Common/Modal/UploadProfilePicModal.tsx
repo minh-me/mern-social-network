@@ -32,13 +32,17 @@ export const UploadProfilePicModal: FC<ModalProps> = ({ open, setOpen }) => {
   return (
     <>
       <Dialog sx={{ bottom: 'inherit' }} scroll="paper" open={open} onClose={handleClose}>
-        <DialogTitle sx={styles.title}>Chnage Avatar</DialogTitle>
+        <DialogTitle sx={styles.title}>Change Avatar</DialogTitle>
         <DialogContent sx={styles.contentContainer}>
           {/* User info */}
           <UserInfo />
 
           {/* Input container */}
-          <ImageUploadForm formId="uploadProfilePic" onSubmit={onSubmit} />
+          <ImageUploadForm
+            formId="uploadProfilePic"
+            onSubmit={onSubmit}
+            previewSize={{ maxHeight: '300px', maxWidth: '300px', borderRadius: '50%' }}
+          />
         </DialogContent>
 
         {/* Button Post */}

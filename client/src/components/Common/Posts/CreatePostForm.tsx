@@ -9,6 +9,7 @@ const userFrom: User = {
   },
   name: 'minh',
   email: 'minhch.vn@gmail.com',
+  username: 'minhch.vn',
   role: 'admin',
   createdAt: '2022-03-08T14:12:58.562Z',
   updatedAt: '2022-03-08T14:25:39.750Z',

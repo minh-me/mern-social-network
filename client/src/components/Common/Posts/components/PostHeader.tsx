@@ -5,12 +5,12 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
-type PostAuthorProps = {
+type AuthorPostProps = {
   user: User;
   postCreated: string;
 };
 
-export const PostHeader: FC<PostAuthorProps> = ({ user, postCreated }) => {
+export const PostHeader: FC<AuthorPostProps> = ({ user, postCreated }) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
       {/* Avatar */}

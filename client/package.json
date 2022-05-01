@@ -25,6 +25,7 @@
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.2.2",
     "react-hook-form": "^7.28.1",
+    "react-intersection-observer": "^9.1.0",
     "react-query": "^3.35.0",
     "react-router-dom": "6",
     "react-scripts": "5.0.0",

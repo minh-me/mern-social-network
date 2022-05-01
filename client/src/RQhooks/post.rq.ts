@@ -28,13 +28,17 @@ export const usePosts = (
   });
 };
 
-export const useMyPosts = ({ page = 1, limit = 1, sort = '-createdAt' }, options?: options) => {
+export const usePostsByPostedBy = (
+  { userId = '', page = 1, limit = 1, sort = '-createdAt' },
+  options?: options
+) => {
   const queryClient = useQueryClient();
 
-  const queryKey = `posts/me?page=${page}&limit=${limit}&sort=${sort}`;
+  const queryKey = `posts/${userId}/postedBy?page=${page}&limit=${limit}&sort=${sort}`;
+
   queryClient.setQueryData('postsKey', queryKey);
 
-  return useQuery(queryKey, postApi.getPosts, {
+  return useQuery(queryKey, postApi.getPostsByPostedBy, {
     ...options,
     onError: handlerError,
   });

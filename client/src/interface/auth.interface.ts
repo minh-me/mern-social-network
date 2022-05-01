@@ -27,7 +27,7 @@ export interface AuthUserResponse {
   id: string;
   name: string;
   role: string;
-  email: string;
+  username: string;
   profilePic: {
     url: string;
   };

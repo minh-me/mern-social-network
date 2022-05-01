@@ -4,11 +4,14 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  username: string;
 
   role?: 'admin' | 'user';
   dateOfBirth?: string;
   coverPhoto?: {
     url: string;
+    pc?: string;
+    mobile?: string;
   };
   profilePic: {
     url: string;

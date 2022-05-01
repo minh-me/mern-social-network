@@ -1,13 +1,20 @@
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Title } from 'components/App';
-import { Tab } from 'components/Common/Buttons';
-import { TabMyPostList } from './Tab_MyPostList';
+import { ProfilePostList } from './ProfilePostList';
 import { ProfileHeader } from './ProfileHeader';
+import { ProfileTabs } from './components/ProfileTabs';
+import { useGetPofile } from 'RQhooks';
+import { ProfileHeaderSkeleton } from 'components/Common/Variants';
 
 export const ProfilePage = () => {
-  const isSelectedPosts = true;
+  const { username } = useParams();
+  const { data: user, isLoading } = useGetPofile({ username });
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isTabReplies = searchParams.get('tab') === 'replies';
+  console.log({ isTabReplies, isLoading });
   return (
     <>
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
@@ -15,18 +22,24 @@ export const ProfilePage = () => {
       </Box>
 
       {/* Header */}
-      <ProfileHeader />
 
-      {/* Tab control */}
-      <Box mt={4} mx={3} sx={{ display: 'flex', alignItems: 'center' }}>
-        <Tab onClick={() => console.log('Clicked!')} text="Posts" active={true} />
-        <Tab onClick={() => console.log('Clicked!')} text="Replies" active={!true} />
-      </Box>
+      {isLoading && <ProfileHeaderSkeleton />}
+
+      {user ? (
+        <>
+          <ProfileHeader user={user} />
+          <ProfileTabs isTabReplies={isTabReplies} setSearchParams={setSearchParams} />
+        </>
+      ) : (
+        <Typography textAlign="center" fontSize={16}>
+          Not found user
+        </Typography>
+      )}
 
       <Divider sx={{ borderBottom: '1px solid #38444d', my: 2, mt: 4 }} />
 
       {/* {!isSelectedPosts && <UserList data={userFroms} />} */}
-      {isSelectedPosts && <TabMyPostList />}
+      {!isTabReplies && user && <ProfilePostList userId={user.id} />}
     </>
   );
 };

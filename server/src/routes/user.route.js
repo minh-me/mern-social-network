@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { userValidation } from '../validations'
 import { auth, validate } from '../middlewares'
 import { userController } from '../controllers'
+import { getUserByUsername } from '../validations/user.validation'
 
 const router = new Router()
 
@@ -13,6 +14,13 @@ router
     validate(userValidation.updateProfile),
     userController.updateProfile
   )
+
+router.get(
+  '/username/:username',
+  auth(),
+  validate(getUserByUsername),
+  userController.getUserByUsername
+)
 
 router
   .route('/')

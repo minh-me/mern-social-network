@@ -27,11 +27,11 @@ const upload = async (path, options) => {
  * @returns
  */
 
-export const reSizeImage = (cloudinary_id, height, width) => {
+export const reSizeImage = (cloudinary_id, width, height) => {
   return cloudinary.url(cloudinary_id, {
     height,
     width,
-    crop: 'fill',
+    crop: 'scale',
     format: 'jpg',
   })
 }
@@ -68,6 +68,8 @@ const uploadCoverPhoto = async path => {
   const result = await upload(path, options)
   return {
     url: result.secure_url,
+    pc: reSizeImage(result.public_id, 820, 312),
+    mobile: reSizeImage(result.public_id, 640, 360),
     id: result.public_id,
   }
 }

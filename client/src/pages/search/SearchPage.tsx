@@ -5,8 +5,8 @@ import { Tab } from 'components/Common/Buttons/Tab';
 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FormSearch } from './FormSearch';
-import { Tab_PostList } from './Tab_PostList';
-import { Tab_UserList } from './Tab_UserList';
+import { TabPostList } from './Tab_PostList';
+import { TabUserList } from './Tab_UserList';
 
 export const SearchPage = () => {
   const location = useLocation();
@@ -37,10 +37,10 @@ export const SearchPage = () => {
       <Box sx={{ borderBottom: '1px solid #38444d' }} my={2} mt={4} />
 
       {/* result users */}
-      {!isSelectedPosts && <Tab_UserList search={search} />}
+      {!isSelectedPosts && <TabUserList search={search} />}
 
       {/* result posts */}
-      {isSelectedPosts && <Tab_PostList search={search} />}
+      {isSelectedPosts && <TabPostList search={search} />}
     </>
   );
 };

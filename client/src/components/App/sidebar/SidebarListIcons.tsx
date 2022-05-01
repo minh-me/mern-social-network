@@ -81,7 +81,7 @@ export const SidebarListIcons = () => {
         </ListItemButton>
       </NavLink>
 
-      <NavLink to="/profile">
+      <NavLink to="/users/profile">
         <ListItemButton>
           <ListItemIcon sx={{ minWidth: '30px' }}>
             <AccountBoxRoundedIcon sx={{ color: 'white' }} />

@@ -17,7 +17,7 @@ export const UserInfo = () => {
           {auth?.user.name}
         </Typography>
         <Typography fontSize={13} color="#999ea3" component="p">
-          @{auth?.user.email.split('@')[0]}
+          @{auth?.user.username}
         </Typography>
       </Box>
     </Box>

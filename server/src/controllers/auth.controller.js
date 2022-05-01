@@ -60,7 +60,7 @@ const login = catchAsync(async (req, res) => {
     user: {
       id: user.id,
       name: user.name,
-      email: user.email,
+      usenrame: user.username,
       role: user.role,
       profilePic: user.profilePic,
     },
@@ -86,7 +86,7 @@ const google = catchAsync(async (req, res) => {
     user: {
       id: user.id,
       name: user.name,
-      email: user.email,
+      usenrame: user.username,
       role: user.role,
       profilePic: user.profilePic,
     },
@@ -120,7 +120,7 @@ const getRefreshToken = catchAsync(async (req, res, next) => {
     user: {
       id: user.id,
       name: user.name,
-      email: user.email,
+      usenrame: user.username,
       role: user.role,
       profilePic: user.profilePic,
     },
@@ -165,7 +165,7 @@ const resetPassword = catchAsync(async (req, res) => {
     user: {
       id: user.id,
       name: user.name,
-      email: user.email,
+      usenrame: user.username,
       role: user.role,
       profilePic: user.profilePic,
     },

@@ -4,7 +4,7 @@ import { UserListSkeleton } from 'components/Common/Variants';
 import { limitUsers } from 'contants/pagination';
 import { useState } from 'react';
 import { useUsers } from 'RQhooks';
-export const Tab_UserList = ({ search = '' }) => {
+export const TabUserList = ({ search = '' }) => {
   const [limit, setLimit] = useState(limitUsers);
   const { data, isFetching, isLoading } = useUsers({ limit, search });
 
