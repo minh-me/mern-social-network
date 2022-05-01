@@ -42,8 +42,8 @@ const createPost = async postBody => {
 /**
  * Update post by id
  * @param {ObjectId} postId
- * @param {Object} body
- * @returns {Promise<post>}
+ * @param {PostBody} body
+ * @returns {Promise<Post>}
  */
 const updatePostById = async (postId, body) => {
   const post = await Post.findByIdAndUpdate(postId, body, { new: true })

@@ -17,13 +17,10 @@ const replyComment = {
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
 }
 
-const getCommentsByPost = {
+const getComments = {
   postId: yup
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
-}
-
-const getComments = {
   commentId: yup
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
@@ -70,5 +67,4 @@ export {
   updateComment,
   commendId,
   replyComment,
-  getCommentsByPost,
 }

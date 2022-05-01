@@ -116,8 +116,8 @@ const updateUserById = async (userId, body) => {
 /**
  * Update One
  * @param {ObjectId} userId
- * @param {*} body
- * @returns {Promise<user>}
+ * @param {userBody} body
+ * @returns {Promise<User>}
  */
 
 const updateById = async (userId, body) => {

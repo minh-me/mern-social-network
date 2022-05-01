@@ -1,3 +1,4 @@
+import { CommentBasic } from './comment.interface';
 import { Info } from './paginate.inteface';
 import { User } from './user.interface';
 
@@ -10,10 +11,10 @@ export interface Post {
   };
   postedBy: User;
   pinned?: boolean;
-  likes?: [string];
-  retweetUsers?: [string];
-  retweetData?: [string];
-  comments?: [string];
+  likes?: string[];
+  retweetUsers?: string[];
+  retweetData?: string[];
+  comments?: CommentBasic[];
 
   createdAt: string;
   updatedAt?: string;

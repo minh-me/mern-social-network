@@ -1,12 +1,7 @@
 import { userApi } from 'api/user.api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { handlerError } from 'utils/handleError';
-
-type options = {
-  enabled?: boolean;
-  cacheTime?: number;
-  search?: string;
-};
+import { options } from './options.type';
 
 export const useGetPofile = ({ username = 'profile' }, options?: options) => {
   const key = username === 'profile' ? 'profile' : `username/${username}`;
@@ -32,8 +27,8 @@ export const useUsers = (
   queryClient.setQueryData('usersKey', queryKey);
 
   return useQuery(queryKey, userApi.getUsers, {
-    ...options,
     onError: handlerError,
+    ...options,
   });
 };
 
