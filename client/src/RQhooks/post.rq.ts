@@ -85,10 +85,11 @@ export const useLikePost = () => {
       });
       handlerError(err);
     },
-    onSettled: () => {
-      return queryClient.invalidateQueries({
-        predicate: (query) => query.queryKey.toString().startsWith('posts'),
-      });
+    onSettled: (data) => {
+      console.log({ data });
+      // return queryClient.invalidateQueries({
+      //   predicate: (query) => query.queryKey.toString().startsWith('posts'),
+      // });
     },
   });
 };

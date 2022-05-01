@@ -1,5 +1,4 @@
 import { LoadingButton } from '@mui/lab';
-import { Button } from '@mui/material';
 import { pink } from '@mui/material/colors';
 import { useFollow } from 'RQhooks';
 
@@ -22,6 +21,7 @@ export const FollowButton = ({ isActive = false, userId = '' }) => {
     </LoadingButton>
   );
 };
+
 const styles = {
   buttonFollow: {
     color: pink[400],

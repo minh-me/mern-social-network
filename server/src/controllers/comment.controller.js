@@ -2,7 +2,6 @@ import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
 import { commentService } from '../services'
-import { tranSuccess } from '../_lang/en'
 
 /**
  * Create a comment
@@ -27,6 +26,32 @@ const getComments = catchAsync(async (req, res) => {
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
   const result = await commentService.queryComments(filter, options)
   res.send(result)
+})
+
+/**
+ * Reply comment
+ * @Post api/comments/:commentId/reply
+ * @access private
+ */
+const getReplies = catchAsync(async (req, res) => {
+  const filter = { reply: req.params.commentId }
+  const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
+  options.populate = 'user'
+  const replies = await commentService.queryComments(filter, options)
+  res.send(replies)
+})
+
+/**
+ * Reply comment
+ * @Post api/comments/:postId/reply
+ * @access private
+ */
+const getCommentsByPost = catchAsync(async (req, res) => {
+  const filter = { post: req.params.postId, reply: { $eq: null } }
+  const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
+  options.populate = 'user'
+  const comments = await commentService.queryComments(filter, options)
+  res.send(comments)
 })
 
 /**
@@ -65,4 +90,26 @@ const deleteComment = catchAsync(async (req, res) => {
   res.send(comment)
 })
 
-export { createComment, getComments, getComment, updateComment, deleteComment }
+/**
+ * Reply comment
+ * @Post api/comments/:commentId/reply
+ * @access private
+ */
+const replyComment = catchAsync(async (req, res) => {
+  const comment = await commentService.replyComment(req.params.commentId, {
+    ...req.body,
+    user: req.user.id,
+  })
+  res.send(comment)
+})
+
+export {
+  createComment,
+  getComments,
+  getComment,
+  updateComment,
+  deleteComment,
+  replyComment,
+  getReplies,
+  getCommentsByPost,
+}

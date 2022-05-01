@@ -43,9 +43,6 @@ export const useFollow = () => {
 
   return useMutation(userApi.follow, {
     onError: handlerError,
-    onSuccess: (data) => {
-      console.log({ dataSuccess: data });
-    },
     onSettled: (data) => {
       if (!profileKey) return;
       queryClient.setQueryData(profileKey, () => {

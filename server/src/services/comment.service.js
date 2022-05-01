@@ -13,7 +13,6 @@ const queryComments = async (filter, options) => {
     page: 'page',
     totalPages: 'totalPages',
     limit: 'limit',
-    totalDocs: 'totalComments',
   }
   options = { ...options, customLabels }
   const comments = await Comment.paginate(filter, options)
@@ -64,10 +63,40 @@ const deleteCommentById = async commentId => {
   return comment
 }
 
+/**
+ * Delte comment by id
+ * @param {ObjectId} commentId
+ * @returns {Promise<comment>}
+ */
+const getReplies = async commentId => {
+  const comments = await Comment.find({ reply: commentId })
+  return comments
+}
+/**
+ * Delte comment by id
+ * @param {ObjectId} commentId
+ * @param {Object} body
+ * @returns {Promise<comment>}
+ */
+const replyComment = async (commentId, body) => {
+  const comment = await Comment.findById(commentId)
+  if (!comment) throw new createHttpError.NotFound('Not found comment.')
+
+  const newComment = await Comment.create({
+    ...body,
+    post: comment.post,
+    reply: comment.id,
+  })
+
+  return newComment
+}
+
 export {
   createComment,
   queryComments,
   getCommentById,
   updateCommentById,
   deleteCommentById,
+  replyComment,
+  getReplies,
 }

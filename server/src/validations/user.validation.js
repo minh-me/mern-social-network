@@ -48,7 +48,7 @@ const updateUser = {
   }),
 }
 
-const deleteUser = {
+const userId = {
   userId: yup
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
@@ -65,20 +65,12 @@ const updateProfile = {
   }),
 }
 
-const mongodbId = {
-  id: yup
-    .string()
-    .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
-    .required(),
-}
-
 export {
   createUser,
   getUsers,
   getUser,
   updateUser,
-  deleteUser,
+  userId,
   updateProfile,
   getUserByUsername,
-  mongodbId,
 }

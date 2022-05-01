@@ -13,7 +13,6 @@ const queryMessages = async (filter, options) => {
     page: 'page',
     totalPages: 'totalPages',
     limit: 'limit',
-    totalDocs: 'totalMessages',
   }
   options = { ...options, customLabels }
   const messages = await Message.paginate(filter, options)

@@ -14,6 +14,26 @@ router
   )
   .get(validate(commentValidation.getComments), commentController.getComments)
 
+router.get(
+  '/:postId/post',
+  auth(),
+  validate(commentValidation.getCommentsByPost),
+  commentController.getCommentsByPost
+)
+
+router.post(
+  '/:commentId/reply',
+  auth(),
+  validate(commentValidation.replyComment),
+  commentController.replyComment
+)
+router.get(
+  '/:commentId/replies',
+  auth(),
+  validate(commentValidation.getComments),
+  commentController.getReplies
+)
+
 router
   .route('/:commentId')
   .get(validate(commentValidation.getComment), commentController.getComment)
@@ -24,7 +44,7 @@ router
   )
   .delete(
     auth(),
-    validate(commentValidation.deleteComment),
+    validate(commentValidation.commendId),
     commentController.deleteComment
   )
 

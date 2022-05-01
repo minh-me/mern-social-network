@@ -2,7 +2,6 @@ import { Router } from 'express'
 import { userValidation } from '../validations'
 import { auth, validate } from '../middlewares'
 import { userController } from '../controllers'
-import { getUserByUsername, mongodbId } from '../validations/user.validation'
 
 const router = new Router()
 
@@ -18,11 +17,16 @@ router
 router.get(
   '/username/:username',
   auth(),
-  validate(getUserByUsername),
+  validate(userValidation.getUserByUsername),
   userController.getUserByUsername
 )
 
-router.patch('/:id/follow', auth(), validate(mongodbId), userController.follow)
+router.patch(
+  '/:id/follow',
+  auth(),
+  validate(userValidation.userId),
+  userController.follow
+)
 
 router
   .route('/')
@@ -43,7 +47,7 @@ router
   )
   .delete(
     // auth('admin'),
-    validate(userValidation.deleteUser),
+    validate(userValidation.userId),
     userController.deleteUser
   )
 export default router

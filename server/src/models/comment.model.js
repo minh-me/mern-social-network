@@ -4,8 +4,14 @@ import { paginate, toJSON } from './plugins'
 const commentSchema = mongoose.Schema(
   {
     content: { type: String, required: true, trim: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User' },
-    post: { type: Schema.Types.ObjectId, ref: 'Post' },
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    post: {
+      type: Schema.Types.ObjectId,
+      ref: 'Post',
+      required: true,
+      index: true,
+    },
+    reply: { type: Schema.Types.ObjectId, ref: 'Comment', index: true },
   },
   {
     timestamps: true,

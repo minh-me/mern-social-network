@@ -4,10 +4,29 @@ import config from './config.validation'
 
 const createComment = {
   content: yup.string().required(),
-  post: yup.string().required(),
+  post: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
+    .required(),
+}
+
+const replyComment = {
+  content: yup.string().required(),
+  commentId: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
+}
+
+const getCommentsByPost = {
+  postId: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
 }
 
 const getComments = {
+  commentId: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
   content: yup.string(),
   post: yup
     .string()
@@ -37,11 +56,19 @@ const updateComment = {
   content: yup.string().required(),
 }
 
-const deleteComment = {
+const commendId = {
   commentId: yup
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
 }
 
-export { createComment, getComments, getComment, updateComment, deleteComment }
+export {
+  createComment,
+  getComments,
+  getComment,
+  updateComment,
+  commendId,
+  replyComment,
+  getCommentsByPost,
+}
