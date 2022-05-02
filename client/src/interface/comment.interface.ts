@@ -2,7 +2,8 @@ import { Info } from './paginate.inteface';
 import { User } from './user.interface';
 
 export interface Comment {
-  content: string;
+  id: string;
+  text: string;
   user: User;
   post: string;
   reply?: string;
@@ -11,11 +12,7 @@ export interface Comment {
   updatedAt?: string;
 }
 
-export interface CommentBasic extends Omit<Comment, 'user'> {
-  user: string;
-}
-
 export interface CommentsResponse {
-  comment: Comment;
+  comments: Comment[];
   info: Info;
 }

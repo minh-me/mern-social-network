@@ -11,8 +11,11 @@ type Props = {};
 export const MessageFooter = (props: Props) => {
   const ref = useRef<HTMLTextAreaElement | null>(null);
 
-  const handleInputChange = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    console.log({ text: e.target });
+  const handleInputChange = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    console.log({ text: event.target });
+    if (event.key === 'Enter') {
+      console.log('do validate');
+    }
   };
   return (
     <Box sx={styles.textareaContainer}>

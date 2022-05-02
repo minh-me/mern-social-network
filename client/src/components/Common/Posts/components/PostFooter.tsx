@@ -1,10 +1,10 @@
 import { FC, useRef } from 'react';
 import { Box } from '@mui/material';
-import { CommentBasic } from 'interface';
+import { Comment } from 'interface';
 import { LikePostButton, CommentPostButton, SharePostButton } from 'components/Common/Buttons';
 
 type Props = {
-  comments: CommentBasic[] | [];
+  comments: Comment[] | [];
   shares: string[] | [];
   likes: string[] | [];
   postId: string;

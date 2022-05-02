@@ -2,14 +2,38 @@ import { Box, FormControl, InputAdornment, InputBase, IconButton, Avatar } from 
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
 import styled from '@emotion/styled';
+import { useAppContext } from 'hooks/useAppContext';
+import React, { useRef } from 'react';
+import { useCreateComment, useCreateReplyComment } from 'RQhooks';
 
-export const CommentForm = () => {
+export const CommentForm = ({ entryId = '', isReply = false }) => {
+  const {
+    state: { auth },
+  } = useAppContext();
+  const inputRef = useRef<HTMLInputElement>();
+
+  const { mutateAsync: comment } = useCreateComment();
+  const { mutateAsync: reply } = useCreateReplyComment(entryId);
+
+  const handleKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && inputRef.current?.value) {
+      if (isReply) {
+        await reply({ text: inputRef.current?.value });
+        inputRef.current.value = '';
+        return;
+      }
+
+      await comment({ text: inputRef.current?.value, post: entryId });
+      inputRef.current.value = '';
+    }
+  };
+
   return (
     <Box my={2} sx={{ display: 'flex', alignItems: 'center' }}>
       <Avatar
         sx={{ border: '1px solid white', height: 26, width: 26, mr: '4px' }}
-        alt="Remy Sharp"
-        src="https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png"
+        alt={auth?.user.name}
+        src={auth?.user.profilePic.url}
       />
 
       <FormControl
@@ -17,43 +41,16 @@ export const CommentForm = () => {
         variant="standard"
       >
         <Input
+          inputRef={inputRef}
           fullWidth
           placeholder="Enter comment.."
+          onKeyDown={handleKeyDown}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton
-                sx={{
-                  color: '#898b8e',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s',
-                  p: '4px',
-                  '&:hover': {
-                    bgcolor: '#3a3b3c',
-                  },
-                  svg: {
-                    height: 18,
-                    width: 18,
-                  },
-                }}
-              >
+              <IconButton sx={styles.icons}>
                 <EmojiEmotionsOutlinedIcon />
               </IconButton>
-              <IconButton
-                sx={{
-                  color: '#898b8e',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s',
-                  p: '4px',
-                  mr: 1,
-                  '&:hover': {
-                    bgcolor: '#3a3b3c',
-                  },
-                  svg: {
-                    height: 18,
-                    width: 18,
-                  },
-                }}
-              >
+              <IconButton sx={{ ...styles.icons, mr: 1 }}>
                 <PhotoCameraOutlinedIcon />
               </IconButton>
             </InputAdornment>
@@ -77,3 +74,19 @@ const Input = styled(InputBase)(() => ({
     },
   },
 }));
+
+const styles = {
+  icons: {
+    color: '#898b8e',
+    cursor: 'pointer',
+    transition: 'all 0.3s',
+    p: '4px',
+    '&:hover': {
+      bgcolor: '#3a3b3c',
+    },
+    svg: {
+      height: 18,
+      width: 18,
+    },
+  },
+};

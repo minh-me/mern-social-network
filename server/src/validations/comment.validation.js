@@ -3,7 +3,7 @@ import { transValidations } from '../_lang/en'
 import config from './config.validation'
 
 const createComment = {
-  content: yup.string().required(),
+  text: yup.string().required(),
   post: yup
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
@@ -11,27 +11,24 @@ const createComment = {
 }
 
 const replyComment = {
-  content: yup.string().required(),
-  commentId: yup
+  text: yup.string().required(),
+  reply: yup
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
 }
 
 const getComments = {
-  postId: yup
-    .string()
-    .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
-  commentId: yup
-    .string()
-    .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
-  content: yup.string(),
+  text: yup.string(),
   post: yup
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
   user: yup
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
-  role: yup.string(),
+  reply: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
+
   page: yup.number().integer(),
   limit: yup.number().integer(),
   sort: yup.string(),
@@ -50,7 +47,7 @@ const updateComment = {
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
-  content: yup.string().required(),
+  text: yup.string().required(),
 }
 
 const commendId = {

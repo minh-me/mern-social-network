@@ -14,21 +14,14 @@ router
   )
   .get(validate(commentValidation.getComments), commentController.getComments)
 
-router.get(
-  '/:postId/post',
-  auth(),
-  validate(commentValidation.getComments),
-  commentController.getCommentsByPost
-)
-
 router.post(
-  '/:commentId/reply',
+  '/:reply/reply',
   auth(),
   validate(commentValidation.replyComment),
   commentController.replyComment
 )
 router.get(
-  '/:commentId/replies',
+  '/:reply/replies',
   auth(),
   validate(commentValidation.getComments),
   commentController.getReplies

@@ -27,8 +27,9 @@ const createComment = catchAsync(async (req, res) => {
  * @access public
  */
 const getComments = catchAsync(async (req, res) => {
-  const filter = pick(req.query, [])
+  const filter = pick(req.query, ['post', 'comment', 'reply'])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
+  options.populate = 'user'
   const result = await commentService.queryComments(filter, options)
   res.send(result)
 })
@@ -39,7 +40,7 @@ const getComments = catchAsync(async (req, res) => {
  * @access private
  */
 const getReplies = catchAsync(async (req, res) => {
-  const filter = { reply: req.params.commentId }
+  const filter = { reply: req.params.reply }
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
   options.populate = 'user'
   const replies = await commentService.queryComments(filter, options)
@@ -52,7 +53,7 @@ const getReplies = catchAsync(async (req, res) => {
  * @access private
  */
 const getCommentsByPost = catchAsync(async (req, res) => {
-  const filter = { post: req.params.postId, reply: { $eq: null } }
+  const filter = { post: req.params.postId }
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
   options.populate = 'user'
   const comments = await commentService.queryComments(filter, options)
@@ -101,12 +102,14 @@ const deleteComment = catchAsync(async (req, res) => {
  * @access private
  */
 const replyComment = catchAsync(async (req, res) => {
-  const comment = await commentService.replyComment(req.params.commentId, {
+  console.log({ pos: req.params.reply })
+  const comment = await commentService.replyComment(req.params.reply, {
     ...req.body,
     user: req.user.id,
   })
 
-  await postService.updatePostById(req.body.post, {
+  console.log({ comment })
+  await postService.updatePostById(comment.post, {
     $push: { comments: comment.id },
   })
 
