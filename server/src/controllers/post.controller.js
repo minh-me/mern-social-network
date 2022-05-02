@@ -30,7 +30,7 @@ const getPosts = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['text', 'search'])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
-  options.populate = 'postedBy,comments'
+  options.populate = 'postedBy,comments,comments.user'
   const result = await postService.queryPosts(filter, options)
   res.send(result)
 })

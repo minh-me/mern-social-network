@@ -1,11 +1,11 @@
 import { PostActionButton } from './PostActionButton';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
-import { CommentBasic } from 'interface';
+import { Comment } from 'interface';
 import { useAppContext } from 'hooks/useAppContext';
 
 type Props = {
   toggleComment: () => void;
-  comments: CommentBasic[] | [];
+  comments: Comment[] | [];
 };
 
 export const CommentPostButton = ({ comments, toggleComment }: Props) => {
@@ -13,7 +13,7 @@ export const CommentPostButton = ({ comments, toggleComment }: Props) => {
     state: { auth },
   } = useAppContext();
 
-  const isCommented = comments.some((c) => c.user == auth?.user.id);
+  const isCommented = comments.some((c) => c.user.id === auth?.user.id);
 
   return (
     <PostActionButton

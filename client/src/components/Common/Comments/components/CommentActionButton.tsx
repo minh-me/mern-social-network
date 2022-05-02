@@ -5,7 +5,7 @@ import { FC } from 'react';
 type Props = {
   children: JSX.Element[] | JSX.Element | string;
   sx?: SxProps<Theme>;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: () => void;
 };
 
 export const CommentActionButton: FC<Props> = ({ children, sx, onClick }) => {

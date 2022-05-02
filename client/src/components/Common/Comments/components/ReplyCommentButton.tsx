@@ -1,7 +1,9 @@
 import { CommentActionButton } from './CommentActionButton';
 
-type Props = {};
+type Props = {
+  onClick: () => void;
+};
 
-export const ReplyCommentButton = (props: Props) => {
-  return <CommentActionButton>Phản hồi</CommentActionButton>;
+export const ReplyCommentButton = ({ onClick }: Props) => {
+  return <CommentActionButton onClick={onClick}>Phản hồi</CommentActionButton>;
 };

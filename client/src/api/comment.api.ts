@@ -13,13 +13,11 @@ export const commentApi = {
   },
 
   createComment(comment: {}): Promise<Comment> {
-    return axiosInstance.post(`api/comments`, comment, {
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return axiosInstance.post(`api/comments`, comment);
   },
 
-  replyComment(commentId = '', comment: {}): Promise<Comment> {
-    return axiosInstance.post(`api/comments/${commentId}/reply`, comment, {
+  replyComment(commentId: string, replyData: { text: string }): Promise<Comment> {
+    return axiosInstance.post(`api/comments/${commentId}/reply`, replyData, {
       headers: { 'Content-Type': 'application/json' },
     });
   },

@@ -35,7 +35,7 @@ export const PostItem: FC<PostItemProps> = memo(({ post }) => {
         {openComment && (
           <Box>
             <Divider sx={{ bgcolor: '#38444d', my: 2 }} />
-            <CommentList postId={post.id} />
+            <CommentList postId={post.id} comments={post?.comments || []} />
           </Box>
         )}
       </Box>
