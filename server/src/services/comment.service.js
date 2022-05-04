@@ -1,5 +1,6 @@
-import { Comment } from '../models'
 import createHttpError from 'http-errors'
+import { Comment } from '../models'
+import * as uploadService from './upload.service'
 
 /**
  * Get comments by query(filter, options)
@@ -26,7 +27,8 @@ const queryComments = async (filter, options) => {
  */
 const getCommentById = async commentId => {
   const comment = await Comment.findById(commentId)
-  return comment
+  if (comment) return comment
+  throw createHttpError.NotFound('Not found comment.')
 }
 
 /**
@@ -38,6 +40,7 @@ const createComment = async commentBody => {
   const newComment = await Comment.create(commentBody)
   return newComment
 }
+
 /**
  * Update comment by id
  * @param {ObjectId} commentId
@@ -59,36 +62,28 @@ const updateCommentById = async (commentId, body) => {
  */
 const deleteCommentById = async commentId => {
   const comment = await Comment.findByIdAndDelete(commentId)
+  console.log({ comment })
+  if (comment?.image?.id) {
+    uploadService.destroy(comment.image.id)
+  }
   if (!comment) throw new createHttpError.NotFound('Not found comment.')
   return comment
 }
 
 /**
  * Delte comment by id
- * @param {ObjectId} commentId
- * @returns {Promise<comment>}
+ * @param {Object} filter
+ * @returns {Promise<result>}
  */
-const getReplies = async commentId => {
-  const comments = await Comment.find({ reply: commentId })
-  return comments
-}
-/**
- * Delte comment by id
- * @param {ObjectId} commentId
- * @param {Object} body
- * @returns {Promise<comment>}
- */
-const replyComment = async (commentId, body) => {
-  const comment = await Comment.findById(commentId)
-  if (!comment) throw new createHttpError.NotFound('Not found comment.')
-
-  const newComment = await Comment.create({
-    ...body,
-    post: comment.post,
-    reply: comment.id,
+const deleteMany = async filter => {
+  const comments = await Comment.find(filter)
+  comments.forEach(comment => {
+    if (comment?.image?.id) {
+      uploadService.destroy(comment.image.id)
+    }
   })
-
-  return newComment
+  const result = await Comment.deleteMany(filter)
+  return result
 }
 
 export {
@@ -97,6 +92,5 @@ export {
   getCommentById,
   updateCommentById,
   deleteCommentById,
-  replyComment,
-  getReplies,
+  deleteMany,
 }

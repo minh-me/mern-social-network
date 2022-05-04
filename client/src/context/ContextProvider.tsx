@@ -9,6 +9,5 @@ type ProviderProps = {
 
 export const AppContextProvider: FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialAppState);
-
   return <AppContext.Provider value={{ state, dispatch }}>{children}</AppContext.Provider>;
 };

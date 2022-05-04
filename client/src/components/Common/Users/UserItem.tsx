@@ -24,7 +24,7 @@ export const UserItem: FC<UserItemProps> = ({ user }) => {
         </Typography>
       </Box>
       <Box>
-        <FollowButton isActive={isFollowing} />
+        <FollowButton isFollowing={isFollowing} />
       </Box>
     </Box>
   );

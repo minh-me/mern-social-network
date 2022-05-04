@@ -82,7 +82,27 @@ const uploadCoverPhoto = async path => {
 const uploadPostImage = async path => {
   const options = {
     folder: 'posts/images',
+    width: 480,
     // width: 150,
+    // height: 150,
+    crop: 'fill',
+  }
+  const result = await upload(path, options)
+  return {
+    url: result.secure_url,
+    id: result.public_id,
+  }
+}
+
+/**
+ * Upload file to cloudinary
+ * @param {string} path link to file image in local
+ *  @returns {Promise<url>}
+ */
+const uploadImageComment = async path => {
+  const options = {
+    folder: 'comments/images',
+    width: 300,
     // height: 150,
     crop: 'fill',
   }
@@ -99,8 +119,15 @@ const uploadPostImage = async path => {
  * @returns
  */
 const destroy = async cloudinary_id => {
-  const result = await cloudinary.uploader.destroy(cloudinary_id)
+  const result = cloudinary.uploader.destroy(cloudinary_id)
   return result
 }
 
-export { upload, uploadAvatar, uploadPostImage, destroy, uploadCoverPhoto }
+export {
+  upload,
+  uploadAvatar,
+  uploadPostImage,
+  destroy,
+  uploadCoverPhoto,
+  uploadImageComment,
+}

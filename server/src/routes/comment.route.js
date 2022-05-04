@@ -1,5 +1,10 @@
 import { Router } from 'express'
-import { validate, auth } from '../middlewares'
+import {
+  validate,
+  auth,
+  uploadStorage,
+  uploadImageComment,
+} from '../middlewares'
 import { commentValidation } from '../validations'
 import { commentController } from '../controllers'
 
@@ -9,22 +14,18 @@ router
   .route('/')
   .post(
     auth(),
+    uploadStorage.single('image'),
+    uploadImageComment,
     validate(commentValidation.createComment),
     commentController.createComment
   )
   .get(validate(commentValidation.getComments), commentController.getComments)
 
-router.post(
-  '/:reply/reply',
+router.patch(
+  '/:commentId/like',
   auth(),
-  validate(commentValidation.replyComment),
-  commentController.replyComment
-)
-router.get(
-  '/:reply/replies',
-  auth(),
-  validate(commentValidation.getComments),
-  commentController.getReplies
+  validate(commentValidation.commentId),
+  commentController.likeComment
 )
 
 router
@@ -37,7 +38,7 @@ router
   )
   .delete(
     auth(),
-    validate(commentValidation.commendId),
+    validate(commentValidation.deleteComment),
     commentController.deleteComment
   )
 

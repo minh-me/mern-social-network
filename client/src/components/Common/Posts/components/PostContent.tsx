@@ -11,7 +11,7 @@ export const PostContent: FC<PostTextProps> = ({ text, imageUrl }) => {
   return (
     <>
       <Box py={1}>
-        <Typography fontSize={16} color="#e1e1e1" component="span">
+        <Typography sx={{ whiteSpace: 'pre-line' }} fontSize={16} color="#e1e1e1" component="span">
           {text}
         </Typography>
       </Box>

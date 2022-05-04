@@ -11,7 +11,6 @@ import {
   SearchPage,
 } from 'pages';
 import { Activate, ResetPassword, SignIn, SignUp } from 'pages/auth';
-import { ProtectedRoute } from 'utils/ProtectedRoute';
 
 function App() {
   return (
@@ -25,14 +24,7 @@ function App() {
               <Route path="reset-password/:reset_token" element={<ResetPassword />} />
               <Route path="activate/:token" element={<Activate />} />
             </Route>
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <MainLayout />
-                </ProtectedRoute>
-              }
-            >
+            <Route path="/" element={<MainLayout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/search/users" element={<SearchPage />} />

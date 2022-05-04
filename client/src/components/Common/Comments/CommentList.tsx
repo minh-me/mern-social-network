@@ -1,51 +1,73 @@
-import { Box, Typography } from '@mui/material';
-import { CommentForm } from './CommentForm';
+import { Box, Button, Typography } from '@mui/material';
 import { CommentItem } from './CommentItem';
-import { memo, useState } from 'react';
-import { Comment } from 'interface';
+import { useRef, useState } from 'react';
+import { CommentForm } from './CommentForm';
+import { useCommentsByPost } from 'RQhooks';
+import { CommentSkeleton, CommentsSkeleton } from '../Variants/CommentSkeleton';
 
 type Props = {
   postId: string;
-  comments: Comment[] | [];
+  authorPost: string;
 };
 
-export const CommentList = memo(({ comments, postId }: Props) => {
+export const CommentList = ({ postId, authorPost }: Props) => {
   const [limit, setLimit] = useState(8);
+  const countRef = useRef(0);
 
-  const rootComments = comments.filter((comm) => !comm.reply);
+  const { data, isLoading, isFetching } = useCommentsByPost({ postId, limit });
+
+  if (isLoading || !data) return <CommentsSkeleton />;
+
+  const { comments, info } = data;
+
+  const rootComments = comments.filter((comm) => !comm.parentId);
+
   const getReplies = (commentId: string) =>
-    comments.filter((comm) => comm.reply === commentId) || [];
+    comments.filter((comm) => comm.parentId === commentId) || [];
 
-  const numComments = rootComments.length;
   const numDesc = (num: number) => (num === 1 ? ' comment' : `${num} comments`);
 
   return (
     <>
       <Box my={2}>
-        <CommentForm entryId={postId} />
-
+        {countRef.current++}
+        {limit <= 10 && <CommentForm postId={postId} />}
         {rootComments.slice(0, limit).map((comment) => (
-          <CommentItem key={comment.id} comment={comment} replies={getReplies(comment.id)} />
+          <CommentItem
+            authorPost={authorPost}
+            key={comment.id}
+            comment={comment}
+            replies={getReplies(comment.id)}
+          />
         ))}
 
-        {numComments > limit && (
+        {isFetching && (
+          <Button sx={{ textTransform: 'capitalize', fontSize: '12px' }}>Loading More...</Button>
+        )}
+
+        {!isFetching && info.totalResults > info.limit && (
           <Typography
             fontSize={10}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              cursor: 'pointer',
-              '&:hover': {
-                textDecoration: 'underline',
-              },
-            }}
+            sx={styles.textViewMore}
             onClick={() => setLimit((prev) => prev + 8)}
           >
-            See more {numDesc(numComments > limit ? numComments - limit : limit - numComments)}{' '}
-            comments
+            See more {numDesc(info.totalResults - info.limit)} comments
           </Typography>
         )}
+
+        {limit > 10 && <CommentForm postId={postId} />}
       </Box>
     </>
   );
-});
+};
+
+const styles = {
+  textViewMore: {
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
+};

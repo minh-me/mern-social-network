@@ -16,6 +16,7 @@ const getUsers = {
   search: yup.string(),
   name: yup.string(),
   email: yup.string().email(),
+  username: yup.string(),
   role: yup.string(),
   page: yup.number().integer(),
   limit: yup.number().integer(),
@@ -59,7 +60,7 @@ const updateProfile = {
   name: yup.string(),
   email: yup.string().email(),
   dateOfBirth: yup.date(),
-  checkbox_selection: yup.string().when(['name', 'email', 'dateOfBirth'], {
+  name_or_email: yup.string().when(['name', 'email', 'dateOfBirth'], {
     is: (name, email, dateOfBirth) => !name && !email && !dateOfBirth,
     then: yup.string().required(),
   }),

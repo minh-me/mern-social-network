@@ -1,4 +1,4 @@
-import { AuthResponse } from 'interface';
+import { AuthUserResponse } from 'interface';
 
 export enum ActionType {
   AddAuth,
@@ -7,7 +7,7 @@ export enum ActionType {
 
 export interface AddAuth {
   type: ActionType.AddAuth;
-  payload: AuthResponse;
+  payload: AuthUserResponse;
 }
 
 export interface ResetAppState {

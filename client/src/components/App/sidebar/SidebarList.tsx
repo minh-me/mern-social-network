@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -10,29 +11,33 @@ import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link, Typography } from '@mui/material';
-import { useState } from 'react';
 import { MDialog } from 'components/Common/Modal';
 import { useLogout } from 'RQhooks';
 import { useGoogleLogout } from 'react-google-login';
-import { toast } from 'react-toastify';
+import { storage } from 'utils';
+import { useAppContext } from 'hooks/useAppContext';
+import { resetAppState } from 'context';
 
 const SidebarList = () => {
+  const { dispatch } = useAppContext();
   const [openModal, setOpenModal] = useState(false);
   const { mutateAsync } = useLogout();
   const navigate = useNavigate();
 
-  const { signOut } = useGoogleLogout({
+  const { signOut, loaded } = useGoogleLogout({
     clientId: '679275323194-0m8bkvm059v14kcepq57l873v8lm7r37.apps.googleusercontent.com',
   });
 
   const handleClose = async () => {
-    await toast.promise(mutateAsync(), {
-      pending: 'Logout...',
-    });
+    dispatch(resetAppState());
+
+    await mutateAsync();
+    if (loaded) signOut();
     setOpenModal(false);
-    signOut();
+    storage.clearToken();
     navigate('/auth', { replace: true });
   };
+
   return (
     <List
       sx={{

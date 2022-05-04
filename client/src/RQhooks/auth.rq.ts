@@ -1,5 +1,5 @@
 import { authApi } from 'api/auth.api';
-import { addAuth, resetAppState } from 'context/actions';
+import { addAuth } from 'context/actions';
 import { useAppContext } from 'hooks/useAppContext';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
@@ -10,7 +10,7 @@ export const useLogin = () => {
   const { dispatch } = useAppContext();
   return useMutation(authApi.login, {
     onSuccess: (data) => {
-      dispatch(addAuth(data));
+      dispatch(addAuth(data.user));
       storage.setToken(data.ac_token);
     },
     onError: handlerError,
@@ -21,7 +21,7 @@ export const useLoginWithGoogle = () => {
   const { dispatch } = useAppContext();
   return useMutation(authApi.googleLogin, {
     onSuccess: (data) => {
-      dispatch(addAuth(data));
+      dispatch(addAuth(data.user));
       storage.setToken(data.ac_token);
     },
     onError: handlerError,
@@ -30,9 +30,6 @@ export const useLoginWithGoogle = () => {
 
 export const useRegister = () => {
   return useMutation(authApi.register, {
-    onSuccess: (data) => {
-      console.log(data);
-    },
     onError: handlerError,
   });
 };
@@ -48,9 +45,6 @@ export const useActiveAccount = () => {
 
 export const useForgotPassword = () => {
   return useMutation(authApi.forgotPassword, {
-    onSuccess: (data) => {
-      console.log({ data });
-    },
     onError: handlerError,
   });
 };
@@ -59,7 +53,7 @@ export const useResetPassword = () => {
   const { dispatch } = useAppContext();
   return useMutation(authApi.resetPassword, {
     onSuccess: (data) => {
-      dispatch(addAuth(data));
+      dispatch(addAuth(data.user));
       storage.setToken(data.ac_token);
     },
     onError: handlerError,
@@ -67,13 +61,8 @@ export const useResetPassword = () => {
 };
 
 export const useLogout = () => {
-  const { dispatch } = useAppContext();
-
   return useMutation(authApi.logout, {
-    onSuccess: () => {
-      dispatch(resetAppState());
-      storage.clearToken();
-    },
+    onSuccess: () => {},
     onError: handlerError,
   });
 };

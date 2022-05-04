@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { useForm, SubmitHandler, ErrorOption } from 'react-hook-form';
@@ -7,11 +8,9 @@ import { FormInputText } from 'components/Common';
 import { LoginData } from 'interface';
 import { styles } from './styles';
 import { emailSchema, loginSchema } from 'validations';
-import { useEffect, useState } from 'react';
 import { MDialog } from 'components/Common/Modal';
 import { useForgotPassword, useLogin } from 'RQhooks';
 import { LoadingButton } from '@mui/lab';
-import { storage } from 'utils';
 import { pink } from '@mui/material/colors';
 import { FacebookLoginButton, GoogleButton } from 'components/Common/Buttons';
 import { toast } from 'react-toastify';
@@ -28,11 +27,11 @@ export const SignIn = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  const token = storage.getToken();
   const navigate = useNavigate();
 
   const { mutateAsync: login, isLoading: isLogging } = useLogin();
   const { mutateAsync: forgotPassword, isLoading } = useForgotPassword();
+
   const onSubmit: SubmitHandler<LoginData> = async (data) => {
     await login(data);
     navigate('/', { replace: true });
@@ -51,10 +50,6 @@ export const SignIn = () => {
       setError('email', error as ErrorOption);
     }
   };
-
-  useEffect(() => {
-    if (!!token) navigate('/', { replace: true });
-  }, [token, navigate]);
 
   return (
     <Box sx={{ background: '#36393f', borderRadius: 2, p: 4, color: 'white' }}>
@@ -128,10 +123,10 @@ export const SignIn = () => {
         confirmButton={() => setOpenModal(false)}
         title="Đã gửi hướng dẫn"
       >
-        <>
+        <span>
           Chúng tôi đã gửi hướng dẫn thay đổi mật khẩu vào <b>{getValues('email')}</b>, vui lòng
           kiếm tra hộp thư cũng như thư rác của bạn.
-        </>
+        </span>
       </MDialog>
     </Box>
   );

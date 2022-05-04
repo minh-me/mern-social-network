@@ -1,10 +1,37 @@
 import { Grid, Box } from '@mui/material';
 import { blueGrey } from '@mui/material/colors';
 import { Sidebar } from '../App';
-import { Outlet } from 'react-router-dom';
-import { styleScroll } from 'utils';
+import { Navigate, Outlet } from 'react-router-dom';
+import { storage, styleScroll } from 'utils';
+import { useAppContext } from 'hooks/useAppContext';
+import { authApi } from 'api/auth.api';
+import { addAuth } from 'context';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export const MainLayout = () => {
+  const { dispatch } = useAppContext();
+  const token = storage.getToken();
+
+  useEffect(() => {
+    const refreshToken = async () => {
+      const data = await authApi.getRefreshToken();
+
+      dispatch(addAuth(data.user));
+
+      storage.setToken(data.ac_token);
+      toast.success(`Hi ${data.user.name}, Have a nice day!`, {
+        position: 'bottom-right',
+      });
+    };
+
+    if (token) refreshToken();
+  }, [token, dispatch]);
+
+  if (!token) {
+    return <Navigate to="/auth" replace />;
+  }
+
   return (
     <Grid container>
       <Grid

@@ -21,8 +21,8 @@ const createUser = catchAsync(async (req, res) => {
  */
 const getUsers = catchAsync(async (req, res) => {
   const filter = pick(req.query, [
-    'firstName',
-    'lastName',
+    'name',
+    'username',
     'role',
     'email',
     'search',
@@ -44,16 +44,6 @@ const getUser = catchAsync(async (req, res) => {
   if (!user) {
     throw createError.NotFound()
   }
-  res.send(user)
-})
-
-/**
- * Get info user when logged in
- * @GET api/users/username/:username
- * @access private
- */
-const getUserByUsername = catchAsync(async (req, res) => {
-  const user = await userService.getUserByUsername(req.params.username)
   res.send(user)
 })
 
@@ -112,13 +102,14 @@ const updateProfile = catchAsync(async (req, res, next) => {
  * @access private
  */
 const follow = catchAsync(async (req, res, next) => {
-  const { id } = req.params
+  const { userId } = req.params
+  console.log({ userId })
   const user = req.user
 
-  const isFollowing = user.following && user.following.includes(id)
+  const isFollowing = user.following && user.following.includes(userId)
   const options = isFollowing ? '$pull' : '$addToSet'
 
-  const userFollow = await userService.updateById(id, {
+  const userFollow = await userService.updateById(userId, {
     [options]: { followers: user.id },
   })
 
@@ -129,6 +120,16 @@ const follow = catchAsync(async (req, res, next) => {
   req.user = userUpdated
 
   res.send(userFollow)
+})
+
+/**
+ * Get info user when logged in
+ * @GET api/users/username/:username
+ * @access private
+ */
+const getUserByUsername = catchAsync(async (req, res) => {
+  const user = await userService.getUserByUsername(req.params.username)
+  res.send(user)
 })
 
 export {

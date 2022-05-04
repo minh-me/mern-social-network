@@ -3,15 +3,21 @@ import { paginate, toJSON } from './plugins'
 
 const commentSchema = mongoose.Schema(
   {
-    text: { type: String, required: true, trim: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    text: { type: String, trim: true },
+    author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     post: {
       type: Schema.Types.ObjectId,
       ref: 'Post',
       required: true,
       index: true,
     },
-    reply: { type: Schema.Types.ObjectId, ref: 'Comment', index: true },
+    image: {
+      id: { type: String, select: false },
+      url: String,
+    },
+    replyTo: { type: Schema.Types.ObjectId, ref: 'User' },
+    parentId: { type: Schema.Types.ObjectId, ref: 'Comment' },
+    likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,

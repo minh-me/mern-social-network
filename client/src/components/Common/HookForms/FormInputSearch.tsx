@@ -10,7 +10,7 @@ export const FormInputSearch: FC<FormInputProps> = ({ control, name, ...rest }) 
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, value }, fieldState: { error, isDirty } }) => (
+      render={({ field: { onChange, value }, fieldState: { isDirty } }) => (
         <>
           <FormControl
             sx={{ border: '1px solid #38444d', borderRadius: 25, width: '100%' }}

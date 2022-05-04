@@ -14,9 +14,8 @@ type Props = {
 };
 
 export const ProfileHeader = memo(({ user }: Props) => {
-  const {
-    state: { auth },
-  } = useAppContext();
+  const { state } = useAppContext();
+  const { auth } = state;
   console.log({ user });
   const countRef = useRef(0);
   return (
@@ -29,13 +28,13 @@ export const ProfileHeader = memo(({ user }: Props) => {
       />
 
       {/* Profile buttons */}
-      {auth?.user && user.id !== auth.user.id ? (
+      {auth && user.id !== auth.id ? (
         <>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} px={2} mt={2}>
             <IconsButtonOutlined>
               <LocalPostOfficeRoundedIcon fontSize="small" />
             </IconsButtonOutlined>
-            <FollowButton userId={user.id} isActive={user?.followers?.includes(auth.user.id)} />
+            <FollowButton userId={user.id} isFollowing={user?.followers?.includes(auth.id)} />
           </Box>
         </>
       ) : (

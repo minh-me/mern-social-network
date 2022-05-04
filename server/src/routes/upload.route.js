@@ -20,4 +20,12 @@ router.post(
   uploadController.uploadCoverPhoto
 )
 
+router.post(
+  '/image_comment',
+  auth(),
+  uploadStorage.single('imageComment'),
+  upload,
+  uploadController.uploadImageComment
+)
+
 export default router

@@ -3,12 +3,17 @@ import { User } from './user.interface';
 
 export interface Comment {
   id: string;
-  text: string;
-  user: User;
+  text?: string;
+  author: User;
   post: string;
-  reply?: string;
+  replyTo?: User;
+  parentId?: string;
+  image?: {
+    url: string;
+  };
+  likes?: string[];
 
-  createdAt?: string;
+  createdAt: string;
   updatedAt?: string;
 }
 

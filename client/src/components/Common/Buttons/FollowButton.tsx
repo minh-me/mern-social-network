@@ -2,22 +2,21 @@ import { LoadingButton } from '@mui/lab';
 import { pink } from '@mui/material/colors';
 import { useFollow } from 'RQhooks';
 
-export const FollowButton = ({ isActive = false, userId = '' }) => {
+export const FollowButton = ({ isFollowing = false, userId = '' }) => {
   const { mutate, isLoading } = useFollow();
   const handleClick = () => {
     if (userId) {
       mutate(userId);
     }
-    console.log('Clicked follow');
   };
   return (
     <LoadingButton
-      sx={isActive ? styles.buttonFollowing : styles.buttonFollow}
-      variant={isActive ? 'contained' : 'outlined'}
+      sx={isFollowing ? styles.buttonFollowing : styles.buttonFollow}
+      variant={isFollowing ? 'contained' : 'outlined'}
       onClick={handleClick}
       loading={isLoading}
     >
-      {isActive ? 'Following' : 'Follow'}
+      {isFollowing ? 'Following' : 'Follow'}
     </LoadingButton>
   );
 };
