@@ -1,8 +1,8 @@
-import { PostActionButton } from './PostActionButton';
+import { PostActionButton } from '../PostActionButton';
 import ShareIcon from '@mui/icons-material/Share';
 import { pink } from '@mui/material/colors';
 
-export const SharePostButton = ({ isActive = false, shares = [''] }) => {
+export const ShareIconButton = ({ isActive = false, shares = [''] }) => {
   const likeHandler = () => {
     console.log('Liked');
   };

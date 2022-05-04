@@ -6,7 +6,14 @@ type Props = {
 
 export const CommentText = ({ text }: Props) => {
   return (
-    <Typography fontSize={12} color="#e4e6ed">
+    <Typography
+      sx={{
+        whiteSpace: 'pre-line',
+        overflowWrap: 'anywhere',
+      }}
+      fontSize={13}
+      color="#e4e6ed"
+    >
       {text}
     </Typography>
   );

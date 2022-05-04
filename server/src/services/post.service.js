@@ -1,6 +1,6 @@
 import createHttpError from 'http-errors'
 import { Post } from '../models'
-import * as updateService from './upload.service'
+import * as uploadService from './upload.service'
 
 /**
  * Get posts by query(filter, options)
@@ -46,7 +46,6 @@ const createPost = async postBody => {
  * @returns {Promise<Post>}
  */
 const updatePostById = async (postId, body) => {
-  console.log({ postId })
   const post = await Post.findByIdAndUpdate(postId, body, { new: true })
   if (!post) throw new createHttpError.NotFound('Not found post.')
   return post
@@ -58,9 +57,9 @@ const updatePostById = async (postId, body) => {
  * @returns {Promise<post>}
  */
 const deletePostById = async postId => {
-  const post = await Post.findByIdAndDelete(postId)
-  if (post?.image) {
-    updateService.destroy(post.image.id)
+  const post = await Post.findByIdAndDelete(postId).select('+image.id')
+  if (post?.image?.id) {
+    uploadService.destroy(post.image.id)
   }
   if (!post) throw new createHttpError.NotFound('Not found post.')
   return post
@@ -71,10 +70,10 @@ const deletePostById = async postId => {
  * @returns {Promise<acknowledged: boolean, deletedCount: number>}
  */
 const deletePosts = async filter => {
-  const posts = await Post.find(filter)
+  const posts = await Post.find(filter).select('+image.id')
   posts.forEach(post => {
-    if (post?.image) {
-      updateService.destroy(post.image.id)
+    if (post?.image?.id) {
+      uploadService.destroy(post.image.id)
     }
   })
 

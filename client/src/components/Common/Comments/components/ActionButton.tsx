@@ -8,7 +8,7 @@ type Props = {
   onClick?: () => void;
 };
 
-export const CommentActionButton: FC<Props> = ({ children, sx, onClick }) => {
+export const ActionButton: FC<Props> = ({ children, sx, onClick }) => {
   return (
     <Typography
       sx={{

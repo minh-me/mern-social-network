@@ -13,26 +13,29 @@ export const TabPostList = ({ search = '' }) => {
     { limit, search },
     { cacheTime: search ? 1500 : 3 * 60 * 1000 }
   );
-
   const countRef = useRef(0);
+
+  if (isLoading || !data) return <PostSkeleton />;
+  const { info, posts } = data;
+
   return (
     <>
       {/* PostList */}
-      {isLoading && isFetching ? <PostSkeleton /> : data && <PostList data={data} />}
+      {<PostList posts={posts} />}
       {countRef.current++}
 
       {/* Button  */}
-      {data?.info && (
+      {info && (
         <LoadMoreButton
           isFetching={isFetching}
           limit={limit}
           setLimit={setLimit}
-          totalResults={data.info.totalResults}
+          totalResults={info.totalResults}
         />
       )}
 
       {/* Entries is empty */}
-      {data?.posts && data?.posts.length === 0 && (
+      {posts && posts.length === 0 && (
         <Typography textAlign="center" fontSize={16}>
           Nothing to show.
         </Typography>

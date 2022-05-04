@@ -15,14 +15,14 @@ router
   )
 
 router.get(
-  '/username/:username',
+  '/:username/username',
   auth(),
   validate(userValidation.getUserByUsername),
   userController.getUserByUsername
 )
 
 router.patch(
-  '/:id/follow',
+  '/:userId/follow',
   auth(),
   validate(userValidation.userId),
   userController.follow
@@ -46,7 +46,7 @@ router
     userController.updateUser
   )
   .delete(
-    // auth('admin'),
+    auth('admin'),
     validate(userValidation.userId),
     userController.deleteUser
   )

@@ -12,11 +12,16 @@ type Props = {
 
 export const LoadMoreButton = ({ isFetching, totalResults, limit, setLimit }: Props) => {
   return (
-    <Box mt={5} sx={{ display: 'flex', justifyContent: 'center' }}>
+    <Box mb={3} sx={{ display: 'flex', justifyContent: 'center' }}>
       {isFetching ? (
         <CircularProgress size={25} />
       ) : totalResults > limit ? (
-        <Button onClick={() => setLimit((prev) => prev + limitPosts)}>Load more</Button>
+        <Button
+          sx={{ textTransform: 'capitalize' }}
+          onClick={() => setLimit((prev) => prev + limitPosts)}
+        >
+          Load more
+        </Button>
       ) : null}
     </Box>
   );

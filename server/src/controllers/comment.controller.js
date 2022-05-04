@@ -1,7 +1,7 @@
 import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
-import { commentService, postService } from '../services'
+import { commentService, postService, uploadService } from '../services'
 
 /**
  * Create a comment
@@ -9,14 +9,26 @@ import { commentService, postService } from '../services'
  * @access private
  */
 const createComment = catchAsync(async (req, res) => {
+  const item = req.body
+
+  if (req.file) {
+    const result = await uploadService.uploadImageComment(req.file.path)
+    item.image = result
+  }
+
   const comment = await commentService.createComment({
-    ...req.body,
-    user: req.user.id,
+    ...item,
+    author: req.user.id,
   })
 
-  await postService.updatePostById(req.body.post, {
-    $push: { comments: comment.id },
-  })
+  await postService
+    .updatePostById(comment.post, {
+      $push: { comments: comment.id },
+    })
+    .catch(error => {
+      commentService.deleteCommentById(comment.id)
+      throw new Error(error)
+    })
 
   res.status(201).json(comment)
 })
@@ -27,37 +39,17 @@ const createComment = catchAsync(async (req, res) => {
  * @access public
  */
 const getComments = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['post', 'comment', 'reply'])
+  const filter = pick(req.query, [
+    'post',
+    'comment',
+    'replyTo',
+    'author',
+    'parentId',
+  ])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
-  options.populate = 'user'
+  options.populate = 'author,replyTo'
   const result = await commentService.queryComments(filter, options)
   res.send(result)
-})
-
-/**
- * Reply comment
- * @Post api/comments/:commentId/reply
- * @access private
- */
-const getReplies = catchAsync(async (req, res) => {
-  const filter = { reply: req.params.reply }
-  const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
-  options.populate = 'user'
-  const replies = await commentService.queryComments(filter, options)
-  res.send(replies)
-})
-
-/**
- * Reply comment
- * @Post api/comments/:postId/reply
- * @access private
- */
-const getCommentsByPost = catchAsync(async (req, res) => {
-  const filter = { post: req.params.postId }
-  const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
-  options.populate = 'user'
-  const comments = await commentService.queryComments(filter, options)
-  res.send(comments)
 })
 
 /**
@@ -93,24 +85,27 @@ const updateComment = catchAsync(async (req, res) => {
  */
 const deleteComment = catchAsync(async (req, res) => {
   const comment = await commentService.deleteCommentById(req.params.commentId)
+  await postService.updatePostById(comment.post, {
+    $pull: { comments: comment.id },
+  })
   res.send(comment)
 })
 
 /**
- * Reply comment
- * @Post api/comments/:commentId/reply
+ * Like comment
+ * @Post api/comments/:commentId/like
  * @access private
  */
-const replyComment = catchAsync(async (req, res) => {
-  console.log({ pos: req.params.reply })
-  const comment = await commentService.replyComment(req.params.reply, {
-    ...req.body,
-    user: req.user.id,
-  })
+const likeComment = catchAsync(async (req, res) => {
+  const commentId = req.params.commentId
+  const user = req.user
 
-  console.log({ comment })
-  await postService.updatePostById(comment.post, {
-    $push: { comments: comment.id },
+  let comment = await commentService.getCommentById(commentId)
+
+  const options = comment.likes.includes(user.id) ? '$pull' : '$addToSet'
+
+  comment = await commentService.updateCommentById(commentId, {
+    [options]: { likes: user.id },
   })
 
   res.send(comment)
@@ -122,7 +117,5 @@ export {
   getComment,
   updateComment,
   deleteComment,
-  replyComment,
-  getReplies,
-  getCommentsByPost,
+  likeComment,
 }

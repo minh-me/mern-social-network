@@ -4,24 +4,15 @@ import axiosInstance from 'utils/axiosInstance';
 
 const commentUrl = '/api/comments';
 export const commentApi = {
-  getCommentsByPost({ queryKey = ['comments/?page=1&limit=1'] }): Promise<CommentsResponse> {
-    return axiosInstance.get(`api/${queryKey[0]}`);
-  },
-
-  getReplies({ queryKey = ['comments/?page=1&limit=1'] }): Promise<CommentsResponse> {
-    return axiosInstance.get(`api/${queryKey[0]}`);
-  },
-
-  createComment(comment: {}): Promise<Comment> {
-    return axiosInstance.post(`api/comments`, comment);
-  },
-
-  replyComment(commentId: string, replyData: { text: string }): Promise<Comment> {
-    return axiosInstance.post(`api/comments/${commentId}/reply`, replyData, {
-      headers: { 'Content-Type': 'application/json' },
+  createComment(comment: FormData): Promise<Comment> {
+    return axiosInstance.post(`api/comments`, comment, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
 
+  getCommentsByPost({ queryKey = ['comments?page=1&limit=1'] }): Promise<CommentsResponse> {
+    return axios.get(`api/${queryKey[0]}`);
+  },
   getComments(filter: {}) {
     return axios.get(`${commentUrl}${filter}`);
   },
@@ -38,5 +29,9 @@ export const commentApi = {
 
   deleteComment(commentId: string) {
     return axios.delete(`${commentUrl}/${commentId}`);
+  },
+
+  likeComment(commentId: string) {
+    return axiosInstance.patch(`${commentUrl}/${commentId}/like`);
   },
 };

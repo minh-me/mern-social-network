@@ -24,7 +24,7 @@ export const ResetPassword = () => {
   const { mutateAsync } = useResetPassword();
   const { reset_token } = useParams();
 
-  const token = storage.getToken();
+  // const token = storage.getToken();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<PasswordData> = async ({ password }) => {
@@ -34,9 +34,9 @@ export const ResetPassword = () => {
     }
   };
 
-  useEffect(() => {
-    if (!!token) navigate('/', { replace: true });
-  }, [token, navigate]);
+  // useEffect(() => {
+  //   if (!!token) navigate('/', { replace: true });
+  // }, [token, navigate]);
 
   return (
     <Box sx={{ background: '#36393f', borderRadius: 2, p: 4, color: 'white' }}>

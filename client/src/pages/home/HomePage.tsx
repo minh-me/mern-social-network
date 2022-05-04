@@ -11,6 +11,17 @@ export const HomePage = () => {
   const { data, isLoading, isFetching } = usePosts({ limit }, { cacheTime: 3 * 60 * 1000 });
   const countRef = useRef(0);
 
+  if (isLoading || !data)
+    return (
+      <>
+        <PostSkeleton />
+        <PostTextSkeleton />
+        <PostImageSkeleton />
+      </>
+    );
+
+  const { info, posts } = data;
+
   return (
     <>
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
@@ -19,19 +30,10 @@ export const HomePage = () => {
 
       <CreatePostForm />
 
-      {/* PostList */}
-      {isLoading && isFetching ? (
-        <>
-          <PostSkeleton />
-          <PostTextSkeleton />
-          <PostImageSkeleton />
-        </>
-      ) : (
-        data && <PostList data={data} />
-      )}
+      <PostList posts={posts} />
 
       {/* Button  */}
-      {data?.info && (
+      {info && (
         <LoadMoreInView
           isFetching={isFetching}
           limit={limit}
@@ -41,7 +43,7 @@ export const HomePage = () => {
       )}
 
       {/* Entries is empty */}
-      {data?.posts && data?.posts.length === 0 && (
+      {posts && posts.length === 0 && (
         <Typography textAlign="center" fontSize={16}>
           Nothing to show.
         </Typography>

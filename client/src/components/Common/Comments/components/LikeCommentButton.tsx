@@ -1,14 +1,27 @@
-import { CommentActionButton } from './CommentActionButton';
+import { ActionButton } from './ActionButton';
 import { Box } from '@mui/material';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbUpRoundedIcon from '@mui/icons-material/ThumbUpRounded';
+import { useLikeComment } from 'RQhooks';
 
-type Props = {};
+type Props = {
+  likes: string[] | [];
+  isLiked: boolean;
+  commentId: string;
+};
 
-export const LikeCommentButton = (props: Props) => {
-  const isLiked = true;
+export const LikeCommentButton = ({ commentId, likes, isLiked }: Props) => {
+  const { mutate } = useLikeComment();
+
+  const handleLikeComment = () => {
+    mutate(commentId);
+  };
+
   return (
-    <CommentActionButton>
+    <ActionButton
+      onClick={handleLikeComment}
+      sx={{ '&:hover': { textDecoration: 'none', color: isLiked ? 'white' : '#2284c2' } }}
+    >
       <Box
         sx={{
           display: 'flex',
@@ -20,9 +33,15 @@ export const LikeCommentButton = (props: Props) => {
           },
         }}
       >
-        {isLiked ? <ThumbUpRoundedIcon /> : <ThumbUpOutlinedIcon />}
-        10
+        {likes.length > 0 ? (
+          <>
+            {isLiked ? <ThumbUpRoundedIcon /> : <ThumbUpOutlinedIcon />}
+            {likes.length}
+          </>
+        ) : (
+          'Thích'
+        )}
       </Box>
-    </CommentActionButton>
+    </ActionButton>
   );
 };

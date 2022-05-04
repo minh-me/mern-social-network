@@ -1,18 +1,22 @@
 import { Grid } from '@mui/material';
-import { Outlet } from 'react-router-dom';
-import { styleScroll } from 'utils';
+import { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { storage, styleScroll } from 'utils';
 
 export const AuthLayout = () => {
+  const token = storage.getToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!!token) navigate('/', { replace: true });
+  }, [token, navigate]);
+
   return (
     <Grid
       container
       spacing={0}
       sx={{
         height: '100vh',
-        // backgroundImage: 'url("./assets/bg.avif")',
-        // backgroundRepeat: 'no-repeat',
-        // backgroundSize: 'cover',
-        // bgcolor: '#1d1927',
         justifyContent: 'center',
         overflowY: 'scroll',
         ...styleScroll,

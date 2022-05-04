@@ -1,7 +1,12 @@
 import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
-import { postService, uploadService, userService } from '../services'
+import {
+  commentService,
+  postService,
+  uploadService,
+  userService,
+} from '../services'
 
 /**
  * Create a post
@@ -27,22 +32,9 @@ const createPost = catchAsync(async (req, res) => {
  * @access public
  */
 const getPosts = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['text', 'search'])
+  const filter = pick(req.query, ['text', 'search', 'postedBy'])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
-  options.populate = 'postedBy,comments,comments.user'
-  const result = await postService.queryPosts(filter, options)
-  res.send(result)
-})
-/**
- * Get all posts
- * @GET api/posts
- * @access public
- */
-const getPostByPostedBy = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['text'])
-  const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
-  filter.postedBy = req.params.postedBy
   options.populate = 'postedBy'
   const result = await postService.queryPosts(filter, options)
   res.send(result)
@@ -78,6 +70,9 @@ const updatePost = catchAsync(async (req, res) => {
  */
 const deletePost = catchAsync(async (req, res) => {
   let post = await postService.deletePostById(req.params.postId)
+
+  // Delete all comments in post
+  await commentService.deleteMany({ post: post.id })
   res.send(post)
 })
 
@@ -106,12 +101,4 @@ const likePost = catchAsync(async (req, res) => {
   res.send(postUpdated)
 })
 
-export {
-  createPost,
-  getPosts,
-  getPost,
-  updatePost,
-  deletePost,
-  likePost,
-  getPostByPostedBy,
-}
+export { createPost, getPosts, getPost, updatePost, deletePost, likePost }

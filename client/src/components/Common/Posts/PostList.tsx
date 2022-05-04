@@ -1,19 +1,19 @@
-import { FC, memo, useRef } from 'react';
-import { Post, PostsResponse } from 'interface';
+import { FC, useRef } from 'react';
+import { Post } from 'interface';
 import { PostItem } from './PostItem';
 
 type PostListProps = {
-  data: PostsResponse;
+  posts: Post[];
 };
 
-export const PostList: FC<PostListProps> = memo(({ data }) => {
+export const PostList: FC<PostListProps> = ({ posts }) => {
   const ref = useRef(0);
   return (
     <>
       {ref.current++}
-      {data.posts.map((post: Post) => (
+      {posts.map((post: Post) => (
         <PostItem key={post.id} post={post} />
       ))}
     </>
   );
-});
+};

@@ -1,7 +1,7 @@
-import { AuthResponse } from 'interface';
+import { AuthUserResponse } from 'interface';
 import { ActionType, AddAuth, ResetAppState } from './actionTypes';
 
-export const addAuth = (auth: AuthResponse): AddAuth => {
+export const addAuth = (auth: AuthUserResponse): AddAuth => {
   return {
     type: ActionType.AddAuth,
     payload: auth,

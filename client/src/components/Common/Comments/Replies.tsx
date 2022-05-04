@@ -7,36 +7,24 @@ import { Comment } from 'interface';
 
 type Props = {
   replies: Comment[];
+  authorPost: string;
 };
 
-export const Replies = ({ replies }: Props) => {
-  const [limit, setLimit] = useState(8);
-  const [toggleReplies, setToggleRelies] = useState(false);
+export const Replies = ({ replies, authorPost }: Props) => {
+  const [limit, setLimit] = useState(6);
+  const [openReplies, setOpenRelies] = useState(false);
 
   const numReplies = replies.length;
   const numDesc = (num: number) => (num === 1 ? ' reply' : `${num} replies`);
-  const handleToggleReplies = () => {
-    setToggleRelies(!toggleReplies);
-  };
+  const handleOpenReplies = () => setOpenRelies(!openReplies);
+
   return (
     <>
       <Box ml={4}>
-        <Typography
-          fontSize={10}
-          component="span"
-          color="#3a97e7"
-          onClick={handleToggleReplies}
-          sx={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            cursor: 'pointer',
-            '&:hover': { textDecoration: 'underline' },
-          }}
-        >
-          {toggleReplies ? (
+        <Typography component="span" onClick={handleOpenReplies} sx={styles.textToggleView}>
+          {openReplies ? (
             <>
-              <ArrowDropUp />
-              Hide
+              <ArrowDropUp /> Hide
             </>
           ) : (
             <>
@@ -46,33 +34,47 @@ export const Replies = ({ replies }: Props) => {
           {numDesc(numReplies)}
         </Typography>
 
-        {toggleReplies &&
+        {openReplies &&
           replies
             .slice(0, limit)
-            .map((reply) => <CommentItem key={reply.id} comment={reply} replies={[]} />)}
+            .map((reply) => (
+              <CommentItem authorPost={authorPost} key={reply.id} comment={reply} replies={[]} />
+            ))}
 
         {numReplies > limit && (
           <Typography
-            fontSize={9}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              cursor: 'pointer',
-              '&:hover': {
-                textDecoration: 'underline',
-              },
-            }}
+            sx={styles.textViewMore}
             onClick={() =>
               setLimit((prev) => {
-                if (prev < numReplies) return prev + 8;
+                if (prev < numReplies) return prev + 6;
                 return prev;
               })
             }
           >
-            See more {numDesc(numReplies > limit ? numReplies - limit : limit - numReplies)}
+            See more replies
           </Typography>
         )}
       </Box>
     </>
   );
+};
+
+const styles = {
+  textToggleView: {
+    color: '#3a97e7',
+    display: 'inline-flex',
+    fontSize: 10,
+    alignItems: 'center',
+    cursor: 'pointer',
+    '&:hover': { textDecoration: 'underline' },
+  },
+  textViewMore: {
+    fontSize: 9,
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
 };

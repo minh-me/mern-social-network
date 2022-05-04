@@ -1,79 +1,113 @@
-import { Box, FormControl, InputAdornment, InputBase, IconButton, Avatar } from '@mui/material';
-import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
-import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
-import styled from '@emotion/styled';
+import { useState } from 'react';
+import { Box, IconButton, Avatar } from '@mui/material';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import PhotoCameraRoundedIcon from '@mui/icons-material/PhotoCameraRounded';
+import { pink } from '@mui/material/colors';
+import { toast } from 'react-toastify';
+
 import { useAppContext } from 'hooks/useAppContext';
-import React, { useRef } from 'react';
-import { useCreateComment, useCreateReplyComment } from 'RQhooks';
+import { useCreateComment } from 'RQhooks';
+import { ImagePreview } from '../Images/ImagePreview';
+import { TextareaSubmit } from '../Forms/TextareaSubmit';
+import { InputFile } from '../Forms/InputFile';
+import { CancelButton, AddLoadingButton } from 'components/Common/Buttons';
 
-export const CommentForm = ({ entryId = '', isReply = false }) => {
-  const {
-    state: { auth },
-  } = useAppContext();
-  const inputRef = useRef<HTMLInputElement>();
+type CommentFormProps = {
+  postId: string;
+  replyTo?: { name: string; id: string };
+  parentId?: string;
+};
 
-  const { mutateAsync: comment } = useCreateComment();
-  const { mutateAsync: reply } = useCreateReplyComment(entryId);
+export const CommentForm = ({ postId, parentId, replyTo }: CommentFormProps) => {
+  const { state } = useAppContext();
+  const { auth } = state;
 
-  const handleKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && inputRef.current?.value) {
-      if (isReply) {
-        await reply({ text: inputRef.current?.value });
-        inputRef.current.value = '';
-        return;
-      }
+  const initLabel = replyTo?.name && replyTo.id !== auth?.id ? `@${replyTo.name}` : '';
+  const [text, setText] = useState('');
+  const [image, setImage] = useState<FileList>();
+  const [label, setLabel] = useState(initLabel);
 
-      await comment({ text: inputRef.current?.value, post: entryId });
-      inputRef.current.value = '';
-    }
+  const { mutateAsync, isLoading } = useCreateComment();
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('post', postId);
+
+    if (parentId) formData.append('parentId', parentId);
+
+    if (text) formData.append('text', text);
+
+    if (label && replyTo?.id) formData.append('replyTo', replyTo.id);
+
+    if (image && image.length > 0) formData.append('image', image[0]);
+
+    await mutateAsync(formData);
+    handleReset();
+  };
+
+  const handleReset = () => {
+    setText('');
+    setLabel('');
+    setImage(undefined);
   };
 
   return (
-    <Box my={2} sx={{ display: 'flex', alignItems: 'center' }}>
-      <Avatar
-        sx={{ border: '1px solid white', height: 26, width: 26, mr: '4px' }}
-        alt={auth?.user.name}
-        src={auth?.user.profilePic.url}
-      />
+    <>
+      <Box my={2} sx={{ display: 'flex', alignItems: 'flex-start' }}>
+        {/* Avatar */}
+        <Avatar sx={styles.avatar} alt={auth?.name} src={auth?.profilePic.url} />
 
-      <FormControl
-        sx={{ border: '1px solid #38444d', borderRadius: 25, width: '100%' }}
-        variant="standard"
-      >
-        <Input
-          inputRef={inputRef}
-          fullWidth
-          placeholder="Enter comment.."
-          onKeyDown={handleKeyDown}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton sx={styles.icons}>
-                <EmojiEmotionsOutlinedIcon />
+        {/* Form */}
+        <form style={{ width: '100%' }}>
+          <Box sx={styles.inputContainer}>
+            <TextareaSubmit
+              handleSubmit={handleSubmit}
+              text={text}
+              setText={setText}
+              autoFocus={true}
+              label={label}
+              setLabel={setLabel}
+              disabled={isLoading}
+            />
+
+            {!(image && image.length > 0) && (
+              <InputFile
+                setFile={setImage}
+                uploadButton={
+                  <IconButton sx={styles.icons} component="span">
+                    <PhotoCameraRoundedIcon />
+                  </IconButton>
+                }
+              />
+            )}
+          </Box>
+
+          {image && image.length > 0 && (
+            <Box sx={styles.imagePreviewContainer} mt={2}>
+              <Box sx={{ maxWidth: 120 }}>
+                <ImagePreview url={URL.createObjectURL(image[0])} />
+              </Box>
+              <IconButton
+                onClick={() => setImage(undefined)}
+                size="small"
+                sx={{ svg: { color: '#898b8e' } }}
+              >
+                <HighlightOffIcon fontSize="inherit" />
               </IconButton>
-              <IconButton sx={{ ...styles.icons, mr: 1 }}>
-                <PhotoCameraOutlinedIcon />
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </FormControl>
-    </Box>
+            </Box>
+          )}
+
+          {(text || image) && (
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 1 }}>
+              <CancelButton onClick={handleReset} />
+              <AddLoadingButton onClick={handleSubmit} loading={isLoading} />
+            </Box>
+          )}
+        </form>
+      </Box>
+    </>
   );
 };
-
-const Input = styled(InputBase)(() => ({
-  fontSize: 16,
-  '& .MuiInputBase-input': {
-    borderRadius: 50,
-    position: 'relative',
-    padding: '4px 14px 4px 14px',
-    fontSize: 13,
-    color: '#f21980',
-    '&::-webkit-input-placeholder': {
-      color: 'white',
-    },
-  },
-}));
 
 const styles = {
   icons: {
@@ -81,12 +115,24 @@ const styles = {
     cursor: 'pointer',
     transition: 'all 0.3s',
     p: '4px',
-    '&:hover': {
-      bgcolor: '#3a3b3c',
-    },
-    svg: {
-      height: 18,
-      width: 18,
+    '&:hover': { bgcolor: '#3a3b3c' },
+    svg: { height: 18, width: 18 },
+  },
+
+  loadingButton: {
+    textTransform: 'capitalize',
+    '&:disabled': {
+      background: pink[400],
+      div: { color: 'white' },
     },
   },
+
+  imagePreviewContainer: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+  },
+
+  avatar: { border: '1px solid white', height: 26, width: 26, mr: '6px' },
+  inputContainer: { display: 'flex', alignItems: 'flex-end', borderBottom: '1px solid #38444d' },
 };

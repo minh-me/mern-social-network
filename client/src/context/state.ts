@@ -1,7 +1,7 @@
-import { AuthResponse } from 'interface';
+import { AuthUserResponse } from 'interface';
 
 export interface AppState {
-  auth: AuthResponse | null;
+  auth: AuthUserResponse | null;
 }
 
 export const initialAppState: AppState = {

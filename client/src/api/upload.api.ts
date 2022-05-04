@@ -14,4 +14,10 @@ export const uploadApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
+
+  uploadImageComment(image: {}): Promise<UploadSingleResponse> {
+    return axiosInstance.post(`${uploadUrl}/image_comment`, image, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
 };

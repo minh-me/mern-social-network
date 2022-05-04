@@ -4,7 +4,7 @@ import { handlerError } from 'utils/handleError';
 import { options } from './options.type';
 
 export const useGetPofile = ({ username = 'profile' }, options?: options) => {
-  const key = username === 'profile' ? 'profile' : `username/${username}`;
+  const key = username === 'profile' ? 'profile' : `${username}/username`;
   const queryKey = `users/${key}`;
   const queryClient = useQueryClient();
 

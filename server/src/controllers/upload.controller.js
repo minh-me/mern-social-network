@@ -23,4 +23,14 @@ const uploadCoverPhoto = catchAsync(async (req, res) => {
   return res.send({ url: coverPhoto.url })
 })
 
-export { uploadAvatar, uploadCoverPhoto }
+/**
+ * Upload cover photo
+ * @POST api/uploads/cover_photo
+ * @access private
+ */
+const uploadImageComment = catchAsync(async (req, res) => {
+  const image = await uploadService.uploadImageComment(req.file.path)
+  return res.send(image)
+})
+
+export { uploadAvatar, uploadCoverPhoto, uploadImageComment }

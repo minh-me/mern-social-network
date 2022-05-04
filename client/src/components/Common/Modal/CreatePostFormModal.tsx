@@ -1,15 +1,17 @@
 import { FC, useEffect } from 'react';
-import { Box, IconButton, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import pink from '@mui/material/colors/pink';
 import ImageIcon from '@mui/icons-material/Image';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
-import { UserInfo } from '../Users';
-import { Image } from '../Images';
+
 import { postSchema } from 'validations';
 import { useCreatePost } from 'RQhooks/post.rq';
-import { LoadingButton } from '@mui/lab';
+import { ImagePreview } from '../Images/ImagePreview';
+import { Modal } from './Modal';
+import { FormInputFile } from '../HookForms/FormInputFile';
+import { FormTextarea } from '../HookForms/FormTextarea';
 
 type ModalProps = {
   open: boolean;
@@ -33,10 +35,6 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
   const { control, handleSubmit, watch, reset, resetField, formState } = methods;
 
   const { mutateAsync, isLoading } = useCreatePost();
-  const handleClose = () => {
-    reset();
-    setOpen(false);
-  };
 
   const onSubmit: SubmitHandler<InputProps> = async (data) => {
     const formData = new FormData();
@@ -44,7 +42,7 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
     if (data.image) formData.append('image', data.image[0]);
     await toast.promise(mutateAsync(formData), {
       pending: 'Posting in progress...',
-      // success: 'Post created successfully 👌',
+      success: 'Post created successfully 👌',
       error: 'Post created failed 🤯',
     });
     handleClose();
@@ -57,87 +55,60 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
     resetField('image');
   }, [formState.errors?.image, resetField]);
 
+  const handleClose = () => {
+    reset();
+    setOpen(false);
+  };
+
   return (
-    <>
-      <Dialog sx={{ bottom: 'inherit' }} scroll="paper" open={open} onClose={handleClose}>
-        <DialogTitle sx={styles.title}>Create Post</DialogTitle>
-        <DialogContent sx={styles.contentContainer}>
-          {/* User info */}
-          <UserInfo />
+    <Modal
+      formId="createPostForm"
+      buttonText="Post"
+      isLoading={isLoading}
+      title="Create Post"
+      open={open}
+      onClose={handleClose}
+    >
+      {/* Input container */}
+      <form id="createPostForm" onSubmit={handleSubmit(onSubmit)}>
+        <Box sx={styles.formContainer}>
+          {/* Textarea */}
+          <Box sx={{ width: '100%', my: 2 }}>
+            <FormTextarea
+              style={{ width: '100%', minHeight: 40, fontSize: 14 }}
+              control={control}
+              placeholder="Enter post text ..."
+              name="text"
+              onSubmit={handleSubmit(onSubmit)}
+            />
+          </Box>
 
-          {/* Input container */}
-          <form id="createPostForm" onSubmit={handleSubmit(onSubmit)}>
-            <Box sx={styles.formContainer}>
-              {/* Textarea */}
-              <Controller
-                control={control}
-                name="text"
-                render={({ field }) => (
-                  <textarea
-                    {...field}
-                    autoFocus
-                    placeholder="What's happending?"
-                    style={styles.textarea}
-                  />
-                )}
-              />
+          {/* Upload Image */}
+          <Box sx={{ alignSelf: 'self-end' }}>
+            <FormInputFile
+              control={control}
+              name="image"
+              uploadButton={
+                <IconButton component="span" sx={{ color: 'white', p: 0 }}>
+                  <ImageIcon />
+                </IconButton>
+              }
+            />
+          </Box>
+        </Box>
 
-              {/* -------------------------------- */}
-              {/* --------Start Image Upload-------- */}
-              <Controller
-                control={control}
-                name="image"
-                render={({ field: { onChange } }) => (
-                  <label htmlFor="image" style={{ alignSelf: 'flex-end' }}>
-                    <input
-                      onChange={(e) => onChange(e.target.files)}
-                      style={{ display: 'none' }}
-                      id="image"
-                      type="file"
-                    />
-                    <IconButton component="span" sx={{ color: 'white', p: 0 }}>
-                      <ImageIcon />
-                    </IconButton>
-                  </label>
-                )}
-              />
-            </Box>
-
-            {/* Image Preview  */}
-            {watch('image') && (
-              <Box sx={styles.previewContainer}>
-                <Image url={URL.createObjectURL(watch('image')[0])} />
-              </Box>
-            )}
-            {/* --------End Image Upload-------- */}
-            {/* -------------------------------- */}
-          </form>
-        </DialogContent>
-
-        {/* Button Post */}
-        <DialogActions sx={{ background: '#15202b' }}>
-          <LoadingButton
-            loadingIndicator="Post..."
-            loading={isLoading}
-            variant="contained"
-            size="small"
-            type="submit"
-            form="createPostForm"
-            fullWidth
-            sx={styles.button}
-            disabled={!formState.dirtyFields['text'] || Boolean(formState.errors.text?.message)}
-          >
-            Post
-          </LoadingButton>
-        </DialogActions>
-      </Dialog>
-    </>
+        {/* Image Preview  */}
+        {watch('image') && watch('image').length > 0 && (
+          <Box sx={styles.previewContainer}>
+            <ImagePreview url={URL.createObjectURL(watch('image')[0])} />
+          </Box>
+        )}
+      </form>
+    </Modal>
   );
 };
 
 const styles = {
-  title: { background: '#15202b', color: 'white', textAlign: 'center' },
-  contentContainer: { background: '#15202b', minWidth: '466px', px: 2 },
   button: {
     color: '#fff',
     background: pink[500],
@@ -154,23 +125,13 @@ const styles = {
       },
     },
   },
-  textarea: {
-    color: 'white',
-    minHeight: '64px',
-    fontSize: 16,
-    marginTop: 16,
-    outline: 'none',
-    border: 0,
-    backgroundColor: 'transparent',
-    width: '100%',
-    flex: 1,
-    paddingLeft: 12,
-  },
   formContainer: { display: 'flex', justifyContent: 'space-between' },
   previewContainer: {
     display: 'flex',
     justifyContent: 'center',
     maxWidth: '100%',
-    maxHeight: '80%',
+    maxHeight: '300px',
+    px: 1,
+    img: { objectFit: 'contain' },
   },
 };

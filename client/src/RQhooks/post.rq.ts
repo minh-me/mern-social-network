@@ -7,34 +7,19 @@ import { handlerError } from 'utils/handleError';
 import { options } from './options.type';
 
 export const usePosts = (
-  { search = '', page = 1, limit = 1, sort = '-createdAt' },
+  { postedBy = '', search = '', page = 1, limit = 1, sort = '-createdAt' },
   options?: options
 ) => {
   const queryClient = useQueryClient();
   const searchQuery = search ? `&search=${search}` : '';
+  const postedByQuery = postedBy ? `&postedBy=${postedBy}` : '';
 
-  const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}${searchQuery}`;
+  const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}${searchQuery}${postedByQuery}`;
   queryClient.setQueryData('postsKey', queryKey);
 
   return useQuery(queryKey, postApi.getPosts, {
     onError: handlerError,
     ...options,
-  });
-};
-
-export const usePostsByPostedBy = (
-  { userId = '', page = 1, limit = 1, sort = '-createdAt' },
-  options?: options
-) => {
-  const queryClient = useQueryClient();
-
-  const queryKey = `posts/${userId}/postedBy?page=${page}&limit=${limit}&sort=${sort}`;
-
-  queryClient.setQueryData('postsKey', queryKey);
-
-  return useQuery(queryKey, postApi.getPostsByPostedBy, {
-    ...options,
-    onError: handlerError,
   });
 };
 
@@ -56,26 +41,25 @@ export const useCreatePost = () => {
 
 export const useLikePost = () => {
   const queryClient = useQueryClient();
-  const {
-    state: { auth },
-  } = useAppContext();
+  const { state } = useAppContext();
+  const { auth } = state;
   const postsKey = queryClient.getQueryData<string>('postsKey');
 
   return useMutation(postApi.likePost, {
     onMutate: (postId) => {
-      if (!postsKey || !auth?.user.id) return;
+      if (!postsKey || !auth) return;
 
       queryClient.setQueryData(postsKey, (oldData: any) => {
-        return updatePostLikes(oldData, postId, auth?.user.id);
+        return updatePostLikes(oldData, postId, auth.id);
       });
     },
 
     onSuccess: () => {},
     onError: (err: Error | AxiosError<any, any>, postId) => {
-      if (!postsKey || !auth?.user.id) return;
+      if (!postsKey || !auth) return;
 
       queryClient.setQueryData(postsKey, (oldData: any) => {
-        return updatePostLikes(oldData, postId, auth?.user.id);
+        return updatePostLikes(oldData, postId, auth.id);
       });
       handlerError(err);
     },

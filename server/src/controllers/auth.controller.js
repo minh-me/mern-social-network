@@ -55,7 +55,7 @@ const login = catchAsync(async (req, res) => {
 
   // store refresh token
   res.cookie('_apprftoken', rf_token, config.cookie)
-  console.log({ user })
+
   res.send({
     user: {
       id: user.id,

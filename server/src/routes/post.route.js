@@ -16,13 +16,6 @@ router
   )
   .get(validate(postValidation.getPosts), postController.getPosts)
 
-router.get(
-  '/:postedBy/postedBy',
-  auth(),
-  validate(postValidation.getPosts),
-  postController.getPostByPostedBy
-)
-
 router.patch(
   '/:postId/like',
   auth(),

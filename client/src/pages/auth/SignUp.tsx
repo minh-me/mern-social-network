@@ -38,11 +38,11 @@ export const SignUp = () => {
     });
     setOpenModal(true);
   };
-  const token = storage.getToken();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!!token) navigate('/', { replace: true });
-  }, [token, navigate]);
+  // const token = storage.getToken();
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (!!token) navigate('/', { replace: true });
+  // }, [token, navigate]);
 
   return (
     <Box sx={{ background: '#36393f', borderRadius: 2, p: 4, color: 'white' }}>

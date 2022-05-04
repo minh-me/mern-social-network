@@ -31,3 +31,9 @@ export const useUploadProfilePic = () => {
     },
   });
 };
+
+export const useUploadImageComment = () => {
+  return useMutation(uploadApi.uploadImageComment, {
+    onError: handlerError,
+  });
+};
