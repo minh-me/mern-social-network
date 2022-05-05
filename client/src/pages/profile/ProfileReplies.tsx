@@ -1,42 +1,44 @@
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import { Typography } from '@mui/material';
 
-import { usePosts } from 'RQhooks';
+import { useCommentsByAuthor } from 'RQhooks';
 import { limitPosts } from 'contants/pagination';
 import { LoadMoreInView } from 'components/App';
-import { PostList } from 'components/Common';
 import { PostSkeleton } from 'components/Common/Variants';
+import { PostItem, PostList } from 'components/Common';
 
-export const ProfilePostList = ({ userId = '' }) => {
+export const ProfileReplies = memo(({ userId }: { userId: string }) => {
   const [limit, setLimit] = useState(limitPosts);
-  const { data, isLoading, isFetching } = usePosts({ postedBy: userId, limit });
+  console.log({ userId });
+  const { data, isLoading, isFetching } = useCommentsByAuthor({ author: userId, limit });
 
   const countRef = useRef(0);
   if (isLoading || !data) return <PostSkeleton />;
-  const { info, posts } = data;
+  const { info, comments } = data;
+  console.log({ comments });
 
   return (
     <>
       {/* PostList */}
-      {<PostList posts={posts} />}
+      {comments.map((comm) => (
+        <PostItem key={comm.id} post={comm.post} />
+      ))}
       {countRef.current++}
-
       {/* Button  */}
-      {info && (
+      {/* {info && (
         <LoadMoreInView
           isFetching={isFetching}
           limit={limit}
           onChangeLimit={(num) => setLimit(num)}
           totalResults={data.info.totalResults}
         />
-      )}
-
-      {/* Entries is empty */}
+      )} */}
+      {/* Entries is empty
       {posts && posts.length === 0 && (
         <Typography textAlign="center" fontSize={16}>
           Nothing to show.
         </Typography>
-      )}
+      )} */}
     </>
   );
-};
+});

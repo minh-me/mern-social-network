@@ -1,12 +1,21 @@
 import { LoadingButton } from '@mui/lab';
 import { pink } from '@mui/material/colors';
 import { useFollow } from 'RQhooks';
+import { User } from 'interface';
+import { useAppContext } from 'hooks/useAppContext';
 
-export const FollowButton = ({ isFollowing = false, userId = '' }) => {
+type Props = {
+  user: User;
+};
+
+export const FollowButton = ({ user }: Props) => {
+  const { state } = useAppContext();
+  const { auth } = state;
+  const isFollowing = user?.followers?.includes(auth?.id as string);
   const { mutate, isLoading } = useFollow();
   const handleClick = () => {
-    if (userId) {
-      mutate(userId);
+    if (user.id) {
+      mutate(user.id);
     }
   };
   return (

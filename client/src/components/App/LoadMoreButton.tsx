@@ -7,19 +7,16 @@ type Props = {
   isFetching: boolean;
   totalResults: number;
   limit: number;
-  setLimit: React.Dispatch<React.SetStateAction<number>>;
+  onChangeLimit: (limit: number) => void;
 };
 
-export const LoadMoreButton = ({ isFetching, totalResults, limit, setLimit }: Props) => {
+export const LoadMoreButton = ({ isFetching, totalResults, limit, onChangeLimit }: Props) => {
   return (
     <Box mb={3} sx={{ display: 'flex', justifyContent: 'center' }}>
       {isFetching ? (
         <CircularProgress size={25} />
       ) : totalResults > limit ? (
-        <Button
-          sx={{ textTransform: 'capitalize' }}
-          onClick={() => setLimit((prev) => prev + limitPosts)}
-        >
+        <Button sx={{ textTransform: 'capitalize' }} onClick={() => onChangeLimit(limit + 2)}>
           Load more
         </Button>
       ) : null}
@@ -27,13 +24,14 @@ export const LoadMoreButton = ({ isFetching, totalResults, limit, setLimit }: Pr
   );
 };
 
-export const LoadMoreInView = ({ isFetching, totalResults, limit, setLimit }: Props) => {
+export const LoadMoreInView = ({ isFetching, totalResults, limit, onChangeLimit }: Props) => {
   const { ref, inView } = useInView();
   useEffect(() => {
     if (!isFetching && inView) {
-      setLimit((prev) => prev + limitPosts);
+      onChangeLimit(limit + 2);
+      // setLimit((prev) => prev + limitPosts);
     }
-  }, [inView, setLimit, isFetching]);
+  }, [inView, onChangeLimit, isFetching]);
 
   return (
     <Box mt={5} sx={{ display: 'flex', justifyContent: 'center' }}>

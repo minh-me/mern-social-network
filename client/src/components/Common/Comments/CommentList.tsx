@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { CommentItem } from './CommentItem';
 import { useRef, useState } from 'react';
 import { CommentForm } from './CommentForm';
@@ -41,11 +41,9 @@ export const CommentList = ({ postId, authorPost }: Props) => {
           />
         ))}
 
-        {isFetching && (
-          <Button sx={{ textTransform: 'capitalize', fontSize: '12px' }}>Loading More...</Button>
-        )}
-
-        {!isFetching && info.totalResults > info.limit && (
+        {isFetching ? (
+          <CircularProgress size={25} />
+        ) : info.totalResults > limit ? (
           <Typography
             fontSize={10}
             sx={styles.textViewMore}
@@ -53,7 +51,7 @@ export const CommentList = ({ postId, authorPost }: Props) => {
           >
             See more {numDesc(info.totalResults - info.limit)} comments
           </Typography>
-        )}
+        ) : null}
 
         {limit > 10 && <CommentForm postId={postId} />}
       </Box>

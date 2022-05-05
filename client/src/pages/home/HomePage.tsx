@@ -8,6 +8,7 @@ import { limitPosts } from 'contants/pagination';
 
 export const HomePage = () => {
   const [limit, setLimit] = useState(limitPosts);
+  // const [limit, setLimit] = useState(limitPosts);
   const { data, isLoading, isFetching } = usePosts({ limit }, { cacheTime: 3 * 60 * 1000 });
   const countRef = useRef(0);
 
@@ -37,7 +38,7 @@ export const HomePage = () => {
         <LoadMoreInView
           isFetching={isFetching}
           limit={limit}
-          setLimit={setLimit}
+          onChangeLimit={(number) => setLimit(number)}
           totalResults={data.info.totalResults}
         />
       )}

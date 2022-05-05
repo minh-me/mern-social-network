@@ -29,7 +29,7 @@ export const TabPostList = ({ search = '' }) => {
         <LoadMoreButton
           isFetching={isFetching}
           limit={limit}
-          setLimit={setLimit}
+          onChangeLimit={(num) => setLimit(num)}
           totalResults={info.totalResults}
         />
       )}

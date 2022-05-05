@@ -47,7 +47,7 @@ const getComments = catchAsync(async (req, res) => {
     'parentId',
   ])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
-  options.populate = 'author,replyTo'
+  options.populate = 'author,replyTo,post,post.postedBy'
   const result = await commentService.queryComments(filter, options)
   res.send(result)
 })
