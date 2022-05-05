@@ -7,6 +7,7 @@ import { ProfileHeader } from './ProfileHeader';
 import { ProfileTabs } from './components/ProfileTabs';
 import { useGetPofile } from 'RQhooks';
 import { ProfileHeaderSkeleton } from 'components/Common/Variants';
+import { ProfileReplies } from './ProfileReplies';
 
 export const ProfilePage = () => {
   const { username } = useParams();
@@ -41,7 +42,7 @@ export const ProfilePage = () => {
 
       <Divider sx={{ borderBottom: '1px solid #38444d', my: 2, mt: 4 }} />
 
-      {/* {!isSelectedPosts && <UserList data={userFroms} />} */}
+      {isTabReplies && user && <ProfileReplies userId={user.id} />}
       {!isTabReplies && user && <ProfilePostList userId={user.id} />}
     </>
   );

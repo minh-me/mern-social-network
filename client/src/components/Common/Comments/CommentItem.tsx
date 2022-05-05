@@ -31,7 +31,6 @@ export const CommentItem = ({ comment, replies, authorPost }: CommentItemProps) 
 
   const isLiked = (auth && comment.likes?.includes(auth.id)) || false;
   const replyId = comment.parentId ? comment.parentId : comment.id;
-  console.log({ authorPost, author });
   const handleToggleForm = () => setToggleReplyForm(!toggleReplyForm);
   return (
     <>
@@ -66,7 +65,7 @@ export const CommentItem = ({ comment, replies, authorPost }: CommentItemProps) 
           <Box sx={{ ml: 4 }}>
             <CommentForm
               replyTo={{ name: author.name, id: author.id }}
-              postId={comment.post}
+              postId={comment.post.id}
               parentId={replyId}
             />
           </Box>

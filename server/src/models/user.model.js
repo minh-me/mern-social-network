@@ -31,6 +31,7 @@ const userSchema = Schema(
       type: String,
       trim: true,
       match: [passwordRegex, transValidations.password_incorrect],
+      select: false,
     },
     role: {
       type: String,

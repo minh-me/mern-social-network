@@ -34,7 +34,7 @@ export const ProfileHeader = memo(({ user }: Props) => {
             <IconsButtonOutlined>
               <LocalPostOfficeRoundedIcon fontSize="small" />
             </IconsButtonOutlined>
-            <FollowButton userId={user.id} isFollowing={user?.followers?.includes(auth.id)} />
+            <FollowButton user={user} />
           </Box>
         </>
       ) : (

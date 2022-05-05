@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Avatar, Box, Link, Typography } from '@mui/material';
+import { Link as LinkRoute } from 'react-router-dom';
 import { User } from 'interface';
 import { FollowButton } from '../Buttons';
 
@@ -8,12 +9,16 @@ interface UserItemProps {
 }
 
 export const UserItem: FC<UserItemProps> = ({ user }) => {
-  const isFollowing = user.following?.includes('currentUserId');
   return (
     <Box sx={styles.container}>
       <Avatar src={user.profilePic.url} sx={{ border: '1px solid white' }} alt={user.name} />
       <Box px={2} sx={{ display: 'flex', alignItems: 'start', flexDirection: 'column', flex: 1 }}>
-        <Link sx={styles.textName} underline="hover">
+        <Link
+          component={LinkRoute}
+          to={`/users/${user.username}`}
+          sx={styles.textName}
+          underline="hover"
+        >
           {user.name}
         </Link>
         <Typography fontSize={12} color="#999ea3" component="p">
@@ -24,7 +29,7 @@ export const UserItem: FC<UserItemProps> = ({ user }) => {
         </Typography>
       </Box>
       <Box>
-        <FollowButton isFollowing={isFollowing} />
+        <FollowButton user={user} />
       </Box>
     </Box>
   );

@@ -3,6 +3,9 @@ import { AuthUserResponse } from 'interface';
 export enum ActionType {
   AddAuth,
   Reset,
+  SetLimitPosts,
+  SetLimitComments,
+  SetLimitUsers,
 }
 
 export interface AddAuth {

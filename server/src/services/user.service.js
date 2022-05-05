@@ -36,7 +36,7 @@ const getUserById = async userId => {
  * @returns {Promise<user>}
  */
 const getUserByEmail = async email => {
-  const user = await User.findOne({ email })
+  const user = await User.findOne({ email }).select('+password')
   return user
 }
 

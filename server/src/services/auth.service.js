@@ -1,7 +1,6 @@
 import createError from 'http-errors'
 import { tokenService } from '.'
 import { transErrors } from '../_lang/en'
-import pick from '../utils/pick'
 import {
   createUserByGoogle,
   getUserByEmail,
@@ -16,6 +15,11 @@ import {
  */
 const loginWithEmailAndPassword = async (email, password) => {
   const user = await getUserByEmail(email)
+  if (user && !user?.password) {
+    throw new createError.BadRequest(
+      'Please login with your account google and create password.'
+    )
+  }
   if (!user || !(await user.isPasswordMatch(password)))
     throw new createError.Unauthorized(transErrors.login_failed)
 

@@ -31,7 +31,7 @@ export const commentApi = {
     return axios.delete(`${commentUrl}/${commentId}`);
   },
 
-  likeComment(commentId: string) {
+  likeComment(commentId: string): Promise<Comment> {
     return axiosInstance.patch(`${commentUrl}/${commentId}/like`);
   },
 };

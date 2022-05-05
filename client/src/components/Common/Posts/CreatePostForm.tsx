@@ -7,10 +7,11 @@ export const CreatePostForm = () => {
   const { state } = useAppContext();
   const { auth } = state;
   const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  console.log({ auth });
 
   return (
     <>
