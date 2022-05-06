@@ -11,6 +11,7 @@ import {
   SearchPage,
 } from 'pages';
 import { Activate, ResetPassword, SignIn, SignUp } from 'pages/auth';
+import { FollowPage } from 'pages/follow/FollowPage';
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
               <Route path="/chat" element={<ChatPage />} />
               <Route path="/chat/new" element={<NewChatPage />} />
               <Route path="/message" element={<MessagePage />} />
+              <Route path="/users/:username/followers" element={<FollowPage />} />
+              <Route path="/users/:username/following" element={<FollowPage />} />
               <Route path="/users/:username" element={<ProfilePage />} />
             </Route>
           </Routes>

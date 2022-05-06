@@ -1,5 +1,3 @@
-import { User } from './user.interface';
-
 export interface LoginData {
   email: string;
   password: string;

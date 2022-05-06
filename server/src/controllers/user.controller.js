@@ -28,6 +28,7 @@ const getUsers = catchAsync(async (req, res) => {
     'search',
   ])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
+  options.populate = 'following,followers'
 
   filter._id = { $ne: req.user.id }
   const result = await userService.queryUsers(filter, options)
@@ -98,7 +99,7 @@ const updateProfile = catchAsync(async (req, res, next) => {
 
 /**
  * Follow user
- * @PATCH api/users/:id/follow
+ * @PATCH api/users/:id/following
  * @access private
  */
 const follow = catchAsync(async (req, res, next) => {

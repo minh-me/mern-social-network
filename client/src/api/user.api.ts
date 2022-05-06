@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { User, UsersResponse } from 'interface';
+import { User, UserProfile, UsersResponse } from 'interface';
 import axiosInstance from 'utils/axiosInstance';
 
 const userUrl = '/api/users';
 export const userApi = {
-  getProfile({ queryKey = ['users/profile'] }): Promise<User> {
+  getProfile({ queryKey = ['users/profile'] }): Promise<UserProfile> {
     return axiosInstance.get(`api/${queryKey[0]}`);
   },
 
@@ -33,6 +33,6 @@ export const userApi = {
   },
 
   follow(userId: string): Promise<User> {
-    return axiosInstance.patch(`${userUrl}/${userId}/follow`);
+    return axiosInstance.patch(`${userUrl}/${userId}/following`);
   },
 };

@@ -1,27 +1,30 @@
-import { memo, useRef } from 'react';
+import { memo } from 'react';
 import { Box } from '@mui/material';
 import LocalPostOfficeRoundedIcon from '@mui/icons-material/LocalPostOfficeRounded';
 
 import { useAppContext } from 'hooks/useAppContext';
-import { User } from 'interface';
+import { UserProfile } from 'interface';
 import { FollowButton, IconsButtonOutlined } from 'components/Common/Buttons';
 import { ProfileFollowers } from './components/ProfileFollowers';
 import { ProfileInfo } from './components/ProfileInfo';
 import { ProfilePhoto } from './components/ProfilePhoto';
 
 type Props = {
-  user: User;
+  user: UserProfile;
 };
 
 export const ProfileHeader = memo(({ user }: Props) => {
   const { state } = useAppContext();
   const { auth } = state;
-  console.log({ user });
-  const countRef = useRef(0);
+
+  const followerIds = user.followers.map((user) => user.id);
+  const followingIds = user.following.map((user) => user.id);
+
+  let isFollowing = false;
+  if (auth?.id) isFollowing = followerIds.includes(auth.id);
+
   return (
     <>
-      {countRef.current++}
-
       <ProfilePhoto
         coverPhoto={user?.coverPhoto?.pc || user?.coverPhoto?.url}
         profilePic={user.profilePic.url}
@@ -34,17 +37,14 @@ export const ProfileHeader = memo(({ user }: Props) => {
             <IconsButtonOutlined>
               <LocalPostOfficeRoundedIcon fontSize="small" />
             </IconsButtonOutlined>
-            <FollowButton user={user} />
+            <FollowButton isFollowing={isFollowing} userId={user.id} />
           </Box>
         </>
       ) : (
         <Box my={7} />
       )}
       <ProfileInfo name={user.name} email={user.email} />
-      <ProfileFollowers
-        followers={user?.followers && user.followers}
-        following={user?.following && user.following}
-      />
+      <ProfileFollowers username={user.username} followers={followerIds} following={followingIds} />
     </>
   );
 });
