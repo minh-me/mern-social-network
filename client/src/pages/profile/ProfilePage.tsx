@@ -5,13 +5,18 @@ import { Title } from 'components/App';
 import { ProfilePostList } from './ProfilePostList';
 import { ProfileHeader } from './ProfileHeader';
 import { ProfileTabs } from './components/ProfileTabs';
-import { useGetPofile } from 'RQhooks';
+import { useUserProfile } from 'RQhooks';
 import { ProfileHeaderSkeleton } from 'components/Common/Variants';
 import { ProfileReplies } from './ProfileReplies';
+import { useAppContext } from 'hooks/useAppContext';
 
 export const ProfilePage = () => {
-  const { username } = useParams();
-  const { data: user, isLoading } = useGetPofile(
+  let { username } = useParams();
+  const { state } = useAppContext();
+  const { auth } = state;
+
+  username = auth?.username === username ? 'profile' : username;
+  const { data: user, isLoading } = useUserProfile(
     { username },
     { cacheTime: username === 'profile' ? 2 * 60 * 1000 : 5 * 60 * 1000 }
   );

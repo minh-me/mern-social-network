@@ -3,12 +3,19 @@ import { Avatar, Box, Link, Typography } from '@mui/material';
 import { Link as LinkRoute } from 'react-router-dom';
 import { User } from 'interface';
 import { FollowButton } from '../Buttons';
+import { useAppContext } from 'hooks/useAppContext';
 
 interface UserItemProps {
   user: User;
 }
 
 export const UserItem: FC<UserItemProps> = ({ user }) => {
+  const { state } = useAppContext();
+  const { auth } = state;
+
+  let isFollowing = false;
+  if (auth?.id && user.followers) isFollowing = user.followers.includes(auth.id);
+
   return (
     <Box sx={styles.container}>
       <Avatar src={user.profilePic.url} sx={{ border: '1px solid white' }} alt={user.name} />
@@ -29,7 +36,7 @@ export const UserItem: FC<UserItemProps> = ({ user }) => {
         </Typography>
       </Box>
       <Box>
-        <FollowButton user={user} />
+        <FollowButton isFollowing={isFollowing || false} userId={user.id} />
       </Box>
     </Box>
   );

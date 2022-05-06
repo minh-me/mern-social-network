@@ -26,7 +26,7 @@ const queryUsers = async (filter, options) => {
  * @returns {Promise<user>}
  */
 const getUserById = async userId => {
-  const user = await User.findById(userId)
+  const user = await User.findById(userId).populate(['followers', 'following'])
   return user
 }
 
@@ -46,7 +46,10 @@ const getUserByEmail = async email => {
  * @returns {Promise<user>}
  */
 const getUserByUsername = async username => {
-  const user = await User.findOne({ username })
+  const user = await User.findOne({ username }).populate([
+    'followers',
+    'following',
+  ])
   return user
 }
 

@@ -1,9 +1,9 @@
 - TODO 1: HOME PAGE, API, PROFILE PAGE
   # + Update google login: Vui lòng đăng nhập bằng google và thiết lập lại mật khẩu
+  + Follow Page: Thiết kế ui follow page và render followers và following
   + Delete post: Xóa bài viêt
   + Pin post: Ghim bài viết
   + Share post: Chia sẻ bài viết
-  + Follow Page: Thiết kế ui follow page và render followers và following
 
 - TODO 2: NOTIFICATION PAGE
   + Render notifications: Hiện thị thông báo

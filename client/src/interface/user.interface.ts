@@ -25,6 +25,11 @@ export interface User {
   updatedAt?: string;
 }
 
+export interface UserProfile extends Omit<User, 'followers' | 'following'> {
+  followers: User[];
+  following: User[];
+}
+
 export interface UsersResponse {
   info: Info;
   users: User[];

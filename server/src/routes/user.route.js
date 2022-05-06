@@ -22,7 +22,7 @@ router.get(
 )
 
 router.patch(
-  '/:userId/follow',
+  '/:userId/following',
   auth(),
   validate(userValidation.userId),
   userController.follow
