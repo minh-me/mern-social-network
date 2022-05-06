@@ -3,20 +3,17 @@ import { Title } from 'components/App';
 import { MessageHeader } from './MessageHeader';
 import { MessageItem } from './MessageItem';
 import { MessageFooter } from './MessageFooter';
-import { blueGrey } from '@mui/material/colors';
 import { useEffect, useRef } from 'react';
 import { styleScroll } from 'utils';
 
 type Props = {};
 
 export const MessagePage = (props: Props) => {
-  console.log('re-render');
-
   const el = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     el?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' });
-  }, [el?.current]);
+  }, [el.current]);
 
   return (
     <>

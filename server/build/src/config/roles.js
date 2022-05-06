@@ -1,14 +1,12 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.roles = exports.roleRights = void 0;
-var allRoles = {
+Object.defineProperty(exports, '__esModule', {
+  value: true,
+})
+exports.roles = exports.roleRights = void 0
+const allRoles = {
   user: [],
-  admin: ['getUsers', 'manageUsers']
-};
-var roles = Object.keys(allRoles);
-exports.roles = roles;
-var roleRights = new Map(Object.entries(allRoles));
-exports.roleRights = roleRights;
+  admin: ['getUsers', 'manageUsers'],
+}
+const roles = Object.keys(allRoles)
+exports.roles = roles
+const roleRights = new Map(Object.entries(allRoles))
+exports.roleRights = roleRights

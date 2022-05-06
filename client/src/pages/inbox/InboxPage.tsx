@@ -3,11 +3,9 @@ import { Box } from '@mui/material';
 import { Title } from 'components/App';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import IconButton from '@mui/material/IconButton';
-import { InboxList } from 'components/Common';
+import { ChatList } from './components';
 
-type Props = {};
-
-export const ChatPage = (props: Props) => {
+export const ChatPage = () => {
   return (
     <>
       <Box
@@ -25,7 +23,9 @@ export const ChatPage = (props: Props) => {
           </IconButton>
         </Link>
       </Box>
-      <InboxList />
+
+      {/* Chat list */}
+      <ChatList />
     </>
   );
 };

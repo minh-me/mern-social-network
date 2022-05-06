@@ -22,8 +22,11 @@ const createChat = catchAsync(async (req, res) => {
  * @access public
  */
 const getChats = catchAsync(async (req, res) => {
-  const filter = pick(req.query, [])
+  const filter = { users: req.user.id }
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
+
+  options.populate = 'users'
+
   const result = await chatService.queryChats(filter, options)
   res.send(result)
 })

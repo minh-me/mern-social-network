@@ -3,8 +3,8 @@ import createHttpError from 'http-errors'
 
 const whitelist = ['http://localhost:3000']
 
-var corsOptions = {
-  origin: function (origin, callback) {
+const corsOptions = {
+  origin(origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {

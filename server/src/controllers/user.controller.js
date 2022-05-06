@@ -105,7 +105,7 @@ const updateProfile = catchAsync(async (req, res, next) => {
 const follow = catchAsync(async (req, res, next) => {
   const { userId } = req.params
   console.log({ userId })
-  const user = req.user
+  const { user } = req
 
   const isFollowing = user.following && user.following.includes(userId)
   const options = isFollowing ? '$pull' : '$addToSet'

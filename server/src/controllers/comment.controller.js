@@ -97,8 +97,8 @@ const deleteComment = catchAsync(async (req, res) => {
  * @access private
  */
 const likeComment = catchAsync(async (req, res) => {
-  const commentId = req.params.commentId
-  const user = req.user
+  const { commentId } = req.params
+  const { user } = req
 
   let comment = await commentService.getCommentById(commentId)
 

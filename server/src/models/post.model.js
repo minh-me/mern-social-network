@@ -37,4 +37,3 @@ postSchema.index({ text: 'text' })
  * @typedef Post
  */
 export const Post = mongoose.model('Post', postSchema)
-Post.createIndexes()
