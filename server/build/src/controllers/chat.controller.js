@@ -1,6 +1,4 @@
-'use strict'
-
-var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault')
+const _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault')
 
 Object.defineProperty(exports, '__esModule', {
   value: true,
@@ -12,32 +10,34 @@ exports.updateChat =
   exports.createChat =
     void 0
 
-var _regenerator = _interopRequireDefault(require('@babel/runtime/regenerator'))
+const _regenerator = _interopRequireDefault(
+  require('@babel/runtime/regenerator')
+)
 
-var _toConsumableArray2 = _interopRequireDefault(
+const _toConsumableArray2 = _interopRequireDefault(
   require('@babel/runtime/helpers/toConsumableArray')
 )
 
-var _defineProperty2 = _interopRequireDefault(
+const _defineProperty2 = _interopRequireDefault(
   require('@babel/runtime/helpers/defineProperty')
 )
 
-var _asyncToGenerator2 = _interopRequireDefault(
+const _asyncToGenerator2 = _interopRequireDefault(
   require('@babel/runtime/helpers/asyncToGenerator')
 )
 
-var _httpErrors = _interopRequireDefault(require('http-errors'))
+const _httpErrors = _interopRequireDefault(require('http-errors'))
 
-var _pick = _interopRequireDefault(require('../utils/pick'))
+const _pick = _interopRequireDefault(require('../utils/pick'))
 
-var _catchAsync = _interopRequireDefault(require('../utils/catchAsync'))
+const _catchAsync = _interopRequireDefault(require('../utils/catchAsync'))
 
-var _services = require('../services')
+const _services = require('../services')
 
 function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object)
+  const keys = Object.keys(object)
   if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object)
+    let symbols = Object.getOwnPropertySymbols(object)
     enumerableOnly &&
       (symbols = symbols.filter(function (sym) {
         return Object.getOwnPropertyDescriptor(object, sym).enumerable
@@ -48,11 +48,11 @@ function ownKeys(object, enumerableOnly) {
 }
 
 function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = null != arguments[i] ? arguments[i] : {}
+  for (let i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {}
     i % 2
       ? ownKeys(Object(source), !0).forEach(function (key) {
-          ;(0, _defineProperty2['default'])(target, key, source[key])
+          ;(0, _defineProperty2.default)(target, key, source[key])
         })
       : Object.getOwnPropertyDescriptors
       ? Object.defineProperties(
@@ -75,12 +75,12 @@ function _objectSpread(target) {
  * @POST api/chats/
  * @access private
  */
-var createChat = (0, _catchAsync['default'])(
-  /*#__PURE__*/ (function () {
-    var _ref = (0, _asyncToGenerator2['default'])(
-      /*#__PURE__*/ _regenerator['default'].mark(function _callee(req, res) {
-        var chat
-        return _regenerator['default'].wrap(function _callee$(_context) {
+const createChat = (0, _catchAsync.default)(
+  /* #__PURE__ */ (function () {
+    const _ref = (0, _asyncToGenerator2.default)(
+      /* #__PURE__ */ _regenerator.default.mark(function _callee(req, res) {
+        let chat
+        return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch ((_context.prev = _context.next)) {
               case 0:
@@ -91,7 +91,7 @@ var createChat = (0, _catchAsync['default'])(
                     {},
                     {
                       users: [].concat(
-                        (0, _toConsumableArray2['default'])(req.body.users),
+                        (0, _toConsumableArray2.default)(req.body.users),
                         [req.user.id]
                       ),
                     }
@@ -123,17 +123,19 @@ var createChat = (0, _catchAsync['default'])(
  */
 
 exports.createChat = createChat
-var getChats = (0, _catchAsync['default'])(
-  /*#__PURE__*/ (function () {
-    var _ref2 = (0, _asyncToGenerator2['default'])(
-      /*#__PURE__*/ _regenerator['default'].mark(function _callee2(req, res) {
-        var filter, options, result
-        return _regenerator['default'].wrap(function _callee2$(_context2) {
+const getChats = (0, _catchAsync.default)(
+  /* #__PURE__ */ (function () {
+    const _ref2 = (0, _asyncToGenerator2.default)(
+      /* #__PURE__ */ _regenerator.default.mark(function _callee2(req, res) {
+        let filter
+        let options
+        let result
+        return _regenerator.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch ((_context2.prev = _context2.next)) {
               case 0:
-                filter = (0, _pick['default'])(req.query, [])
-                options = (0, _pick['default'])(req.query, [
+                filter = (0, _pick.default)(req.query, [])
+                options = (0, _pick.default)(req.query, [
                   'sort',
                   'select',
                   'limit',
@@ -167,12 +169,12 @@ var getChats = (0, _catchAsync['default'])(
  */
 
 exports.getChats = getChats
-var getChat = (0, _catchAsync['default'])(
-  /*#__PURE__*/ (function () {
-    var _ref3 = (0, _asyncToGenerator2['default'])(
-      /*#__PURE__*/ _regenerator['default'].mark(function _callee3(req, res) {
-        var chat
-        return _regenerator['default'].wrap(function _callee3$(_context3) {
+const getChat = (0, _catchAsync.default)(
+  /* #__PURE__ */ (function () {
+    const _ref3 = (0, _asyncToGenerator2.default)(
+      /* #__PURE__ */ _regenerator.default.mark(function _callee3(req, res) {
+        let chat
+        return _regenerator.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch ((_context3.prev = _context3.next)) {
               case 0:
@@ -187,7 +189,7 @@ var getChat = (0, _catchAsync['default'])(
                   break
                 }
 
-                throw _httpErrors['default'].NotFound()
+                throw _httpErrors.default.NotFound()
 
               case 5:
                 res.send(chat)
@@ -213,12 +215,12 @@ var getChat = (0, _catchAsync['default'])(
  */
 
 exports.getChat = getChat
-var updateChat = (0, _catchAsync['default'])(
-  /*#__PURE__*/ (function () {
-    var _ref4 = (0, _asyncToGenerator2['default'])(
-      /*#__PURE__*/ _regenerator['default'].mark(function _callee4(req, res) {
-        var chat
-        return _regenerator['default'].wrap(function _callee4$(_context4) {
+const updateChat = (0, _catchAsync.default)(
+  /* #__PURE__ */ (function () {
+    const _ref4 = (0, _asyncToGenerator2.default)(
+      /* #__PURE__ */ _regenerator.default.mark(function _callee4(req, res) {
+        let chat
+        return _regenerator.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch ((_context4.prev = _context4.next)) {
               case 0:
@@ -253,12 +255,12 @@ var updateChat = (0, _catchAsync['default'])(
  */
 
 exports.updateChat = updateChat
-var deleteChat = (0, _catchAsync['default'])(
-  /*#__PURE__*/ (function () {
-    var _ref5 = (0, _asyncToGenerator2['default'])(
-      /*#__PURE__*/ _regenerator['default'].mark(function _callee5(req, res) {
-        var chat
-        return _regenerator['default'].wrap(function _callee5$(_context5) {
+const deleteChat = (0, _catchAsync.default)(
+  /* #__PURE__ */ (function () {
+    const _ref5 = (0, _asyncToGenerator2.default)(
+      /* #__PURE__ */ _regenerator.default.mark(function _callee5(req, res) {
+        let chat
+        return _regenerator.default.wrap(function _callee5$(_context5) {
           while (1) {
             switch ((_context5.prev = _context5.next)) {
               case 0:

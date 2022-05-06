@@ -83,7 +83,7 @@ const createUser = async userBody => {
  * @returns {Promise<user>}
  */
 const createUserByGoogle = async googleData => {
-  let user = await getUserByEmail(googleData.email)
+  const user = await getUserByEmail(googleData.email)
   if (user)
     return User.findByIdAndUpdate(
       user.id,

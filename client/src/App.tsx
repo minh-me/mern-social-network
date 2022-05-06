@@ -33,7 +33,8 @@ function App() {
               <Route path="/notification" element={<NotificationPage />} />
               <Route path="/chat" element={<ChatPage />} />
               <Route path="/chat/new" element={<NewChatPage />} />
-              <Route path="/message" element={<MessagePage />} />
+              <Route path="/messages" element={<MessagePage />} />
+              <Route path="/messages/:slug" element={<MessagePage />} />
               <Route path="/users/:username/followers" element={<FollowPage />} />
               <Route path="/users/:username/following" element={<FollowPage />} />
               <Route path="/users/:username" element={<ProfilePage />} />

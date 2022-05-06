@@ -1,77 +1,49 @@
-import React, { useState } from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 import { Title } from 'components/App';
-import { UserItem } from 'components/Common';
 
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { User } from 'interface';
-import { LabelUsers } from './LabelUsers';
 import { pink } from '@mui/material/colors';
-
-export const userFroms: User[] = [
-  {
-    profilePic: {
-      url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
-    },
-    name: 'Minh Chìu',
-    username: 'minhch.vn',
-    email: 'minhch.vn@gmail.com',
-    role: 'admin',
-    createdAt: '2022-03-08T14:12:58.562Z',
-    updatedAt: '2022-03-08T14:25:39.750Z',
-    id: '6227646a0588488cd53eb293',
-  },
-  {
-    profilePic: {
-      url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
-    },
-    name: 'Minh Chìu',
-    username: 'minhch.vn',
-    email: 'minhch.vn@gmail.com',
-    role: 'admin',
-    createdAt: '2022-03-08T14:12:58.562Z',
-    updatedAt: '2022-03-08T14:25:39.750Z',
-    id: '12123123',
-  },
-  {
-    profilePic: {
-      url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
-    },
-    name: 'Minh Chìu',
-    username: 'minhch.vn',
-    email: 'minhch.vn@gmail.com',
-    role: 'admin',
-    createdAt: '2022-03-08T14:12:58.562Z',
-    updatedAt: '2022-03-08T14:25:39.750Z',
-    id: '62271fw23646a0588488cd53eb293',
-  },
-];
-
-interface InputProps {
-  text: string;
-}
+import { ChatUserList } from './components/ChatUserList';
+import { FormSearchUserLabel } from './components/FormSearchUserLabel';
+import { useCreateChat } from 'RQhooks/chat.rq';
+import { toast } from 'react-toastify';
+import { LoadingButton } from '@mui/lab';
+import { useNavigate } from 'react-router-dom';
 
 export const NewChatPage = () => {
-  const [selectedUsers, setSelectedUsers] = useState<{ name: string; id: string }[]>([]);
-  const { control, handleSubmit, reset, getValues } = useForm<InputProps>({
-    defaultValues: { text: '' },
-    mode: 'onChange',
-  });
+  const [search, setSearch] = useState('');
+  const [usersSelected, setUsersSelected] = useState<User[]>([]);
+  const { mutateAsync, isLoading, data } = useCreateChat();
+  const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<InputProps> = (data) => {
-    console.log({ data });
-    reset();
+  const handleCreateChat = () => {
+    const userIds = usersSelected.map((user) => user.id);
+    const chatNames = usersSelected.map((user) => user.name);
+    const chatName = chatNames.join(',');
+    const isGroupChat = userIds.length > 1 ? true : false;
+
+    toast.promise(mutateAsync({ users: userIds, chatName, isGroupChat }), {
+      pending: 'Creating room chat ...',
+    });
   };
 
-  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (getValues('text').length === 0 && e.key === 'Backspace' && selectedUsers.length > 0)
-      return setSelectedUsers(selectedUsers.slice(0, -1));
+  const handleAddUsersSelected = (user: User) => {
+    if (usersSelected.some((userIds) => userIds.id === user.id)) return;
+    setUsersSelected([...usersSelected, user]);
   };
 
-  const handleAddSelectedUsers = (user: { id: string; name: string }) => {
-    if (selectedUsers.some((sUser) => sUser.id === user.id)) return;
-    setSelectedUsers([...selectedUsers, { id: user.id, name: user.name }]);
+  const handleDeleteUserSelected = (start: number, deleteCount?: number) => {
+    setUsersSelected((prevUsersSeleted) => {
+      const newUsers = [...prevUsersSeleted];
+      newUsers.splice(start, deleteCount);
+      return newUsers;
+    });
   };
+
+  useEffect(() => {
+    if (data) navigate(`/messages/${data.slug}`);
+  }, [data]);
 
   return (
     <Box>
@@ -79,49 +51,32 @@ export const NewChatPage = () => {
         <Title title="New Chat" />
       </Box>
 
-      <form
-        id="createChatForm"
-        style={styles.createChatFormContainer}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Controller
-          control={control}
-          name="text"
-          render={({ field }) => (
-            <Box py={1}>
-              <Typography sx={{ pr: 1 }} component="span">
-                To:{' '}
-              </Typography>
-              {selectedUsers.length > 0 && <LabelUsers users={selectedUsers} />}
-              <input
-                {...field}
-                placeholder="Type the name of person"
-                onKeyDown={handleKeyDown}
-                style={styles.input}
-              />
-            </Box>
-          )}
-        />
-      </form>
+      <FormSearchUserLabel
+        setSearch={setSearch}
+        usersSelected={usersSelected}
+        handleDeleteUser={handleDeleteUserSelected}
+      />
 
       {/* Users List */}
-      {userFroms.map((user: User) => (
-        <Box
-          onClick={() => handleAddSelectedUsers({ id: user.id, name: user.name })}
-          key={user.id}
-          py={2}
-          px={2}
-          sx={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #38444d' }}
-        >
-          <UserItem user={user} />
-        </Box>
-      ))}
+      {search && (
+        <ChatUserList
+          search={search}
+          usersSelected={usersSelected}
+          handleAddUsersSelected={handleAddUsersSelected}
+        />
+      )}
 
       {/* Button Create */}
       <Box my={2} sx={{ textAlign: 'center' }}>
-        <Button variant="contained" disabled={true} sx={styles.buttonCreate}>
+        <LoadingButton
+          loading={isLoading}
+          onClick={handleCreateChat}
+          variant="contained"
+          disabled={usersSelected.length <= 0}
+          sx={styles.buttonCreate}
+        >
           Create Chat
-        </Button>
+        </LoadingButton>
       </Box>
     </Box>
   );
@@ -146,8 +101,8 @@ const styles = {
       background: pink[400],
     },
     '&:disabled': {
-      bgcolor: '#b5496b',
-      color: 'white',
+      background: pink[400],
+      div: { color: 'white' },
     },
   },
 

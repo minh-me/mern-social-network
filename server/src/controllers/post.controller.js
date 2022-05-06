@@ -69,7 +69,7 @@ const updatePost = catchAsync(async (req, res) => {
  * @access private
  */
 const deletePost = catchAsync(async (req, res) => {
-  let post = await postService.deletePostById(req.params.postId)
+  const post = await postService.deletePostById(req.params.postId)
 
   // Delete all comments in post
   await commentService.deleteMany({ post: post.id })
@@ -83,7 +83,7 @@ const deletePost = catchAsync(async (req, res) => {
  */
 const likePost = catchAsync(async (req, res) => {
   const { postId } = req.params
-  const user = req.user
+  const { user } = req
 
   const isLiked = user.likes && user.likes.includes(postId)
   const options = isLiked ? '$pull' : '$addToSet'

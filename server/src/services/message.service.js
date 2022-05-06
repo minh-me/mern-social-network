@@ -1,5 +1,5 @@
-import { Message } from '../models'
 import createHttpError from 'http-errors'
+import { Message } from '../models'
 
 /**
  * Get messages by query(filter, options)

@@ -8,7 +8,7 @@ const router = new Router()
 router
   .route('/')
   .post(auth(), validate(chatValidation.createChat), chatController.createChat)
-  .get(validate(chatValidation.getChats), chatController.getChats)
+  .get(auth(), validate(chatValidation.getChats), chatController.getChats)
 
 router
   .route('/:chatId')

@@ -1,5 +1,8 @@
 import mongoose, { Schema } from 'mongoose'
+import slug from 'mongoose-slug-updater'
 import { paginate, toJSON } from './plugins'
+
+mongoose.plugin(slug)
 
 const chatSchema = mongoose.Schema(
   {
@@ -7,6 +10,7 @@ const chatSchema = mongoose.Schema(
     isGroupChat: { type: Boolean, default: false },
     users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     lastestMessage: { type: Schema.Types.ObjectId, ref: 'Message' },
+    slug: { type: String, slug: 'chatName', unique: true, slugPaddingSize: 2 },
   },
   {
     timestamps: true,

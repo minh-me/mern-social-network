@@ -111,4 +111,3 @@ userSchema.index({ name: 'text', email: 'text', username: 'text' })
  * @typedef User
  */
 export const User = mongoose.model('User', userSchema)
-User.createIndexes()

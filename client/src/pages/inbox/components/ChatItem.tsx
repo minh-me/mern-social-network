@@ -3,11 +3,14 @@ import { GroupAvatar } from './GroupAvatar';
 import { UserAvatar } from './UserAvatar';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { Chat } from 'interface';
 dayjs.extend(relativeTime);
 
-type Props = {};
+type Props = {
+  chat: Chat;
+};
 
-export const InboxItem = (props: Props) => {
+export const ChatItem = ({ chat }: Props) => {
   return (
     <Box
       py={1}
@@ -23,7 +26,7 @@ export const InboxItem = (props: Props) => {
         },
       }}
     >
-      {true ? <GroupAvatar /> : <UserAvatar />}
+      {chat.isGroupChat ? <GroupAvatar /> : <UserAvatar />}
       <Box px={2}>
         <Typography
           color={true ? '#ff0076' : '#d51a71'}
@@ -31,13 +34,13 @@ export const InboxItem = (props: Props) => {
           fontSize={15}
           component="p"
         >
-          Minh Chìu, Anh Tân, Bảo Trần, vung lien
+          {chat.chatName}
         </Typography>
         <Typography fontSize={12} color={true ? 'white' : '#8f8e8e'} component="p">
           Bạn: đã gửi một ảnh.
         </Typography>
         <Typography fontSize={10} color={true ? 'white' : '#686868'} component="p">
-          {dayjs('2022-04-06T07:31:18.235Z').fromNow()}
+          {dayjs(chat.createdAt).fromNow()}
         </Typography>
       </Box>
     </Box>
