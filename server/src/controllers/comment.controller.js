@@ -9,28 +9,51 @@ import { commentService, postService, uploadService } from '../services'
  * @access private
  */
 const createComment = catchAsync(async (req, res) => {
-  const item = req.body
+  const comment = req.body
 
   if (req.file) {
     const result = await uploadService.uploadImageComment(req.file.path)
-    item.image = result
+    comment.image = result
   }
 
-  const comment = await commentService.createComment({
-    ...item,
-    author: req.user.id,
-  })
+  // Add author
+  comment.author = req.user.id
 
+  // Create comment comment
+  const result = await commentService.createComment(comment)
+
+  // Add comment to post
   await postService
     .updatePostById(comment.post, {
-      $push: { comments: comment.id },
+      $push: { comments: result.id },
     })
     .catch(error => {
-      commentService.deleteCommentById(comment.id)
+      commentService.deleteCommentById(result.id)
+
       throw new Error(error)
     })
 
-  res.status(201).json(comment)
+  res.status(201).json(result)
+})
+
+/**
+ * Like comment
+ * @Post api/comments/:commentId/like
+ * @access private
+ */
+const likeComment = catchAsync(async (req, res) => {
+  const { commentId } = req.params
+  const { user } = req
+
+  let comment = await commentService.getCommentById(commentId)
+
+  const options = comment.likes.includes(user.id) ? '$pull' : '$addToSet'
+
+  comment = await commentService.updateCommentById(commentId, {
+    [options]: { likes: user.id },
+  })
+
+  res.send(comment)
 })
 
 /**
@@ -47,8 +70,11 @@ const getComments = catchAsync(async (req, res) => {
     'parentId',
   ])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
+
   options.populate = 'author,replyTo,post,post.postedBy'
+
   const result = await commentService.queryComments(filter, options)
+
   res.send(result)
 })
 
@@ -59,9 +85,9 @@ const getComments = catchAsync(async (req, res) => {
  */
 const getComment = catchAsync(async (req, res) => {
   const comment = await commentService.getCommentById(req.params.commentId)
-  if (!comment) {
-    throw createError.NotFound()
-  }
+
+  if (!comment) throw createError.NotFound()
+
   res.send(comment)
 })
 
@@ -85,27 +111,10 @@ const updateComment = catchAsync(async (req, res) => {
  */
 const deleteComment = catchAsync(async (req, res) => {
   const comment = await commentService.deleteCommentById(req.params.commentId)
+
+  // Delete comment id in post
   await postService.updatePostById(comment.post, {
     $pull: { comments: comment.id },
-  })
-  res.send(comment)
-})
-
-/**
- * Like comment
- * @Post api/comments/:commentId/like
- * @access private
- */
-const likeComment = catchAsync(async (req, res) => {
-  const { commentId } = req.params
-  const { user } = req
-
-  let comment = await commentService.getCommentById(commentId)
-
-  const options = comment.likes.includes(user.id) ? '$pull' : '$addToSet'
-
-  comment = await commentService.updateCommentById(commentId, {
-    [options]: { likes: user.id },
   })
 
   res.send(comment)

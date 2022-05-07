@@ -8,7 +8,9 @@ import { uploadService, userService } from '../services'
  */
 const uploadAvatar = catchAsync(async (req, res) => {
   const avatar = await uploadService.uploadAvatar(req.file.path)
+
   await userService.updateProfilePic(req.user.id, { profilePic: avatar })
+
   return res.send({ url: avatar.url })
 })
 
@@ -19,7 +21,9 @@ const uploadAvatar = catchAsync(async (req, res) => {
  */
 const uploadCoverPhoto = catchAsync(async (req, res) => {
   const coverPhoto = await uploadService.uploadCoverPhoto(req.file.path)
+
   await userService.updateCoverPhoto(req.user.id, { coverPhoto })
+
   return res.send({ url: coverPhoto.url })
 })
 

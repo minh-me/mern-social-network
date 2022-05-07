@@ -9,10 +9,11 @@ import { chatService } from '../services'
  * @access private
  */
 const createChat = catchAsync(async (req, res) => {
-  const chat = await chatService.createChat({
-    ...req.body,
-    users: [...req.body.users, req.user.id],
-  })
+  // Add user logged in to group
+  req.body.users.push(req.user.id)
+
+  const chat = await chatService.createChat(req.body)
+
   res.status(201).json(chat)
 })
 
@@ -25,9 +26,9 @@ const getChats = catchAsync(async (req, res) => {
   const filter = { users: req.user.id }
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
+  const result = await chatService.queryChats(filter, options)
   options.populate = 'users'
 
-  const result = await chatService.queryChats(filter, options)
   res.send(result)
 })
 
@@ -38,9 +39,9 @@ const getChats = catchAsync(async (req, res) => {
  */
 const getChat = catchAsync(async (req, res) => {
   const chat = await chatService.getChatById(req.params.chatId)
-  if (!chat) {
-    throw createError.NotFound()
-  }
+
+  if (!chat) throw createError.NotFound()
+
   res.send(chat)
 })
 
@@ -51,6 +52,7 @@ const getChat = catchAsync(async (req, res) => {
  */
 const updateChat = catchAsync(async (req, res) => {
   const chat = await chatService.updateChatById(req.params.chatId, req.body)
+
   res.send(chat)
 })
 
@@ -61,6 +63,7 @@ const updateChat = catchAsync(async (req, res) => {
  */
 const deleteChat = catchAsync(async (req, res) => {
   const chat = await chatService.deleteChatById(req.params.chatId)
+
   res.send(chat)
 })
 

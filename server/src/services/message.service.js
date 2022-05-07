@@ -53,7 +53,7 @@ const updateMessageById = async (messageId, body) => {
 }
 
 /**
- * Delte message by id
+ * Delete message by id
  * @param {ObjectId} messageId
  * @returns {Promise<message>}
  */

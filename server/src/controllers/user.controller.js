@@ -28,10 +28,12 @@ const getUsers = catchAsync(async (req, res) => {
     'search',
   ])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
-  options.populate = 'following,followers'
 
+  options.populate = 'following,followers'
   filter._id = { $ne: req.user.id }
+
   const result = await userService.queryUsers(filter, options)
+
   res.send(result)
 })
 
@@ -42,9 +44,19 @@ const getUsers = catchAsync(async (req, res) => {
  */
 const getUser = catchAsync(async (req, res) => {
   const user = await userService.getUserById(req.params.userId)
-  if (!user) {
-    throw createError.NotFound()
-  }
+
+  if (!user) throw createError.NotFound()
+
+  res.send(user)
+})
+
+/**
+ * Get info user when logged in
+ * @GET api/users/username/:username
+ * @access private
+ */
+const getUserByUsername = catchAsync(async (req, res) => {
+  const user = await userService.getUserByUsername(req.params.username)
   res.send(user)
 })
 
@@ -88,15 +100,6 @@ const updateProfile = catchAsync(async (req, res, next) => {
   res.send(user)
 })
 
-// Followers: danh sách người theo dõi mình
-// Following: danh sách người mình đang theo dõi
-
-// Để follow hoặc unfollow
-// 1. Nếu following của mình tồn tại thì unfollow
-// Ngược lại thì follow
-// 2. Update following của user hiện tại
-// 3. Update followers của user cần [follow or unfollow]
-
 /**
  * Follow user
  * @PATCH api/users/:id/following
@@ -104,16 +107,18 @@ const updateProfile = catchAsync(async (req, res, next) => {
  */
 const follow = catchAsync(async (req, res, next) => {
   const { userId } = req.params
-  console.log({ userId })
   const { user } = req
 
+  // Check user is following
   const isFollowing = user.following && user.following.includes(userId)
   const options = isFollowing ? '$pull' : '$addToSet'
 
+  // Update user follow
   const userFollow = await userService.updateById(userId, {
     [options]: { followers: user.id },
   })
 
+  // Update current user
   const userUpdated = await userService.updateById(user.id, {
     [options]: { following: userFollow.id },
   })
@@ -121,16 +126,6 @@ const follow = catchAsync(async (req, res, next) => {
   req.user = userUpdated
 
   res.send(userFollow)
-})
-
-/**
- * Get info user when logged in
- * @GET api/users/username/:username
- * @access private
- */
-const getUserByUsername = catchAsync(async (req, res) => {
-  const user = await userService.getUserByUsername(req.params.username)
-  res.send(user)
 })
 
 export {

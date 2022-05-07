@@ -56,7 +56,7 @@ const updateCommentById = async (commentId, body) => {
 }
 
 /**
- * Delte comment by id
+ * Delete comment by id
  * @param {ObjectId} commentId
  * @returns {Promise<comment>}
  */
@@ -71,7 +71,7 @@ const deleteCommentById = async commentId => {
 }
 
 /**
- * Delte comment by id
+ * Delete comment by id
  * @param {Object} filter
  * @returns {Promise<result>}
  */

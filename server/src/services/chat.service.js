@@ -2,10 +2,20 @@ import createHttpError from 'http-errors'
 import { Chat } from '../models'
 
 /**
+ * Create new chat
+ * @param {Object} body
+ * @returns {Promise<Chat>}
+ */
+const createChat = async chatBody => {
+  const newChat = await Chat.create(chatBody)
+  return newChat
+}
+
+/**
  * Get chats by query(filter, options)
  * @param {Object} filter
  * @param {Object} options
- * @returns {Promise<chats>}
+ * @returns {Promise<Chat[]>}
  */
 const queryChats = async (filter, options) => {
   const customLabels = {
@@ -14,15 +24,18 @@ const queryChats = async (filter, options) => {
     totalPages: 'totalPages',
     limit: 'limit',
   }
+
   options = { ...options, customLabels }
+
   const chats = await Chat.paginate(filter, options)
+
   return chats
 }
 
 /**
- * Find chat by id
+ * Get chat by id
  * @param {ObjectId} chatId
- * @returns {Promise<chat>}
+ * @returns {Promise<Chat>}
  */
 const getChatById = async chatId => {
   const chat = await Chat.findById(chatId)
@@ -30,19 +43,10 @@ const getChatById = async chatId => {
 }
 
 /**
- * Create chat
- * @param {Object} body
- * @returns {Promise<chat>}
- */
-const createChat = async chatBody => {
-  const newChat = await Chat.create(chatBody)
-  return newChat
-}
-/**
  * Update chat by id
  * @param {ObjectId} chatId
  * @param {Object} body
- * @returns {Promise<chat>}
+ * @returns {Promise<Chat>}
  */
 const updateChatById = async (chatId, body) => {
   const chat = await Chat.findByIdAndUpdate(chatId, body, { new: true })
@@ -51,13 +55,15 @@ const updateChatById = async (chatId, body) => {
 }
 
 /**
- * Delte chat by id
+ * Delete chat by id
  * @param {ObjectId} chatId
- * @returns {Promise<chat>}
+ * @returns {Promise<Chat>}
  */
 const deleteChatById = async chatId => {
   const chat = await Chat.findByIdAndDelete(chatId)
+
   if (!chat) throw new createHttpError.NotFound('Not found chat.')
+
   return chat
 }
 

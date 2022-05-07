@@ -15,14 +15,17 @@ import {
  */
 const createPost = catchAsync(async (req, res) => {
   const item = req.body
+
   if (req.file) {
     const url = await uploadService.uploadPostImage(req.file.path)
+
     item.image = url
   }
-  const post = await postService.createPost({
-    ...item,
-    postedBy: req.user.id,
-  })
+
+  item.postedBy = req.user.id
+
+  const post = await postService.createPost(item)
+
   res.status(201).json(post)
 })
 
@@ -36,7 +39,9 @@ const getPosts = catchAsync(async (req, res) => {
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
   options.populate = 'postedBy'
+
   const result = await postService.queryPosts(filter, options)
+
   res.send(result)
 })
 
@@ -47,9 +52,9 @@ const getPosts = catchAsync(async (req, res) => {
  */
 const getPost = catchAsync(async (req, res) => {
   const post = await postService.getPostById(req.params.postId)
-  if (!post) {
-    throw createError.NotFound()
-  }
+
+  if (!post) throw createError.NotFound()
+
   res.send(post)
 })
 
@@ -64,6 +69,34 @@ const updatePost = catchAsync(async (req, res) => {
 })
 
 /**
+ * Like post
+ * @Patch api/posts/:postId/like
+ * @access private
+ */
+const likePost = catchAsync(async (req, res) => {
+  const { postId } = req.params
+  const { user } = req
+
+  // Check user is liked post
+  const isLiked = user.likes && user.likes.includes(postId)
+  const options = isLiked ? '$pull' : '$addToSet'
+
+  // Update post
+  const postUpdated = await postService.updatePostById(postId, {
+    [options]: { likes: user.id },
+  })
+
+  // Update current user
+  const userUpdated = await userService.updateById(user.id, {
+    [options]: { likes: postId },
+  })
+
+  req.user = userUpdated
+
+  res.send(postUpdated)
+})
+
+/**
  * Delete post by postId
  * @DELETE api/posts/:postId
  * @access private
@@ -73,32 +106,8 @@ const deletePost = catchAsync(async (req, res) => {
 
   // Delete all comments in post
   await commentService.deleteMany({ post: post.id })
+
   res.send(post)
-})
-
-/**
- * Like post
- * @Patch api/posts/:postId/like
- * @access private
- */
-const likePost = catchAsync(async (req, res) => {
-  const { postId } = req.params
-  const { user } = req
-
-  const isLiked = user.likes && user.likes.includes(postId)
-  const options = isLiked ? '$pull' : '$addToSet'
-
-  const postUpdated = await postService.updatePostById(postId, {
-    [options]: { likes: user.id },
-  })
-
-  const userUpdated = await userService.updateById(user.id, {
-    [options]: { likes: postId },
-  })
-
-  req.user = userUpdated
-
-  res.send(postUpdated)
 })
 
 export { createPost, getPosts, getPost, updatePost, deletePost, likePost }

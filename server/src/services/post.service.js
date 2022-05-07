@@ -3,10 +3,21 @@ import { Post } from '../models'
 import * as uploadService from './upload.service'
 
 /**
+ * Create new post
+ * @param {Object} body
+ * @returns {Promise<Post>}
+ */
+const createPost = async postBody => {
+  const newPost = await Post.create(postBody)
+
+  return newPost
+}
+
+/**
  * Get posts by query(filter, options)
  * @param {Object} filter
  * @param {Object} options
- * @returns {Promise<posts>}
+ * @returns {Promise<{posts: Post[], info: Info}>}
  */
 const queryPosts = async (filter, options) => {
   const customLabels = {
@@ -15,30 +26,25 @@ const queryPosts = async (filter, options) => {
     totalPages: 'totalPages',
     limit: 'limit',
   }
+
   options = { ...options, customLabels }
+
   const posts = await Post.paginate(filter, options)
+
   return posts
 }
 
 /**
  * Find post by id
  * @param {ObjectId} postId
- * @returns {Promise<post>}
+ * @returns {Promise<Post>}
  */
 const getPostById = async postId => {
   const post = await Post.findById(postId)
+
   return post
 }
 
-/**
- * Create post
- * @param {Object} body
- * @returns {Promise<post>}
- */
-const createPost = async postBody => {
-  const newPost = await Post.create(postBody)
-  return newPost
-}
 /**
  * Update post by id
  * @param {ObjectId} postId
@@ -47,30 +53,39 @@ const createPost = async postBody => {
  */
 const updatePostById = async (postId, body) => {
   const post = await Post.findByIdAndUpdate(postId, body, { new: true })
+
   if (!post) throw new createHttpError.NotFound('Not found post.')
+
   return post
 }
 
 /**
- * Delte post by id
+ * Delete post by id
  * @param {ObjectId} postId
- * @returns {Promise<post>}
+ * @returns {Promise<Post>}
  */
 const deletePostById = async postId => {
   const post = await Post.findByIdAndDelete(postId).select('+image.id')
+
+  // Remove image in cloudinary
   if (post?.image?.id) {
     uploadService.destroy(post.image.id)
   }
+
   if (!post) throw new createHttpError.NotFound('Not found post.')
+
   return post
 }
+
 /**
- * Delte many posts
+ * Delete many posts
  * @param {Object} filter
- * @returns {Promise<acknowledged: boolean, deletedCount: number>}
+ * @returns {Promise<{acknowledged: boolean, deletedCount: number}>}
  */
 const deletePosts = async filter => {
   const posts = await Post.find(filter).select('+image.id')
+
+  // Remove images in cloudinary
   posts.forEach(post => {
     if (post?.image?.id) {
       uploadService.destroy(post.image.id)

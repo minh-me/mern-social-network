@@ -9,7 +9,7 @@ import * as userService from './user.service'
  * @param {object} payload
  * @param {string} secretSignature
  * @param {number|string(date)} tokenLife
- * @returns
+ * @returns {Promise<token>}
  */
 const generateToken = (payload, secretSignature, tokenLife) => {
   return new Promise((resolve, reject) => {
@@ -21,11 +21,13 @@ const generateToken = (payload, secretSignature, tokenLife) => {
         if (error) {
           return reject(httpError.Unauthorized(error.message))
         }
+
         resolve(token)
       }
     )
   })
 }
+
 /**
  * This module used for verify jwt token
  * @param {string} token
@@ -46,10 +48,11 @@ const verifyToken = (token, secretKey) => {
 /**
  * Generate activation token to confirm account
  * @param {object} user
- * @returns
+ * @returns {Promise<token>}
  */
 const activationToken = async userBody => {
   const user = await userService.getUserByEmail(userBody.email)
+
   if (user) throw new httpError.BadRequest(transErrors.account_in_use)
 
   const token = await generateToken(
@@ -57,6 +60,7 @@ const activationToken = async userBody => {
     config.jwt.activateSecret,
     config.jwt.activateExpiration
   )
+
   return token
 }
 
@@ -89,7 +93,7 @@ const accessToken = async userId => {
 /**
  * Generate auth token
  * @param {string} userId
- * @returns {Promise<token>}
+ * @returns {Promise<tokens>}
  */
 const authToken = async userId => {
   const [ac_token, rf_token] = await Promise.all([
@@ -109,22 +113,26 @@ const authToken = async userId => {
  */
 const resetPasswordToken = async email => {
   const user = await userService.getUserByEmail(email)
+
   if (!user) throw httpError.BadRequest(transErrors.email_undefined)
+
   const token = await generateToken(
     { sub: user.id },
     config.jwt.resetPasswordSecret,
     config.jwt.resetPasswordExpiration
   )
+
   return token
 }
 
 /**
  *  Verify activation token
  * @param {string} userId
- * @returns {Promise<user>}
+ * @returns {Promise<User>}
  */
 const verifyActivationToken = async token => {
   const user = await verifyToken(token, config.jwt.activateSecret)
+
   return user
 }
 
