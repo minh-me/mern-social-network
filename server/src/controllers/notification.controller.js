@@ -22,7 +22,9 @@ const createNotification = catchAsync(async (req, res) => {
 const getNotifications = catchAsync(async (req, res) => {
   const filter = pick(req.query, [])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
+
   const result = await notificationService.queryNotifications(filter, options)
+
   res.send(result)
 })
 
@@ -35,9 +37,9 @@ const getNotification = catchAsync(async (req, res) => {
   const notification = await notificationService.getNotificationById(
     req.params.notificationId
   )
-  if (!notification) {
-    throw createError.NotFound()
-  }
+
+  if (!notification) throw createError.NotFound()
+
   res.send(notification)
 })
 

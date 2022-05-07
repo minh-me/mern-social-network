@@ -39,12 +39,13 @@ const sendEmail = async (to, subject, htmlContent) => {
  */
 const sendEmailRegister = async (to, token) => {
   const subject = 'ACTIVATE YOUR ACCOUNT'
-  // replace this url with the link to the reset password page of your front-end app
-  const url = `http://localhost:3000/auth/activate/${token}`
-  const text = 'Verify your email'
-
   const title = `<span>Welcome !</span> And thank you for registering !`
   const desc = `Please validate your email by clicking the button below 🙂`
+  const text = 'Verify your email'
+
+  // replace this url with the link to the register page of front-end app
+  const url = `http://localhost:3000/auth/activate/${token}`
+
   const htmlContent = transEmail.template(title, desc, url, text)
 
   await sendEmail(to, subject, htmlContent)
@@ -58,14 +59,15 @@ const sendEmailRegister = async (to, token) => {
  */
 const sendEmailResetPassword = async (to, token, name) => {
   const subject = 'RESET YOUR PASSWORD'
-  // replace this url with the link to the reset password page of your front-end app
-  const url = `http://localhost:3000/auth/reset-password/${token}`
   const text = 'Reset your password'
-
   const title = `<span>Hey</span> ${name}`
   const desc = 'Please click the button below to reset your password.'
+
+  // replace this url with the link to the reset password page of front-end app
+  const url = `http://localhost:3000/auth/reset-password/${token}`
+
   const htmlContent = transEmail.template(title, desc, url, text)
-  // template_reset_password(url, text, name)
+
   await sendEmail(to, subject, htmlContent)
 }
 

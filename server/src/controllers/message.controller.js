@@ -10,11 +10,14 @@ import { tranSuccess } from '../_lang/en'
  * @access private
  */
 const createMessage = catchAsync(async (req, res) => {
-  const message = await messageService.createMessage({
-    ...req.body,
-    sender: req.user.id,
-    readBy: [req.user.id],
-  })
+  const item = req.body
+
+  // Add current user to sender and readBy
+  item.sender = req.user.id
+  item.readBy = req.user.id
+
+  const message = await messageService.createMessage(item)
+
   res.status(201).json(message)
 })
 
@@ -26,7 +29,9 @@ const createMessage = catchAsync(async (req, res) => {
 const getMessages = catchAsync(async (req, res) => {
   const filter = pick(req.query, [])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
+
   const result = await messageService.queryMessages(filter, options)
+
   res.send(result)
 })
 
@@ -37,9 +42,9 @@ const getMessages = catchAsync(async (req, res) => {
  */
 const getMessage = catchAsync(async (req, res) => {
   const message = await messageService.getMessageById(req.params.messageId)
-  if (!message) {
-    throw createError.NotFound()
-  }
+
+  if (!message) throw createError.NotFound()
+
   res.send(message)
 })
 
@@ -53,6 +58,7 @@ const updateMessage = catchAsync(async (req, res) => {
     req.params.messageId,
     req.body
   )
+
   res.send(message)
 })
 

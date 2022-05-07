@@ -14,17 +14,20 @@ const upload = async (path, options) => {
   return new Promise((resolve, reject) => {
     cloudinary.v2.uploader.upload(path, options, (err, result) => {
       if (err) return reject(err)
+
       fs.unlinkSync(path)
+
       return resolve(result)
     })
   })
 }
+
 /**
  *
  * @param {string} cloudinary_id
  * @param {number} height
  * @param {number} width
- * @returns
+ * @returns {string}
  */
 
 export const reSizeImage = (cloudinary_id, width, height) => {
@@ -48,7 +51,9 @@ const uploadAvatar = async path => {
     height: 150,
     crop: 'fill',
   }
+
   const result = await upload(path, options)
+
   return {
     url: result.secure_url,
     id: result.public_id,
@@ -65,7 +70,9 @@ const uploadCoverPhoto = async path => {
     folder: 'cover_images',
     crop: 'fill',
   }
+
   const result = await upload(path, options)
+
   return {
     url: result.secure_url,
     pc: reSizeImage(result.public_id, 820, 312),
@@ -83,11 +90,11 @@ const uploadPostImage = async path => {
   const options = {
     folder: 'posts/images',
     width: 480,
-    // width: 150,
-    // height: 150,
     crop: 'fill',
   }
+
   const result = await upload(path, options)
+
   return {
     url: result.secure_url,
     id: result.public_id,
@@ -103,10 +110,11 @@ const uploadImageComment = async path => {
   const options = {
     folder: 'comments/images',
     width: 300,
-    // height: 150,
     crop: 'fill',
   }
+
   const result = await upload(path, options)
+
   return {
     url: result.secure_url,
     id: result.public_id,
@@ -114,12 +122,13 @@ const uploadImageComment = async path => {
 }
 
 /**
- *
+ * Remove image uploaded in cloudinary
  * @param {string} cloudinary_id
  * @returns
  */
 const destroy = async cloudinary_id => {
   const result = cloudinary.uploader.destroy(cloudinary_id)
+
   return result
 }
 

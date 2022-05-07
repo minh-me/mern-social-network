@@ -12,8 +12,8 @@
   + Update profile: cập nhập thông tin cá nhân
 
 - TODO 3: INBOX PAGE
-  + Create Room: tạo phòng chat
-  + Render rooms: hiển thị phòng chat
+  # + Create Room: tạo phòng chat
+  # + Render rooms: hiển thị phòng chat
   + Mark message as read: Đánh dấu tin nhắn đã đọc
   + Delete message in room chat: Xóa tất cả tin nhắn trong phòng chat
 

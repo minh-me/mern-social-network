@@ -2,6 +2,7 @@ import mongoose, { Schema } from 'mongoose'
 import slug from 'mongoose-slug-updater'
 import { paginate, toJSON } from './plugins'
 
+// add plugin slug
 mongoose.plugin(slug)
 
 const chatSchema = mongoose.Schema(

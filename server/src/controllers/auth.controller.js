@@ -19,6 +19,7 @@ const register = catchAsync(async (req, res) => {
   const activation_token = await tokenService.activationToken(req.body)
 
   await emailService.sendEmailRegister(req.body.email, activation_token)
+
   // registration success
   return res.send({ message: tranSuccess.user_registered })
 })
@@ -33,6 +34,7 @@ const activate = catchAsync(async (req, res) => {
   const newUser = await tokenService.verifyActivationToken(
     req.body.activation_token
   )
+
   // add user
   await userService.createUser(newUser)
 
@@ -56,16 +58,16 @@ const login = catchAsync(async (req, res) => {
   // store refresh token
   res.cookie('_apprftoken', rf_token, config.cookie)
 
-  res.send({
-    user: {
-      id: user.id,
-      name: user.name,
-      username: user.username,
-      role: user.role,
-      profilePic: user.profilePic,
-    },
-    ac_token,
-  })
+  // success
+  const authUser = {
+    id: user.id,
+    name: user.name,
+    username: user.username,
+    role: user.role,
+    profilePic: user.profilePic,
+  }
+
+  res.send({ user: authUser, ac_token })
 })
 
 /**
@@ -82,16 +84,16 @@ const google = catchAsync(async (req, res) => {
   // store refresh token
   res.cookie('_apprftoken', rf_token, config.cookie)
 
-  res.send({
-    user: {
-      id: user.id,
-      name: user.name,
-      username: user.username,
-      role: user.role,
-      profilePic: user.profilePic,
-    },
-    ac_token,
-  })
+  // success
+  const authUser = {
+    id: user.id,
+    name: user.name,
+    username: user.username,
+    role: user.role,
+    profilePic: user.profilePic,
+  }
+
+  res.send({ user: authUser, ac_token })
 })
 
 /**
@@ -115,17 +117,16 @@ const getRefreshToken = catchAsync(async (req, res, next) => {
   // store refresh token
   res.cookie('_apprftoken', rf_token, config.cookie)
 
-  // access success
-  return res.send({
-    user: {
-      id: user.id,
-      name: user.name,
-      username: user.username,
-      role: user.role,
-      profilePic: user.profilePic,
-    },
-    ac_token,
-  })
+  // success
+  const authUser = {
+    id: user.id,
+    name: user.name,
+    username: user.username,
+    role: user.role,
+    profilePic: user.profilePic,
+  }
+
+  res.send({ user: authUser, ac_token })
 })
 
 /**
@@ -160,17 +161,15 @@ const resetPassword = catchAsync(async (req, res) => {
   // store refresh token
   res.cookie('_apprftoken', rf_token, config.cookie)
 
-  // reset success
-  res.send({
-    user: {
-      id: user.id,
-      name: user.name,
-      username: user.username,
-      role: user.role,
-      profilePic: user.profilePic,
-    },
-    ac_token,
-  })
+  // success
+  const authUser = {
+    id: user.id,
+    name: user.name,
+    username: user.username,
+    role: user.role,
+    profilePic: user.profilePic,
+  }
+  res.send({ user: authUser, ac_token })
 })
 
 /**
