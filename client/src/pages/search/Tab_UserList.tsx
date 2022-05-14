@@ -8,23 +8,20 @@ export const TabUserList = ({ search = '' }) => {
   const [limit, setLimit] = useState(limitUsers);
   const { data, isFetching, isLoading } = useUsers({ limit, search });
 
+  if (isLoading || !data) return <UserListSkeleton />;
+  const { users, info } = data;
   return (
     <Box px={2}>
-      {isLoading && isFetching ? (
-        <UserListSkeleton />
-      ) : (
-        data?.users && <UserList users={data.users} />
-      )}
-
+      <UserList users={data.users} />
       <Box mt={2} mb={4} sx={{ display: 'flex', justifyContent: 'center' }}>
         {isFetching ? (
           <CircularProgress size={25} />
-        ) : data?.info && data?.info.totalResults > limit ? (
+        ) : info.totalResults > limit ? (
           <Button onClick={() => setLimit((prevLimit) => prevLimit + limitUsers)}>Load more</Button>
         ) : null}
       </Box>
 
-      {data?.users && data?.users.length === 0 && (
+      {info.totalResults === 0 && (
         <Typography textAlign="center" fontSize={16}>
           Nothing to show.
         </Typography>

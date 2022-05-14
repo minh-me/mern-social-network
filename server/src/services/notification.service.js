@@ -1,15 +1,104 @@
 import createHttpError from 'http-errors'
 import { Notification } from '../models'
 
+const notificationTypes = {
+  likePost: 'likePost',
+  retweetPost: 'retweetPost',
+  follow: 'follow',
+  postReply: 'reply',
+  newMessage: 'newMessage',
+  commentPost: 'commentPost',
+  commentUser: 'commentUser',
+}
+
 /**
  * Create new notification
- * @param {Object} notificationBody
+ * @param {{userFrom: mongodbId; userTo: mongodbId, entityId: mongodbId, notificationType: string}} notificationBody
  * @returns {Promise<Notification>}
  */
 const createNotification = async notificationBody => {
   const newNotification = await Notification.create(notificationBody)
 
   return newNotification
+}
+
+/**
+ * Create new notification
+ * @param {mongodbId} userFrom
+ * @param {mongodbId} userTo
+ * @param {mongodbId} postId
+ * @returns {Promise<Notification>}
+ */
+const createNotificationLikePost = async (userFrom, userTo, postId) => {
+  const notify = await createNotification({
+    userFrom,
+    userTo,
+    entity: postId,
+    notificationType: notificationTypes.likePost,
+  })
+  return notify
+}
+
+/**
+ * Create new notification
+ * @param {mongodbId} userFrom
+ * @param {mongodbId} userTo
+ * @param {mongodbId} postId
+ * @returns {Promise<Notification>}
+ */
+const createNotificationRetweetPost = async (userFrom, userTo, postId) => {
+  const notify = await createNotification({
+    userFrom,
+    userTo,
+    entity: postId,
+    notificationType: notificationTypes.retweetPost,
+  })
+  return notify
+}
+
+/**
+ * Create new notification
+ * @param {mongodbId} userFrom
+ * @param {mongodbId} userTo
+ * @param {mongodbId} postId
+ * @returns {Promise<Notification>}
+ */
+const createNotificationComment = async (userFrom, userTo, postId) => {
+  const notify = await createNotification({ userFrom, userTo, entity: postId })
+  return notify
+}
+
+/**
+ * Create new notification
+ * @param {mongodbId} userFrom
+ * @param {mongodbId} userTo
+ * @returns {Promise<Notification>}
+ */
+const createNotificationFollow = async (userFrom, userTo) => {
+  const notify = await createNotification({
+    userFrom,
+    userTo,
+    entity: userTo,
+    notificationType: notificationTypes.follow,
+  })
+  return notify
+}
+
+/**
+ * Create new notification
+ * @param {mongodbId} userFrom
+ * @param {mongodbId} userTo
+ * @param {mongodbId} chatId
+ * @returns {Promise<Notification>}
+ */
+const createNotificationNewMessage = async (userFrom, userTo, chatId) => {
+  const notify = await createNotification({
+    userFrom,
+    userTo,
+    entityId: chatId,
+    notificationType: notificationTypes.newMessage,
+  })
+  return notify
 }
 
 /**
@@ -83,4 +172,9 @@ export {
   getNotificationById,
   updateNotificationById,
   deleteNotificationById,
+  createNotificationLikePost,
+  createNotificationRetweetPost,
+  createNotificationComment,
+  createNotificationFollow,
+  createNotificationNewMessage,
 }
