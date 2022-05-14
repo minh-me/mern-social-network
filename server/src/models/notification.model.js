@@ -6,8 +6,8 @@ const notificationSchema = new Schema(
     userTo: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     userFrom: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     notificationType: String,
-    opened: { type: Boolean, default: true },
-    entityId: { type: Schema.Types.ObjectId },
+    opened: { type: Boolean, default: false },
+    entity: { type: Schema.Types.ObjectId },
   },
   { timestamps: true }
 )

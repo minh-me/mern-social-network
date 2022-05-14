@@ -43,6 +43,31 @@ const getChatById = async chatId => {
 }
 
 /**
+ * Find chat
+ * @param {Object} filter
+ * @returns {Promise<Chat>}
+ */
+const findOne = async filter => {
+  const chat = await Chat.findOne(filter)
+  return chat
+}
+
+/**
+ * Update chat
+ * @param {FilterQuery} filter
+ * @param {Object} filter
+ * @returns {Promise<Chat>}
+ */
+const updateOne = async (filter, body) => {
+  const chat = await Chat.findOneAndUpdate(filter, body, {
+    upsert: true,
+    new: true,
+  }).populate('users')
+
+  return chat
+}
+
+/**
  * Update chat by id
  * @param {ObjectId} chatId
  * @param {Object} body
@@ -67,4 +92,12 @@ const deleteChatById = async chatId => {
   return chat
 }
 
-export { createChat, queryChats, getChatById, updateChatById, deleteChatById }
+export {
+  createChat,
+  queryChats,
+  getChatById,
+  findOne,
+  updateChatById,
+  updateOne,
+  deleteChatById,
+}

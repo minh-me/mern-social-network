@@ -33,6 +33,13 @@ const getChat = {
     .required(),
 }
 
+const getChatByUserId = {
+  userId: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
+    .required(),
+}
+
 const updateChat = {
   chatId: yup
     .string()
@@ -48,4 +55,11 @@ const deleteChat = {
     .required(),
 }
 
-export { createChat, getChats, getChat, updateChat, deleteChat }
+export {
+  createChat,
+  getChats,
+  getChat,
+  getChatByUserId,
+  updateChat,
+  deleteChat,
+}

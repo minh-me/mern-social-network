@@ -5,7 +5,7 @@ import axiosInstance from 'utils/axiosInstance';
 const chatUrl = '/api/chats';
 export const chatApi = {
   getChats({ queryKey = ['chats?page=1&limit=1'] }): Promise<ChatsResponse> {
-    return axiosInstance.get(`api/${queryKey}`);
+    return axiosInstance.get(`api/${queryKey[0]}`);
   },
 
   getChat(chatId: string): Promise<Chat> {

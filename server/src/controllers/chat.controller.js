@@ -1,7 +1,7 @@
 import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
-import { chatService } from '../services'
+import { chatService, userService } from '../services'
 
 /**
  * Create a chat
@@ -40,9 +40,32 @@ const getChats = catchAsync(async (req, res) => {
 const getChat = catchAsync(async (req, res) => {
   const chat = await chatService.getChatById(req.params.chatId)
 
-  if (!chat) throw createError.NotFound()
+  if (!chat) throw createError.NotFound('Not found chat')
 
   res.send(chat)
+})
+
+/**
+ * Create a message
+ * @Get api/chats/:userId
+ * @access private
+ */
+const getChatByUserId = catchAsync(async (req, res) => {
+  const { userId } = req.params
+
+  const user = await userService.getUserById(userId)
+
+  const filter = {
+    isGroupChat: false,
+    users: { $size: 2, $all: [user.id, req.user.id] },
+  }
+  const body = {
+    chatName: user.name,
+    users: [user.id, req.user.id],
+  }
+  const chat = await chatService.updateOne(filter, body)
+
+  res.status(201).json(chat)
 })
 
 /**
@@ -67,4 +90,11 @@ const deleteChat = catchAsync(async (req, res) => {
   res.send(chat)
 })
 
-export { createChat, getChats, getChat, updateChat, deleteChat }
+export {
+  createChat,
+  getChats,
+  getChat,
+  getChatByUserId,
+  updateChat,
+  deleteChat,
+}

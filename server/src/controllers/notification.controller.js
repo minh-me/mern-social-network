@@ -23,6 +23,8 @@ const getNotifications = catchAsync(async (req, res) => {
   const filter = pick(req.query, [])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
+  options.populate = 'userFrom,userTo,entity'
+
   const result = await notificationService.queryNotifications(filter, options)
 
   res.send(result)

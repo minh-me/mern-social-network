@@ -12,9 +12,8 @@ interface NotiProps {
   notification: Notification;
 }
 
-export const NotificationItem: FC<NotiProps> = ({
-  notification: { userFrom, notificationType },
-}) => {
+export const NotificationItem: FC<NotiProps> = ({ notification }) => {
+  const { userFrom, notificationType } = notification;
   const [openModal, setOpenModal] = useState(false);
 
   const handleClose = (entityId: string) => {

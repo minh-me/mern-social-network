@@ -3,6 +3,7 @@ import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
 import {
   commentService,
+  notificationService,
   postService,
   uploadService,
   userService,
@@ -93,6 +94,16 @@ const likePost = catchAsync(async (req, res) => {
 
   req.user = userUpdated
 
+  // Create notification
+  if (!isLiked && postUpdated.postedBy._id !== user._id) {
+    await notificationService.createNotificationLikePost(
+      postUpdated.postedBy._id,
+      user._id,
+      postUpdated._id
+    )
+  }
+
+  // Success
   res.send(postUpdated)
 })
 

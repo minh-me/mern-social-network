@@ -1,56 +1,39 @@
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 
 import { User } from 'interface';
-import { Title } from 'components/App';
-import { NotificationItem } from 'components/Common';
-
-const userFrom: User = {
-  profilePic: {
-    url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
-  },
-  name: 'minh',
-  username: 'minhch.vn',
-  email: 'minhch.vn@gmail.com',
-  role: 'admin',
-  createdAt: '2022-03-08T14:12:58.562Z',
-  updatedAt: '2022-03-08T14:25:39.750Z',
-  id: '6227646a0588488cd53eb293',
-};
-
-const userTo: User = {
-  name: 'minh',
-  email: 'minhch.vn@gmail.com',
-  username: 'minhch.vn',
-  role: 'admin',
-  createdAt: '2022-03-08T14:12:58.562Z',
-  updatedAt: '2022-03-08T14:25:39.750Z',
-  id: '6227646a0588488cd53eb293',
-  profilePic: {
-    url: 'https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png',
-  },
-};
-
-const notification = {
-  id: '123123',
-  userFrom,
-  userTo,
-  notificationType: 'post',
-  opened: true,
-  entityId: '123o0192u31023',
-};
+import { LoadMoreButton, Title } from 'components/App';
+import { NotificationItem } from './components/NotificationItem';
+import { useNotifications } from 'RQhooks/notification.rq';
+import { limitNotifications } from 'contants/pagination';
+import { useState } from 'react';
+import { UserListSkeleton } from 'components/Common/Variants';
 
 export const NotificationPage = () => {
+  const [limit, setLimit] = useState(1);
+  const { data, isFetching, isLoading } = useNotifications({ limit });
+
+  if (isLoading || !data)
+    return (
+      <>
+        <Box sx={styles.titleContainer}>
+          <Title title="Notifications" />
+          <IconButton size="small" sx={{ color: 'white', mr: 3 }}>
+            <DoneAllOutlinedIcon />
+          </IconButton>
+        </Box>
+        <Box mx={2}>
+          <UserListSkeleton />
+        </Box>
+      </>
+    );
+
+  const { notifications, info } = data;
+
+  console.log({ notifications, info });
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          borderBottom: '1px solid #38444d',
-        }}
-      >
+      <Box sx={styles.titleContainer}>
         <Title title="Notifications" />
         <IconButton size="small" sx={{ color: 'white', mr: 3 }}>
           <DoneAllOutlinedIcon />
@@ -58,8 +41,32 @@ export const NotificationPage = () => {
       </Box>
 
       <Box>
-        <NotificationItem notification={notification} />
+        {notifications.map((notification) => (
+          <NotificationItem key={notification.id} notification={notification} />
+        ))}
       </Box>
+
+      <LoadMoreButton
+        isFetching={isFetching}
+        totalResults={info.totalResults}
+        limit={limit}
+        onChangeLimit={(limit) => setLimit(limit)}
+      />
+
+      {info.totalResults === 0 && (
+        <Typography textAlign="center" fontSize={16}>
+          Nothing to show.
+        </Typography>
+      )}
     </>
   );
+};
+
+const styles = {
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottom: '1px solid #38444d',
+  },
 };

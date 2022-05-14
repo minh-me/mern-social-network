@@ -1,8 +1,7 @@
 import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
-import { messageService } from '../services'
-import { tranSuccess } from '../_lang/en'
+import { chatService, messageService } from '../services'
 
 /**
  * Create a message
@@ -10,11 +9,11 @@ import { tranSuccess } from '../_lang/en'
  * @access private
  */
 const createMessage = catchAsync(async (req, res) => {
-  const item = req.body
-
-  // Add current user to sender and readBy
-  item.sender = req.user.id
-  item.readBy = req.user.id
+  const item = {
+    ...req.body,
+    sender: req.user.id,
+    readBy: req.user.id,
+  }
 
   const message = await messageService.createMessage(item)
 

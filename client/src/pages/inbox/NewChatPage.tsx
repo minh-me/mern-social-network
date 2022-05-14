@@ -17,7 +17,7 @@ export const NewChatPage = () => {
   const { mutateAsync, isLoading, data } = useCreateChat();
   const navigate = useNavigate();
 
-  const handleCreateChat = () => {
+  const handleSubmitCreateChat = () => {
     const userIds = usersSelected.map((user) => user.id);
     const chatNames = usersSelected.map((user) => user.name);
     const chatName = chatNames.join(',');
@@ -70,7 +70,7 @@ export const NewChatPage = () => {
       <Box my={2} sx={{ textAlign: 'center' }}>
         <LoadingButton
           loading={isLoading}
-          onClick={handleCreateChat}
+          onClick={handleSubmitCreateChat}
           variant="contained"
           disabled={usersSelected.length <= 0}
           sx={styles.buttonCreate}

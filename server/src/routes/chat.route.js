@@ -11,8 +11,16 @@ router
   .get(auth(), validate(chatValidation.getChats), chatController.getChats)
 
 router
+  .route('/:userId/user')
+  .get(
+    auth(),
+    validate(chatValidation.getChatByUserId),
+    chatController.getChatByUserId
+  )
+
+router
   .route('/:chatId')
-  .get(validate(chatValidation.getChat), chatController.getChat)
+  .get(auth(), validate(chatValidation.getChat), chatController.getChat)
   .patch(auth(), validate(chatValidation.updateChat), chatController.updateChat)
   .delete(
     auth(),
