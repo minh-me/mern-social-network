@@ -3,7 +3,7 @@ import { User } from 'interface';
 import { FC } from 'react';
 
 type Props = {
-  users?: User[];
+  users: User[];
 };
 
 export const GroupAvatar: FC<Props> = ({ users }) => {

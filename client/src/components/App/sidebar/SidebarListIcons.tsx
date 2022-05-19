@@ -9,20 +9,23 @@ import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link, Typography } from '@mui/material';
+import { Badge, Link, Typography } from '@mui/material';
 import { MDialog } from 'components/Common/Modal';
 import { useLogout } from 'RQhooks';
 import { storage } from 'utils';
 import { useAppContext } from 'hooks/useAppContext';
 import { resetAppState } from 'context';
 import { QueryClient } from 'react-query';
+import { useCountNotifications } from 'RQhooks/notification.rq';
 
 export const SidebarListIcons = () => {
   const { dispatch } = useAppContext();
   const [openModal, setOpenModal] = useState(false);
-  const { mutateAsync } = useLogout();
   const navigate = useNavigate();
   const queryClient = new QueryClient();
+
+  const { mutateAsync } = useLogout();
+  const { data } = useCountNotifications({ opened: false });
 
   const handleClose = async () => {
     // Clear hoooks
@@ -77,9 +80,12 @@ export const SidebarListIcons = () => {
 
       <NavLink to="/notification">
         <ListItemButton>
-          <ListItemIcon sx={{ minWidth: '30px' }}>
-            <NotificationsSharpIcon sx={{ color: 'white' }} />
-          </ListItemIcon>
+          <Badge
+            badgeContent={data?.result}
+            sx={{ span: { fontSize: 12, background: '#ec407a' }, color: 'white' }}
+          >
+            <NotificationsSharpIcon />
+          </Badge>
         </ListItemButton>
       </NavLink>
 

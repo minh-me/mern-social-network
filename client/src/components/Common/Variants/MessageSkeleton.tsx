@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import { ButtonSekeleton } from './ButtonSkeleton';
 const bgColor = '#6c6c6c';
 
-export const UserSkeleton = () => {
+export const MessageHeaderSkeleton = () => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }} py={2}>
       {/* Avatar */}
@@ -19,10 +19,3 @@ export const UserSkeleton = () => {
     </Box>
   );
 };
-
-export const UserListSkeleton = () => (
-  <Box mx={2}>
-    <UserSkeleton />
-    <UserSkeleton />
-  </Box>
-);

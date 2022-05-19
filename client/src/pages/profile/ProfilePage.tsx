@@ -15,6 +15,7 @@ export const ProfilePage = () => {
   let { username } = useParams();
   const { state } = useAppContext();
   const { auth } = state;
+  const [searchParams, setSearchParams] = useSearchParams();
 
   username = auth?.username === username ? 'profile' : username;
 
@@ -23,7 +24,17 @@ export const ProfilePage = () => {
     { cacheTime: username === 'profile' ? 2 * 60 * 1000 : 5 * 60 * 1000 }
   );
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  if (isLoading || !user) {
+    return (
+      <>
+        <Box sx={{ borderBottom: '1px solid #38444d' }}>
+          <Title title="Profile" />
+        </Box>
+        <ProfileHeaderSkeleton />
+      </>
+    );
+  }
+
   const isTabReplies = searchParams.get('tab') === 'replies';
 
   return (
@@ -31,21 +42,8 @@ export const ProfilePage = () => {
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
         <Title title="Profile" />
       </Box>
-
-      {/* Header */}
-
-      {isLoading && <ProfileHeaderSkeleton />}
-
-      {user ? (
-        <>
-          <ProfileHeader user={user as UserProfile} />
-          <ProfileTabs isTabReplies={isTabReplies} setSearchParams={setSearchParams} />
-        </>
-      ) : (
-        <Typography textAlign="center" fontSize={16}>
-          Not found user
-        </Typography>
-      )}
+      <ProfileHeader user={user as UserProfile} />
+      <ProfileTabs isTabReplies={isTabReplies} setSearchParams={setSearchParams} />
 
       <Divider sx={{ borderBottom: '1px solid #38444d', my: 2, mt: 4 }} />
 

@@ -2,21 +2,36 @@ import { Box, IconButton } from '@mui/material';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined';
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
-import { ChatAvatar } from './ChatAvatar';
+import { MessageHeaderSkeleton } from 'components/Common/Variants/MessageSkeleton';
+import { MessageAvatar } from './MessageAvatar';
 import { ChatName } from './ChatName';
+import { useChat } from 'RQhooks/chat.rq';
+import { useAppContext } from 'hooks/useAppContext';
 
-type Props = {};
+type Props = {
+  chatId: string | '';
+};
 
-export const MessageHeader = (props: Props) => {
+export const MessageHeader = ({ chatId }: Props) => {
+  const { state } = useAppContext();
+  const { auth } = state;
+  const { data: chat, isLoading } = useChat({ chatId });
+
+  if (isLoading || !chat) return <MessageHeaderSkeleton />;
+  let chatName = chat.chatName as string;
+  if (!chatName) {
+    chatName = chat.users.find((user) => user.id !== auth?.id)?.name as string;
+  }
+
   return (
     <Box
       py={1}
       px={2}
       sx={{ borderBottom: '1px solid #38444d', display: 'flex', alignItems: 'center' }}
     >
-      <ChatAvatar />
+      <MessageAvatar isGroupChat={chat.isGroupChat} users={chat.users} />
       <Box sx={{ flex: 1 }}>
-        <ChatName />
+        <ChatName chatId={chat.id} chatName={chatName} />
       </Box>
 
       <Box>

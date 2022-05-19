@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { auth, validate } from '../middlewares'
-import { messageValidation } from '../validations'
+import { chatValidation, messageValidation } from '../validations'
 import { messageController } from '../controllers'
 
 const router = new Router()
@@ -17,6 +17,13 @@ router
     validate(messageValidation.getMessages),
     messageController.getMessages
   )
+
+router.get(
+  '/:slug/chat',
+  auth(),
+  validate(chatValidation.getChatBySlug),
+  messageController.getMessageBySlugChat
+)
 
 router
   .route('/:messageId')

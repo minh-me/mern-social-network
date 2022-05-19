@@ -38,7 +38,7 @@ const queryChats = async (filter, options) => {
  * @returns {Promise<Chat>}
  */
 const getChatById = async chatId => {
-  const chat = await Chat.findById(chatId)
+  const chat = await Chat.findById(chatId).populate('users')
   return chat
 }
 
@@ -75,7 +75,9 @@ const updateOne = async (filter, body) => {
  */
 const updateChatById = async (chatId, body) => {
   const chat = await Chat.findByIdAndUpdate(chatId, body, { new: true })
+
   if (!chat) throw new createHttpError.NotFound('Not found chat.')
+
   return chat
 }
 

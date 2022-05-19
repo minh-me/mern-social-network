@@ -7,11 +7,12 @@ mongoose.plugin(slug)
 
 const chatSchema = mongoose.Schema(
   {
-    chatName: { type: String, required: true },
+    chatName: { type: String },
     isGroupChat: { type: Boolean, default: false },
     users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     lastestMessage: { type: Schema.Types.ObjectId, ref: 'Message' },
     slug: { type: String, slug: 'chatName', unique: true, slugPaddingSize: 2 },
+    admin: { type: Schema.Types.ObjectId, ref: 'User' },
   },
   {
     timestamps: true,

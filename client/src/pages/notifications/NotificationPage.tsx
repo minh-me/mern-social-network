@@ -21,9 +21,7 @@ export const NotificationPage = () => {
         <Box sx={styles.titleContainer}>
           <Title title="Notifications" />
         </Box>
-        <Box mx={2}>
-          <UserListSkeleton />
-        </Box>
+        <UserListSkeleton />
       </>
     );
 

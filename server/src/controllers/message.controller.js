@@ -23,7 +23,7 @@ const createMessage = catchAsync(async (req, res) => {
 /**
  * Get all messages
  * @GET api/messages
- * @access public
+ * @access private
  */
 const getMessages = catchAsync(async (req, res) => {
   const filter = pick(req.query, [])
@@ -37,12 +37,24 @@ const getMessages = catchAsync(async (req, res) => {
 /**
  * Get a message by message id
  * @GET api/messages/:messageId
- * @access public
+ * @access private
  */
 const getMessage = catchAsync(async (req, res) => {
   const message = await messageService.getMessageById(req.params.messageId)
 
   if (!message) throw createError.NotFound()
+
+  res.send(message)
+})
+
+/**
+ * Get a message by message id
+ * @GET api/messages/:slug/chat
+ * @access private
+ */
+const getMessageBySlugChat = catchAsync(async (req, res) => {
+  const chat = await chatService.findOne({ slug: req.params.slug })
+  const message = await messageService.findOne({ chat: chat._id })
 
   res.send(message)
 })
@@ -71,4 +83,11 @@ const deleteMessage = catchAsync(async (req, res) => {
   res.send(message)
 })
 
-export { createMessage, getMessages, getMessage, updateMessage, deleteMessage }
+export {
+  createMessage,
+  getMessages,
+  getMessage,
+  getMessageBySlugChat,
+  updateMessage,
+  deleteMessage,
+}
