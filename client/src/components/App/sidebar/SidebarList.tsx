@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { QueryClient } from 'react-query';
 import { NavLink, useNavigate } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -10,31 +11,36 @@ import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link, Typography } from '@mui/material';
+import { Badge, Link, Typography } from '@mui/material';
 import { MDialog } from 'components/Common/Modal';
 import { useLogout } from 'RQhooks';
-import { useGoogleLogout } from 'react-google-login';
 import { storage } from 'utils';
 import { useAppContext } from 'hooks/useAppContext';
 import { resetAppState } from 'context';
+import { useCountNotifications } from 'RQhooks/notification.rq';
 
 const SidebarList = () => {
   const { dispatch } = useAppContext();
   const [openModal, setOpenModal] = useState(false);
-  const { mutateAsync } = useLogout();
   const navigate = useNavigate();
+  const queryClient = new QueryClient();
 
-  const { signOut, loaded } = useGoogleLogout({
-    clientId: '679275323194-0m8bkvm059v14kcepq57l873v8lm7r37.apps.googleusercontent.com',
-  });
+  const { mutateAsync } = useLogout();
+  const { data } = useCountNotifications({ opened: false });
 
   const handleClose = async () => {
+    // Clear hoooks
     dispatch(resetAppState());
 
-    await mutateAsync();
-    if (loaded) signOut();
-    setOpenModal(false);
+    // Clear localstorage
     storage.clearToken();
+
+    // Clear react query
+    queryClient.clear();
+
+    // Clear server
+    await mutateAsync();
+
     navigate('/auth', { replace: true });
   };
 
@@ -78,7 +84,12 @@ const SidebarList = () => {
       <NavLink to="/notification">
         <ListItemButton>
           <ListItemIcon sx={{ minWidth: '30px' }}>
-            <NotificationsSharpIcon sx={{ color: 'white' }} />
+            <Badge
+              badgeContent={data?.result}
+              sx={{ span: { fontSize: 12, background: '#ec407a' }, color: 'white' }}
+            >
+              <NotificationsSharpIcon />
+            </Badge>
           </ListItemIcon>
           <ListItemText primary="Notification" />
         </ListItemButton>

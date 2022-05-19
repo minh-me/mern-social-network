@@ -6,6 +6,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useUserProfile } from 'RQhooks';
 import { UserListSkeleton } from 'components/Common/Variants';
 import { UserList } from 'components/Common';
+import { User } from 'interface';
 
 export const FollowPage = () => {
   const { username } = useParams();
@@ -15,10 +16,9 @@ export const FollowPage = () => {
   const isTabFollowers = selectedTab === 'followers';
 
   const { data, isLoading } = useUserProfile({ username });
+
   if (isLoading || !data) return <UserListSkeleton />;
   const { followers, following, name } = data;
-  console.log({ followers, following });
-
   return (
     <>
       {/* Title */}
@@ -53,7 +53,7 @@ export const FollowPage = () => {
         )}
         {!isTabFollowers && following && (
           <>
-            <UserList users={following} />
+            <UserList users={following as User[]} />
             {following.length === 0 && (
               <Typography textAlign="center" fontSize={16}>
                 Nothing to show.
@@ -62,12 +62,6 @@ export const FollowPage = () => {
           </>
         )}
       </Box>
-
-      {/* result users */}
-      {/* {!isTabFollowers && <TabUserList search={search} />} */}
-
-      {/* result posts */}
-      {/* {isTabFollowers && <TabPostList search={search} />} */}
     </>
   );
 };

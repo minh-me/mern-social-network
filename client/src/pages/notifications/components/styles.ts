@@ -19,7 +19,6 @@ export const styles = {
     },
   },
   text: {
-    color: '#DBDBDB',
     fontWeight: 400,
     fontSize: 14,
   },

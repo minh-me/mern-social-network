@@ -4,6 +4,7 @@ import { UserListSkeleton } from 'components/Common/Variants';
 import { limitUsers } from 'contants/pagination';
 import { useState } from 'react';
 import { useUsers } from 'RQhooks';
+
 export const TabUserList = ({ search = '' }) => {
   const [limit, setLimit] = useState(limitUsers);
   const { data, isFetching, isLoading } = useUsers({ limit, search });
@@ -12,7 +13,7 @@ export const TabUserList = ({ search = '' }) => {
   const { users, info } = data;
   return (
     <Box px={2}>
-      <UserList users={data.users} />
+      <UserList users={users} />
       <Box mt={2} mb={4} sx={{ display: 'flex', justifyContent: 'center' }}>
         {isFetching ? (
           <CircularProgress size={25} />

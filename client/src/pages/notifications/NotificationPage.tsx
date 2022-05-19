@@ -1,26 +1,25 @@
 import { Box, IconButton, Typography } from '@mui/material';
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 
-import { User } from 'interface';
 import { LoadMoreButton, Title } from 'components/App';
 import { NotificationItem } from './components/NotificationItem';
-import { useNotifications } from 'RQhooks/notification.rq';
+import { useMarkAsOpened, useNotifications } from 'RQhooks/notification.rq';
 import { limitNotifications } from 'contants/pagination';
 import { useState } from 'react';
 import { UserListSkeleton } from 'components/Common/Variants';
+import { MDialog } from 'components/Common/Modal';
 
 export const NotificationPage = () => {
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(limitNotifications);
   const { data, isFetching, isLoading } = useNotifications({ limit });
+  const { mutateAsync } = useMarkAsOpened();
+  const [openModal, setOpenModal] = useState(false);
 
   if (isLoading || !data)
     return (
       <>
         <Box sx={styles.titleContainer}>
           <Title title="Notifications" />
-          <IconButton size="small" sx={{ color: 'white', mr: 3 }}>
-            <DoneAllOutlinedIcon />
-          </IconButton>
         </Box>
         <Box mx={2}>
           <UserListSkeleton />
@@ -28,14 +27,22 @@ export const NotificationPage = () => {
       </>
     );
 
+  const handleConfirm = async () => {
+    await mutateAsync({ filter: { opened: false }, body: { opened: true } });
+    setOpenModal(false);
+  };
+
   const { notifications, info } = data;
 
-  console.log({ notifications, info });
   return (
     <>
       <Box sx={styles.titleContainer}>
         <Title title="Notifications" />
-        <IconButton size="small" sx={{ color: 'white', mr: 3 }}>
+        <IconButton
+          size="small"
+          onClick={() => setOpenModal(true)}
+          sx={{ color: '#ff2b72', mr: 3 }}
+        >
           <DoneAllOutlinedIcon />
         </IconButton>
       </Box>
@@ -58,6 +65,17 @@ export const NotificationPage = () => {
           Nothing to show.
         </Typography>
       )}
+
+      {/* Modal */}
+      <MDialog
+        title="Đánh dấu thông báo!"
+        confirmButton={handleConfirm}
+        onClose={() => setOpenModal(false)}
+        open={openModal}
+        isLoading={isLoading}
+      >
+        Đánh dấu tất cả thông báo là đã đọc?
+      </MDialog>
     </>
   );
 };

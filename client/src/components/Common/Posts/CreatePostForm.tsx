@@ -11,8 +11,6 @@ export const CreatePostForm = () => {
     setOpen(true);
   };
 
-  console.log({ auth });
-
   return (
     <>
       <Box

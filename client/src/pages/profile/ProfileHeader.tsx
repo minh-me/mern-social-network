@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import LocalPostOfficeRoundedIcon from '@mui/icons-material/LocalPostOfficeRounded';
 
 import { useAppContext } from 'hooks/useAppContext';
-import { UserProfile } from 'interface';
+import { User, UserProfile } from 'interface';
 import { FollowButton, IconsButtonOutlined } from 'components/Common/Buttons';
 import { ProfileFollowers } from './components/ProfileFollowers';
 import { ProfileInfo } from './components/ProfileInfo';

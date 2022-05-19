@@ -1,11 +1,10 @@
 import { Info } from './paginate.inteface';
 import { User } from './user.interface';
-enum notificationTypes {
+export enum NotificationTypes {
   likePost,
   retweetPost,
   follow,
   reply,
-  newMessage,
   commentPost,
   commentUser,
 }
@@ -14,7 +13,7 @@ export interface Notification {
   id: string;
   userTo: User;
   userFrom: User;
-  notificationType: notificationTypes;
+  type: NotificationTypes;
   opened: boolean;
   entityId: string;
 

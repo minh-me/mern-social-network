@@ -18,7 +18,7 @@ export const GoogleButton = () => {
   const { signIn } = useGoogleLogin({
     onSuccess,
     clientId: OAUTH_CLIENT_ID,
-    isSignedIn: true,
+    isSignedIn: false,
     autoLoad: false,
   });
 

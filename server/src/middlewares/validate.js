@@ -16,7 +16,7 @@ export const validate = schema => (req, res, next) => {
     Object.assign(req, value)
     return next()
   } catch (err) {
-    console.log({ err: err.name, erros: err.errors })
+    console.log({ err: err.name, errors: err.errors })
     return res.status(400).json({
       code: 400,
       name: err.name,
