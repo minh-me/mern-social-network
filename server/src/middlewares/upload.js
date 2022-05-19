@@ -50,7 +50,7 @@ export const uploadPostImage = (req, res, next) => {
   next()
 }
 
-export const uploadImageComment = (req, res, next) => {
+export const uploadImage = (req, res, next) => {
   if (typeof req.file === 'undefined' && typeof req.body === 'undefined')
     throw new createHttpError.BadRequest(transErrors.upload_issue)
 

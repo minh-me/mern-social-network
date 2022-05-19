@@ -76,7 +76,7 @@ const updatePost = catchAsync(async (req, res) => {
  */
 const likePost = catchAsync(async (req, res) => {
   const { postId } = req.params
-  const user = req.user
+  const { user } = req
 
   // Check user is liked post
   const isLiked = user.likes && user.likes.includes(postId)

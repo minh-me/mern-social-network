@@ -1,70 +1,46 @@
-import { useRef } from 'react';
-import { Box, IconButton } from '@mui/material';
-import SendRoundedIcon from '@mui/icons-material/SendRounded';
-import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
-import { blueGrey } from '@mui/material/colors';
-import TextareaAutosize from 'react-textarea-autosize';
-import { styleScroll } from 'utils';
+import { useState } from 'react';
+import { Box } from '@mui/material';
 
-type Props = {};
+import { FormTextAndImageSubmit } from 'components/Common/Forms';
+import { useCreateMessage } from 'RQhooks/message.rq';
 
-export const MessageFooter = (props: Props) => {
-  const ref = useRef<HTMLTextAreaElement | null>(null);
-
-  const handleInputChange = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    console.log({ text: event.target });
-    if (event.key === 'Enter') {
-      console.log('do validate');
-    }
-  };
-  return (
-    <Box sx={styles.textareaContainer}>
-      <TextareaAutosize
-        ref={ref}
-        maxRows={4}
-        autoFocus={true}
-        // onChange={handleInputChange}
-        onKeyDown={handleInputChange}
-        placeholder="Type a message..."
-      />
-      <input type="file" style={{ display: 'none' }} id="upload-image" />
-
-      <IconButton sx={{ color: '#f91880' }}>
-        <SendRoundedIcon />
-      </IconButton>
-      <IconButton sx={{ color: '#f91880' }} component="label" htmlFor="upload-image">
-        <ImageRoundedIcon />
-      </IconButton>
-    </Box>
-  );
+type Props = {
+  chatId: string;
 };
 
-const styles = {
-  textareaContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    px: 2,
-    py: 2,
-    textarea: {
-      outline: 'none',
-      fontWeight: 500,
-      borderRadius: 4,
-      pb: 0,
-      width: '100%',
-      resize: 'none',
-      overflowY: 'auto',
-      fontSize: 14,
-      padding: '8px 12px',
-      flex: 1,
-      height: 20,
-      background: '#1f2e3b',
-      border: '1px solid #38444d',
-      color: 'rgb(233, 30, 99)',
-      transition: 'all 0.2s ease-in-out',
-      ...styleScroll,
-    },
-    'textarea:hover': {
-      borderColor: '#4e6272',
-    },
-  },
+export const MessageFooter = ({ chatId }: Props) => {
+  const [text, setText] = useState('');
+  const [image, setImage] = useState<FileList>();
+
+  const { mutateAsync, isLoading } = useCreateMessage();
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+
+    text && formData.append('text', text);
+    image && formData.append('image', image[0]);
+    formData.append('chat', chatId);
+
+    await mutateAsync(formData);
+
+    handleResetForm();
+  };
+  const handleResetForm = () => {
+    setText('');
+    setImage(undefined);
+  };
+  return (
+    <Box p={2} sx={{ display: 'flex', alignItems: 'center' }}>
+      <FormTextAndImageSubmit
+        text={text}
+        setText={setText}
+        image={image}
+        setImage={setImage}
+        onSubmit={handleSubmit}
+        resetForm={handleResetForm}
+        isLoading={isLoading}
+        placeholderText="Enter message..."
+      />
+    </Box>
+  );
 };

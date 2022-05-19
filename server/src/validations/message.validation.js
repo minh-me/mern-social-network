@@ -15,12 +15,14 @@ const createMessage = {
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
-  text: yup.string().required(),
+  text: yup.string(),
   image: yup.string(),
 }
 
 const getMessages = {
-  chat: yup.string(),
+  chat: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
   text: yup.string(),
   role: yup.string(),
   page: yup.number().integer(),

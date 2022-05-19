@@ -17,13 +17,25 @@ export const ChatItem = ({ chat }: Props) => {
   const { auth } = state;
   const { lastestMessage } = chat;
 
-  let msg = `${chat.admin.name}: đã tạo nhóm.`;
+  let LastestMessage = () => (
+    <>
+      <Typography fontWeight={500} fontSize={12} component="span">
+        {chat.admin.name}
+      </Typography>
+      : đã tạo nhóm.
+    </>
+  );
 
   // Check lastest message is text or image
   if (lastestMessage) {
-    msg = lastestMessage?.text
-      ? `${lastestMessage.sender.name}: ${lastestMessage?.text}`
-      : `${lastestMessage.sender.name}: đã gửi một ảnh.`;
+    LastestMessage = () => (
+      <>
+        <Typography fontWeight={500} fontSize={12} component="span">
+          {lastestMessage.sender.name}
+        </Typography>
+        : {lastestMessage?.text ? lastestMessage?.text : `đã gửi một ảnh.`}
+      </>
+    );
   }
 
   let MessageAvatar = () => <GroupAvatar users={chat.users} />;
@@ -37,22 +49,32 @@ export const ChatItem = ({ chat }: Props) => {
     MessageAvatar = () => <UserAvatar user={user} />;
   }
 
+  console.log({ lastestMessage, authId: auth?.id });
+
   return (
     <Box py={1} px={2} component={Link} to={`/messages/${chat.id}`} sx={styles.container}>
       <MessageAvatar />
       <Box px={2}>
         <Typography
-          color={true ? '#ff0076' : '#d51a71'}
+          color={lastestMessage?.readBy.includes(auth?.id as string) ? '#d51a71' : '#ff0076'}
           fontWeight={400}
           fontSize={15}
           component="p"
         >
           {chatName}
         </Typography>
-        <Typography fontSize={12} color={true ? 'white' : '#8f8e8e'} component="p">
-          {msg}
+        <Typography
+          fontSize={12}
+          color={lastestMessage?.readBy.includes(auth?.id as string) ? '#8f8e8e' : '#d9d9d9'}
+          component="p"
+        >
+          <LastestMessage />
         </Typography>
-        <Typography fontSize={10} color={true ? 'white' : '#686868'} component="p">
+        <Typography
+          fontSize={10}
+          color={lastestMessage?.readBy.includes(auth?.id as string) ? '#686868' : '#d9d9d9'}
+          component="p"
+        >
           {dayjs(chat.createdAt).fromNow()}
         </Typography>
       </Box>

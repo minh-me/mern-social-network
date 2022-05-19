@@ -42,8 +42,8 @@ export const NewChatPage = () => {
   };
 
   useEffect(() => {
-    if (data) navigate(`/messages/${data.slug}`);
-  }, [data]);
+    if (data) navigate(`/messages/${data.id}`);
+  }, [data, navigate]);
 
   return (
     <Box>

@@ -1,43 +1,66 @@
 import { FC } from 'react';
 import { Box, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import { blueGrey } from '@mui/material/colors';
-import { PostImage } from 'components/Common/Posts/components';
+import { Message } from 'interface';
+import { ImageWithModal } from 'components/Common/Images/ImageWithModal';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+
 type MessageProps = {
   isOwner: Boolean;
+  message: Message;
 };
-export const MessageItem: FC<MessageProps> = ({ isOwner }) => {
+export const MessageItem: FC<MessageProps> = ({ isOwner, message }) => {
+  const isGroupChat = message.chat.isGroupChat;
   return (
     <Box
       pb={1}
       sx={{
         display: 'flex',
         alignItems: 'flex-start',
-        flexDirection: isOwner ? 'row' : 'row-reverse',
+        flexDirection: isOwner ? 'row-reverse' : 'row',
       }}
     >
       <Avatar
-        alt="Remy Sharp"
-        src="https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png"
+        alt={message.sender.username}
+        src={message.sender.profilePic.url}
         sx={{ width: 34, height: 34, border: '2px solid white' }}
       />
       <Box sx={styles.contentContainer}>
+        {isGroupChat && !isOwner && (
+          <Typography sx={{ ml: 1, textAlign: 'left' }} color="#898989" fontSize={12}>
+            {message.sender.name}
+          </Typography>
+        )}
+
         {/* Content */}
-        <Typography variant="body1" component="p" sx={styles.text}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, quam? Lorem ipsum dolor sit
-          amet consectetur adipisicing elit. Odit, asperiores!
-        </Typography>
+        {message.text && (
+          <Typography
+            variant="body1"
+            component="p"
+            sx={{ ...styles.text, bgcolor: isOwner ? '#5352ed' : '#3E4042' }}
+          >
+            {message.text}
+          </Typography>
+        )}
 
         {/* Image */}
-        <PostImage
-          sx={{ px: 1 }}
-          alt="not found image"
-          imageUrl="https://res.cloudinary.com/djvd6zhbg/image/upload/v1645065070/postImage/fik7evjfx3bg0a5tzweq.png"
-        />
+        {message.image && (
+          <ImageWithModal
+            sx={{ px: 1, mt: 1 }}
+            alt="not found image"
+            imageUrl={message.image.url}
+          />
+        )}
 
         {/* Times */}
-        <Typography fontSize={13} component="span" sx={styles.time}>
-          30p truwosc
+        <Typography
+          fontSize={9}
+          component="span"
+          sx={{ ...styles.time, float: isOwner ? 'left' : 'right' }}
+        >
+          {dayjs(message.createdAt).fromNow()}
         </Typography>
       </Box>
     </Box>
@@ -47,19 +70,17 @@ export const MessageItem: FC<MessageProps> = ({ isOwner }) => {
 const styles = {
   contentContainer: {
     '&>p': {
-      bgcolor: '#5352ed',
       transition: 'all 0.4s ease-in-out',
-      '&:hover+span': {
-        opactiy: 1,
-        visibility: 'visible',
-      },
     },
     maxWidth: '80%',
+    '&:hover span': {
+      opactiy: 1,
+      visibility: 'visible',
+    },
   },
 
   time: {
     color: 'white',
-    float: 'right',
     pt: '2px',
     opactiy: 0,
     visibility: 'hidden',
