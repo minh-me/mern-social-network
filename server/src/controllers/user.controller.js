@@ -1,7 +1,7 @@
 import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
-import { userService } from '../services'
+import { notificationService, userService } from '../services'
 import { tranSuccess } from '../_lang/en'
 
 /**
@@ -29,7 +29,7 @@ const getUsers = catchAsync(async (req, res) => {
   ])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
-  options.populate = 'following,followers'
+  // options.populate = 'following,followers'
   filter._id = { $ne: req.user.id }
 
   const result = await userService.queryUsers(filter, options)
@@ -123,7 +123,16 @@ const follow = catchAsync(async (req, res, next) => {
     [options]: { following: userFollow.id },
   })
 
+  // Update current user
   req.user = userUpdated
+
+  // Create notify
+  if (isFollowing && !userUpdated.id !== userFollow.id) {
+    await notificationService.createNotificationFollow(
+      userUpdated.id,
+      userFollow.id
+    )
+  }
 
   res.send(userFollow)
 })

@@ -111,6 +111,8 @@ const getRefreshToken = catchAsync(async (req, res, next) => {
 
   const user = await userService.getUserById(userId)
 
+  if (!user) return next(createHttpError.NotFound('Not found user.'))
+
   // create access token
   const { ac_token, rf_token } = await tokenService.authToken(user.id)
 

@@ -13,7 +13,7 @@ const notificationTypes = {
 
 /**
  * Create new notification
- * @param {{userFrom: mongodbId; userTo: mongodbId, entityId: mongodbId, notificationType: string}} notificationBody
+ * @param {{userFrom: mongodbId; userTo: mongodbId, entityId: mongodbId, type: string}} notificationBody
  * @returns {Promise<Notification>}
  */
 const createNotification = async notificationBody => {
@@ -33,8 +33,8 @@ const createNotificationLikePost = async (userFrom, userTo, postId) => {
   const notify = await createNotification({
     userFrom,
     userTo,
-    entity: postId,
-    notificationType: notificationTypes.likePost,
+    entityId: postId,
+    type: notificationTypes.likePost,
   })
   return notify
 }
@@ -50,8 +50,8 @@ const createNotificationRetweetPost = async (userFrom, userTo, postId) => {
   const notify = await createNotification({
     userFrom,
     userTo,
-    entity: postId,
-    notificationType: notificationTypes.retweetPost,
+    entityId: postId,
+    type: notificationTypes.retweetPost,
   })
   return notify
 }
@@ -64,7 +64,11 @@ const createNotificationRetweetPost = async (userFrom, userTo, postId) => {
  * @returns {Promise<Notification>}
  */
 const createNotificationComment = async (userFrom, userTo, postId) => {
-  const notify = await createNotification({ userFrom, userTo, entity: postId })
+  const notify = await createNotification({
+    userFrom,
+    userTo,
+    entityId: postId,
+  })
   return notify
 }
 
@@ -78,8 +82,8 @@ const createNotificationFollow = async (userFrom, userTo) => {
   const notify = await createNotification({
     userFrom,
     userTo,
-    entity: userTo,
-    notificationType: notificationTypes.follow,
+    entityId: userTo,
+    type: notificationTypes.follow,
   })
   return notify
 }
@@ -96,7 +100,7 @@ const createNotificationNewMessage = async (userFrom, userTo, chatId) => {
     userFrom,
     userTo,
     entityId: chatId,
-    notificationType: notificationTypes.newMessage,
+    type: notificationTypes.newMessage,
   })
   return notify
 }
@@ -153,6 +157,20 @@ const updateNotificationById = async (notificationId, body) => {
 }
 
 /**
+ * Update notification by id
+ * @param {Object} filter
+ * @param {Object} body
+ * @returns {Promise<Notifications>}
+ */
+const updateMany = async (filter, body) => {
+  const result = await Notification.updateMany(filter, body, {
+    new: true,
+  })
+
+  return result
+}
+
+/**
  * Delete notification by id
  * @param {ObjectId} notificationId
  * @returns {Promise<Notification>}
@@ -166,15 +184,29 @@ const deleteNotificationById = async notificationId => {
   return notification
 }
 
+/**
+ * Count notification by filter
+ * @param {Object} filter
+ * @returns {Promise<Number>}
+ */
+const count = async filter => {
+  const result = await Notification.count(filter)
+  console.log({ result })
+
+  return result
+}
+
 export {
   createNotification,
   queryNotifications,
   getNotificationById,
   updateNotificationById,
+  updateMany,
   deleteNotificationById,
   createNotificationLikePost,
   createNotificationRetweetPost,
   createNotificationComment,
   createNotificationFollow,
   createNotificationNewMessage,
+  count,
 }

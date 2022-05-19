@@ -9,6 +9,7 @@ import { useUserProfile } from 'RQhooks';
 import { ProfileHeaderSkeleton } from 'components/Common/Variants';
 import { ProfileReplies } from './ProfileReplies';
 import { useAppContext } from 'hooks/useAppContext';
+import { UserProfile } from 'interface';
 
 export const ProfilePage = () => {
   let { username } = useParams();
@@ -16,6 +17,7 @@ export const ProfilePage = () => {
   const { auth } = state;
 
   username = auth?.username === username ? 'profile' : username;
+
   const { data: user, isLoading } = useUserProfile(
     { username },
     { cacheTime: username === 'profile' ? 2 * 60 * 1000 : 5 * 60 * 1000 }
@@ -23,7 +25,7 @@ export const ProfilePage = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const isTabReplies = searchParams.get('tab') === 'replies';
-  console.log({ isTabReplies, isLoading });
+
   return (
     <>
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
@@ -36,7 +38,7 @@ export const ProfilePage = () => {
 
       {user ? (
         <>
-          <ProfileHeader user={user} />
+          <ProfileHeader user={user as UserProfile} />
           <ProfileTabs isTabReplies={isTabReplies} setSearchParams={setSearchParams} />
         </>
       ) : (

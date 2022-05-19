@@ -12,9 +12,11 @@ interface UserItemProps {
 export const UserItem: FC<UserItemProps> = ({ user }) => {
   const { state } = useAppContext();
   const { auth } = state;
-
   let isFollowing = false;
-  if (auth?.id && user.followers) isFollowing = user.followers.includes(auth.id);
+
+  console.log({ followers: user.followers, auth: auth?.id });
+  if (auth?.id) isFollowing = user.followers.includes(auth.id);
+  console.log({ isFollowing });
 
   return (
     <Box sx={styles.container}>

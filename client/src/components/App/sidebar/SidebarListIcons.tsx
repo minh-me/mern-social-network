@@ -12,28 +12,31 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Link, Typography } from '@mui/material';
 import { MDialog } from 'components/Common/Modal';
 import { useLogout } from 'RQhooks';
-import { useGoogleLogout } from 'react-google-login';
 import { storage } from 'utils';
 import { useAppContext } from 'hooks/useAppContext';
 import { resetAppState } from 'context';
+import { QueryClient } from 'react-query';
 
 export const SidebarListIcons = () => {
   const { dispatch } = useAppContext();
   const [openModal, setOpenModal] = useState(false);
   const { mutateAsync } = useLogout();
   const navigate = useNavigate();
-
-  const { signOut, loaded } = useGoogleLogout({
-    clientId: '679275323194-0m8bkvm059v14kcepq57l873v8lm7r37.apps.googleusercontent.com',
-  });
+  const queryClient = new QueryClient();
 
   const handleClose = async () => {
+    // Clear hoooks
     dispatch(resetAppState());
 
-    await mutateAsync();
-    if (loaded) signOut();
-    setOpenModal(false);
+    // Clear localstorage
     storage.clearToken();
+
+    // Clear react query
+    queryClient.clear();
+
+    // Clear server
+    await mutateAsync();
+
     navigate('/auth', { replace: true });
   };
 

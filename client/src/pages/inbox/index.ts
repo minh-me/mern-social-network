@@ -1,2 +1,2 @@
-export * from './InboxPage';
+export * from './ChatPage';
 export * from './NewChatPage';

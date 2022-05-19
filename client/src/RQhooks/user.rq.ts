@@ -34,7 +34,6 @@ export const useFollow = () => {
     onSettled: () => {
       return queryClient.invalidateQueries({
         predicate: (query) => {
-          console.log({ query });
           return query.queryKey.toString().startsWith('users');
         },
       });

@@ -17,6 +17,7 @@ type ModalProps = {
   type?: 'delete' | 'ok';
   position?: 'top' | 'center';
   textAlign?: 'center' | 'left';
+  isLoading?: boolean;
 };
 
 export const MDialog: FC<ModalProps> = ({
@@ -29,6 +30,7 @@ export const MDialog: FC<ModalProps> = ({
   confirmButton,
   entityId,
   textAlign = 'left',
+  isLoading = false,
 }) => {
   return (
     <Dialog
@@ -49,12 +51,18 @@ export const MDialog: FC<ModalProps> = ({
             size="small"
             color="error"
             variant="contained"
+            disabled={isLoading}
             onClick={() => confirmButton(entityId)}
           >
             Xóa
           </Button>
         ) : (
-          <Button sx={styles.button} variant="contained" onClick={() => confirmButton(entityId)}>
+          <Button
+            disabled={isLoading}
+            sx={styles.button}
+            variant="contained"
+            onClick={() => confirmButton(entityId)}
+          >
             Okay!
           </Button>
         )}

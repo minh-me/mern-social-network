@@ -20,10 +20,17 @@ const createNotification = catchAsync(async (req, res) => {
  * @access public
  */
 const getNotifications = catchAsync(async (req, res) => {
-  const filter = pick(req.query, [])
+  const filter = pick(req.query, ['opened'])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
-  options.populate = 'userFrom,userTo,entity'
+  if (filter.opened) {
+    // convert string to boolean
+    filter.opened = JSON.parse(filter.opened)
+  }
+
+  // Get notifications of user logged in
+  filter.userTo = req.user.id
+  options.populate = 'userFrom,userTo,entityId'
 
   const result = await notificationService.queryNotifications(filter, options)
 
@@ -59,6 +66,27 @@ const updateNotification = catchAsync(async (req, res) => {
 })
 
 /**
+ * Update many notification
+ * @PATCH api/notifications/update-many
+ * @access private
+ */
+const updateMany = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['opened'])
+  const { opened } = req.body
+
+  if (filter.opened) {
+    // convert string to boolean
+    filter.opened = JSON.parse(filter.opened)
+  }
+
+  filter.userTo = req.user.id
+
+  const notification = await notificationService.updateMany(filter, { opened })
+
+  res.send(notification)
+})
+
+/**
  * Delete notification by notificationId
  * @DELETE api/notifications/:notificationId
  * @access private
@@ -67,7 +95,28 @@ const deleteNotification = catchAsync(async (req, res) => {
   const notification = await notificationService.deleteNotificationById(
     req.params.notificationId
   )
+
   res.send(notification)
+})
+
+/**
+ * Count collections
+ * @GET api/notifications/count
+ * @access private
+ */
+const count = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['opened'])
+
+  if (filter.opened) {
+    // convert string to boolean
+    filter.opened = JSON.parse(filter.opened)
+  }
+
+  filter.userTo = req.user.id
+
+  const result = await notificationService.count(filter)
+
+  res.send({ result })
 })
 
 export {
@@ -75,5 +124,7 @@ export {
   getNotifications,
   getNotification,
   updateNotification,
+  updateMany,
   deleteNotification,
+  count,
 }

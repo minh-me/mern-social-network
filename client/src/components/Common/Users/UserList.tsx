@@ -20,6 +20,13 @@ export const UserList: FC<UserListProps> = ({ users }) => {
           }}
         >
           <UserItem key={user.id} user={user} />
+
+          {/* <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' },}>
+            <UserItem key={user.id} user={user} />
+            <Box>
+              <FollowButton isFollowing={isFollowing || false} userId={user.id} />
+            </Box>
+          </Box> */}
         </Box>
       ))}
     </>

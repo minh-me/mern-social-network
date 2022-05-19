@@ -11,7 +11,7 @@ const createNotification = {
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
-  notificationType: yup.string().oneOf(['follow', 'like']).required(),
+  type: yup.string().oneOf(['follow', 'like']).required(),
   entityId: yup
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
@@ -19,11 +19,16 @@ const createNotification = {
 }
 
 const getNotifications = {
+  opened: yup.boolean(),
   role: yup.string(),
   page: yup.number().integer(),
   limit: yup.number().integer(),
   sort: yup.string(),
   select: yup.string(),
+}
+
+const count = {
+  opened: yup.boolean(),
 }
 
 const getNotification = {
@@ -38,6 +43,11 @@ const updateNotification = {
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
+  opened: yup.boolean(),
+}
+
+const updateNotifications = {
+  opened: yup.boolean(),
 }
 
 const deleteNotification = {
@@ -52,5 +62,7 @@ export {
   getNotifications,
   getNotification,
   updateNotification,
+  updateNotifications,
   deleteNotification,
+  count,
 }
