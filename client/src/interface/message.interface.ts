@@ -1,5 +1,8 @@
+import { Info } from './paginate.inteface';
+import { User } from './user.interface';
+
 export interface Message {
-  sender: string;
+  sender: User;
   readBy?: string;
   chat: string;
   text?: string;
@@ -7,4 +10,9 @@ export interface Message {
 
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface MessagesResponse {
+  messages: Message[];
+  info: Info;
 }

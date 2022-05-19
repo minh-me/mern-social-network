@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { Typography } from '@mui/material';
 import { MDialogInput } from 'components/Common/Modal';
+import { useUpdateChat } from 'RQhooks/chat.rq';
 
-type Props = {};
+type Props = {
+  chatId: string;
+  chatName: string;
+};
 
-export const ChatName = (props: Props) => {
+export const ChatName = ({ chatId, chatName }: Props) => {
   const [openModal, setOpenModal] = useState(false);
+  const { mutateAsync } = useUpdateChat();
 
-  const handleSubmit = (data: string) => {
-    console.log(data);
-    setOpenModal(false);
-  };
-  const handleClose = () => {
+  const handleSubmit = async (value: string) => {
+    await mutateAsync({ filter: { chatId }, body: { chatName: value } });
     setOpenModal(false);
   };
 
@@ -31,13 +33,13 @@ export const ChatName = (props: Props) => {
           },
         }}
       >
-        Minh Chiu, Bảo Trần, vung lien
+        {chatName}
       </Typography>
 
       <MDialogInput
-        inputValue=" Minh Chiu, Bảo Trần, vung lien"
+        inputValue={chatName}
         title="Thay đổi tên trò chuyện?"
-        onClose={handleClose}
+        onClose={() => setOpenModal(false)}
         onSubmit={handleSubmit}
         open={openModal}
       />

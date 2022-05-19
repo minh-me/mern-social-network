@@ -1,13 +1,16 @@
 import { Avatar } from '@mui/material';
+import { User } from 'interface';
 
-type Props = {};
+type Props = {
+  user: User;
+};
 
-export const UserAvatar = (props: Props) => {
+export const UserAvatar = ({ user }: Props) => {
   return (
     <Avatar
-      alt="Remy Sharp"
+      alt={user.username}
       sx={{ border: '1px solid white', height: '36px', width: '36px' }}
-      src="https://res.cloudinary.com/djvd6zhbg/image/upload/v1639037693/avatar/avatar-default_emyynu.png"
+      src={user.profilePic.url}
     />
   );
 };

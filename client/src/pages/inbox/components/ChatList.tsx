@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useChats } from 'RQhooks/chat.rq';
 import { UserListSkeleton } from 'components/Common/Variants';
@@ -24,6 +24,14 @@ export const ChatList = () => {
         limit={limit}
         onChangeLimit={(limit) => setLimit(limit)}
       />
+
+      {info.totalResults === 0 && (
+        <>
+          <Typography textAlign="center" fontSize={16}>
+            Nothing to show.
+          </Typography>
+        </>
+      )}
     </Box>
   );
 };

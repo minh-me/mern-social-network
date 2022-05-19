@@ -38,25 +38,7 @@ export const MDialogInput: FC<ModalInputProps> = ({
         {title}
       </DialogTitle>
       <DialogContent sx={{ background: '#36393f', maxWidth: '100%' }}>
-        <Box
-          sx={{
-            input: {
-              minWidth: 432,
-              outline: 'none',
-              border: '1px solid #5e5e5e',
-              padding: '8px 16px',
-              fontSize: '18px',
-              borderRadius: '20px',
-              color: 'rgb(233, 30, 99)',
-              background: '#2f3136',
-              transition: 'all 0.3s',
-              fontWeight: 500,
-            },
-            'input:hover': {
-              borderColor: 'rgb(206, 193, 193)',
-            },
-          }}
-        >
+        <Box sx={styles.inputContainer}>
           <input onChange={(e) => setValue(e.target.value)} value={value} />
         </Box>
       </DialogContent>
@@ -86,6 +68,23 @@ const styles = {
     '&:disabled': {
       color: '#d1d1d1',
       bgcolor: '#b72a5a',
+    },
+  },
+  inputContainer: {
+    input: {
+      minWidth: 432,
+      outline: 'none',
+      border: '1px solid #5e5e5e',
+      padding: '8px 16px',
+      fontSize: '18px',
+      borderRadius: '20px',
+      color: 'rgb(233, 30, 99)',
+      background: '#2f3136',
+      transition: 'all 0.3s',
+      fontWeight: 500,
+    },
+    'input:hover': {
+      borderColor: 'rgb(206, 193, 193)',
     },
   },
 };

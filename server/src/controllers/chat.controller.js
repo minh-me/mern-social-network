@@ -9,11 +9,26 @@ import { chatService, userService } from '../services'
  * @access private
  */
 const createChat = catchAsync(async (req, res) => {
-  // Add user logged in to group
+  // Add user logged in to users
   req.body.users.push(req.user.id)
 
+  // Check chat is exists
+  const chatExist = await chatService.findOne({
+    users: req.body.users,
+  })
+
+  // If chat is exists return chat
+  if (chatExist) return res.send(chatExist)
+
+  // Create chat
+
+  // Add admin field
+  req.body.admin = req.user.id
+
+  // Create
   const chat = await chatService.createChat(req.body)
 
+  // Success
   res.status(201).json(chat)
 })
 
@@ -26,8 +41,9 @@ const getChats = catchAsync(async (req, res) => {
   const filter = { users: req.user.id }
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
+  options.populate = 'admin,users,lastestMessage'
+
   const result = await chatService.queryChats(filter, options)
-  options.populate = 'users'
 
   res.send(result)
 })
@@ -39,6 +55,21 @@ const getChats = catchAsync(async (req, res) => {
  */
 const getChat = catchAsync(async (req, res) => {
   const chat = await chatService.getChatById(req.params.chatId)
+
+  if (!chat) throw createError.NotFound('Not found chat')
+
+  res.send(chat)
+})
+
+/**
+ * Get a chat by chat id
+ * @GET api/chats/:slug/slug
+ * @access private
+ */
+const getChatBySlug = catchAsync(async (req, res) => {
+  const { slug } = req.params
+
+  const chat = await chatService.findOne({ slug })
 
   if (!chat) throw createError.NotFound('Not found chat')
 
@@ -94,6 +125,7 @@ export {
   createChat,
   getChats,
   getChat,
+  getChatBySlug,
   getChatByUserId,
   updateChat,
   deleteChat,

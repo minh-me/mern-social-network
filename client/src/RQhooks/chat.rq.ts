@@ -13,8 +13,31 @@ export const useChats = ({ page = 1, limit = 1, sort = '-createdAt' }, options?:
   });
 };
 
+export const useChat = ({ chatId = '' }, options?: options) => {
+  return useQuery(`chats/${chatId}`, () => chatApi.getChat(chatId), {
+    onError: handlerError,
+    ...options,
+  });
+};
+
+export const useChatBySlug = ({ slug = '' }, options?: options) => {
+  return useQuery(`chats/${slug}/slug`, () => chatApi.getChatBySlug(slug), {
+    onError: handlerError,
+    ...options,
+  });
+};
+
 export const useCreateChat = () => {
   return useMutation('create-chat', chatApi.createChat, {
     onError: handlerError,
+  });
+};
+
+export const useUpdateChat = () => {
+  return useMutation(chatApi.updateChat, {
+    onError: handlerError,
+    onSuccess: (data) => {
+      console.log({ data });
+    },
   });
 };

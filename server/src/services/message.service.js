@@ -1,4 +1,5 @@
 import createHttpError from 'http-errors'
+import { chatService } from '.'
 import { Message } from '../models'
 
 /**
@@ -30,12 +31,28 @@ const getMessageById = async messageId => {
 }
 
 /**
+ * Find message by filter
+ * @param {Object} filter
+ * @returns {Promise<message>}
+ */
+const findOne = async filter => {
+  const message = await Message.findOne(filter)
+  return message
+}
+
+/**
  * Create message
  * @param {Object} body
  * @returns {Promise<message>}
  */
 const createMessage = async messageBody => {
   const newMessage = await Message.create(messageBody)
+
+  // Update lastestMessage in chat
+  await chatService.updateChatById(newMessage.chat, {
+    lastestMessage: newMessage.id,
+  })
+
   return newMessage
 }
 /**
@@ -67,6 +84,7 @@ export {
   createMessage,
   queryMessages,
   getMessageById,
+  findOne,
   updateMessageById,
   deleteMessageById,
 }

@@ -9,7 +9,11 @@ export const chatApi = {
   },
 
   getChat(chatId: string): Promise<Chat> {
-    return axios.get(`${chatUrl}/${chatId}`);
+    return axiosInstance.get(`${chatUrl}/${chatId}`);
+  },
+
+  getChatBySlug(slug = ''): Promise<Chat> {
+    return axiosInstance.get(`${chatUrl}/${slug}/slug`);
   },
 
   createChat(chat: {}): Promise<Chat> {
@@ -18,8 +22,8 @@ export const chatApi = {
     });
   },
 
-  updateChat(chatId: string, chat: {}): Promise<Chat> {
-    return axios.post(`${chatUrl}/${chatId}`, chat, {
+  updateChat(chatData: { filter: { chatId: string }; body: {} }): Promise<Chat> {
+    return axiosInstance.patch(`${chatUrl}/${chatData.filter.chatId}`, chatData.body, {
       headers: { 'Content-Type': 'application/json' },
     });
   },
