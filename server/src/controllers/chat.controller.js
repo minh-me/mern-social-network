@@ -41,7 +41,7 @@ const getChats = catchAsync(async (req, res) => {
   const filter = { users: req.user.id }
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
-  options.populate = 'admin,users,lastestMessage'
+  options.populate = 'admin,users,lastestMessage,lastestMessage.sender'
 
   const result = await chatService.queryChats(filter, options)
 
@@ -55,21 +55,6 @@ const getChats = catchAsync(async (req, res) => {
  */
 const getChat = catchAsync(async (req, res) => {
   const chat = await chatService.getChatById(req.params.chatId)
-
-  if (!chat) throw createError.NotFound('Not found chat')
-
-  res.send(chat)
-})
-
-/**
- * Get a chat by chat id
- * @GET api/chats/:slug/slug
- * @access private
- */
-const getChatBySlug = catchAsync(async (req, res) => {
-  const { slug } = req.params
-
-  const chat = await chatService.findOne({ slug })
 
   if (!chat) throw createError.NotFound('Not found chat')
 
@@ -125,7 +110,6 @@ export {
   createChat,
   getChats,
   getChat,
-  getChatBySlug,
   getChatByUserId,
   updateChat,
   deleteChat,

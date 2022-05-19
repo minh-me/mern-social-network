@@ -3,13 +3,13 @@ import { Box, SxProps, Theme } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 
-type PostImageProps = {
+type Props = {
   imageUrl: string;
   alt: string;
   sx?: SxProps<Theme>;
 };
 
-export const PostImage: FC<PostImageProps> = ({ imageUrl, sx, alt }) => {
+export const ImageWithModal: FC<Props> = ({ imageUrl, sx, alt }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -33,7 +33,7 @@ export const PostImage: FC<PostImageProps> = ({ imageUrl, sx, alt }) => {
         <DialogContent sx={{ background: '#36393f', p: 0 }}>
           <img
             src={imageUrl}
-            alt="Not found image"
+            alt={imageUrl}
             style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: 1 }}
           />
         </DialogContent>

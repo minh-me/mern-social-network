@@ -18,13 +18,6 @@ router
     chatController.getChatByUserId
   )
 
-router.get(
-  '/:slug/slug',
-  auth(),
-  validate(chatValidation.getChatBySlug),
-  chatController.getChatBySlug
-)
-
 router
   .route('/:chatId')
   .get(auth(), validate(chatValidation.getChat), chatController.getChat)

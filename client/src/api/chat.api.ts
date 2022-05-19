@@ -12,10 +12,6 @@ export const chatApi = {
     return axiosInstance.get(`${chatUrl}/${chatId}`);
   },
 
-  getChatBySlug(slug = ''): Promise<Chat> {
-    return axiosInstance.get(`${chatUrl}/${slug}/slug`);
-  },
-
   createChat(chat: {}): Promise<Chat> {
     return axiosInstance.post(`${chatUrl}`, chat, {
       headers: { 'Content-Type': 'application/json' },

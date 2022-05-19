@@ -1,12 +1,16 @@
+import { Chat } from './chat.interface';
 import { Info } from './paginate.inteface';
 import { User } from './user.interface';
 
 export interface Message {
+  id: string;
   sender: User;
-  readBy?: string;
-  chat: string;
+  readBy: User[];
+  chat: Chat;
   text?: string;
-  image?: string;
+  image?: {
+    url: string;
+  };
 
   createdAt?: string;
   updatedAt?: string;

@@ -1,7 +1,7 @@
 import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
-import { chatService, messageService } from '../services'
+import { chatService, messageService, uploadService } from '../services'
 
 /**
  * Create a message
@@ -12,7 +12,12 @@ const createMessage = catchAsync(async (req, res) => {
   const item = {
     ...req.body,
     sender: req.user.id,
-    readBy: req.user.id,
+    readBy: [req.user.id],
+  }
+
+  if (req.file) {
+    const result = await uploadService.uploadImageMessage(req.file.path)
+    item.image = result
   }
 
   const message = await messageService.createMessage(item)
@@ -26,8 +31,10 @@ const createMessage = catchAsync(async (req, res) => {
  * @access private
  */
 const getMessages = catchAsync(async (req, res) => {
-  const filter = pick(req.query, [])
+  const filter = pick(req.query, ['chat'])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
+
+  options.populate = 'sender,readBy,chat'
 
   const result = await messageService.queryMessages(filter, options)
 
@@ -43,18 +50,6 @@ const getMessage = catchAsync(async (req, res) => {
   const message = await messageService.getMessageById(req.params.messageId)
 
   if (!message) throw createError.NotFound()
-
-  res.send(message)
-})
-
-/**
- * Get a message by message id
- * @GET api/messages/:slug/chat
- * @access private
- */
-const getMessageBySlugChat = catchAsync(async (req, res) => {
-  const chat = await chatService.findOne({ slug: req.params.slug })
-  const message = await messageService.findOne({ chat: chat._id })
 
   res.send(message)
 })
@@ -83,11 +78,4 @@ const deleteMessage = catchAsync(async (req, res) => {
   res.send(message)
 })
 
-export {
-  createMessage,
-  getMessages,
-  getMessage,
-  getMessageBySlugChat,
-  updateMessage,
-  deleteMessage,
-}
+export { createMessage, getMessages, getMessage, updateMessage, deleteMessage }

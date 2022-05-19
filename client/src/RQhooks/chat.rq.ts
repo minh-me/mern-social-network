@@ -1,6 +1,5 @@
 import { chatApi } from 'api/chat.api';
-import { Chat } from 'interface';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { handlerError } from 'utils/handleError';
 import { options } from './options.type';
 
@@ -15,13 +14,6 @@ export const useChats = ({ page = 1, limit = 1, sort = '-createdAt' }, options?:
 
 export const useChat = ({ chatId = '' }, options?: options) => {
   return useQuery(`chats/${chatId}`, () => chatApi.getChat(chatId), {
-    onError: handlerError,
-    ...options,
-  });
-};
-
-export const useChatBySlug = ({ slug = '' }, options?: options) => {
-  return useQuery(`chats/${slug}/slug`, () => chatApi.getChatBySlug(slug), {
     onError: handlerError,
     ...options,
   });

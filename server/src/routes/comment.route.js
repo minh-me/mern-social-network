@@ -1,10 +1,5 @@
 import { Router } from 'express'
-import {
-  validate,
-  auth,
-  uploadStorage,
-  uploadImageComment,
-} from '../middlewares'
+import { validate, auth, uploadStorage, uploadImage } from '../middlewares'
 import { commentValidation } from '../validations'
 import { commentController } from '../controllers'
 
@@ -15,7 +10,7 @@ router
   .post(
     auth(),
     uploadStorage.single('image'),
-    uploadImageComment,
+    uploadImage,
     validate(commentValidation.createComment),
     commentController.createComment
   )

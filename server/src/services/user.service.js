@@ -1,6 +1,18 @@
 import createError from 'http-errors'
-import { postService, uploadService } from '.'
+import { postService } from './post.service'
+import { uploadService } from './upload.service'
 import { User } from '../models'
+
+/**
+ * Find user by email
+ * @param {string} email
+ * @returns {Promise<User>}
+ */
+const getUserByEmail = async email => {
+  const user = await User.findOne({ email }).select('+password')
+
+  return user
+}
 
 /**
  * Create user
@@ -67,17 +79,6 @@ const queryUsers = async (filter, options) => {
  */
 const getUserById = async userId => {
   const user = await User.findById(userId).populate(['followers', 'following'])
-
-  return user
-}
-
-/**
- * Find user by email
- * @param {string} email
- * @returns {Promise<User>}
- */
-const getUserByEmail = async email => {
-  const user = await User.findOne({ email }).select('+password')
 
   return user
 }

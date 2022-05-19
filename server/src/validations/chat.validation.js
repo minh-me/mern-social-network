@@ -33,10 +33,6 @@ const getChat = {
     .required(),
 }
 
-const getChatBySlug = {
-  slug: yup.string().required(),
-}
-
 const getChatByUserId = {
   userId: yup
     .string()
@@ -63,7 +59,6 @@ export {
   createChat,
   getChats,
   getChat,
-  getChatBySlug,
   getChatByUserId,
   updateChat,
   deleteChat,

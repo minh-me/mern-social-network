@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { auth, validate } from '../middlewares'
+import { auth, uploadImage, uploadStorage, validate } from '../middlewares'
 import { chatValidation, messageValidation } from '../validations'
 import { messageController } from '../controllers'
 
@@ -9,6 +9,8 @@ router
   .route('/')
   .post(
     auth(),
+    uploadStorage.single('image'),
+    uploadImage,
     validate(messageValidation.createMessage),
     messageController.createMessage
   )
@@ -17,13 +19,6 @@ router
     validate(messageValidation.getMessages),
     messageController.getMessages
   )
-
-router.get(
-  '/:slug/chat',
-  auth(),
-  validate(chatValidation.getChatBySlug),
-  messageController.getMessageBySlugChat
-)
 
 router
   .route('/:messageId')

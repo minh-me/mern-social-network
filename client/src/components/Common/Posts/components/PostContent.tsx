@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Typography, Box } from '@mui/material';
-import { PostImage } from './PostImage';
+import { ImageWithModal } from 'components/Common/Images/ImageWithModal';
 
 type PostTextProps = {
   text: string;
@@ -15,7 +15,7 @@ export const PostContent: FC<PostTextProps> = ({ text, imageUrl }) => {
           {text}
         </Typography>
       </Box>
-      {imageUrl && <PostImage alt="Not found image" imageUrl={imageUrl} />}
+      {imageUrl && <ImageWithModal alt="Not found image" imageUrl={imageUrl} />}
     </>
   );
 };

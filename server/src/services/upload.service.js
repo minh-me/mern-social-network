@@ -108,6 +108,26 @@ const uploadPostImage = async path => {
  */
 const uploadImageComment = async path => {
   const options = {
+    folder: 'messages/images',
+    width: 400,
+    crop: 'fill',
+  }
+
+  const result = await upload(path, options)
+
+  return {
+    url: result.secure_url,
+    id: result.public_id,
+  }
+}
+
+/**
+ * Upload file to cloudinary
+ * @param {string} path link to file image in local
+ *  @returns {Promise<url>}
+ */
+const uploadImageMessage = async path => {
+  const options = {
     folder: 'comments/images',
     width: 300,
     crop: 'fill',
@@ -139,4 +159,5 @@ export {
   destroy,
   uploadCoverPhoto,
   uploadImageComment,
+  uploadImageMessage,
 }
