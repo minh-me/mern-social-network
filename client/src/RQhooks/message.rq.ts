@@ -1,5 +1,5 @@
 import { messageApi } from 'api/message.api';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { handlerError } from 'utils/handleError';
 import { options } from './options.type';
 
@@ -7,7 +7,10 @@ export const useMessages = (
   { chatId = '', page = 1, limit = 1, sort = '-createdAt' },
   options?: options
 ) => {
+  const queryClient = useQueryClient();
+
   const queryKey = `messages?chat=${chatId}&page=${page}&limit=${limit}&sort=${sort}`;
+  queryClient.setQueryData('messageKey', queryKey);
 
   return useQuery(queryKey, messageApi.getMessages, {
     onError: handlerError,
@@ -15,24 +18,17 @@ export const useMessages = (
   });
 };
 
-export const useMessage = ({ messageId = '' }, options?: options) => {
-  return useQuery(`messages/${messageId}`, () => messageApi.getMessage(messageId), {
-    onError: handlerError,
-    ...options,
-  });
-};
-
 export const useCreateMessage = () => {
+  const queryClient = useQueryClient();
+  const messageKey = queryClient.getQueryData('messageKey');
   return useMutation('create-message', messageApi.createMessage, {
     onError: handlerError,
-  });
-};
-
-export const useUpdateMessage = () => {
-  return useMutation(messageApi.updateMessage, {
-    onError: handlerError,
-    onSuccess: (data) => {
-      console.log({ data });
+    onSettled: () => {
+      return queryClient.invalidateQueries({
+        predicate: (query) => {
+          return query.queryKey === messageKey;
+        },
+      });
     },
   });
 };
