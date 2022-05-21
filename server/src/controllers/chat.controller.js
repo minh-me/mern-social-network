@@ -20,12 +20,10 @@ const createChat = catchAsync(async (req, res) => {
   // If chat is exists return chat
   if (chatExist) return res.send(chatExist)
 
-  // Create chat
-
   // Add admin field
   req.body.admin = req.user.id
 
-  // Create
+  // Create chat
   const chat = await chatService.createChat(req.body)
 
   // Success

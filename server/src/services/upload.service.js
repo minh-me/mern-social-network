@@ -11,6 +11,7 @@ cloudinary.v2.config(config.cloudinaryV2)
  * @param {string} folder store in cloudinary
  */
 const upload = async (path, options) => {
+  options.transformation = [{ quality: 60 }]
   return new Promise((resolve, reject) => {
     cloudinary.v2.uploader.upload(path, options, (err, result) => {
       if (err) return reject(err)
@@ -128,7 +129,7 @@ const uploadImageComment = async path => {
  */
 const uploadImageMessage = async path => {
   const options = {
-    folder: 'comments/images',
+    folder: 'messages/images',
     width: 300,
     crop: 'fill',
   }
