@@ -1,12 +1,12 @@
 import FacebookLogin from 'react-facebook-login';
-import { useNavigate } from 'react-router-dom';
-import { useLoginWithGoogle } from 'RQhooks';
+// import { useNavigate } from 'react-router-dom';
+// import { useLoginWithGoogle } from 'RQhooks';
 
 const FB_APP_ID = '726027201729735';
 
 export const FacebookLoginButton = () => {
-  const { mutateAsync } = useLoginWithGoogle();
-  const navigate = useNavigate();
+  // const { mutateAsync } = useLoginWithGoogle();
+  // const navigate = useNavigate();
 
   const response = (res: any) => {
     console.log({ res });

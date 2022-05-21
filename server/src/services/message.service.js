@@ -3,6 +3,22 @@ import { chatService } from '.'
 import { Message } from '../models'
 
 /**
+ * Create message
+ * @param {Object} body
+ * @returns {Promise<message>}
+ */
+const createMessage = async messageBody => {
+  const newMessage = await Message.create(messageBody)
+
+  // Update lastestMessage in chat
+  await chatService.updateChatById(newMessage.chat, {
+    lastestMessage: newMessage.id,
+  })
+
+  return newMessage.populate(['chat', 'sender', 'readBy'])
+}
+
+/**
  * Get messages by query(filter, options)
  * @param {Object} filter
  * @param {Object} options
@@ -40,21 +56,6 @@ const findOne = async filter => {
   return message
 }
 
-/**
- * Create message
- * @param {Object} body
- * @returns {Promise<message>}
- */
-const createMessage = async messageBody => {
-  const newMessage = await Message.create(messageBody)
-
-  // Update lastestMessage in chat
-  await chatService.updateChatById(newMessage.chat, {
-    lastestMessage: newMessage.id,
-  })
-
-  return newMessage
-}
 /**
  * Update message by id
  * @param {ObjectId} messageId

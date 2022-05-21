@@ -1,13 +1,13 @@
 import { authApi } from 'api/auth.api';
 import { addAuth } from 'context/actions';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
 import { storage } from 'utils';
 import { handlerError } from 'utils/handleError';
 
 export const useLogin = () => {
-  const { dispatch } = useAppContext();
+  const { dispatch } = useAuthContext();
   return useMutation(authApi.login, {
     onSuccess: (data) => {
       dispatch(addAuth(data.user));
@@ -18,7 +18,7 @@ export const useLogin = () => {
 };
 
 export const useLoginWithGoogle = () => {
-  const { dispatch } = useAppContext();
+  const { dispatch } = useAuthContext();
   return useMutation(authApi.googleLogin, {
     onSuccess: (data) => {
       dispatch(addAuth(data.user));
@@ -50,7 +50,7 @@ export const useForgotPassword = () => {
 };
 
 export const useResetPassword = () => {
-  const { dispatch } = useAppContext();
+  const { dispatch } = useAuthContext();
   return useMutation(authApi.resetPassword, {
     onSuccess: (data) => {
       dispatch(addAuth(data.user));

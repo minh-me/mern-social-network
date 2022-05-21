@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material';
 import { blueGrey, pink } from '@mui/material/colors';
-import { User } from 'interface';
 import { Link } from 'react-router-dom';
 
 type Props = {

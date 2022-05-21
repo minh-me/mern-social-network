@@ -3,16 +3,19 @@ import { blueGrey } from '@mui/material/colors';
 import { Sidebar } from '../App';
 import { Navigate, Outlet } from 'react-router-dom';
 import { storage, styleScroll } from 'utils';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 import { authApi } from 'api/auth.api';
 import { addAuth } from 'context';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { socketClient } from 'hooks/socket';
+import { EVENTS } from 'contants/events';
 
 export const MainLayout = () => {
-  const { dispatch } = useAppContext();
+  const { dispatch, auth } = useAuthContext();
   const token = storage.getToken();
 
+  // Refresh token
   useEffect(() => {
     const refreshToken = async () => {
       const data = await authApi.getRefreshToken();
@@ -27,6 +30,11 @@ export const MainLayout = () => {
 
     if (token) refreshToken();
   }, [token, dispatch]);
+
+  // Setup socket
+  useEffect(() => {
+    auth && socketClient.emit(EVENTS.setup, auth);
+  }, [auth]);
 
   if (!token) {
     return <Navigate to="/auth" replace />;

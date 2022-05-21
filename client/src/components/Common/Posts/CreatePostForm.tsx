@@ -1,12 +1,12 @@
 import { Avatar, Box, Button, TextField } from '@mui/material';
 import { useState } from 'react';
 import { CreatePostFormModal } from 'components/Common/Modal';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 
 export const CreatePostForm = () => {
-  const { state } = useAppContext();
-  const { auth } = state;
+  const { auth } = useAuthContext();
   const [open, setOpen] = useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Avatar } from '@mui/material';
 
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 import { useCreateComment } from 'RQhooks';
 import { FormTextAndImageSubmit } from '../Forms';
 
@@ -12,10 +12,10 @@ type CommentFormProps = {
 };
 
 export const CommentForm = ({ postId, parentId, replyTo }: CommentFormProps) => {
-  const { state } = useAppContext();
-  const { auth } = state;
+  const { auth } = useAuthContext();
 
   const initLabel = replyTo?.name && replyTo.id !== auth?.id ? `@${replyTo.name}` : '';
+
   const [text, setText] = useState('');
   const [image, setImage] = useState<FileList>();
   const [label, setLabel] = useState(initLabel);

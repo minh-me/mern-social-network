@@ -1,0 +1,7 @@
+export const EVENTS = {
+  setup: 'set_up',
+  connected: 'connected',
+  joinChat: 'join_chat',
+  newMessage: 'new_message',
+  messageReceived: 'message_received',
+};

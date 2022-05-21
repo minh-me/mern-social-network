@@ -25,10 +25,12 @@ export const MessageFooter = ({ chatId }: Props) => {
 
     handleResetForm();
   };
+
   const handleResetForm = () => {
     setText('');
     setImage(undefined);
   };
+
   return (
     <Box p={2} sx={{ display: 'flex', alignItems: 'center' }}>
       <FormTextAndImageSubmit

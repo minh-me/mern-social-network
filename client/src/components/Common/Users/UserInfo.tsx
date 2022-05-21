@@ -1,9 +1,9 @@
 import { Avatar, Box, Typography } from '@mui/material';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 
 export const UserInfo = () => {
-  const { state } = useAppContext();
-  const { auth } = state;
+  const { auth } = useAuthContext();
+
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Avatar src={auth?.profilePic.url} sx={{ border: '2px solid white' }} alt={auth?.name} />

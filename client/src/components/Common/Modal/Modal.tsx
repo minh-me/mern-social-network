@@ -1,15 +1,8 @@
-import { FC, useEffect } from 'react';
-import { Box, IconButton, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { FC } from 'react';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import pink from '@mui/material/colors/pink';
-import ImageIcon from '@mui/icons-material/Image';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { toast } from 'react-toastify';
 import { UserInfo } from '../Users';
-import { postSchema } from 'validations';
-import { useCreatePost } from 'RQhooks/post.rq';
 import { LoadingButton } from '@mui/lab';
-import { ImagePreview } from '../Images/ImagePreview';
 
 type ModalProps = {
   open: boolean;

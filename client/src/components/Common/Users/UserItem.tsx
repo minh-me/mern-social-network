@@ -3,20 +3,17 @@ import { Avatar, Box, Link, Typography } from '@mui/material';
 import { Link as LinkRoute } from 'react-router-dom';
 import { User } from 'interface';
 import { FollowButton } from '../Buttons';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 
 interface UserItemProps {
   user: User;
 }
 
 export const UserItem: FC<UserItemProps> = ({ user }) => {
-  const { state } = useAppContext();
-  const { auth } = state;
+  const { auth } = useAuthContext();
   let isFollowing = false;
 
-  console.log({ followers: user.followers, auth: auth?.id });
   if (auth?.id) isFollowing = user.followers.includes(auth.id);
-  console.log({ isFollowing });
 
   return (
     <Box sx={styles.container}>

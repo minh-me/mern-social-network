@@ -1,9 +1,9 @@
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { CommentItem } from './CommentItem';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { CommentForm } from './CommentForm';
 import { useCommentsByPost } from 'RQhooks';
-import { CommentSkeleton, CommentsSkeleton } from '../Variants/CommentSkeleton';
+import { CommentsSkeleton } from '../Variants/CommentSkeleton';
 
 type Props = {
   postId: string;
@@ -12,7 +12,6 @@ type Props = {
 
 export const CommentList = ({ postId, authorPost }: Props) => {
   const [limit, setLimit] = useState(8);
-  const countRef = useRef(0);
 
   const { data, isLoading, isFetching } = useCommentsByPost({ postId, limit });
 
@@ -30,7 +29,6 @@ export const CommentList = ({ postId, authorPost }: Props) => {
   return (
     <>
       <Box my={2}>
-        {countRef.current++}
         {limit <= 10 && <CommentForm postId={postId} />}
         {rootComments.slice(0, limit).map((comment) => (
           <CommentItem

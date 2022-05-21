@@ -29,7 +29,7 @@ export const LoadMoreInView = ({ isFetching, totalResults, limit, onChangeLimit 
     if (!isFetching && inView) {
       onChangeLimit(limit + 2);
     }
-  }, [inView, onChangeLimit, isFetching]);
+  }, [inView, onChangeLimit, isFetching, limit]);
 
   return (
     <Box mt={5} sx={{ display: 'flex', justifyContent: 'center' }}>

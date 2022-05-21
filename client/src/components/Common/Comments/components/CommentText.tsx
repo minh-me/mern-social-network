@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { Twemoji } from 'react-emoji-render';
 
 type Props = {
   text: string;
@@ -13,8 +14,8 @@ export const CommentText = ({ text }: Props) => {
       }}
       fontSize={13}
       color="#e4e6ed"
-    >
-      {text}
-    </Typography>
+      component={Twemoji}
+      text={text}
+    />
   );
 };

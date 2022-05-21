@@ -87,13 +87,12 @@ const likePost = catchAsync(async (req, res) => {
     [options]: { likes: user.id },
   })
 
-  console.log({ updatedPost })
-
   // Update current user
   const userUpdated = await userService.updateById(user.id, {
     [options]: { likes: postId },
   })
 
+  // Update user in request
   req.user = userUpdated
 
   // Create notification

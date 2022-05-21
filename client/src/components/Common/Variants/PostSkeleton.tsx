@@ -1,5 +1,4 @@
 import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack';
 import { Box } from '@mui/system';
 const bgColor = '#6c6c6c';
 

@@ -1,4 +1,15 @@
 import { useContext } from 'react';
 import { AppContext } from '../context/context';
 
-export const useAppContext = () => useContext(AppContext);
+export const useAppContext = () => {
+  const { state, dispatch } = useContext(AppContext);
+  return { state, dispatch };
+};
+
+export const useAuthContext = () => {
+  const { state, dispatch } = useAppContext();
+
+  const { auth } = state;
+
+  return { auth, dispatch };
+};

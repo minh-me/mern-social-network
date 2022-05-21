@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { LoadMoreButton } from 'components/App';
 import { UserItem } from 'components/Common';
 import { UserListSkeleton } from 'components/Common/Variants';
@@ -22,21 +22,21 @@ export const ChatUserList = ({ search, handleAddUsersSelected, usersSelected }: 
 
   return (
     <Box px={2}>
-      {users.map((user) => {
-        if (usersSelected.some((userSelected) => userSelected.id === user.id)) return;
-
-        return (
-          <Box
-            onClick={() => handleAddUsersSelected(user)}
-            key={user.id}
-            py={2}
-            px={2}
-            sx={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #38444d' }}
-          >
-            <UserItem user={user} />
-          </Box>
-        );
-      })}
+      {users
+        .filter((user) => !usersSelected.includes(user))
+        .map((user) => {
+          return (
+            <Box
+              onClick={() => handleAddUsersSelected(user)}
+              key={user.id}
+              py={2}
+              px={2}
+              sx={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid #38444d' }}
+            >
+              <UserItem user={user} />
+            </Box>
+          );
+        })}
 
       <LoadMoreButton
         isFetching={isFetching}

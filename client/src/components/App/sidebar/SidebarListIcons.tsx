@@ -13,13 +13,13 @@ import { Badge, Link, Typography } from '@mui/material';
 import { MDialog } from 'components/Common/Modal';
 import { useLogout } from 'RQhooks';
 import { storage } from 'utils';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 import { resetAppState } from 'context';
 import { QueryClient } from 'react-query';
 import { useCountNotifications } from 'RQhooks/notification.rq';
 
 export const SidebarListIcons = () => {
-  const { dispatch } = useAppContext();
+  const { dispatch } = useAuthContext();
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   const queryClient = new QueryClient();

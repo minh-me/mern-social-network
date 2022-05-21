@@ -10,7 +10,7 @@ import { Comment } from 'interface';
 import { CommentForm } from './CommentForm';
 import { Replies } from './Replies';
 import { ContentComment } from './components/ContentComment';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -23,15 +23,15 @@ type CommentItemProps = {
 };
 
 export const CommentItem = ({ comment, replies, authorPost }: CommentItemProps) => {
-  const { state } = useAppContext();
-  const { auth } = state;
-
-  const [toggleReplyForm, setToggleReplyForm] = useState(false);
+  const { auth } = useAuthContext();
   const { text, author, createdAt, image, replyTo } = comment;
+  const [toggleReplyForm, setToggleReplyForm] = useState(false);
 
   const isLiked = (auth && comment.likes?.includes(auth.id)) || false;
   const replyId = comment.parentId ? comment.parentId : comment.id;
+
   const handleToggleForm = () => setToggleReplyForm(!toggleReplyForm);
+
   return (
     <>
       <Box mt="12px" mb="4px">

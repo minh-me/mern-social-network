@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Box, Typography } from '@mui/material';
+import { Twemoji } from 'react-emoji-render';
 import Avatar from '@mui/material/Avatar';
 import { Message } from 'interface';
 import { ImageWithModal } from 'components/Common/Images/ImageWithModal';
@@ -13,6 +14,7 @@ type MessageProps = {
 };
 export const MessageItem: FC<MessageProps> = ({ isOwner, message }) => {
   const isGroupChat = message.chat.isGroupChat;
+
   return (
     <Box
       pb={1}
@@ -20,6 +22,7 @@ export const MessageItem: FC<MessageProps> = ({ isOwner, message }) => {
         display: 'flex',
         alignItems: 'flex-start',
         flexDirection: isOwner ? 'row-reverse' : 'row',
+        justifyContent: 'flex-start',
       }}
     >
       <Avatar
@@ -38,11 +41,11 @@ export const MessageItem: FC<MessageProps> = ({ isOwner, message }) => {
         {message.text && (
           <Typography
             variant="body1"
-            component="p"
+            // component="p"
             sx={{ ...styles.text, bgcolor: isOwner ? '#5352ed' : '#3E4042' }}
-          >
-            {message.text}
-          </Typography>
+            component={Twemoji}
+            text={message.text}
+          />
         )}
 
         {/* Image */}
