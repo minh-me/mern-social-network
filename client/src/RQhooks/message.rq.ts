@@ -1,7 +1,11 @@
-import { messageApi } from 'api/message.api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+// import io from 'socket.io-client';
+
+import { EVENTS } from 'contants/events';
+import { messageApi } from 'api/message.api';
 import { handlerError } from 'utils/handleError';
 import { options } from './options.type';
+import { socketClient } from 'hooks/socket';
 
 export const useMessages = (
   { chatId = '', page = 1, limit = 1, sort = '-createdAt' },
@@ -19,16 +23,20 @@ export const useMessages = (
 };
 
 export const useCreateMessage = () => {
-  const queryClient = useQueryClient();
-  const messageKey = queryClient.getQueryData('messageKey');
+  // const socket = io('http://localhost:8888');
+  // const queryClient = useQueryClient();
+  // const messageKey = queryClient.getQueryData('messageKey');
   return useMutation('create-message', messageApi.createMessage, {
     onError: handlerError,
-    onSettled: () => {
-      return queryClient.invalidateQueries({
-        predicate: (query) => {
-          return query.queryKey === messageKey;
-        },
-      });
+    onSuccess: (data) => {
+      socketClient.emit(EVENTS.newMessage, data);
     },
+    // onSettled: () => {
+    //   return queryClient.invalidateQueries({
+    //     predicate: (query) => {
+    //       return query.queryKey === messageKey;
+    //     },
+    //   });
+    // },
   });
 };

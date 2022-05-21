@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { Box } from '@mui/material';
-import { Comment } from 'interface';
 import {
   LikeIconButton,
   CommentIconButton,

@@ -33,7 +33,7 @@ export const ChatName = ({ chatId, chatName }: Props) => {
           },
         }}
       >
-        {chatName}
+        {chatName.length >= 30 ? chatName?.slice(0, 27) + '...' : chatName}
       </Typography>
 
       <MDialogInput

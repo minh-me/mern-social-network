@@ -6,19 +6,20 @@ import { MessageHeaderSkeleton } from 'components/Common/Variants/MessageSkeleto
 import { MessageAvatar } from './MessageAvatar';
 import { ChatName } from './ChatName';
 import { useChat } from 'RQhooks/chat.rq';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 
 type Props = {
   chatId: string | '';
 };
 
 export const MessageHeader = ({ chatId }: Props) => {
-  const { state } = useAppContext();
-  const { auth } = state;
+  const { auth } = useAuthContext();
   const { data: chat, isLoading } = useChat({ chatId });
 
   if (isLoading || !chat) return <MessageHeaderSkeleton />;
+
   let chatName = chat.chatName as string;
+
   if (!chatName) {
     chatName = chat.users.find((user) => user.id !== auth?.id)?.name as string;
   }

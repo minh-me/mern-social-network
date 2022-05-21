@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Typography } from '@mui/material';
 
 import { usePosts } from 'RQhooks';
@@ -13,7 +13,6 @@ export const TabPostList = ({ search = '' }) => {
     { limit, search },
     { cacheTime: search ? 1500 : 3 * 60 * 1000 }
   );
-  const countRef = useRef(0);
 
   if (isLoading || !data) return <PostSkeleton />;
   const { info, posts } = data;
@@ -22,7 +21,6 @@ export const TabPostList = ({ search = '' }) => {
     <>
       {/* PostList */}
       {<PostList posts={posts} />}
-      {countRef.current++}
 
       {/* Button  */}
       {info && (

@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { Title } from 'components/App';
 import { Box } from '@mui/material';
 import { Tab } from 'components/Common/Buttons/Tab';
@@ -14,14 +13,12 @@ export const SearchPage = () => {
   const isSelectedPosts = selectedTab === 'posts';
   const navigate = useNavigate();
   const { search } = location;
-  const ref = useRef(0);
 
   return (
     <>
       {/* Title */}
       <Box sx={{ borderBottom: '1px solid #38444d' }}>
         <Title title="Search" />
-        {ref.current++}
       </Box>
 
       {/* Form search */}

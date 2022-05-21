@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
+import { toast } from 'react-toastify';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,10 +11,8 @@ import { MDialog } from 'components/Common/Modal';
 import { registerSchema } from 'validations';
 import { RegisterData } from 'interface';
 import { styles } from './styles';
-import { storage } from 'utils';
 import { useRegister } from 'RQhooks';
 import { LoadingButton } from '@mui/lab';
-import { toast } from 'react-toastify';
 
 const defaultValues: RegisterData = {
   email: '',
@@ -27,10 +26,8 @@ export const SignUp = () => {
     defaultValues,
     resolver: yupResolver(registerSchema),
   });
-
-  const { mutateAsync, isLoading } = useRegister();
-
   const [openModal, setOpenModal] = useState(false);
+  const { mutateAsync, isLoading } = useRegister();
 
   const onSubmit: SubmitHandler<RegisterData> = async (data) => {
     await toast.promise(mutateAsync(data), {
@@ -38,11 +35,6 @@ export const SignUp = () => {
     });
     setOpenModal(true);
   };
-  // const token = storage.getToken();
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!!token) navigate('/', { replace: true });
-  // }, [token, navigate]);
 
   return (
     <Box sx={{ background: '#36393f', borderRadius: 2, p: 4, color: 'white' }}>

@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useRef } from 'react';
+import { FC, memo, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';

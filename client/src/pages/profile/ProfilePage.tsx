@@ -1,4 +1,4 @@
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Title } from 'components/App';
@@ -8,13 +8,12 @@ import { ProfileTabs } from './components/ProfileTabs';
 import { useUserProfile } from 'RQhooks';
 import { ProfileHeaderSkeleton } from 'components/Common/Variants';
 import { ProfileReplies } from './ProfileReplies';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 import { UserProfile } from 'interface';
 
 export const ProfilePage = () => {
   let { username } = useParams();
-  const { state } = useAppContext();
-  const { auth } = state;
+  const { auth } = useAuthContext();
   const [searchParams, setSearchParams] = useSearchParams();
 
   username = auth?.username === username ? 'profile' : username;

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Typography } from '@mui/material';
 
 import { usePosts } from 'RQhooks';
@@ -11,7 +11,6 @@ export const ProfilePostList = ({ userId = '' }) => {
   const [limit, setLimit] = useState(limitPosts);
   const { data, isLoading, isFetching } = usePosts({ postedBy: userId, limit });
 
-  const countRef = useRef(0);
   if (isLoading || !data) return <PostSkeleton />;
   const { info, posts } = data;
 
@@ -19,7 +18,6 @@ export const ProfilePostList = ({ userId = '' }) => {
     <>
       {/* PostList */}
       {<PostList posts={posts} />}
-      {countRef.current++}
 
       {/* Button  */}
       {info && (

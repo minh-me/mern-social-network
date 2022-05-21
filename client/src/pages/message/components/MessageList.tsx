@@ -1,31 +1,36 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
+
 import { UserListSkeleton } from 'components/Common/Variants';
 import { MessageItem } from './MessageItem';
 import { LoadMoreButton } from 'components/App';
 import { useMessages } from 'RQhooks/message.rq';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
+
+import { socketClient } from 'hooks/socket';
+import { EVENTS } from 'contants/events';
 
 export const MessageList = ({ chatId = '' }) => {
-  const { state } = useAppContext();
+  const { auth } = useAuthContext();
   const [limit, setLimit] = useState(8);
-  const { data, isFetching, isLoading } = useMessages({ chatId, limit });
   const el = useRef<HTMLDivElement>(null);
+  const { data, isFetching, isLoading, refetch } = useMessages({ chatId, limit });
 
   useEffect(() => {
     el?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' });
-  }, []);
+  });
+
+  useEffect(() => {
+    socketClient.on(EVENTS.messageReceived, () => refetch());
+  }, [refetch]);
 
   if (isLoading || !data) return <UserListSkeleton />;
+
   const { messages, info } = data;
-  const { auth } = state;
 
   return (
-    <Box
-      id={'el'}
-      ref={el}
-      sx={{ display: 'flex', justifyContent: 'flex-end', flexDirection: 'column-reverse' }}
-    >
+    <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexDirection: 'column-reverse' }}>
+      <Box id={'el'} ref={el} sx={{ opacity: 0 }} />
       {messages.map((message) => (
         <MessageItem isOwner={message.sender.id === auth?.id} key={message.id} message={message} />
       ))}

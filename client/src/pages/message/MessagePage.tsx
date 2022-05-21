@@ -1,15 +1,24 @@
+import { useEffect } from 'react';
 import { Box } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import io from 'socket.io-client';
+
 import { Title } from 'components/App';
 import { MessageHeader } from './components/MessageHeader';
 import { MessageFooter } from './components/MessageFooter';
 import { styleScroll } from 'utils';
-import { useParams } from 'react-router-dom';
 import { MessageList } from './components/MessageList';
+import { EVENTS } from 'contants/events';
 
-type Props = {};
-
-export const MessagePage = (props: Props) => {
+const socket = io('http://localhost:8888');
+export const MessagePage = () => {
   const { chatId } = useParams();
+
+  // Add user to socket
+  useEffect(() => {
+    socket.emit(EVENTS.joinChat, chatId);
+  }, [chatId]);
+
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>

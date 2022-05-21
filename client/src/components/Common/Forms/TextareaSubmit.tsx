@@ -1,6 +1,8 @@
-import React from 'react';
-import { TextareaAutosize, IconButton, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { TextareaAutosize, IconButton, Typography, Box } from '@mui/material';
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
+import Picker, { IEmojiData, SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react';
+
 type Props = {
   autoFocus?: boolean;
   onSubmit: () => void;
@@ -33,6 +35,13 @@ export const TextareaSubmit = ({
     }
   };
 
+  const [openEmoji, setOpenEmoji] = useState(false);
+
+  const onEmojiClick = (event: any, emojiObject: IEmojiData) => {
+    console.log({ emojiObject });
+    setText((preText) => `${preText}${emojiObject.emoji}`);
+  };
+
   return (
     <>
       {label && (
@@ -40,8 +49,8 @@ export const TextareaSubmit = ({
           {label}
         </Typography>
       )}
+
       <TextareaAutosize
-        aria-label="empty textarea"
         placeholder={placeholder}
         autoFocus={autoFocus}
         value={text}
@@ -50,8 +59,22 @@ export const TextareaSubmit = ({
         disabled={disabled}
         style={{ ...styles.textArea, ...style }}
       />
+      {openEmoji && (
+        <Box sx={{ position: 'absolute', right: 0, bottom: 40 }}>
+          <Picker
+            groupVisibility={{
+              flags: false,
+              food_drink: false,
+              recently_used: false,
+              symbols: false,
+            }}
+            skinTone={SKIN_TONE_MEDIUM_DARK}
+            onEmojiClick={onEmojiClick}
+          />
+        </Box>
+      )}
 
-      <IconButton sx={styles.icons}>
+      <IconButton sx={styles.icons} onClick={() => setOpenEmoji(!openEmoji)}>
         <EmojiEmotionsOutlinedIcon />
       </IconButton>
     </>

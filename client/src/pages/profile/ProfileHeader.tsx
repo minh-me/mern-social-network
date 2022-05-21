@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react';
 import { Box } from '@mui/material';
 import LocalPostOfficeRoundedIcon from '@mui/icons-material/LocalPostOfficeRounded';
 
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 import { UserProfile } from 'interface';
 import { FollowButton, IconsButtonOutlined } from 'components/Common/Buttons';
 import { ProfileFollowers } from './components/ProfileFollowers';
@@ -16,9 +16,9 @@ type Props = {
 };
 
 export const ProfileHeader = memo(({ user }: Props) => {
-  const { state } = useAppContext();
-  const { auth } = state;
+  const { auth } = useAuthContext();
   const navigate = useNavigate();
+
   const { mutateAsync, data } = useCreateChat();
 
   const followerIds = user.followers.map((user) => user.id);

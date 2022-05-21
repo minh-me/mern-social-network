@@ -1,4 +1,3 @@
-import { Divider } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import { Box } from '@mui/system';
 import { ButtonSekeleton } from './ButtonSkeleton';

@@ -1,4 +1,4 @@
-import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
+import { URLSearchParamsInit } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { Tab } from 'components/Common/Buttons';
 

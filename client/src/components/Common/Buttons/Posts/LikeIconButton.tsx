@@ -2,11 +2,10 @@ import { PostActionButton } from '../PostActionButton';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import { pink } from '@mui/material/colors';
 import { useLikePost } from 'RQhooks';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 
 export const LikeIconButton = ({ likes = [''], postId = '' }) => {
-  const { state } = useAppContext();
-  const { auth } = state;
+  const { auth } = useAuthContext();
   const { mutate } = useLikePost();
 
   const isLiked = likes.includes(auth?.id as string);

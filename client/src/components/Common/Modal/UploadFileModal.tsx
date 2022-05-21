@@ -1,12 +1,9 @@
 import { FC, useEffect } from 'react';
-import { Box, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
-import pink from '@mui/material/colors/pink';
-import { LoadingButton } from '@mui/lab';
+import { Box, IconButton } from '@mui/material';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
 
-import { UserInfo } from '../Users';
 import { FormInputFile } from '../HookForms/FormInputFile';
 import { ImagePreview } from '../Images/ImagePreview';
 import { Modal } from './Modal';

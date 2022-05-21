@@ -18,3 +18,13 @@ body {
   margin-top: 2px;
   cursor: pointer;
 }
+
+.emoji-scroll-wrapper::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.emoji-scroll-wrapper::-webkit-scrollbar-thumb {
+  background-color: #626d71 !important;
+  border-radius: 2px;
+  height: 50px;
+}

@@ -5,7 +5,8 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Chat, User } from 'interface';
 import { Link } from 'react-router-dom';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
+import { Twemoji } from 'react-emoji-render';
 dayjs.extend(relativeTime);
 
 type Props = {
@@ -13,8 +14,7 @@ type Props = {
 };
 
 export const ChatItem = ({ chat }: Props) => {
-  const { state } = useAppContext();
-  const { auth } = state;
+  const { auth } = useAuthContext();
   const { lastestMessage } = chat;
 
   let LastestMessage = () => (
@@ -22,7 +22,7 @@ export const ChatItem = ({ chat }: Props) => {
       <Typography fontWeight={500} fontSize={12} component="span">
         {chat.admin.name}
       </Typography>
-      : đã tạo nhóm.
+      : <Twemoji text="đã tạo nhóm." />
     </>
   );
 
@@ -33,7 +33,7 @@ export const ChatItem = ({ chat }: Props) => {
         <Typography fontWeight={500} fontSize={12} component="span">
           {lastestMessage.sender.name}
         </Typography>
-        : {lastestMessage?.text ? lastestMessage?.text : `đã gửi một ảnh.`}
+        : <Twemoji text={lastestMessage?.text ? lastestMessage?.text : `đã gửi một ảnh.`} />
       </>
     );
   }
@@ -49,7 +49,7 @@ export const ChatItem = ({ chat }: Props) => {
     MessageAvatar = () => <UserAvatar user={user} />;
   }
 
-  console.log({ lastestMessage, authId: auth?.id });
+  if (chatName && chatName.length >= 30) chatName = chatName?.slice(0, 27) + '...';
 
   return (
     <Box py={1} px={2} component={Link} to={`/messages/${chat.id}`} sx={styles.container}>

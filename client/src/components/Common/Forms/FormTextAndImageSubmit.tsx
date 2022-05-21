@@ -91,7 +91,12 @@ export const FormTextAndImageSubmit = ({
 };
 
 const styles = {
-  inputContainer: { display: 'flex', alignItems: 'flex-end', borderBottom: '1px solid #38444d' },
+  inputContainer: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    borderBottom: '1px solid #38444d',
+    position: 'relative',
+  },
   icons: {
     color: '#898b8e',
     cursor: 'pointer',

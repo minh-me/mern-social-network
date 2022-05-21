@@ -1,6 +1,6 @@
 import { postApi } from 'api/post.api';
 import { AxiosError } from 'axios';
-import { useAppContext } from 'hooks/useAppContext';
+import { useAuthContext } from 'hooks/useAppContext';
 import { Post } from 'interface';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { handlerError } from 'utils/handleError';
@@ -41,8 +41,7 @@ export const useCreatePost = () => {
 
 export const useLikePost = () => {
   const queryClient = useQueryClient();
-  const { state } = useAppContext();
-  const { auth } = state;
+  const { auth } = useAuthContext();
   const postsKey = queryClient.getQueryData<string>('postsKey');
 
   return useMutation(postApi.likePost, {
@@ -62,12 +61,6 @@ export const useLikePost = () => {
         return updatePostLikes(oldData, postId, auth.id);
       });
       handlerError(err);
-    },
-    onSettled: (data) => {
-      console.log({ data });
-      // return queryClient.invalidateQueries({
-      //   predicate: (query) => query.queryKey.toString().startsWith('posts'),
-      // });
     },
   });
 };
