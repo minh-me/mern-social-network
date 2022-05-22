@@ -53,7 +53,7 @@ io.on('connection', function (socket) {
     });
     if (!chat.users) return _config.logger.error('chat.users not defined.');
     chat.users.forEach(function (user) {
-      // if (user === message.sender.id) return
+      if (user === message.sender.id) return;
       console.log({
         user: user,
         sender: message.sender.id

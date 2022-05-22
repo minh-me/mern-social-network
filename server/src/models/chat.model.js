@@ -1,4 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
+import deepPopulate from 'mongoose-deep-populate'
+
 import { paginate, toJSON } from './plugins'
 
 const chatSchema = mongoose.Schema(
@@ -17,6 +19,7 @@ const chatSchema = mongoose.Schema(
 // add plugin that converts mongoose to json
 chatSchema.plugin(toJSON)
 chatSchema.plugin(paginate)
+chatSchema.plugin(deepPopulate(mongoose))
 
 /**
  * @typedef Chat

@@ -50,9 +50,8 @@ var createChat = (0, _catchAsync["default"])( /*#__PURE__*/function () {
             return _context.abrupt("return", res.send(chatExist));
 
           case 6:
-            // Create chat
             // Add admin field
-            req.body.admin = req.user.id; // Create
+            req.body.admin = req.user.id; // Create chat
 
             _context.next = 9;
             return _services.chatService.createChat(req.body);

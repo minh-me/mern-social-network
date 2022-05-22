@@ -12,6 +12,7 @@ type MessageProps = {
   isOwner: Boolean;
   message: Message;
 };
+
 export const MessageItem: FC<MessageProps> = ({ isOwner, message }) => {
   const isGroupChat = message.chat.isGroupChat;
 
@@ -30,9 +31,9 @@ export const MessageItem: FC<MessageProps> = ({ isOwner, message }) => {
         src={message.sender.profilePic.url}
         sx={{ width: 34, height: 34, border: '2px solid white' }}
       />
-      <Box sx={styles.contentContainer}>
+      <Box sx={{ ...styles.contentContainer, alignItems: 'flex-start' }}>
         {isGroupChat && !isOwner && (
-          <Typography sx={{ ml: 1, textAlign: 'left' }} color="#898989" fontSize={12}>
+          <Typography sx={{ width: '100%' }} color="#898989" fontSize={12}>
             {message.sender.name}
           </Typography>
         )}
@@ -72,6 +73,9 @@ export const MessageItem: FC<MessageProps> = ({ isOwner, message }) => {
 
 const styles = {
   contentContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    px: 1,
     '&>p': {
       transition: 'all 0.4s ease-in-out',
     },
@@ -90,5 +94,5 @@ const styles = {
     transition: 'all 0.1s ease-in-out',
   },
 
-  text: { maxWidth: '100%', borderRadius: 1, px: 1, py: 1, mx: 1 },
+  text: { maxWidth: '100%', borderRadius: 1, p: 1 },
 };

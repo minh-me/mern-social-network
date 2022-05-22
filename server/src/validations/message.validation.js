@@ -38,6 +38,13 @@ const getMessage = {
     .required(),
 }
 
+const addToReadBy = {
+  chatId: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
+    .required(),
+}
+
 const updateMessage = {
   messageId: yup
     .string()
@@ -53,4 +60,11 @@ const deleteMessage = {
     .required(),
 }
 
-export { createMessage, getMessages, getMessage, updateMessage, deleteMessage }
+export {
+  createMessage,
+  getMessages,
+  getMessage,
+  updateMessage,
+  addToReadBy,
+  deleteMessage,
+}

@@ -4,4 +4,6 @@ export const EVENTS = {
   joinChat: 'join_chat',
   newMessage: 'new_message',
   messageReceived: 'message_received',
+  typing: 'typing',
+  stopTyping: 'stop_typing',
 };

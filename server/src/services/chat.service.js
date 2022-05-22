@@ -74,7 +74,11 @@ const updateOne = async (filter, body) => {
  * @returns {Promise<Chat>}
  */
 const updateChatById = async (chatId, body) => {
-  const chat = await Chat.findByIdAndUpdate(chatId, body, { new: true })
+  const chat = await Chat.findByIdAndUpdate(chatId, body, {
+    new: true,
+  })
+    .populate(['admin', 'users', 'lastestMessage'])
+    .deepPopulate('lastestMessage.sender')
 
   if (!chat) throw new createHttpError.NotFound('Not found chat.')
 

@@ -6,6 +6,7 @@ import { messageApi } from 'api/message.api';
 import { handlerError } from 'utils/handleError';
 import { options } from './options.type';
 import { socketClient } from 'hooks/socket';
+import { Chat } from 'interface';
 
 export const useMessages = (
   { chatId = '', page = 1, limit = 1, sort = '-createdAt' },
@@ -22,21 +23,43 @@ export const useMessages = (
   });
 };
 
+export const useAddToReadBy = () => {
+  return useMutation(messageApi.addToReadBy, {
+    onError: handlerError,
+    onSuccess: (data) => {
+      console.log({ data });
+    },
+  });
+};
+
 export const useCreateMessage = () => {
-  // const socket = io('http://localhost:8888');
-  // const queryClient = useQueryClient();
-  // const messageKey = queryClient.getQueryData('messageKey');
-  return useMutation('create-message', messageApi.createMessage, {
+  const queryClient = useQueryClient();
+  const messageKey = queryClient.getQueryData('messageKey') as string;
+  const chatsKey = queryClient.getQueryData('chatsKey');
+
+  return useMutation(messageApi.createMessage, {
     onError: handlerError,
     onSuccess: (data) => {
       socketClient.emit(EVENTS.newMessage, data);
+
+      // Update current message
+      queryClient.setQueryData(messageKey, (oldMessages: any) => ({
+        ...oldMessages,
+        messages: [data, ...oldMessages.messages],
+      }));
+
+      // Update message in chats
+      if (!chatsKey) return;
+      queryClient.setQueryData(chatsKey as string, (oldChats: any) => {
+        // Get updated chat index
+        const updatedChatIndex = oldChats.chats.findIndex((chat: Chat) => chat.id === data.chat.id);
+
+        // Update to new
+        oldChats.chats[updatedChatIndex].lastestMessage = { ...data, readBy: [data.sender.id] };
+
+        // Success
+        return oldChats;
+      });
     },
-    // onSettled: () => {
-    //   return queryClient.invalidateQueries({
-    //     predicate: (query) => {
-    //       return query.queryKey === messageKey;
-    //     },
-    //   });
-    // },
   });
 };

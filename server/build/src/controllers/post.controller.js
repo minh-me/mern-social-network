@@ -206,32 +206,29 @@ var likePost = (0, _catchAsync["default"])( /*#__PURE__*/function () {
 
           case 6:
             updatedPost = _context5.sent;
-            console.log({
-              updatedPost: updatedPost
-            }); // Update current user
-
-            _context5.next = 10;
+            _context5.next = 9;
             return _services.userService.updateById(user.id, (0, _defineProperty2["default"])({}, options, {
               likes: postId
             }));
 
-          case 10:
+          case 9:
             userUpdated = _context5.sent;
+            // Update user in request
             req.user = userUpdated; // Create notification
 
             if (!(!isLiked && updatedPost.postedBy._id !== user.id)) {
-              _context5.next = 15;
+              _context5.next = 14;
               break;
             }
 
-            _context5.next = 15;
+            _context5.next = 14;
             return _services.notificationService.createNotificationLikePost(user.id, updatedPost.postedBy._id, updatedPost._id);
 
-          case 15:
+          case 14:
             // Success
             res.send(updatedPost);
 
-          case 16:
+          case 15:
           case "end":
             return _context5.stop();
         }

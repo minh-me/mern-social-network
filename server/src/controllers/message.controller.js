@@ -69,6 +69,21 @@ const updateMessage = catchAsync(async (req, res) => {
 })
 
 /**
+ * Update a message by messageId
+ * @PATCH api/messages/:messageId/readBy
+ * @access private
+ */
+const addToReadBy = catchAsync(async (req, res) => {
+  console.log(req.params.chatId)
+  const message = await messageService.addToReadBy(
+    req.params.chatId,
+    req.user.id
+  )
+
+  res.send(message)
+})
+
+/**
  * Delete message by messageId
  * @DELETE api/messages/:messageId
  * @access private
@@ -78,4 +93,11 @@ const deleteMessage = catchAsync(async (req, res) => {
   res.send(message)
 })
 
-export { createMessage, getMessages, getMessage, updateMessage, deleteMessage }
+export {
+  createMessage,
+  getMessages,
+  getMessage,
+  updateMessage,
+  addToReadBy,
+  deleteMessage,
+}

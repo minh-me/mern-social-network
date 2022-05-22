@@ -20,6 +20,13 @@ router
     messageController.getMessages
   )
 
+router.patch(
+  '/:chatId/readBy',
+  auth(),
+  validate(messageValidation.addToReadBy),
+  messageController.addToReadBy
+)
+
 router
   .route('/:messageId')
   .get(

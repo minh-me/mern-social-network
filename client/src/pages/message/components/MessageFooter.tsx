@@ -3,6 +3,8 @@ import { Box } from '@mui/material';
 
 import { FormTextAndImageSubmit } from 'components/Common/Forms';
 import { useCreateMessage } from 'RQhooks/message.rq';
+import { socketClient } from 'hooks/socket';
+import { EVENTS } from 'contants/events';
 
 type Props = {
   chatId: string;
@@ -11,6 +13,7 @@ type Props = {
 export const MessageFooter = ({ chatId }: Props) => {
   const [text, setText] = useState('');
   const [image, setImage] = useState<FileList>();
+  const [isTyping, setIsTyping] = useState(false);
 
   const { mutateAsync, isLoading } = useCreateMessage();
 
@@ -29,6 +32,27 @@ export const MessageFooter = ({ chatId }: Props) => {
   const handleResetForm = () => {
     setText('');
     setImage(undefined);
+    setIsTyping(false);
+  };
+
+  const handleTyping = () => {
+    if (!isTyping) {
+      socketClient.emit(EVENTS.typing, chatId);
+      setIsTyping(true);
+    }
+
+    let lastTypingTime = new Date().getTime();
+    let timerLength = 3000; // 3s
+
+    setTimeout(() => {
+      let timeNow = new Date().getTime();
+      let timeDiff = timeNow - lastTypingTime;
+
+      if (timeDiff >= timerLength && isTyping) {
+        setIsTyping(false);
+        socketClient.emit(EVENTS.stopTyping, chatId);
+      }
+    }, timerLength);
   };
 
   return (
@@ -41,6 +65,7 @@ export const MessageFooter = ({ chatId }: Props) => {
         onSubmit={handleSubmit}
         resetForm={handleResetForm}
         isLoading={isLoading}
+        onTyping={handleTyping}
         placeholderText="Enter message..."
       />
     </Box>

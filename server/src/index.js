@@ -19,6 +19,8 @@ const EVENTS = {
   joinChat: 'join_chat',
   newMessage: 'new_message',
   messageReceived: 'message_received',
+  typing: 'typing',
+  stopTyping: 'stop_typing',
 }
 
 // Socket
@@ -39,24 +41,23 @@ io.on('connection', socket => {
   })
 
   // Join chat
-  socket.on(EVENTS.joinChat, chat => {
-    socket.join(chat)
-  })
+  socket.on(EVENTS.joinChat, chat => socket.join(chat))
+
+  // Typing
+  socket.on(EVENTS.typing, room => socket.to(room).emit(EVENTS.typing))
+  socket.on(EVENTS.stopTyping, room => socket.to(room).emit(EVENTS.stopTyping))
 
   // New message
   socket.on(EVENTS.newMessage, message => {
     const chat = message.chat
-    console.log({ message })
 
     if (!chat.users) return logger.error('chat.users not defined.')
 
     chat.users.forEach(user => {
-      // if (user === message.sender.id) return
-      console.log({ user, sender: message.sender.id })
+      if (user === message.sender.id) return
+
       socket.to(user).emit(EVENTS.messageReceived, message)
     })
-
-    console.log('User joined chat: ' + chat.id)
   })
 })
 
