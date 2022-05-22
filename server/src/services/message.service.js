@@ -71,6 +71,22 @@ const updateMessageById = async (messageId, body) => {
 }
 
 /**
+ * Update message by id
+ * @param {ObjectId} chatId
+ * @param {ObjectId} userId
+ * @returns {Promise<message>}
+ */
+const addToReadBy = async (chatId, userId) => {
+  const message = await Message.findOneAndUpdate(
+    { chat: chatId },
+    { $addToSet: { readBy: userId } },
+    { new: true }
+  ).sort('-createdAt')
+
+  return message
+}
+
+/**
  * Delete message by id
  * @param {ObjectId} messageId
  * @returns {Promise<message>}
@@ -87,5 +103,6 @@ export {
   getMessageById,
   findOne,
   updateMessageById,
+  addToReadBy,
   deleteMessageById,
 }

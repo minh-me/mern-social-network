@@ -24,6 +24,10 @@ export const messageApi = {
     });
   },
 
+  addToReadBy(chatId: string): Promise<Message> {
+    return axiosInstance.patch(`${messageUrl}/${chatId}/readBy`, {});
+  },
+
   deleteMessage(messageId: string) {
     return axios.delete(`${messageUrl}/${messageId}`);
   },

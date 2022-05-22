@@ -6,6 +6,7 @@ import Picker, { IEmojiData, SKIN_TONE_MEDIUM_DARK } from 'emoji-picker-react';
 type Props = {
   autoFocus?: boolean;
   onSubmit: () => void;
+  onTyping?: () => void;
   text: string;
   setText: React.Dispatch<React.SetStateAction<string>>;
   style?: React.CSSProperties;
@@ -25,6 +26,7 @@ export const TextareaSubmit = ({
   setLabel,
   disabled = false,
   placeholder,
+  onTyping,
 }: Props) => {
   const handleKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
     if (event.key === 'Backspace' && !text && setLabel && label) setLabel('');
@@ -55,7 +57,10 @@ export const TextareaSubmit = ({
         autoFocus={autoFocus}
         value={text}
         onKeyDown={handleKeyDown}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          onTyping && onTyping();
+          setText(e.target.value);
+        }}
         disabled={disabled}
         style={{ ...styles.textArea, ...style }}
       />

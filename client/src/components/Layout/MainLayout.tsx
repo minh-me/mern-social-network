@@ -8,11 +8,9 @@ import { authApi } from 'api/auth.api';
 import { addAuth } from 'context';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { socketClient } from 'hooks/socket';
-import { EVENTS } from 'contants/events';
 
 export const MainLayout = () => {
-  const { dispatch, auth } = useAuthContext();
+  const { dispatch } = useAuthContext();
   const token = storage.getToken();
 
   // Refresh token
@@ -30,11 +28,6 @@ export const MainLayout = () => {
 
     if (token) refreshToken();
   }, [token, dispatch]);
-
-  // Setup socket
-  useEffect(() => {
-    auth && socketClient.emit(EVENTS.setup, auth);
-  }, [auth]);
 
   if (!token) {
     return <Navigate to="/auth" replace />;

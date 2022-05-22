@@ -19,6 +19,7 @@ type Props = {
 
   onSubmit: () => void;
   resetForm: () => void;
+  onTyping?: () => void;
 
   isLoading?: boolean;
   placeholderText?: string;
@@ -33,6 +34,7 @@ export const FormTextAndImageSubmit = ({
   setLabel,
   onSubmit,
   resetForm,
+  onTyping,
   isLoading = false,
   placeholderText = 'Enter text...',
 }: Props) => {
@@ -49,6 +51,7 @@ export const FormTextAndImageSubmit = ({
             setLabel={setLabel}
             disabled={isLoading}
             placeholder={placeholderText}
+            onTyping={onTyping}
           />
 
           {!(image && image.length > 0) && (

@@ -1,28 +1,39 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
+import Lottie from 'react-lottie';
+import * as animationData from 'animations/dote-typing-animation.json';
 
 import { UserListSkeleton } from 'components/Common/Variants';
 import { MessageItem } from './MessageItem';
 import { LoadMoreButton } from 'components/App';
 import { useMessages } from 'RQhooks/message.rq';
 import { useAuthContext } from 'hooks/useAppContext';
-
 import { socketClient } from 'hooks/socket';
 import { EVENTS } from 'contants/events';
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: animationData,
+};
 
 export const MessageList = ({ chatId = '' }) => {
   const { auth } = useAuthContext();
   const [limit, setLimit] = useState(8);
   const el = useRef<HTMLDivElement>(null);
-  const { data, isFetching, isLoading, refetch } = useMessages({ chatId, limit });
+  const [isTyping, setIsTyping] = useState(false);
+
+  const { data, isFetching, isLoading } = useMessages({ chatId, limit }, { cacheTime: Infinity });
 
   useEffect(() => {
     el?.current?.scrollIntoView({ block: 'end', behavior: 'smooth' });
   });
 
+  // Typing
   useEffect(() => {
-    socketClient.on(EVENTS.messageReceived, () => refetch());
-  }, [refetch]);
+    socketClient.on(EVENTS.typing, () => setIsTyping(true));
+    socketClient.on(EVENTS.stopTyping, () => setIsTyping(false));
+  }, [setIsTyping]);
 
   if (isLoading || !data) return <UserListSkeleton />;
 
@@ -31,6 +42,9 @@ export const MessageList = ({ chatId = '' }) => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexDirection: 'column-reverse' }}>
       <Box id={'el'} ref={el} sx={{ opacity: 0 }} />
+
+      {isTyping && <Lottie options={defaultOptions} style={{ margin: 0 }} width={98} />}
+
       {messages.map((message) => (
         <MessageItem isOwner={message.sender.id === auth?.id} key={message.id} message={message} />
       ))}
