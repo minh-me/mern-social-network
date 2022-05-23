@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { PostSkeleton, PostTextSkeleton, PostImageSkeleton } from 'components/Common/Variants';
-import { Title, LoadMoreInView } from 'components/App';
+import { Title } from 'components/App';
+import { LoadMoreInView } from 'components/Common/Buttons';
 import { CreatePostForm, PostList } from 'components/Common';
 import { usePosts } from 'RQhooks/post.rq';
 import { limitPosts } from 'contants/pagination';

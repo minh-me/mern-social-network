@@ -1,7 +1,8 @@
 import { Box, IconButton, Typography } from '@mui/material';
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 
-import { LoadMoreButton, Title } from 'components/App';
+import { LoadMoreButton } from 'components/Common/Buttons';
+import { Title } from 'components/App';
 import { NotificationItem } from './components/NotificationItem';
 import { useMarkAsOpened, useNotifications } from 'RQhooks/notification.rq';
 import { limitNotifications } from 'contants/pagination';

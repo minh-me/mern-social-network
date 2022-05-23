@@ -6,3 +6,4 @@ export * from './FollowButton';
 export * from './IconsButtonOutlined';
 export * from './CancelButton';
 export * from './AddLoadingButton';
+export * from './LoadMoreButton';
