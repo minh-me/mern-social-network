@@ -14,7 +14,6 @@ import { EVENTS } from 'contants/events';
 
 export const MessagePage = () => {
   const { chatId } = useParams();
-
   const { mutate } = useAddToReadBy();
 
   // Add current user to read by

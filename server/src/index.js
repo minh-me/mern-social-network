@@ -21,6 +21,7 @@ const EVENTS = {
   messageReceived: 'message_received',
   typing: 'typing',
   stopTyping: 'stop_typing',
+  renameChat: 'rename_chat',
 }
 
 // Socket
@@ -42,6 +43,11 @@ io.on('connection', socket => {
 
   // Join chat
   socket.on(EVENTS.joinChat, chat => socket.join(chat))
+
+  // Rename chat
+  socket.on(EVENTS.renameChat, ({ chatId, newChatName }) =>
+    socket.to(chatId).emit(EVENTS.renameChat, { chatId, newChatName })
+  )
 
   // Typing
   socket.on(EVENTS.typing, room => socket.to(room).emit(EVENTS.typing))

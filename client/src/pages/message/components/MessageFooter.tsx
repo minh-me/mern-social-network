@@ -18,6 +18,8 @@ export const MessageFooter = ({ chatId }: Props) => {
   const { mutateAsync, isLoading } = useCreateMessage();
 
   const handleSubmit = async () => {
+    setIsTyping(false);
+
     const formData = new FormData();
 
     text && formData.append('text', text);
@@ -32,7 +34,6 @@ export const MessageFooter = ({ chatId }: Props) => {
   const handleResetForm = () => {
     setText('');
     setImage(undefined);
-    setIsTyping(false);
   };
 
   const handleTyping = () => {

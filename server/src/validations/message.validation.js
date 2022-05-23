@@ -17,6 +17,7 @@ const createMessage = {
     .required(),
   text: yup.string(),
   image: yup.string(),
+  isRename: yup.boolean(),
 }
 
 const getMessages = {
@@ -51,6 +52,7 @@ const updateMessage = {
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
   text: yup.string().required(),
+  isRename: yup.boolean(),
 }
 
 const deleteMessage = {

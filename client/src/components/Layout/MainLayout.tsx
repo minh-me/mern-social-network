@@ -8,6 +8,7 @@ import { authApi } from 'api/auth.api';
 import { addAuth } from 'context';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { TabUserList } from 'pages/search/Tab_UserList';
 
 export const MainLayout = () => {
   const { dispatch } = useAuthContext();
@@ -63,6 +64,21 @@ export const MainLayout = () => {
         >
           <Outlet />
         </Box>
+      </Grid>
+
+      <Grid
+        item
+        lg={3}
+        md={3}
+        sx={{
+          display: {
+            xs: 'none',
+            sm: 'none',
+            md: 'inherit',
+          },
+        }}
+      >
+        <TabUserList />
       </Grid>
     </Grid>
   );

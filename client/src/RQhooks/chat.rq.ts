@@ -41,7 +41,6 @@ export const useUpdateChat = () => {
     onSuccess: (data) => {
       // Update query cache current chat
       queryClient.setQueryData(chatIdKey, () => data);
-      console.log({ data });
 
       // Update chat list
       if (!chatsKey) return;

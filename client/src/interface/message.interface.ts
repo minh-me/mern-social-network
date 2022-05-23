@@ -8,6 +8,7 @@ export interface Message {
   readBy: User[];
   chat: Chat;
   text?: string;
+  isRename?: boolean;
   image?: {
     url: string;
   };
