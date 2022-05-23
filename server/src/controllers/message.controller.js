@@ -9,19 +9,26 @@ import { chatService, messageService, uploadService } from '../services'
  * @access private
  */
 const createMessage = catchAsync(async (req, res) => {
+  // If create message renameChat => parse isReanme to bool
+  if (req.body.isRename) req.body.isRename = JSON.parse(req.body.isRename)
+
+  // Create item
   const item = {
     ...req.body,
     sender: req.user.id,
     readBy: [req.user.id],
   }
 
+  // Check upload file
   if (req.file) {
     const result = await uploadService.uploadImageMessage(req.file.path)
     item.image = result
   }
 
+  // Create message
   const message = await messageService.createMessage(item)
 
+  // Success
   res.status(201).json(message)
 })
 
@@ -74,7 +81,6 @@ const updateMessage = catchAsync(async (req, res) => {
  * @access private
  */
 const addToReadBy = catchAsync(async (req, res) => {
-  console.log(req.params.chatId)
   const message = await messageService.addToReadBy(
     req.params.chatId,
     req.user.id

@@ -6,4 +6,5 @@ export const EVENTS = {
   messageReceived: 'message_received',
   typing: 'typing',
   stopTyping: 'stop_typing',
+  renameChat: 'rename_chat',
 };

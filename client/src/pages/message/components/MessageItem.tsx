@@ -16,6 +16,9 @@ type MessageProps = {
 export const MessageItem: FC<MessageProps> = ({ isOwner, message }) => {
   const isGroupChat = message.chat.isGroupChat;
 
+  let bgText = isOwner ? '#5352ed' : '#3E4042';
+  if (message.isRename) bgText = 'transparent';
+
   return (
     <Box
       pb={1}
@@ -31,7 +34,14 @@ export const MessageItem: FC<MessageProps> = ({ isOwner, message }) => {
         src={message.sender.profilePic.url}
         sx={{ width: 34, height: 34, border: '2px solid white' }}
       />
-      <Box sx={{ ...styles.contentContainer, alignItems: 'flex-start' }}>
+      <Box
+        sx={{
+          ...styles.contentContainer,
+          width: message.isRename ? '100%' : 'inherit',
+          maxWidth: message.isRename ? '100%' : '80%',
+          textAlign: 'center',
+        }}
+      >
         {isGroupChat && !isOwner && (
           <Typography sx={{ width: '100%' }} color="#898989" fontSize={12}>
             {message.sender.name}
@@ -42,10 +52,11 @@ export const MessageItem: FC<MessageProps> = ({ isOwner, message }) => {
         {message.text && (
           <Typography
             variant="body1"
-            // component="p"
-            sx={{ ...styles.text, bgcolor: isOwner ? '#5352ed' : '#3E4042' }}
+            sx={{ ...styles.text, bgcolor: bgText }}
             component={Twemoji}
             text={message.text}
+            color={message.isRename ? '#b7b7b7' : '#ebebeb'}
+            fontSize={message.isRename ? 12 : 15}
           />
         )}
 

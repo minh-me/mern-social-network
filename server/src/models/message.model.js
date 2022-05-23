@@ -7,6 +7,7 @@ const messageSchema = mongoose.Schema(
     readBy: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     chat: { type: Schema.Types.ObjectId, ref: 'Chat' },
     text: { type: String },
+    isRename: { type: Boolean, default: false },
     image: {
       id: { type: String, select: false },
       url: String,
