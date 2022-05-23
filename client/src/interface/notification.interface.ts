@@ -1,12 +1,12 @@
 import { Info } from './paginate.inteface';
 import { User } from './user.interface';
 export enum NotificationTypes {
-  likePost,
-  retweetPost,
-  follow,
-  reply,
-  commentPost,
-  commentUser,
+  likePost = 'likesPost',
+  retweetPost = 'retweetPost',
+  follow = 'follow',
+  reply = 'reply',
+  commentPost = 'commentPost',
+  commentUser = 'commentUser',
 }
 
 export interface Notification {

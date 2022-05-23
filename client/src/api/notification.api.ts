@@ -21,8 +21,8 @@ export const notificationApi = {
     });
   },
 
-  updateNotification(notificationId: string, notification: {}): Promise<Notification> {
-    return axiosInstance.post(`${notificationUrl}/${notificationId}`, notification, {
+  updateNotification(notifyData: { filter: { id: string }; body: {} }): Promise<Notification> {
+    return axiosInstance.patch(`${notificationUrl}/${notifyData.filter.id}`, notifyData.body, {
       headers: { 'Content-Type': 'application/json' },
     });
   },

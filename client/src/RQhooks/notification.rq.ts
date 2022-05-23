@@ -39,7 +39,25 @@ export const useDeleteNotification = () => {
   });
 };
 
-export const useMarkAsOpened = () => {
+export const useUpdateNotifycation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(notificationApi.updateNotification, {
+    onError: handlerError,
+    onSuccess: (data) => {
+      console.log({ data });
+    },
+    onSettled: () => {
+      return queryClient.invalidateQueries({
+        predicate: (query) => {
+          return query.queryKey.toString().startsWith('notifications');
+        },
+      });
+    },
+  });
+};
+
+export const useUpdateManyNotication = () => {
   const queryClient = useQueryClient();
 
   return useMutation(notificationApi.updateMany, {

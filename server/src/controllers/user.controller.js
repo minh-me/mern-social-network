@@ -127,11 +127,12 @@ const follow = catchAsync(async (req, res, next) => {
   req.user = userUpdated
 
   // Create notify
-  if (isFollowing && !userUpdated.id !== userFollow.id) {
-    await notificationService.createNotificationFollow(
+  if (!isFollowing && !userUpdated.id !== userFollow.id) {
+    const nofi = await notificationService.createNotificationFollow(
       userUpdated.id,
       userFollow.id
     )
+    console.log({ nofi })
   }
 
   res.send(userFollow)

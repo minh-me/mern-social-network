@@ -72,8 +72,8 @@ const updateNotification = catchAsync(async (req, res) => {
  */
 const updateMany = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['opened'])
-  const { opened } = req.body
 
+  // Filter by opened
   if (filter.opened) {
     // convert string to boolean
     filter.opened = JSON.parse(filter.opened)
@@ -81,7 +81,7 @@ const updateMany = catchAsync(async (req, res) => {
 
   filter.userTo = req.user.id
 
-  const notification = await notificationService.updateMany(filter, { opened })
+  const notification = await notificationService.updateMany(filter, req.body)
 
   res.send(notification)
 })
