@@ -6,8 +6,8 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { styles } from './styles';
 import { MDialog } from 'components/Common/Modal';
-import { useDeleteNotification } from 'RQhooks/notification.rq';
-import { Link } from 'react-router-dom';
+import { useDeleteNotification, useUpdateNotifycation } from 'RQhooks/notification.rq';
+import { Link, useNavigate } from 'react-router-dom';
 
 dayjs.extend(relativeTime);
 
@@ -15,7 +15,7 @@ interface NotiProps {
   notification: Notification;
 }
 
-const notifies: Record<string, any> = {
+const notifyMessages: Record<string, any> = {
   likePost: 'đã thích một bài viết của bạn.',
   retweetPost: 'đã chia sẽ một bài viết của bạn.',
   follow: 'đã follow bạn.',
@@ -26,14 +26,17 @@ const notifies: Record<string, any> = {
 export const NotificationItem: FC<NotiProps> = ({ notification }) => {
   const { userFrom, type } = notification;
   const [openModal, setOpenModal] = useState(false);
-  const { mutateAsync, isLoading } = useDeleteNotification();
+  const navigate = useNavigate();
+
+  const { mutateAsync: deleteAsync, isLoading } = useDeleteNotification();
+  const { mutate: update } = useUpdateNotifycation();
 
   const handleDelete = async (entityId: string) => {
-    if (entityId) await mutateAsync(entityId);
+    if (entityId) await deleteAsync(entityId);
     setOpenModal(false);
   };
 
-  const linkDetail = (notification: Notification) => {
+  const linkNotifyDetail = (notification: Notification): string => {
     if (
       notification.type === NotificationTypes.commentUser ||
       notification.type === NotificationTypes.follow
@@ -43,12 +46,17 @@ export const NotificationItem: FC<NotiProps> = ({ notification }) => {
     return `/posts/${notification.entityId}`;
   };
 
+  const handleNavigateNotifyDetail = () => {
+    update({ filter: { id: notification.id }, body: { opened: true } });
+    navigate(linkNotifyDetail(notification));
+  };
+
   return (
     <Box sx={styles.itemContainer}>
       <Link to={`/users/${userFrom.username}`}>
         <Avatar alt={userFrom.name} src={userFrom.profilePic.url} />
       </Link>
-      <Box sx={{ flex: 1, textDecoration: 'none' }} component={Link} to={linkDetail(notification)}>
+      <Box sx={{ flex: 1, cursor: 'pointer' }} onClick={handleNavigateNotifyDetail}>
         <Typography
           color={notification.opened ? '#8b8b8b' : '#f9f9f9'}
           component="span"
@@ -63,7 +71,7 @@ export const NotificationItem: FC<NotiProps> = ({ notification }) => {
           sx={styles.text}
           color={notification.opened ? '#8b8b8b' : '#f9f9f9'}
         >
-          {notifies[type]}
+          {notifyMessages[type]}
         </Typography>
       </Box>
 

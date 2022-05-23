@@ -1,20 +1,17 @@
-import { Box, IconButton, Typography } from '@mui/material';
-import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
+import { Box, Typography } from '@mui/material';
 
 import { LoadMoreButton } from 'components/Common/Buttons';
 import { Title } from 'components/App';
 import { NotificationItem } from './components/NotificationItem';
-import { useMarkAsOpened, useNotifications } from 'RQhooks/notification.rq';
+import { useNotifications } from 'RQhooks/notification.rq';
 import { limitNotifications } from 'contants/pagination';
 import { useState } from 'react';
 import { UserListSkeleton } from 'components/Common/Variants';
-import { MDialog } from 'components/Common/Modal';
+import { DoneAllIcon } from './components/DoneAllIcon';
 
 export const NotificationPage = () => {
   const [limit, setLimit] = useState(limitNotifications);
   const { data, isFetching, isLoading } = useNotifications({ limit });
-  const { mutateAsync } = useMarkAsOpened();
-  const [openModal, setOpenModal] = useState(false);
 
   if (isLoading || !data)
     return (
@@ -26,24 +23,13 @@ export const NotificationPage = () => {
       </>
     );
 
-  const handleConfirm = async () => {
-    await mutateAsync({ filter: { opened: false }, body: { opened: true } });
-    setOpenModal(false);
-  };
-
   const { notifications, info } = data;
 
   return (
     <>
       <Box sx={styles.titleContainer}>
         <Title title="Notifications" />
-        <IconButton
-          size="small"
-          onClick={() => setOpenModal(true)}
-          sx={{ color: '#ff2b72', mr: 3 }}
-        >
-          <DoneAllOutlinedIcon />
-        </IconButton>
+        <DoneAllIcon />
       </Box>
 
       <Box>
@@ -64,17 +50,6 @@ export const NotificationPage = () => {
           Nothing to show.
         </Typography>
       )}
-
-      {/* Modal */}
-      <MDialog
-        title="Đánh dấu thông báo!"
-        confirmButton={handleConfirm}
-        onClose={() => setOpenModal(false)}
-        open={openModal}
-        isLoading={isLoading}
-      >
-        Đánh dấu tất cả thông báo là đã đọc?
-      </MDialog>
     </>
   );
 };
