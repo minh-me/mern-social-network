@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { LoadMoreButton } from 'components/App';
+import { LoadMoreButton } from 'components/Common/Buttons';
 import { UserItem } from 'components/Common';
 import { UserListSkeleton } from 'components/Common/Variants';
 import { limitUsers } from 'contants/pagination';

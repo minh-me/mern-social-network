@@ -5,7 +5,7 @@ import * as animationData from 'animations/dote-typing-animation.json';
 
 import { UserListSkeleton } from 'components/Common/Variants';
 import { MessageItem } from './MessageItem';
-import { LoadMoreButton } from 'components/App';
+import { LoadMoreButton } from 'components/Common/Buttons';
 import { useMessages } from 'RQhooks/message.rq';
 import { useAuthContext } from 'hooks/useAppContext';
 import { socketClient } from 'hooks/socket';

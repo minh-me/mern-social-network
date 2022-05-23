@@ -11,24 +11,10 @@ export const Sidebar = (props: Props) => {
       {/* Logo */}
       <Logo />
       {/* Sidebar Item */}
-      <Box
-        sx={{
-          display: {
-            sm: 'none',
-            md: 'inherit',
-          },
-        }}
-      >
+      <Box sx={{ display: { sm: 'none', md: 'inherit' } }}>
         <SidebarList />
       </Box>
-      <Box
-        sx={{
-          display: {
-            sm: 'inherit',
-            md: 'none',
-          },
-        }}
-      >
+      <Box sx={{ display: { sm: 'inherit', md: 'none' } }}>
         <SidebarListIcons />
       </Box>
     </Box>

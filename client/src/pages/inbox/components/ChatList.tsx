@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useChats } from 'RQhooks/chat.rq';
 import { UserListSkeleton } from 'components/Common/Variants';
 import { ChatItem } from './ChatItem';
-import { LoadMoreButton } from 'components/App';
+import { LoadMoreButton } from 'components/Common/Buttons';
 
 export const ChatList = () => {
   const [limit, setLimit] = useState(8);

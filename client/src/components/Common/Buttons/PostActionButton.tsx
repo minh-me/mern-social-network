@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Button, SxProps, Theme } from '@mui/material';
+
 type PostActionButtonProps = {
   startIcon?: React.ReactNode;
   sx?: SxProps<Theme>;

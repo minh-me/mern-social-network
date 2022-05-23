@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 
 import { usePosts } from 'RQhooks';
 import { limitPosts } from 'contants/pagination';
-import { LoadMoreButton } from 'components/App';
+import { LoadMoreButton } from 'components/Common/Buttons';
 import { PostList } from 'components/Common';
 import { PostSkeleton } from 'components/Common/Variants';
 
