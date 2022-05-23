@@ -18,6 +18,7 @@ import { useAuthContext } from 'hooks/useAppContext';
 import { useEffect } from 'react';
 import { useQueryClient } from 'react-query';
 import { Message } from 'interface';
+import { PostDetailPage } from 'pages/postDetail';
 
 function App() {
   const { auth } = useAuthContext();
@@ -53,6 +54,7 @@ function App() {
             </Route>
             <Route path="/" element={<MainLayout />}>
               <Route path="/" element={<HomePage />} />
+              <Route path="/posts/:postId" element={<PostDetailPage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/search/users" element={<SearchPage />} />
               <Route path="/search/posts" element={<SearchPage />} />

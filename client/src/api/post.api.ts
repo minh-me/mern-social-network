@@ -12,21 +12,21 @@ export const postApi = {
     return axiosInstance.get(`api/${queryKey[0]}`);
   },
 
-  getPost(postId: string) {
-    return axios.get(`${postUrl}/${postId}`);
+  getPost(postId: string): Promise<Post> {
+    return axiosInstance.get(`${postUrl}/${postId}`);
   },
 
-  createPost(post: {}) {
+  createPost(post: {}): Promise<Post> {
     return axiosInstance.post(`${postUrl}`, post, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
 
-  updatePost(postId: string, post: {}) {
+  updatePost(postId: string, post: {}): Promise<Post> {
     return axios.post(`${postUrl}/${postId}`, post);
   },
 
-  deletePost(postId: string) {
+  deletePost(postId: string): Promise<Post> {
     return axios.delete(`${postUrl}/${postId}`);
   },
 

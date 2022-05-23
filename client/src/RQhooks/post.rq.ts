@@ -23,6 +23,13 @@ export const usePosts = (
   });
 };
 
+export const usePostById = ({ postId = '' }, options?: options) => {
+  return useQuery(`posts/${postId}`, () => postApi.getPost(postId), {
+    onError: handlerError,
+    ...options,
+  });
+};
+
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
   const postsKey = queryClient.getQueryData('postsKey');

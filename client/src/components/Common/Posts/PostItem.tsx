@@ -6,17 +6,18 @@ import { CommentList } from '../Comments';
 
 type PostItemProps = {
   post: Post;
+  isOpenComment?: boolean;
 };
 
-export const PostItem: FC<PostItemProps> = memo(({ post }) => {
-  const [openComment, setOpenComment] = useState(false);
+export const PostItem: FC<PostItemProps> = memo(({ post, isOpenComment = false }) => {
+  const [openComment, setOpenComment] = useState(isOpenComment);
   const toggleComment = () => setOpenComment(!openComment);
 
   return (
     <Box sx={styles.container}>
       {/* User info */}
       <Box px={2} sx={{ width: '100%' }}>
-        <PostHeader user={post.postedBy} postCreated={post.createdAt} />
+        <PostHeader user={post.postedBy} postCreatedAt={post.createdAt} />
 
         {/* Post Content */}
         <PostContent text={post.text} imageUrl={post.image?.url} />

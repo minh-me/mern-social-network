@@ -27,7 +27,7 @@ export const useCommentsByPost = (
     onError: handlerError,
     ...options,
     enabled: !!postId,
-    cacheTime: 0,
+    // cacheTime: 0,
   });
 };
 
