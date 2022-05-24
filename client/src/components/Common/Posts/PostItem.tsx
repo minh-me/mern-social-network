@@ -17,7 +17,13 @@ export const PostItem: FC<PostItemProps> = memo(({ post, isOpenComment = false }
     <Box sx={styles.container}>
       {/* User info */}
       <Box px={2} sx={{ width: '100%' }}>
-        <PostHeader user={post.postedBy} postCreatedAt={post.createdAt} />
+        <PostHeader
+          postedBy={post.postedBy}
+          hidden={post.hidden}
+          createdAt={post.createdAt}
+          pinned={post.pinned}
+          postId={post.id}
+        />
 
         {/* Post Content */}
         <PostContent text={post.text} imageUrl={post.image?.url} />
@@ -26,9 +32,9 @@ export const PostItem: FC<PostItemProps> = memo(({ post, isOpenComment = false }
 
         <PostFooter
           postId={post.id}
-          likes={post?.likes || []}
-          comments={post?.comments || []}
-          shares={post?.retweetUsers || []}
+          likes={post.likes}
+          comments={post.comments}
+          shares={post.retweetUsers}
           toggleComment={toggleComment}
         />
         {/* Comment */}

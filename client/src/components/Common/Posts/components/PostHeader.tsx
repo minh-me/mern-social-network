@@ -1,55 +1,41 @@
-import React, { FC, useState } from 'react';
+import { FC } from 'react';
 import { Link as LinkRoute } from 'react-router-dom';
-import {
-  Avatar,
-  Box,
-  Link,
-  Typography,
-  Button,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import HideSourceIcon from '@mui/icons-material/HideSource';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import PushPinIcon from '@mui/icons-material/PushPin';
+import { Avatar, Box, Link, Typography } from '@mui/material';
 
 import { User } from 'interface';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useAuthContext } from 'hooks/useAppContext';
+import { MenuPost } from './MenuPost';
 dayjs.extend(relativeTime);
 
 type AuthorPostProps = {
-  user: User;
-  postCreatedAt: string;
+  postedBy: User;
+  postId: string;
+  hidden: boolean;
+  pinned: boolean;
+  createdAt: string;
 };
 
-export const PostHeader: FC<AuthorPostProps> = ({ user, postCreatedAt }) => {
+export const PostHeader: FC<AuthorPostProps> = ({
+  postedBy,
+  createdAt,
+  postId,
+  hidden,
+  pinned,
+}) => {
   const { auth } = useAuthContext();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const open = Boolean(anchorEl);
-  const isOwner = auth?.id === user.id;
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const isOwner = auth?.id === postedBy.id;
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
         {/* Avatar */}
         <Avatar
-          src={user.profilePic.url}
+          src={postedBy.profilePic.url}
           sx={{ border: '1px solid white', mr: 1 }}
-          alt={user.name}
+          alt={postedBy.name}
         />
 
         <Box>
@@ -58,65 +44,22 @@ export const PostHeader: FC<AuthorPostProps> = ({ user, postCreatedAt }) => {
               sx={styles.userLinkContainer}
               underline="hover"
               component={LinkRoute}
-              to={`/users/${user.username}`}
+              to={`/users/${postedBy.username}`}
             >
-              {user.name}
+              {postedBy.name}
             </Link>
             <Typography fontSize={12} color="#999ea3" component="p" sx={{ mx: 1 }}>
-              @{user.username}
+              @{postedBy.username}
             </Typography>
           </Box>
           <Typography fontSize={12} color="#686868" component="p">
-            {dayjs(postCreatedAt).fromNow()}
+            {dayjs(createdAt).fromNow()}
           </Typography>
         </Box>
       </Box>
-      {isOwner && (
-        <>
-          <Button
-            sx={{ color: '#919191' }}
-            size="small"
-            id="basic-button"
-            aria-controls={open ? 'basic-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-          >
-            <MoreHorizIcon />
-          </Button>
 
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
-          >
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <PushPinIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Ghim</ListItemText>
-            </MenuItem>
-
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <HideSourceIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Ẩn</ListItemText>
-            </MenuItem>
-
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <DeleteForeverIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Xóa</ListItemText>
-            </MenuItem>
-          </Menu>
-        </>
-      )}
+      {/* Menu options post */}
+      {isOwner && <MenuPost postId={postId} hidden={hidden} pinned={pinned} />}
     </Box>
   );
 };

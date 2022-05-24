@@ -52,9 +52,22 @@ const getPostById = async postId => {
  * @returns {Promise<Post>}
  */
 const updatePostById = async (postId, body) => {
+  console.log({ postId })
   const post = await Post.findByIdAndUpdate(postId, body, { new: true })
 
   if (!post) throw new createHttpError.NotFound('Not found post.')
+
+  return post
+}
+
+/**
+ * Update post by id
+ * @param {Object} filter
+ * @param {PostBody} body
+ * @returns {Promise<Post>}
+ */
+const updateOne = async (filter, body) => {
+  const post = await Post.findOneAndUpdate(filter, body, { new: true })
 
   return post
 }
@@ -102,6 +115,7 @@ export {
   queryPosts,
   getPostById,
   updatePostById,
+  updateOne,
   deletePostById,
   deletePosts,
 }

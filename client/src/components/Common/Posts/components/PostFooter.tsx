@@ -7,9 +7,9 @@ import {
 } from 'components/Common/Buttons/Posts';
 
 type Props = {
-  comments: string[] | [];
-  shares: string[] | [];
-  likes: string[] | [];
+  comments: string[];
+  shares: string[];
+  likes: string[];
   postId: string;
   toggleComment: () => void;
 };

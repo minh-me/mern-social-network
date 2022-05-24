@@ -16,10 +16,20 @@ const postSchema = Schema(
       ref: 'User',
     },
     pinned: { type: Boolean, default: false },
-    likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    retweetUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    hidden: { type: Boolean, default: false },
+    likes: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+      default: [],
+    },
+    retweetUsers: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+      default: [],
+    },
     retweetData: { type: Schema.Types.ObjectId, ref: 'Post' },
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    comments: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+      default: [],
+    },
     numberLikes: Number,
   },
   {

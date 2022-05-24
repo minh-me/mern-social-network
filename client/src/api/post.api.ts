@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Post, PostsResponse } from 'interface';
 import axiosInstance from 'utils/axiosInstance';
 
@@ -22,12 +21,14 @@ export const postApi = {
     });
   },
 
-  updatePost(postId: string, post: {}): Promise<Post> {
-    return axios.post(`${postUrl}/${postId}`, post);
+  updatePost(updateRequest: { filter: { id: string }; body: {} }): Promise<Post> {
+    return axiosInstance.patch(`${postUrl}/${updateRequest.filter.id}`, updateRequest.body, {
+      headers: { 'Content-Type': 'application/json' },
+    });
   },
 
   deletePost(postId: string): Promise<Post> {
-    return axios.delete(`${postUrl}/${postId}`);
+    return axiosInstance.delete(`${postUrl}/${postId}`);
   },
 
   likePost(postId: string): Promise<Post> {

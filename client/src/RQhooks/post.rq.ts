@@ -72,14 +72,30 @@ export const useLikePost = () => {
   });
 };
 
+export const useUpdatePost = () => {
+  return useMutation(postApi.updatePost, {
+    onSuccess: (data) => {
+      console.log({ msg: 'updated post sucessfully!', data });
+    },
+  });
+};
+
+export const useDeletePost = () => {
+  return useMutation(postApi.deletePost, {
+    onSuccess: (data) => {
+      console.log({ msg: 'Deleted post sucessfully!', data });
+    },
+  });
+};
+
 const updatePostLikes = (oldData: any, postId: string, userId: string) => {
   const newPosts = oldData?.posts.map((post: Post) => {
     if (post.id === postId) {
-      if (post.likes?.includes(userId)) {
+      if (post.likes.includes(userId)) {
         const likes = post.likes.filter((id) => id !== userId);
         return { ...post, likes: likes };
       }
-      return { ...post, likes: post.likes?.concat(userId) };
+      return { ...post, likes: post.likes.concat(userId) };
     }
     return post;
   });

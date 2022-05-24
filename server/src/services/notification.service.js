@@ -191,7 +191,6 @@ const deleteNotificationById = async notificationId => {
  */
 const count = async filter => {
   const result = await Notification.count(filter)
-  console.log({ result })
 
   return result
 }

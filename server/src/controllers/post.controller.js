@@ -65,7 +65,17 @@ const getPost = catchAsync(async (req, res) => {
  * @access private
  */
 const updatePost = catchAsync(async (req, res) => {
+  // Update post is pinned = true => pinned = false
+  if (req.body.pinned) {
+    await postService.updateOne(
+      { postedBy: req.user.id, pinned: true },
+      { pinned: false }
+    )
+  }
+
+  // Pin post
   const post = await postService.updatePostById(req.params.postId, req.body)
+
   res.send(post)
 })
 
