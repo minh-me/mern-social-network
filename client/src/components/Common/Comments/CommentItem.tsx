@@ -27,7 +27,7 @@ export const CommentItem = ({ comment, replies, authorPost }: CommentItemProps) 
   const { text, author, createdAt, image, replyTo } = comment;
   const [toggleReplyForm, setToggleReplyForm] = useState(false);
 
-  const isLiked = (auth && comment.likes?.includes(auth.id)) || false;
+  const isLiked = (auth && comment.likes.includes(auth.id)) || false;
   const replyId = comment.parentId ? comment.parentId : comment.id;
 
   const handleToggleForm = () => setToggleReplyForm(!toggleReplyForm);
@@ -47,11 +47,7 @@ export const CommentItem = ({ comment, replies, authorPost }: CommentItemProps) 
 
             {/* Actions */}
             <Box sx={{ display: 'flex', mt: '4px' }}>
-              <LikeCommentButton
-                commentId={comment.id}
-                isLiked={isLiked}
-                likes={comment?.likes || []}
-              />
+              <LikeCommentButton commentId={comment.id} isLiked={isLiked} likes={comment.likes} />
               <ReplyCommentButton onClick={handleToggleForm} />
               <ActionButton>{dayjs(createdAt).fromNow()}</ActionButton>
             </Box>

@@ -12,7 +12,7 @@ export interface Comment {
   image?: {
     url: string;
   };
-  likes?: string[];
+  likes: string[];
 
   createdAt: string;
   updatedAt?: string;

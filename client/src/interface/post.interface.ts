@@ -9,12 +9,13 @@ export interface Post {
     id?: string;
   };
   postedBy: User;
-  pinned?: boolean;
-  likes?: string[];
-  retweetUsers?: string[];
+  pinned: boolean;
+  hidden: boolean;
+  likes: string[];
+  retweetUsers: string[];
   retweetData?: string[];
-  comments?: string[];
-  numberLikes?: Number;
+  comments: string[];
+  numberLikes: Number;
 
   createdAt: string;
   updatedAt?: string;

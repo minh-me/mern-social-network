@@ -34,9 +34,12 @@ const updatePost = {
     .required(),
   text: yup.string(),
   image: yup.string(),
+  pinned: yup.boolean(),
+  hidden: yup.boolean(),
 
-  checkbox_selection: yup.string().when(['text', 'image'], {
-    is: (text, image) => !text && !image,
+  fields_update: yup.string().when(['text', 'image', 'hidden', 'pinned'], {
+    is: (text, image, hidden, pinned) =>
+      !text && !image && hidden === undefined && pinned === undefined,
     then: yup.string().required(),
   }),
 }
