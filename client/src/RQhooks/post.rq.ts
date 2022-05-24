@@ -7,15 +7,15 @@ import { handlerError } from 'utils/handleError';
 import { options } from './options.type';
 
 export const usePosts = (
-  { postedBy = '', search = '', page = 1, limit = 1, sort = '-createdAt' },
+  { postedBy = '', search = '', page = 1, limit = 1, sort = '-createdAt', hidden = false },
   options?: options
 ) => {
   const queryClient = useQueryClient();
   const searchQuery = search ? `&search=${search}` : '';
   const postedByQuery = postedBy ? `&postedBy=${postedBy}` : '';
 
-  const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}${searchQuery}${postedByQuery}`;
-  queryClient.setQueryData('postsKey', queryKey);
+  const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}&&hidden=${hidden}${searchQuery}${postedByQuery}`;
+  if (sort !== '-numberLikes') queryClient.setQueryData('postsKey', queryKey);
 
   return useQuery(queryKey, postApi.getPosts, {
     onError: handlerError,
@@ -73,7 +73,32 @@ export const useLikePost = () => {
 };
 
 export const useUpdatePost = () => {
+  const queryClient = useQueryClient();
+
   return useMutation(postApi.updatePost, {
+    onMutate: (data) => {
+      const postsKey = queryClient.getQueryData('postsKey') as string;
+
+      queryClient.setQueryData(postsKey, (oldData: any) => {
+        const index = oldData.posts.findIndex((post: Post) => post.id === data.filter.id);
+        // Update pinned
+        if (data.body?.pinned !== undefined) {
+          oldData.posts[index].pinned = data.body.pinned;
+          return oldData;
+        }
+
+        // Update hidden
+        if (data.body?.hidden !== undefined) {
+          if (data.body.hidden) oldData.posts.splice(index, 1);
+          else oldData.posts[index].hidden = data.body.hidden; // false
+
+          return oldData;
+        }
+
+        return oldData;
+      });
+    },
+
     onSuccess: (data) => {
       console.log({ msg: 'updated post sucessfully!', data });
     },
@@ -81,10 +106,23 @@ export const useUpdatePost = () => {
 };
 
 export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+
   return useMutation(postApi.deletePost, {
-    onSuccess: (data) => {
-      console.log({ msg: 'Deleted post sucessfully!', data });
+    onMutate: (postId) => {
+      const postsKey = queryClient.getQueryData('postsKey') as string;
+
+      queryClient.setQueryData(postsKey, (oldData: any) => {
+        // Get index
+        const index = oldData.posts.findIndex((post: Post) => post.id === postId);
+
+        // Remove
+        oldData.posts.splice(index, 1);
+
+        return oldData;
+      });
     },
+    onError: handlerError,
   });
 };
 

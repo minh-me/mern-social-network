@@ -36,10 +36,19 @@ const createPost = catchAsync(async (req, res) => {
  * @access public
  */
 const getPosts = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['text', 'search', 'postedBy'])
+  const filter = pick(req.query, [
+    'text',
+    'search',
+    'postedBy',
+    'hidden',
+    'pinned',
+  ])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
   options.populate = 'postedBy'
+
+  if (filter.hidden) filter.hidden = JSON.parse(filter.hidden)
+  if (filter.pinned) filter.pinned = JSON.parse(filter.pinned)
 
   const result = await postService.queryPosts(filter, options)
 
