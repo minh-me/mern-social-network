@@ -21,7 +21,10 @@ export const postApi = {
     });
   },
 
-  updatePost(updateRequest: { filter: { id: string }; body: {} }): Promise<Post> {
+  updatePost(updateRequest: {
+    filter: { id: string };
+    body: { [key: string]: any };
+  }): Promise<Post> {
     return axiosInstance.patch(`${postUrl}/${updateRequest.filter.id}`, updateRequest.body, {
       headers: { 'Content-Type': 'application/json' },
     });

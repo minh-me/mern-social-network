@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import { Button, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import HideSourceIcon from '@mui/icons-material/HideSource';
+import VisibilityOffSharpIcon from '@mui/icons-material/VisibilityOffSharp';
+import VisibilitySharpIcon from '@mui/icons-material/VisibilitySharp';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import PushPinIcon from '@mui/icons-material/PushPin';
+import PushPinSharpIcon from '@mui/icons-material/PushPinSharp';
+import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
 import { useDeletePost, useUpdatePost } from 'RQhooks';
+import { Post } from 'interface';
 
 type MenuPostProps = {
-  postId: string;
-  pinned: boolean;
-  hidden: boolean;
+  post: Post;
 };
 
-export const MenuPost = ({ postId, pinned, hidden }: MenuPostProps) => {
+export const MenuPost = ({ post }: MenuPostProps) => {
+  const { id, pinned, hidden } = post;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
 
-  const { mutateAsync: updateAsync } = useUpdatePost();
-  const { mutateAsync: deleteAsync } = useDeletePost();
+  const { mutate: updateAsync } = useUpdatePost();
+  const { mutate: deleteAsync } = useDeletePost();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -26,16 +28,17 @@ export const MenuPost = ({ postId, pinned, hidden }: MenuPostProps) => {
 
   const handleClose = async (menuType: 'delete' | 'hidden' | 'pinned') => {
     if (menuType === 'delete') {
-      await deleteAsync(postId);
-      // Delete
-    } else {
+      deleteAsync(id);
+    }
+    if (menuType === 'pinned' || menuType === 'hidden') {
       const options = { pinned, hidden };
-      console.log({ body: { [menuType]: !options[menuType] } });
-      await updateAsync({ filter: { id: postId }, body: { [menuType]: !options[menuType] } });
+      updateAsync({ filter: { id }, body: { [menuType]: !options[menuType] } });
     }
 
     setAnchorEl(null);
   };
+
+  console.log('re-render', hidden);
 
   return (
     <>
@@ -61,17 +64,39 @@ export const MenuPost = ({ postId, pinned, hidden }: MenuPostProps) => {
         }}
       >
         <MenuItem onClick={() => handleClose('pinned')}>
-          <ListItemIcon>
-            <PushPinIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Ghim</ListItemText>
+          {pinned ? (
+            <>
+              <ListItemIcon>
+                <PushPinSharpIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Bỏ Ghim</ListItemText>
+            </>
+          ) : (
+            <>
+              <ListItemIcon>
+                <PushPinOutlinedIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Ghim</ListItemText>
+            </>
+          )}
         </MenuItem>
 
         <MenuItem onClick={() => handleClose('hidden')}>
-          <ListItemIcon>
-            <HideSourceIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Ẩn</ListItemText>
+          {hidden ? (
+            <>
+              <ListItemIcon>
+                <VisibilitySharpIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Bỏ ẩn</ListItemText>
+            </>
+          ) : (
+            <>
+              <ListItemIcon>
+                <VisibilityOffSharpIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText>Ẩn</ListItemText>
+            </>
+          )}
         </MenuItem>
 
         <MenuItem onClick={() => handleClose('delete')}>

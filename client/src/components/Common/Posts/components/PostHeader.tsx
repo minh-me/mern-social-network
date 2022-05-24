@@ -2,28 +2,19 @@ import { FC } from 'react';
 import { Link as LinkRoute } from 'react-router-dom';
 import { Avatar, Box, Link, Typography } from '@mui/material';
 
-import { User } from 'interface';
+import { Post } from 'interface';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useAuthContext } from 'hooks/useAppContext';
 import { MenuPost } from './MenuPost';
 dayjs.extend(relativeTime);
 
-type AuthorPostProps = {
-  postedBy: User;
-  postId: string;
-  hidden: boolean;
-  pinned: boolean;
-  createdAt: string;
+type Props = {
+  post: Post;
 };
 
-export const PostHeader: FC<AuthorPostProps> = ({
-  postedBy,
-  createdAt,
-  postId,
-  hidden,
-  pinned,
-}) => {
+export const PostHeader: FC<Props> = ({ post }) => {
+  const { postedBy, createdAt } = post;
   const { auth } = useAuthContext();
 
   const isOwner = auth?.id === postedBy.id;
@@ -59,7 +50,7 @@ export const PostHeader: FC<AuthorPostProps> = ({
       </Box>
 
       {/* Menu options post */}
-      {isOwner && <MenuPost postId={postId} hidden={hidden} pinned={pinned} />}
+      {isOwner && <MenuPost post={post} />}
     </Box>
   );
 };

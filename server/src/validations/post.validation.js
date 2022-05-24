@@ -14,6 +14,9 @@ const getPosts = {
   postedBy: yup
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
+  hidden: yup.boolean(),
+  pinned: yup.boolean(),
+
   page: yup.number().integer(),
   limit: yup.number().integer(),
   sort: yup.string(),
