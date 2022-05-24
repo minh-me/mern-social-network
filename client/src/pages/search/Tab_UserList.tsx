@@ -5,9 +5,9 @@ import { limitUsers } from 'contants/pagination';
 import { useState } from 'react';
 import { useUsers } from 'RQhooks';
 
-export const TabUserList = ({ search = '' }) => {
-  const [limit, setLimit] = useState(2);
-  const { data, isFetching, isLoading } = useUsers({ limit, search });
+export const TabUserList = ({ search = '', sort = '-createdAt', limit = limitUsers }) => {
+  const [sizeLimit, setSizeLimit] = useState(limit);
+  const { data, isFetching, isLoading } = useUsers({ limit: sizeLimit, search, sort });
 
   if (isLoading || !data) return <UserListSkeleton />;
   const { users, info } = data;
@@ -17,8 +17,10 @@ export const TabUserList = ({ search = '' }) => {
       <Box mt={2} mb={4} sx={{ display: 'flex', justifyContent: 'center' }}>
         {isFetching ? (
           <CircularProgress size={25} />
-        ) : info.totalResults > limit ? (
-          <Button onClick={() => setLimit((prevLimit) => prevLimit + limitUsers)}>Load more</Button>
+        ) : info.totalResults > sizeLimit ? (
+          <Button onClick={() => setSizeLimit((prevLimit) => prevLimit + limitUsers)}>
+            Load more
+          </Button>
         ) : null}
       </Box>
 

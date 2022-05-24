@@ -187,11 +187,13 @@ const updateCoverPhoto = async (userId, coverPhoto) => {
  */
 const updateUserPasswordById = async (userId, body) => {
   const user = await getUserById(userId)
-  if (!user) {
-    throw createError.NotFound()
-  }
+
+  if (!user) throw createError.NotFound()
+
   Object.assign(user, body)
+
   await user.save()
+
   return user
 }
 

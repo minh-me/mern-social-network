@@ -116,6 +116,7 @@ const follow = catchAsync(async (req, res, next) => {
   // Update user follow
   const userFollow = await userService.updateById(userId, {
     [options]: { followers: user.id },
+    $inc: { numberFollowers: isFollowing ? -1 : 1 },
   })
 
   // Update current user
@@ -132,7 +133,6 @@ const follow = catchAsync(async (req, res, next) => {
       userUpdated.id,
       userFollow.id
     )
-    console.log({ nofi })
   }
 
   res.send(userFollow)
