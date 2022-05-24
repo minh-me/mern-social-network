@@ -20,6 +20,7 @@ const postSchema = Schema(
     retweetUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     retweetData: { type: Schema.Types.ObjectId, ref: 'Post' },
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    numberLikes: Number,
   },
   {
     timestamps: true,

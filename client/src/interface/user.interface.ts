@@ -20,6 +20,7 @@ export interface User {
 
   followers: string[];
   following: string[];
+  numberFollowers?: string;
 
   createdAt?: string;
   updatedAt?: string;

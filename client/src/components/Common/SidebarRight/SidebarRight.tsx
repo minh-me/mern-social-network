@@ -15,14 +15,14 @@ export const SidebarRight = () => {
       {/* Posts */}
       <Box sx={styles.SidebarPosts}>
         <SidebarRightList title="Trends for you">
-          <TabPostList />
+          <TabPostList sort="-numberLikes" limit={5} />
         </SidebarRightList>
       </Box>
 
       {/* Users */}
       <Box sx={styles.SidebarUsers}>
         <SidebarRightList title="Who to follow">
-          <TabUserList search="user" />
+          <TabUserList sort="-numberFollowers" limit={5} />
         </SidebarRightList>
       </Box>
     </Box>
@@ -58,6 +58,15 @@ const styles = {
         p: 0,
       },
     },
+    a: {
+      fontSize: '12px',
+    },
+    p: {
+      fontSize: '10px',
+    },
+    span: {
+      fontSize: '14px',
+    },
   },
 
   SidebarUsers: {
@@ -67,7 +76,13 @@ const styles = {
     mr: '8px',
     button: {
       p: '4px',
+      fontSize: '10px',
+    },
+    a: {
       fontSize: '12px',
+    },
+    p: {
+      fontSize: '10px',
     },
   },
 };

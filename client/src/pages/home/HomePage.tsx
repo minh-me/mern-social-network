@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import { PostSkeleton, PostTextSkeleton, PostImageSkeleton } from 'components/Common/Variants';
+import { PostListSkeleton } from 'components/Common/Variants';
 import { Title } from 'components/App';
 import { LoadMoreInView } from 'components/Common/Buttons';
 import { CreatePostForm, PostList } from 'components/Common';
@@ -11,16 +11,10 @@ export const HomePage = () => {
   const [limit, setLimit] = useState(limitPosts);
   const { data, isLoading, isFetching } = usePosts({ limit }, { cacheTime: 3 * 60 * 1000 });
 
-  if (isLoading || !data)
-    return (
-      <>
-        <PostSkeleton />
-        <PostTextSkeleton />
-        <PostImageSkeleton />
-      </>
-    );
+  if (isLoading || !data) return <PostListSkeleton />;
 
   const { info, posts } = data;
+  console.log({ data });
 
   return (
     <>

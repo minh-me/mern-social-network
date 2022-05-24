@@ -29,18 +29,19 @@ type AuthorPostProps = {
 
 export const PostHeader: FC<AuthorPostProps> = ({ user, postCreatedAt }) => {
   const { auth } = useAuthContext();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const open = Boolean(anchorEl);
   const isOwner = auth?.id === user.id;
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  console.log({ user, postCreatedAt });
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>

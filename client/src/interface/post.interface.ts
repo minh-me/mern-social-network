@@ -14,6 +14,7 @@ export interface Post {
   retweetUsers?: string[];
   retweetData?: string[];
   comments?: string[];
+  numberLikes?: Number;
 
   createdAt: string;
   updatedAt?: string;

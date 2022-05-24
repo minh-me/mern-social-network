@@ -76,7 +76,7 @@ const updatePost = catchAsync(async (req, res) => {
  */
 const likePost = catchAsync(async (req, res) => {
   const { postId } = req.params
-  const { user } = req
+  const user = req.user
 
   // Check user is liked post
   const isLiked = user.likes && user.likes.includes(postId)
@@ -85,6 +85,7 @@ const likePost = catchAsync(async (req, res) => {
   // Update post
   const updatedPost = await postService.updatePostById(postId, {
     [options]: { likes: user.id },
+    $inc: { numberLikes: isLiked ? -1 : 1 },
   })
 
   // Update current user
@@ -96,11 +97,11 @@ const likePost = catchAsync(async (req, res) => {
   req.user = userUpdated
 
   // Create notification
-  if (!isLiked && updatedPost.postedBy._id !== user.id) {
+  if (!isLiked && updatedPost.postedBy.toString() !== user.id) {
     await notificationService.createNotificationLikePost(
       user.id,
-      updatedPost.postedBy._id,
-      updatedPost._id
+      updatedPost.postedBy,
+      updatedPost.id
     )
   }
 
