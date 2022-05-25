@@ -9,8 +9,7 @@ import { styleScroll } from 'utils';
 import { MessageList } from './components/MessageList';
 import { useAddToReadBy } from 'RQhooks/message.rq';
 
-import { socketClient } from 'hooks/socket';
-import { EVENTS } from 'contants/events';
+import { socketClient, EVENTS } from 'socketIO';
 
 export const MessagePage = () => {
   const { chatId } = useParams();

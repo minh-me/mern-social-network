@@ -8,8 +8,7 @@ import { MessageItem } from './MessageItem';
 import { LoadMoreButton } from 'components/Common/Buttons';
 import { useMessages } from 'RQhooks/message.rq';
 import { useAuthContext } from 'hooks/useAppContext';
-import { socketClient } from 'hooks/socket';
-import { EVENTS } from 'contants/events';
+import { socketClient, EVENTS } from 'socketIO';
 
 const defaultOptions = {
   loop: true,

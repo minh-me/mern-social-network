@@ -1,12 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-// import io from 'socket.io-client';
 
-import { EVENTS } from 'contants/events';
 import { messageApi } from 'api/message.api';
 import { handlerError } from 'utils/handleError';
 import { options } from './options.type';
-import { socketClient } from 'hooks/socket';
 import { Chat } from 'interface';
+import { socketClient, EVENTS } from 'socketIO';
 
 export const useMessages = (
   { chatId = '', page = 1, limit = 1, sort = '-createdAt' },

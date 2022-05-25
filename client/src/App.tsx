@@ -12,13 +12,12 @@ import {
 } from 'pages';
 import { Activate, ResetPassword, SignIn, SignUp } from 'pages/auth';
 import { FollowPage } from 'pages/follow/FollowPage';
-import { socketClient } from 'hooks/socket';
-import { EVENTS } from 'contants/events';
 import { useAuthContext } from 'hooks/useAppContext';
 import { useEffect } from 'react';
 import { useQueryClient } from 'react-query';
 import { Message } from 'interface';
 import { PostDetailPage } from 'pages/postDetail';
+import { socketClient, EVENTS } from 'socketIO';
 
 function App() {
   const { auth } = useAuthContext();

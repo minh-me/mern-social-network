@@ -7,4 +7,5 @@ export const EVENTS = {
   typing: 'typing',
   stopTyping: 'stop_typing',
   renameChat: 'rename_chat',
-};
+  notificationReceived: 'notification-received',
+}

@@ -7,7 +7,10 @@ export const useNotifications = (
   { page = 1, limit = 1, sort = 'opened,-createdAt' },
   options?: options
 ) => {
+  const queryClient = useQueryClient();
   const queryKey = `notifications?page=${page}&limit=${limit}&sort=${sort}`;
+
+  queryClient.setQueryData('notificationsKey', queryKey);
 
   return useQuery(queryKey, notificationApi.getNotifications, {
     onError: handlerError,

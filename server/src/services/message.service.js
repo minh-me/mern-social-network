@@ -57,6 +57,17 @@ const findOne = async filter => {
 }
 
 /**
+ * Count notification by filter
+ * @param {Object} filter
+ * @returns {Promise<Number>}
+ */
+const count = async filter => {
+  const result = await Message.count(filter)
+
+  return result
+}
+
+/**
  * Update message by id
  * @param {ObjectId} messageId
  * @param {Object} body
@@ -102,6 +113,7 @@ export {
   queryMessages,
   getMessageById,
   findOne,
+  count,
   updateMessageById,
   addToReadBy,
   deleteMessageById,

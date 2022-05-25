@@ -3,9 +3,7 @@ import SidebarList from './SidebarList';
 import Logo from './Logo';
 import { SidebarListIcons } from './SidebarListIcons';
 
-type Props = {};
-
-export const Sidebar = (props: Props) => {
+export const Sidebar = () => {
   return (
     <Box sx={{ height: '100vh' }}>
       {/* Logo */}
