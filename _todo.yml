@@ -1,31 +1,31 @@
 - TODO 1: HOME PAGE, API, PROFILE PAGE
   # + Update google login: Vui lòng đăng nhập bằng google và thiết lập lại mật khẩu
   # + Follow Page: Thiết kế ui follow page và render followers và following
-  + Delete post: Xóa bài viêt
-  + Pin post: Ghim bài viết
-  + Share post: Chia sẻ bài viết
+  # + Delete post: Xóa bài viêt
+  # + Pin post: Ghim bài viết
+  # + Share post: Chia sẻ bài viết
 
 - TODO 2: NOTIFICATION PAGE
-  + Render notifications: Hiện thị thông báo
-  + Mark notifications as read: Đánh dấu đã đọc thông báo
-  + Delete Notification: Xóa thông báo
+  # + Render notifications: Hiện thị thông báo
+  # + Mark notifications as read: Đánh dấu đã đọc thông báo
+  # + Delete Notification: Xóa thông báo
   + Update profile: cập nhập thông tin cá nhân
 
 - TODO 3: INBOX PAGE
   # + Create Room: tạo phòng chat
   # + Render rooms: hiển thị phòng chat
-  + Mark message as read: Đánh dấu tin nhắn đã đọc
+  # + Mark message as read: Đánh dấu tin nhắn đã đọc
   + Delete message in room chat: Xóa tất cả tin nhắn trong phòng chat
 
 - TODO 4: MESSAGE PAGE
-  + Update chat name: Chỉnh sửa tên phòng chat
-  + Create message: Tạo tin nhắn
-  + Render message: Hiển thị tất cả tin nhắn
+  # + Update chat name: Chỉnh sửa tên phòng chat
+  # + Create message: Tạo tin nhắn
+  # + Render message: Hiển thị tất cả tin nhắn
 
 - TODO 5: SOCKET IO
-  + Like post: hiện thị thông báo khi người dùng like post mình
+  # + Like post: hiện thị thông báo khi người dùng like post mình
   + Comment post: Hiện thị comment và thông báo khi người dùng comment vào bài post của mình or tag tên mình vào bài post
-  + Following user: Hiện thị thông báo khi có người dùng follow mình
+  # + Following user: Hiện thị thông báo khi có người dùng follow mình
   + Message: Hiện thị thông báo tin nhắn khi có người dùng gửi tin nhắn cho mình
 
 - TODO 6: ADMIN

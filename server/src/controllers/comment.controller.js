@@ -25,7 +25,7 @@ const createComment = catchAsync(async (req, res) => {
   // Add comment to post
   await postService
     .updatePostById(comment.post, {
-      $push: { comments: result.id },
+      $push: { comments: result.author },
     })
     .catch(error => {
       commentService.deleteCommentById(result.id)

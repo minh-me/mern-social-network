@@ -7,7 +7,7 @@ export const postApi = {
     return axiosInstance.get(`api/${queryKey[0]}`);
   },
 
-  getPostsByPostedBy({ queryKey = ['posts?page=1&limit=1'] }): Promise<PostsResponse> {
+  getProfilePosts({ queryKey = ['posts/profile?page=1&limit=1'] }): Promise<PostsResponse> {
     return axiosInstance.get(`api/${queryKey[0]}`);
   },
 

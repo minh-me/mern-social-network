@@ -62,7 +62,6 @@ const updateCommentById = async (commentId, body) => {
  */
 const deleteCommentById = async commentId => {
   const comment = await Comment.findByIdAndDelete(commentId)
-  console.log({ comment })
   if (comment?.image?.id) {
     uploadService.destroy(comment.image.id)
   }

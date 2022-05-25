@@ -24,9 +24,6 @@ export const useMessages = (
 export const useAddToReadBy = () => {
   return useMutation(messageApi.addToReadBy, {
     onError: handlerError,
-    onSuccess: (data) => {
-      console.log({ data });
-    },
   });
 };
 

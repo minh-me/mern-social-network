@@ -38,8 +38,6 @@ export const MenuPost = ({ post }: MenuPostProps) => {
     setAnchorEl(null);
   };
 
-  console.log('re-render', hidden);
-
   return (
     <>
       <Button

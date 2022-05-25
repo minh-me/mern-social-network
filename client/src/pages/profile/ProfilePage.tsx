@@ -12,11 +12,11 @@ import { useAuthContext } from 'hooks/useAppContext';
 import { UserProfile } from 'interface';
 
 export const ProfilePage = () => {
-  let { username } = useParams();
+  const params = useParams();
   const { auth } = useAuthContext();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  username = auth?.username === username ? 'profile' : username;
+  const username = auth?.username === params.username ? 'profile' : params.username;
 
   const { data: user, isLoading } = useUserProfile(
     { username },
@@ -47,7 +47,9 @@ export const ProfilePage = () => {
       <Divider sx={{ borderBottom: '1px solid #38444d', my: 2, mt: 4 }} />
 
       {isTabReplies && user && <ProfileReplies userId={user.id} />}
-      {!isTabReplies && user && <ProfilePostList userId={user.id} />}
+      {!isTabReplies && user && (
+        <ProfilePostList userId={params.username !== 'profile' ? user.id : ''} />
+      )}
     </>
   );
 };

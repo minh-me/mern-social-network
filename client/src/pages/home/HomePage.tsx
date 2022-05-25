@@ -15,7 +15,6 @@ export const HomePage = () => {
   if (isLoading || !data) return <HomeSkeleton />;
 
   const { info, posts } = data;
-  console.log({ data });
 
   return (
     <>

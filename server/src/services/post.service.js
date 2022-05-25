@@ -52,7 +52,6 @@ const getPostById = async postId => {
  * @returns {Promise<Post>}
  */
 const updatePostById = async (postId, body) => {
-  console.log({ postId })
   const post = await Post.findByIdAndUpdate(postId, body, { new: true })
 
   if (!post) throw new createHttpError.NotFound('Not found post.')
