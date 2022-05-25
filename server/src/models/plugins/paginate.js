@@ -45,14 +45,6 @@ const paginate = schema => {
   }
 
   schema.statics.paginate = async function (filter = {}, options = {}) {
-    // Create filter string
-    const filterStr = JSON.stringify(filter)
-
-    // Create operators ($gt, $gte, etc)
-    filter = JSON.parse(
-      filterStr.replace(/\b(gt|gte|lt|lte|in|eq)\b/g, match => `$${match}`)
-    )
-
     // Merge options
     options = {
       ...defaultOptions,

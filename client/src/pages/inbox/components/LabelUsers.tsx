@@ -8,7 +8,6 @@ type LabelUsersProps = {
 };
 export const LabelUsers: FC<LabelUsersProps> = ({ users, handleDeleteUser }) => {
   const handleDelete = (index: number) => {
-    console.log({ index });
     handleDeleteUser(index, 1);
   };
   return (

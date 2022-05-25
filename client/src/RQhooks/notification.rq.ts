@@ -47,9 +47,6 @@ export const useUpdateNotifycation = () => {
 
   return useMutation(notificationApi.updateNotification, {
     onError: handlerError,
-    onSuccess: (data) => {
-      console.log({ data });
-    },
     onSettled: () => {
       return queryClient.invalidateQueries({
         predicate: (query) => {
@@ -65,9 +62,6 @@ export const useUpdateManyNotication = () => {
 
   return useMutation(notificationApi.updateMany, {
     onError: handlerError,
-    onSuccess: (data) => {
-      console.log({ data });
-    },
     onSettled: () => {
       return queryClient.invalidateQueries({
         predicate: (query) => {

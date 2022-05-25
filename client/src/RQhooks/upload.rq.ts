@@ -5,9 +5,6 @@ import { handlerError } from 'utils/handleError';
 export const useUploadCoverPhoto = () => {
   const queryClient = useQueryClient();
   return useMutation('upload_cover_photo', uploadApi.uploadCoverPhoto, {
-    onSuccess: (data) => {
-      console.log(data);
-    },
     onError: handlerError,
     onSettled: () => {
       return queryClient.invalidateQueries({
@@ -20,9 +17,6 @@ export const useUploadCoverPhoto = () => {
 export const useUploadProfilePic = () => {
   const queryClient = useQueryClient();
   return useMutation('upload_profile_pic', uploadApi.uploadProfilePic, {
-    onSuccess: (data) => {
-      console.log(data);
-    },
     onError: handlerError,
     onSettled: () => {
       return queryClient.invalidateQueries({

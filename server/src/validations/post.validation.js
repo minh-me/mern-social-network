@@ -16,6 +16,7 @@ const getPosts = {
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect),
   hidden: yup.boolean(),
   pinned: yup.boolean(),
+  onlyReply: yup.boolean(),
 
   page: yup.number().integer(),
   limit: yup.number().integer(),

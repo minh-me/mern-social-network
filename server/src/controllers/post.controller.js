@@ -36,19 +36,36 @@ const createPost = catchAsync(async (req, res) => {
  * @access public
  */
 const getPosts = catchAsync(async (req, res) => {
-  const filter = pick(req.query, [
-    'text',
-    'search',
-    'postedBy',
-    'hidden',
-    'pinned',
-  ])
+  const filter = pick(req.query, ['text', 'search', 'postedBy'])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
+  filter.hidden = false
   options.populate = 'postedBy'
 
-  if (filter.hidden) filter.hidden = JSON.parse(filter.hidden)
-  if (filter.pinned) filter.pinned = JSON.parse(filter.pinned)
+  const result = await postService.queryPosts(filter, options)
+
+  res.send(result)
+})
+
+/**
+ * Get all posts
+ * @GET api/posts/profile
+ * @access private
+ */
+const getProfilePosts = catchAsync(async (req, res) => {
+  const filter = pick(req.query, ['postedBy', 'onlyReply'])
+  const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
+
+  if (filter.postedBy) filter.hidden = false
+  else filter.postedBy = req.user.id
+
+  if (filter.onlyReply === 'true') {
+    filter.comments = { $in: [filter.postedBy] }
+
+    delete filter.postedBy
+  }
+
+  options.populate = 'postedBy'
 
   const result = await postService.queryPosts(filter, options)
 
@@ -142,4 +159,12 @@ const deletePost = catchAsync(async (req, res) => {
   res.send(post)
 })
 
-export { createPost, getPosts, getPost, updatePost, deletePost, likePost }
+export {
+  createPost,
+  getPosts,
+  getProfilePosts,
+  getPost,
+  updatePost,
+  deletePost,
+  likePost,
+}

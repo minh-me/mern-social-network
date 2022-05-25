@@ -7,17 +7,34 @@ import { handlerError } from 'utils/handleError';
 import { options } from './options.type';
 
 export const usePosts = (
-  { postedBy = '', search = '', page = 1, limit = 1, sort = '-createdAt', hidden = false },
+  { postedBy = '', search = '', page = 1, limit = 1, sort = '-createdAt' },
   options?: options
 ) => {
   const queryClient = useQueryClient();
   const searchQuery = search ? `&search=${search}` : '';
   const postedByQuery = postedBy ? `&postedBy=${postedBy}` : '';
 
-  const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}&&hidden=${hidden}${searchQuery}${postedByQuery}`;
+  const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}&${searchQuery}${postedByQuery}`;
   if (sort !== '-numberLikes') queryClient.setQueryData('postsKey', queryKey);
 
   return useQuery(queryKey, postApi.getPosts, {
+    onError: handlerError,
+    ...options,
+  });
+};
+
+export const useProfilePosts = (
+  { postedBy = '', page = 1, limit = 1, onlyReply = false },
+  options?: options
+) => {
+  const queryClient = useQueryClient();
+  const postedByQuery = postedBy ? `&postedBy=${postedBy}` : '';
+
+  const queryKey = `posts/profile?page=${page}&limit=${limit}&onlyReply=${onlyReply}${postedByQuery}`;
+
+  queryClient.setQueryData('postsKey', queryKey);
+
+  return useQuery(queryKey, postApi.getProfilePosts, {
     onError: handlerError,
     ...options,
   });

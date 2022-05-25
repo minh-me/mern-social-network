@@ -16,12 +16,20 @@ router
   )
   .get(validate(postValidation.getPosts), postController.getPosts)
 
+router.get(
+  '/profile',
+  auth(),
+  validate(postValidation.getPosts),
+  postController.getProfilePosts
+)
+
 router.patch(
   '/:postId/like',
   auth(),
   validate(postValidation.postIdParams),
   postController.likePost
 )
+
 router
   .route('/:postId')
   .get(validate(postValidation.getPost), postController.getPost)
