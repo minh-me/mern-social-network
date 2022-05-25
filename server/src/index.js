@@ -2,8 +2,7 @@ import app from './app'
 import { config, logger } from './config'
 import 'colors'
 import { Server } from 'socket.io'
-import { configCors } from './config/cors'
-import { User } from './models'
+import { EVENTS } from './utils/socketEvents'
 
 // Run app
 const server = app.listen(
@@ -12,17 +11,6 @@ const server = app.listen(
     `Server running in ${config.env} mode on port ${config.port}`.cyan.underline
   )
 )
-
-const EVENTS = {
-  setup: 'set_up',
-  connected: 'connected',
-  joinChat: 'join_chat',
-  newMessage: 'new_message',
-  messageReceived: 'message_received',
-  typing: 'typing',
-  stopTyping: 'stop_typing',
-  renameChat: 'rename_chat',
-}
 
 // Socket
 const io = new Server(server, {
@@ -52,6 +40,11 @@ io.on('connection', socket => {
   // Typing
   socket.on(EVENTS.typing, room => socket.to(room).emit(EVENTS.typing))
   socket.on(EVENTS.stopTyping, room => socket.to(room).emit(EVENTS.stopTyping))
+
+  // Notification
+  socket.on(EVENTS.notificationReceived, userId =>
+    socket.to(userId).emit(EVENTS.notificationReceived, userId)
+  )
 
   // New message
   socket.on(EVENTS.newMessage, message => {

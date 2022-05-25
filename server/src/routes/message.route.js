@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { auth, uploadImage, uploadStorage, validate } from '../middlewares'
-import { chatValidation, messageValidation } from '../validations'
+import { messageValidation } from '../validations'
 import { messageController } from '../controllers'
 
 const router = new Router()

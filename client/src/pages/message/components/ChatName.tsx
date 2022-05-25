@@ -3,11 +3,10 @@ import { Typography } from '@mui/material';
 import { MDialogInput } from 'components/Common/Modal';
 import { useUpdateChat } from 'RQhooks/chat.rq';
 import { Twemoji } from 'react-emoji-render';
-import { socketClient } from 'hooks/socket';
-import { EVENTS } from 'contants/events';
 import { Chat } from 'interface';
 import { useQueryClient } from 'react-query';
 import { useCreateMessage } from 'RQhooks/message.rq';
+import { socketClient, EVENTS } from 'socketIO';
 
 type Props = {
   chatId: string;

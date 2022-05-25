@@ -3,8 +3,7 @@ import { Box } from '@mui/material';
 
 import { FormTextAndImageSubmit } from 'components/Common/Forms';
 import { useCreateMessage } from 'RQhooks/message.rq';
-import { socketClient } from 'hooks/socket';
-import { EVENTS } from 'contants/events';
+import { socketClient, EVENTS } from 'socketIO';
 
 type Props = {
   chatId: string;
