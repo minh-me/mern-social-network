@@ -20,7 +20,7 @@ export const SidebarRight = () => {
       </Box>
 
       {/* Users */}
-      <Box sx={styles.SidebarUsers}>
+      <Box mt={2} sx={styles.SidebarUsers}>
         <SidebarRightList title="Who to follow">
           <TabUserList sort="-numberFollowers" limit={5} />
         </SidebarRightList>

@@ -244,3 +244,12 @@ export const PostListSkeleton = () => {
     </>
   );
 };
+
+export const HomeSkeleton = () => {
+  return (
+    <>
+      <PostFormSkeleton />
+      <PostListSkeleton />
+    </>
+  );
+};
