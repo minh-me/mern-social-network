@@ -24,7 +24,7 @@ export const LikeIconButton = ({ likes = [''], postId = '' }) => {
         },
       }}
       onClick={likeHandler}
-      nums={likes.length}
+      nums={likes.length || null}
       startIcon={<FavoriteBorderRoundedIcon />}
     />
   );

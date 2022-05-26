@@ -17,6 +17,7 @@ const getPosts = {
   hidden: yup.boolean(),
   pinned: yup.boolean(),
   onlyReply: yup.boolean(),
+  followingOnly: yup.boolean(),
 
   page: yup.number().integer(),
   limit: yup.number().integer(),
