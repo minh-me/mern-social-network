@@ -226,6 +226,16 @@ const deleteUserById = async userId => {
   return result
 }
 
+/**
+ * Delete users by filter
+ * @param {Object} filter
+ * @returns {deleteMany}
+ */
+const deleteUsers = async filter => {
+  const result = await User.deleteMany(filter)
+  return result
+}
+
 export {
   createUser,
   queryUsers,
@@ -240,4 +250,5 @@ export {
   updateProfilePic,
   updateCoverPhoto,
   getUserByUsername,
+  deleteUsers,
 }

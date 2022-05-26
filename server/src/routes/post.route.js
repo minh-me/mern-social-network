@@ -14,7 +14,7 @@ router
     validate(postValidation.createPost),
     postController.createPost
   )
-  .get(validate(postValidation.getPosts), postController.getPosts)
+  .get(auth(), validate(postValidation.getPosts), postController.getPosts)
 
 router.get(
   '/profile',

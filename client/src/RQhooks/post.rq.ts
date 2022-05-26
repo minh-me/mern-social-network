@@ -7,14 +7,14 @@ import { handlerError } from 'utils/handleError';
 import { options } from './options.type';
 
 export const usePosts = (
-  { postedBy = '', search = '', page = 1, limit = 1, sort = '-createdAt' },
+  { postedBy = '', followingOnly = true, search = '', page = 1, limit = 1, sort = '-createdAt' },
   options?: options
 ) => {
   const queryClient = useQueryClient();
   const searchQuery = search ? `&search=${search}` : '';
   const postedByQuery = postedBy ? `&postedBy=${postedBy}` : '';
 
-  const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}&${searchQuery}${postedByQuery}`;
+  const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}&followingOnly=${followingOnly}${searchQuery}${postedByQuery}`;
   if (sort !== '-numberLikes') queryClient.setQueryData('postsKey', queryKey);
 
   return useQuery(queryKey, postApi.getPosts, {

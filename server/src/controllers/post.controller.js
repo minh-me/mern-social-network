@@ -36,11 +36,30 @@ const createPost = catchAsync(async (req, res) => {
  * @access public
  */
 const getPosts = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['text', 'search', 'postedBy'])
+  const filter = pick(req.query, ['text', 'search', 'followingOnly'])
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
   filter.hidden = false
   options.populate = 'postedBy'
+
+  if (filter.followingOnly !== undefined) {
+    const followingOnly = filter.followingOnly === 'true'
+
+    if (followingOnly) {
+      let userIds = []
+
+      if (!req.user.following) {
+        req.user.following = []
+      }
+
+      req.user.following.forEach(user => userIds.push(user))
+      userIds.push(req.user._id)
+
+      filter.postedBy = { $in: userIds }
+    }
+
+    delete filter.followingOnly
+  }
 
   const result = await postService.queryPosts(filter, options)
 

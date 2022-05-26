@@ -31,7 +31,7 @@ router.patch(
 router
   .route('/')
   .post(
-    auth('admin'),
+    // auth('admin'),
     validate(userValidation.createUser),
     userController.createUser
   )
@@ -50,4 +50,5 @@ router
     validate(userValidation.userId),
     userController.deleteUser
   )
+
 export default router
