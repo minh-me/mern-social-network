@@ -3,55 +3,27 @@ import { toast } from 'react-toastify';
 import { Grid, Box } from '@mui/material';
 import { blueGrey } from '@mui/material/colors';
 import { Sidebar } from 'components/Common/SidebarLeft';
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { storage, styleScroll } from 'utils';
 import { useAppContext } from 'hooks/useAppContext';
 import { authApi } from 'api/auth.api';
-import { addAuth, resetAppState } from 'context';
+import { addAuth } from 'context';
 import { SidebarRight } from 'components/Common/SidebarRight';
-import { useLogout } from 'RQhooks';
-import { useQueryClient } from 'react-query';
 
 export const MainLayout = () => {
   const { dispatch } = useAppContext();
   const token = storage.getToken();
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
-
-  const { mutateAsync: logout } = useLogout();
-
-  const handleLogout = async () => {
-    // Clear hoooks
-    dispatch(resetAppState());
-
-    // Clear localstorage
-    storage.clearToken();
-
-    // Clear react query
-    queryClient.clear();
-
-    // Clear server
-    await logout();
-
-    navigate('/auth', { replace: true });
-    return;
-  };
 
   // Refresh token
   useEffect(() => {
     const refreshToken = async () => {
-      const data = await authApi.getRefreshToken().catch((error) => {
-        // handleLogout(error);
+      const data = await authApi.getRefreshToken();
+      dispatch(addAuth(data.user));
+
+      storage.setToken(data.ac_token);
+      toast.success(`Hi ${data.user.name}, Have a nice day!`, {
+        position: 'bottom-right',
       });
-
-      if (data) {
-        dispatch(addAuth(data.user));
-
-        storage.setToken(data.ac_token);
-        toast.success(`Hi ${data.user.name}, Have a nice day!`, {
-          position: 'bottom-right',
-        });
-      }
     };
 
     if (token) refreshToken();
