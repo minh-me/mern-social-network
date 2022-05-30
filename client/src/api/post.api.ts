@@ -37,4 +37,12 @@ export const postApi = {
   likePost(postId: string): Promise<Post> {
     return axiosInstance.patch(`${postUrl}/${postId}/like`, {});
   },
+
+  retweetPost({ postId = '', text = '' }): Promise<Post> {
+    return axiosInstance.post(`${postUrl}/${postId}/retweet`, { text });
+  },
+
+  deleteRetweetPost(postId: string): Promise<Post> {
+    return axiosInstance.delete(`${postUrl}/${postId}/retweet`);
+  },
 };

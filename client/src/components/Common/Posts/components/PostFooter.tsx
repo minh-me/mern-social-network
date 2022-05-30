@@ -24,7 +24,7 @@ export const PostFooter: FC<Props> = ({ comments, retweetUsers, likes, postId, t
       <CommentIconButton toggleComment={toggleComment} comments={comments} />
 
       {/* share */}
-      <ShareIconButton shares={retweetUsers} />
+      <ShareIconButton postId={postId} shares={retweetUsers} />
     </Box>
   );
 };

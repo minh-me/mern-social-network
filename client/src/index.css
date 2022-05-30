@@ -35,3 +35,7 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.show-more__content {
+  font-size: 12px;
+}
