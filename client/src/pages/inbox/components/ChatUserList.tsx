@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { LoadMoreButton } from 'components/Common/Buttons';
 import { UserItem } from 'components/Common';
 import { UserListSkeleton } from 'components/Common/Variants';
-import { limitUsers } from 'contants/pagination';
+import { limitUsers } from 'constants/pagination';
 import { User } from 'interface';
 import { useState } from 'react';
 import { useUsers } from 'RQhooks';

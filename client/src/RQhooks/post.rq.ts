@@ -25,15 +25,15 @@ export const usePosts = (
 };
 
 export const useProfilePosts = (
-  { postedBy = '', page = 1, limit = 1, onlyReply = false },
+  { postedBy = '', page = 1, limit = 1, onlyReply = false, sort = '-pinned,-createdAt' },
   options?: options
 ) => {
   const queryClient = useQueryClient();
   const postedByQuery = postedBy ? `&postedBy=${postedBy}` : '';
 
-  const queryKey = `posts/profile?page=${page}&limit=${limit}&onlyReply=${onlyReply}${postedByQuery}`;
+  const queryKey = `posts/profile?page=${page}&sort=${sort}&limit=${limit}&onlyReply=${onlyReply}${postedByQuery}`;
 
-  queryClient.setQueryData('profilePostsKey', queryKey);
+  if (!postedBy) queryClient.setQueryData('profilePostsKey', queryKey);
 
   return useQuery(queryKey, postApi.getProfilePosts, {
     onError: handlerError,
@@ -58,13 +58,13 @@ export const useCreatePost = () => {
       const profilePostsKey = queryClient.getQueryData('profilePostsKey');
 
       if (postsKey)
-        queryClient.setQueriesData(postsKey as string, (oldData: any) => {
+        queryClient.setQueryData(postsKey as string, (oldData: any) => {
           oldData.posts.unshift(data);
           return oldData;
         });
 
       if (profilePostsKey)
-        queryClient.setQueriesData(profilePostsKey as string, (oldData: any) => {
+        queryClient.setQueryData(profilePostsKey as string, (oldData: any) => {
           oldData.posts.unshift(data);
           return oldData;
         });
@@ -75,23 +75,38 @@ export const useCreatePost = () => {
 export const useLikePost = () => {
   const queryClient = useQueryClient();
   const { auth } = useAuthContext();
-  const postsKey = queryClient.getQueryData<string>('postsKey');
+
+  const postsKey = queryClient.getQueryData('postsKey');
+  const profilePostsKey = queryClient.getQueryData('profilePostsKey');
 
   return useMutation(postApi.likePost, {
     onMutate: (postId) => {
-      if (!postsKey || !auth) return;
+      if ((!postsKey && !profilePostsKey) || !auth) return;
 
-      queryClient.setQueryData(postsKey, (oldData: any) => {
-        return updatePostLikes(oldData, postId, auth.id);
-      });
+      if (postsKey)
+        queryClient.setQueryData(postsKey as string, (oldData: any) => {
+          return updatePostLikes(oldData, postId, auth.id);
+        });
+
+      if (profilePostsKey)
+        queryClient.setQueryData(profilePostsKey as string, (oldData: any) => {
+          return updatePostLikes(oldData, postId, auth.id);
+        });
     },
     onSuccess: () => {},
     onError: (err: Error | AxiosError<any, any>, postId) => {
-      if (!postsKey || !auth) return;
+      if ((!postsKey && !profilePostsKey) || !auth) return;
 
-      queryClient.setQueryData(postsKey, (oldData: any) => {
-        return updatePostLikes(oldData, postId, auth.id);
-      });
+      if (postsKey)
+        queryClient.setQueryData(postsKey as string, (oldData: any) => {
+          return updatePostLikes(oldData, postId, auth.id);
+        });
+
+      if (profilePostsKey)
+        queryClient.setQueryData(profilePostsKey as string, (oldData: any) => {
+          return updatePostLikes(oldData, postId, auth.id);
+        });
+
       handlerError(err);
     },
   });
@@ -102,26 +117,48 @@ export const useUpdatePost = () => {
 
   return useMutation(postApi.updatePost, {
     onMutate: (data) => {
-      const postsKey = queryClient.getQueryData('postsKey') as string;
+      const postsKey = queryClient.getQueryData('postsKey');
+      const profilePostsKey = queryClient.getQueryData('profilePostsKey');
 
-      queryClient.setQueryData(postsKey, (oldData: any) => {
-        const index = oldData.posts.findIndex((post: Post) => post.id === data.filter.id);
-        // Update pinned
-        if (data.body?.pinned !== undefined) {
-          oldData.posts[index].pinned = data.body.pinned;
+      if (postsKey)
+        queryClient.setQueryData(postsKey as string, (oldData: any) => {
+          const index = oldData.posts.findIndex((post: Post) => post.id === data.filter.id);
+          // Update pinned
+          if (data.body?.pinned !== undefined) {
+            oldData.posts[index].pinned = data.body.pinned;
+            return oldData;
+          }
+
+          // Update hidden
+          if (data.body?.hidden !== undefined) {
+            if (data.body.hidden) oldData.posts.splice(index, 1);
+            else oldData.posts[index].hidden = data.body.hidden; // false
+
+            return oldData;
+          }
+
           return oldData;
-        }
+        });
 
-        // Update hidden
-        if (data.body?.hidden !== undefined) {
-          if (data.body.hidden) oldData.posts.splice(index, 1);
-          else oldData.posts[index].hidden = data.body.hidden; // false
+      if (profilePostsKey)
+        queryClient.setQueryData(profilePostsKey as string, (oldData: any) => {
+          const index = oldData.posts.findIndex((post: Post) => post.id === data.filter.id);
+          // Update pinned
+          if (data.body?.pinned !== undefined) {
+            oldData.posts[index].pinned = data.body.pinned;
+            return oldData;
+          }
+
+          // Update hidden
+          if (data.body?.hidden !== undefined) {
+            if (data.body.hidden) oldData.posts.splice(index, 1);
+            else oldData.posts[index].hidden = data.body.hidden; // false
+
+            return oldData;
+          }
 
           return oldData;
-        }
-
-        return oldData;
-      });
+        });
     },
 
     onSuccess: (data) => {
@@ -135,17 +172,30 @@ export const useDeletePost = () => {
 
   return useMutation(postApi.deletePost, {
     onMutate: (postId) => {
-      const postsKey = queryClient.getQueryData('postsKey') as string;
+      const postsKey = queryClient.getQueryData('postsKey');
+      const profilePostsKey = queryClient.getQueryData('profilePostsKey');
 
-      queryClient.setQueryData(postsKey, (oldData: any) => {
-        // Get index
-        const index = oldData.posts.findIndex((post: Post) => post.id === postId);
+      if (postsKey)
+        queryClient.setQueryData(postsKey as string, (oldData: any) => {
+          // Get index
+          const index = oldData.posts.findIndex((post: Post) => post.id === postId);
 
-        // Remove
-        oldData.posts.splice(index, 1);
+          // Remove
+          oldData.posts.splice(index, 1);
 
-        return oldData;
-      });
+          return oldData;
+        });
+
+      if (profilePostsKey)
+        queryClient.setQueryData(profilePostsKey as string, (oldData: any) => {
+          // Get index
+          const index = oldData.posts.findIndex((post: Post) => post.id === postId);
+
+          // Remove
+          oldData.posts.splice(index, 1);
+
+          return oldData;
+        });
     },
     onError: handlerError,
     onSettled: (data) => {
@@ -160,10 +210,16 @@ export const useRetweetPost = () => {
   return useMutation(postApi.retweetPost, {
     onSuccess: () => {
       const postsKey = queryClient.getQueryData('postsKey') as string;
+      const profilePostsKey = queryClient.getQueryData('profilePostsKey') as string;
 
       queryClient.invalidateQueries({
         predicate: (query) => query.queryKey === postsKey,
       });
+
+      if (profilePostsKey)
+        queryClient.invalidateQueries({
+          predicate: (query) => query.queryKey === profilePostsKey,
+        });
     },
     onError: handlerError,
   });

@@ -8,6 +8,7 @@ import PushPinSharpIcon from '@mui/icons-material/PushPinSharp';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
 import { useDeletePost, useUpdatePost } from 'RQhooks';
 import { Post } from 'interface';
+import { toast } from 'react-toastify';
 
 type MenuPostProps = {
   post: Post;
@@ -19,8 +20,8 @@ export const MenuPost = ({ post }: MenuPostProps) => {
 
   const open = Boolean(anchorEl);
 
-  const { mutate: updateAsync } = useUpdatePost();
-  const { mutate: deleteAsync } = useDeletePost();
+  const { mutateAsync: updateAsync } = useUpdatePost();
+  const { mutateAsync: deleteAsync } = useDeletePost();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -28,11 +29,20 @@ export const MenuPost = ({ post }: MenuPostProps) => {
 
   const handleClose = async (menuType: 'delete' | 'hidden' | 'pinned') => {
     if (menuType === 'delete') {
-      deleteAsync(id);
+      await toast.promise(deleteAsync(id), {
+        pending: `Deleting in progress...`,
+        success: `Deleted post successfully 👌`,
+      });
     }
     if (menuType === 'pinned' || menuType === 'hidden') {
       const options = { pinned, hidden };
-      updateAsync({ filter: { id }, body: { [menuType]: !options[menuType] } });
+
+      const postData = { filter: { id }, body: { [menuType]: !options[menuType] } };
+
+      await toast.promise(updateAsync(postData), {
+        pending: `Update ${menuType} in progress...`,
+        success: `Update ${menuType} successfully 👌`,
+      });
     }
 
     setAnchorEl(null);
