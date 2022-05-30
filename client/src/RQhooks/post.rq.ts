@@ -15,6 +15,7 @@ export const usePosts = (
   const postedByQuery = postedBy ? `&postedBy=${postedBy}` : '';
 
   const queryKey = `posts?page=${page}&limit=${limit}&sort=${sort}&followingOnly=${followingOnly}${searchQuery}${postedByQuery}`;
+
   if (sort !== '-numberLikes') queryClient.setQueryData('postsKey', queryKey);
 
   return useQuery(queryKey, postApi.getPosts, {
@@ -32,7 +33,7 @@ export const useProfilePosts = (
 
   const queryKey = `posts/profile?page=${page}&limit=${limit}&onlyReply=${onlyReply}${postedByQuery}`;
 
-  queryClient.setQueryData('postsKey', queryKey);
+  queryClient.setQueryData('profilePostsKey', queryKey);
 
   return useQuery(queryKey, postApi.getProfilePosts, {
     onError: handlerError,
@@ -49,16 +50,24 @@ export const usePostById = ({ postId = '' }, options?: options) => {
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
-  const postsKey = queryClient.getQueryData('postsKey');
 
   return useMutation(postApi.createPost, {
     onError: handlerError,
-    onSettled: () => {
-      return queryClient.invalidateQueries({
-        predicate: (query) => {
-          return query.queryKey === postsKey;
-        },
-      });
+    onSuccess: (data) => {
+      const postsKey = queryClient.getQueryData('postsKey');
+      const profilePostsKey = queryClient.getQueryData('profilePostsKey');
+
+      if (postsKey)
+        queryClient.setQueriesData(postsKey as string, (oldData: any) => {
+          oldData.posts.unshift(data);
+          return oldData;
+        });
+
+      if (profilePostsKey)
+        queryClient.setQueriesData(profilePostsKey as string, (oldData: any) => {
+          oldData.posts.unshift(data);
+          return oldData;
+        });
     },
   });
 };
@@ -76,7 +85,6 @@ export const useLikePost = () => {
         return updatePostLikes(oldData, postId, auth.id);
       });
     },
-
     onSuccess: () => {},
     onError: (err: Error | AxiosError<any, any>, postId) => {
       if (!postsKey || !auth) return;
@@ -140,6 +148,24 @@ export const useDeletePost = () => {
       });
     },
     onError: handlerError,
+    onSettled: (data) => {
+      console.log({ data });
+    },
+  });
+};
+
+export const useRetweetPost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(postApi.retweetPost, {
+    onSuccess: () => {
+      const postsKey = queryClient.getQueryData('postsKey') as string;
+
+      queryClient.invalidateQueries({
+        predicate: (query) => query.queryKey === postsKey,
+      });
+    },
+    onError: handlerError,
   });
 };
 
@@ -147,34 +173,11 @@ export const useDeleteRetweetPost = () => {
   const queryClient = useQueryClient();
 
   return useMutation(postApi.deleteRetweetPost, {
-    onMutate: (postId) => {
+    onSuccess: () => {
       const postsKey = queryClient.getQueryData('postsKey') as string;
 
-      queryClient.setQueryData(postsKey, (oldData: any) => {
-        // Get index
-        const index = oldData.posts.findIndex((post: Post) => post.id === postId);
-
-        // Remove
-        oldData.posts.splice(index, 1);
-
-        return oldData;
-      });
-    },
-    onError: handlerError,
-  });
-};
-
-export const useRetweetPost = () => {
-  const queryClient = useQueryClient();
-
-  const postsKey = queryClient.getQueryData('postsKey');
-
-  return useMutation(postApi.retweetPost, {
-    onSuccess: (data) => {
-      queryClient.setQueryData(postsKey as string, (oldData: any) => {
-        oldData.posts.unshift(data);
-        console.log({ data, oldData });
-        return oldData;
+      queryClient.invalidateQueries({
+        predicate: (query) => query.queryKey === postsKey,
       });
     },
     onError: handlerError,

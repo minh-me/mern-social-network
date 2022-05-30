@@ -2,7 +2,7 @@ import { FC, memo, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FormInputSearch } from 'components/Common';
 
 const searchSchema = yup.object({
@@ -10,11 +10,12 @@ const searchSchema = yup.object({
 });
 
 type InputProps = { text: string };
-type Props = { name: string };
+type Props = { name: string; to?: string };
 
-export const FormSearch: FC<Props> = memo(({ name }) => {
+export const FormSearch: FC<Props> = memo(({ name, to }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryValue = searchParams.get(name) || '';
+  const navigate = useNavigate();
 
   const { control, handleSubmit, reset } = useForm<InputProps>({
     defaultValues: { text: queryValue },
@@ -23,6 +24,8 @@ export const FormSearch: FC<Props> = memo(({ name }) => {
 
   const onSearch: SubmitHandler<InputProps> = (data) => {
     setSearchParams({ [name]: data.text });
+
+    if (to) return navigate(`${to}?${name}=${data.text}`);
   };
 
   useEffect(() => {

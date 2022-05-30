@@ -57,6 +57,6 @@ export const authApi = {
   },
 
   getRefreshToken(): Promise<AuthResponse> {
-    return client.get(`${authUrl}/rf_token`, { withCredentials: true });
+    return axiosInstance.get(`${authUrl}/rf_token`, { withCredentials: true });
   },
 };

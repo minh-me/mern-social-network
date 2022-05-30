@@ -11,10 +11,18 @@ type Props = {
   retweetUsers: string[];
   likes: string[];
   postId: string;
+  postedBy: string;
   toggleComment: () => void;
 };
 
-export const PostFooter: FC<Props> = ({ comments, retweetUsers, likes, postId, toggleComment }) => {
+export const PostFooter: FC<Props> = ({
+  comments,
+  retweetUsers,
+  likes,
+  postId,
+  toggleComment,
+  postedBy,
+}) => {
   return (
     <Box mt={2} sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
       {/* favorite */}
@@ -24,7 +32,7 @@ export const PostFooter: FC<Props> = ({ comments, retweetUsers, likes, postId, t
       <CommentIconButton toggleComment={toggleComment} comments={comments} />
 
       {/* share */}
-      <ShareIconButton postId={postId} shares={retweetUsers} />
+      <ShareIconButton postedBy={postedBy} postId={postId} shares={retweetUsers} />
     </Box>
   );
 };

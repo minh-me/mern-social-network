@@ -17,6 +17,8 @@ export const ImageWithModal: FC<Props> = ({ imageUrl, sx, alt }) => {
       <Box
         sx={{
           textAlign: 'center',
+          maxHeight: '400px',
+          overflow: 'hidden',
           img: { maxWidth: '100%', maxHeight: '100%', borderRadius: 1 },
           ...sx,
         }}
@@ -30,7 +32,7 @@ export const ImageWithModal: FC<Props> = ({ imageUrl, sx, alt }) => {
         onClose={() => setOpen(false)}
         aria-labelledby="responsive-dialog-title"
       >
-        <DialogContent sx={{ background: '#36393f', p: 0 }}>
+        <DialogContent sx={{ background: '#36393f', p: 0, maxHeight: 490, overflow: 'hidden' }}>
           <img
             src={imageUrl}
             alt={imageUrl}

@@ -6,12 +6,20 @@ type PostActionButtonProps = {
   sx?: SxProps<Theme>;
   nums?: number | null;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
 };
 
-export const PostActionButton: FC<PostActionButtonProps> = ({ sx, startIcon, nums, onClick }) => {
+export const PostActionButton: FC<PostActionButtonProps> = ({
+  sx,
+  startIcon,
+  nums,
+  onClick,
+  disabled = false,
+}) => {
   return (
     <Button
       variant="contained"
+      disabled={disabled}
       sx={{
         color: '#b0b3b8',
         bgcolor: '#2d2a34',
@@ -28,9 +36,11 @@ export const PostActionButton: FC<PostActionButtonProps> = ({ sx, startIcon, num
           bgcolor: 'rgba(153, 158, 163, 0.2)',
         },
         svg: {
-          // py: 1,
           height: '16px',
           width: '16px',
+        },
+        '&:disabled': {
+          color: 'white',
         },
         ...sx,
       }}

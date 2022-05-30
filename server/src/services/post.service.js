@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors'
 import { Post } from '../models'
+import { deleteMany } from './comment.service'
 import * as uploadService from './upload.service'
 
 /**
@@ -8,17 +9,8 @@ import * as uploadService from './upload.service'
  * @returns {Promise<Post>}
  */
 const createPost = async postBody => {
-  return Post.create(postBody)
-}
-/**
- * Create new post
- * @param {Object} body
- * @returns {Promise<Post>}
- */
-const retweetPost = async postBody => {
-  const retweet = await Post.create(postBody)
-
-  return retweet.populate(['postedBy', 'retweetData'])
+  const post = await Post.create(postBody)
+  return post.populate('postedBy')
 }
 
 /**
@@ -60,7 +52,10 @@ const getPostById = async postId => {
  * @returns {Promise<Post>}
  */
 const updatePostById = async (postId, body) => {
-  const post = await Post.findByIdAndUpdate(postId, body, { new: true })
+  const post = await Post.findByIdAndUpdate(postId, body, {
+    new: true,
+    populate: { path: 'postedBy' },
+  })
 
   if (!post) throw new createHttpError.NotFound('Not found post.')
 
@@ -74,7 +69,10 @@ const updatePostById = async (postId, body) => {
  * @returns {Promise<Post>}
  */
 const updateOne = async (filter, body) => {
-  const post = await Post.findOneAndUpdate(filter, body, { new: true })
+  const post = await Post.findOneAndUpdate(filter, body, {
+    new: true,
+    populate: { path: 'postedBy' },
+  })
 
   return post
 }
@@ -87,7 +85,10 @@ const updateOne = async (filter, body) => {
 const deletePostById = async postId => {
   const post = await Post.findByIdAndDelete(postId)
 
-  // Remove image in cloudinary
+  // Delete all retweet post
+  await deleteMany({ retweetData: post.id })
+
+  // Remove image in cloudiness
   if (post?.image?.id) {
     uploadService.destroy(post.image.id)
   }
@@ -105,12 +106,12 @@ const deletePostById = async postId => {
 const deleteOne = async filter => {
   const post = await Post.findOneAndDelete(filter)
 
-  // Remove image in cloudinary
+  // Remove image in cloudiness
   if (post?.image?.id) {
     uploadService.destroy(post.image.id)
   }
 
-  if (!post) throw new createHttpError.NotFound('Not found post.')
+  if (post) await deleteMany({ retweetData: post?.id })
 
   return post
 }
@@ -123,7 +124,7 @@ const deleteOne = async filter => {
 const deletePosts = async filter => {
   const posts = await Post.find(filter).select('+image.id')
 
-  // Remove images in cloudinary
+  // Remove images in cloudiness
   posts.forEach(post => {
     if (post?.image?.id) {
       uploadService.destroy(post.image.id)
@@ -137,7 +138,6 @@ const deletePosts = async filter => {
 
 export {
   createPost,
-  retweetPost,
   queryPosts,
   getPostById,
   updatePostById,

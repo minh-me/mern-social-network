@@ -7,7 +7,7 @@ import { Typography } from '@mui/material';
 import { useState } from 'react';
 import { useAuthContext } from 'hooks/useAppContext';
 
-export const ShareIconButton = ({ shares = [''], postId = '' }) => {
+export const ShareIconButton = ({ shares = [''], postId = '', postedBy = '' }) => {
   const { auth } = useAuthContext();
   const [openModal, setOpenModal] = useState(false);
 
@@ -40,6 +40,7 @@ export const ShareIconButton = ({ shares = [''], postId = '' }) => {
             bgcolor: 'rgba(153, 158, 163, 0.2)',
           },
         }}
+        disabled={auth?.id === postedBy}
         onClick={() => setOpenModal(true)}
         nums={shares.length || null}
         startIcon={<ShareIcon />}
