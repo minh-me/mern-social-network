@@ -12,7 +12,13 @@ export const PostContent: FC<PostTextProps> = ({ text, imageUrl }) => {
   return (
     <>
       <Box py={1}>
-        <ShowMoreText className="textBreak" more="Show more" less="...Show less" expanded={false}>
+        <ShowMoreText
+          anchorClass="show-more__content"
+          className="textBreak"
+          more="Show more"
+          less="...Show less"
+          expanded={false}
+        >
           <Typography fontSize={16} color="#e1e1e1">
             {text}
           </Typography>

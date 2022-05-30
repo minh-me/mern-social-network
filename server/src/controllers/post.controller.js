@@ -199,6 +199,27 @@ const deletePost = catchAsync(async (req, res) => {
   res.send(post)
 })
 
+/**
+ * Delete retweet post by postId
+ * @DELETE api/posts/:postId/retweet
+ * @access private
+ */
+const deleteRetweetPost = catchAsync(async (req, res) => {
+  const post = await postService.deleteOne({
+    retweetData: req.params.postId,
+    postedBy: req.user.id,
+  })
+
+  await postService.updatePostById(req.params.postId, {
+    $pull: { retweetUsers: req.user.id },
+  })
+
+  // Delete all comments in post
+  await commentService.deleteMany({ post: post.id })
+
+  res.send(post)
+})
+
 export {
   createPost,
   getPosts,
@@ -208,4 +229,5 @@ export {
   deletePost,
   likePost,
   retweetPost,
+  deleteRetweetPost,
 }

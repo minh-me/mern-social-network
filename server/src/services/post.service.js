@@ -85,7 +85,25 @@ const updateOne = async (filter, body) => {
  * @returns {Promise<Post>}
  */
 const deletePostById = async postId => {
-  const post = await Post.findByIdAndDelete(postId).select('+image.id')
+  const post = await Post.findByIdAndDelete(postId)
+
+  // Remove image in cloudinary
+  if (post?.image?.id) {
+    uploadService.destroy(post.image.id)
+  }
+
+  if (!post) throw new createHttpError.NotFound('Not found post.')
+
+  return post
+}
+
+/**
+ * Delete post by id
+ * @param {Object} filter
+ * @returns {Promise<Post>}
+ */
+const deleteOne = async filter => {
+  const post = await Post.findOneAndDelete(filter)
 
   // Remove image in cloudinary
   if (post?.image?.id) {
@@ -126,4 +144,5 @@ export {
   updateOne,
   deletePostById,
   deletePosts,
+  deleteOne,
 }

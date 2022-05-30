@@ -30,12 +30,18 @@ router.patch(
   postController.likePost
 )
 
-router.post(
-  '/:postId/retweet',
-  auth(),
-  validate(postValidation.retweetPost),
-  postController.retweetPost
-)
+router
+  .route('/:postId/retweet')
+  .post(
+    auth(),
+    validate(postValidation.retweetPost),
+    postController.retweetPost
+  )
+  .delete(
+    auth(),
+    validate(postValidation.postIdParams),
+    postController.deleteRetweetPost
+  )
 
 router
   .route('/:postId')

@@ -143,6 +143,44 @@ export const useDeletePost = () => {
   });
 };
 
+export const useDeleteRetweetPost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(postApi.deleteRetweetPost, {
+    onMutate: (postId) => {
+      const postsKey = queryClient.getQueryData('postsKey') as string;
+
+      queryClient.setQueryData(postsKey, (oldData: any) => {
+        // Get index
+        const index = oldData.posts.findIndex((post: Post) => post.id === postId);
+
+        // Remove
+        oldData.posts.splice(index, 1);
+
+        return oldData;
+      });
+    },
+    onError: handlerError,
+  });
+};
+
+export const useRetweetPost = () => {
+  const queryClient = useQueryClient();
+
+  const postsKey = queryClient.getQueryData('postsKey');
+
+  return useMutation(postApi.retweetPost, {
+    onSuccess: (data) => {
+      queryClient.setQueryData(postsKey as string, (oldData: any) => {
+        oldData.posts.unshift(data);
+        console.log({ data, oldData });
+        return oldData;
+      });
+    },
+    onError: handlerError,
+  });
+};
+
 const updatePostLikes = (oldData: any, postId: string, userId: string) => {
   const newPosts = oldData?.posts.map((post: Post) => {
     if (post.id === postId) {
