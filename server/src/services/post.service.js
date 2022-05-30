@@ -8,9 +8,17 @@ import * as uploadService from './upload.service'
  * @returns {Promise<Post>}
  */
 const createPost = async postBody => {
-  const newPost = await Post.create(postBody)
+  return Post.create(postBody)
+}
+/**
+ * Create new post
+ * @param {Object} body
+ * @returns {Promise<Post>}
+ */
+const retweetPost = async postBody => {
+  const retweet = await Post.create(postBody)
 
-  return newPost
+  return retweet.populate(['postedBy', 'retweetData'])
 }
 
 /**
@@ -111,6 +119,7 @@ const deletePosts = async filter => {
 
 export {
   createPost,
+  retweetPost,
   queryPosts,
   getPostById,
   updatePostById,

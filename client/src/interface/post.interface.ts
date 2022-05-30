@@ -13,7 +13,7 @@ export interface Post {
   hidden: boolean;
   likes: string[];
   retweetUsers: string[];
-  retweetData?: string[];
+  retweetData?: Post;
   comments: string[];
   numberLikes: Number;
 

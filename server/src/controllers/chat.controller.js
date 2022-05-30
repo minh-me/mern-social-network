@@ -39,7 +39,7 @@ const getChats = catchAsync(async (req, res) => {
   const filter = { users: req.user.id }
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
-  options.populate = 'admin,users,lastestMessage,lastestMessage.sender'
+  options.populate = 'admin,users,latestMessage,latestMessage.sender'
 
   const result = await chatService.queryChats(filter, options)
 

@@ -15,9 +15,9 @@ type Props = {
 
 export const ChatItem = ({ chat }: Props) => {
   const { auth } = useAuthContext();
-  const { lastestMessage } = chat;
+  const { latestMessage } = chat;
 
-  let LastestMessage = () => (
+  let LatestMessage = () => (
     <>
       <Typography fontWeight={500} fontSize={12} component="span">
         {chat.admin.name}
@@ -27,13 +27,13 @@ export const ChatItem = ({ chat }: Props) => {
   );
 
   // Check lastest message is text or image
-  if (lastestMessage) {
-    LastestMessage = () => (
+  if (latestMessage) {
+    LatestMessage = () => (
       <>
         <Typography fontWeight={500} fontSize={12} component="span">
-          {lastestMessage.sender.name}
+          {latestMessage.sender.name}
         </Typography>
-        : <Twemoji text={lastestMessage?.text ? lastestMessage?.text : `đã gửi một ảnh.`} />
+        : <Twemoji text={latestMessage?.text ? latestMessage?.text : `đã gửi một ảnh.`} />
       </>
     );
   }
@@ -56,7 +56,7 @@ export const ChatItem = ({ chat }: Props) => {
       <MessageAvatar />
       <Box px={2}>
         <Typography
-          color={lastestMessage?.readBy.includes(auth?.id as string) ? '#d51a71' : '#ff0076'}
+          color={latestMessage?.readBy.includes(auth?.id as string) ? '#d51a71' : '#ff0076'}
           fontWeight={400}
           fontSize={15}
           component="p"
@@ -65,14 +65,14 @@ export const ChatItem = ({ chat }: Props) => {
         </Typography>
         <Typography
           fontSize={12}
-          color={lastestMessage?.readBy.includes(auth?.id as string) ? '#8f8e8e' : '#d9d9d9'}
+          color={latestMessage?.readBy.includes(auth?.id as string) ? '#8f8e8e' : '#d9d9d9'}
           component="p"
         >
-          <LastestMessage />
+          <LatestMessage />
         </Typography>
         <Typography
           fontSize={10}
-          color={lastestMessage?.readBy.includes(auth?.id as string) ? '#686868' : '#d9d9d9'}
+          color={latestMessage?.readBy.includes(auth?.id as string) ? '#686868' : '#d9d9d9'}
           component="p"
         >
           {dayjs(chat.createdAt).fromNow()}

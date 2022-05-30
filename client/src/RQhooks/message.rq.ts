@@ -50,7 +50,7 @@ export const useCreateMessage = () => {
         const updatedChatIndex = oldChats.chats.findIndex((chat: Chat) => chat.id === data.chat.id);
 
         // Update to new
-        oldChats.chats[updatedChatIndex].lastestMessage = { ...data, readBy: [data.sender.id] };
+        oldChats.chats[updatedChatIndex].latestMessage = { ...data, readBy: [data.sender.id] };
 
         // Success
         return oldChats;

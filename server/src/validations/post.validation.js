@@ -55,10 +55,27 @@ const deletePost = {
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
 }
+
 const postIdParams = {
   postId: yup
     .string()
     .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
     .required(),
 }
-export { createPost, getPosts, getPost, updatePost, deletePost, postIdParams }
+
+const retweetPost = {
+  postId: yup
+    .string()
+    .matches(config.regexObjectId, transValidations.objectId_type_incorrect)
+    .required(),
+  text: yup.string(),
+}
+export {
+  createPost,
+  getPosts,
+  getPost,
+  updatePost,
+  deletePost,
+  postIdParams,
+  retweetPost,
+}
