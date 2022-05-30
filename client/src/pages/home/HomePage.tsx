@@ -6,7 +6,7 @@ import { usePosts } from 'RQhooks/post.rq';
 import { HomeSkeleton } from 'components/Common/Variants';
 import { LoadMoreInView } from 'components/Common/Buttons';
 import { CreatePostForm, PostList } from 'components/Common';
-import { limitPosts } from 'contants/pagination';
+import { limitPosts } from 'constants/pagination';
 
 export const HomePage = () => {
   const [limit, setLimit] = useState(limitPosts);

@@ -1,7 +1,7 @@
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { UserList } from 'components/Common';
 import { UserListSkeleton } from 'components/Common/Variants';
-import { limitUsers } from 'contants/pagination';
+import { limitUsers } from 'constants/pagination';
 import { useState } from 'react';
 import { useUsers } from 'RQhooks';
 
@@ -18,7 +18,13 @@ export const TabUserList = ({ search = '', sort = '-createdAt', limit = limitUse
         {isFetching ? (
           <CircularProgress size={25} />
         ) : info.totalResults > sizeLimit ? (
-          <Button onClick={() => setSizeLimit((prevLimit) => prevLimit + limitUsers)}>
+          <Button
+            onClick={() =>
+              setSizeLimit((prevLimit: number) => {
+                return prevLimit + limitUsers;
+              })
+            }
+          >
             Load more
           </Button>
         ) : null}

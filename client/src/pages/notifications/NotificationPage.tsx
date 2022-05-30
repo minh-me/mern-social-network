@@ -4,7 +4,7 @@ import { LoadMoreButton } from 'components/Common/Buttons';
 import { Title } from 'components/App';
 import { NotificationItem } from './components/NotificationItem';
 import { useNotifications } from 'RQhooks/notification.rq';
-import { limitNotifications } from 'contants/pagination';
+import { limitNotifications } from 'constants/pagination';
 import { useState } from 'react';
 import { UserListSkeleton } from 'components/Common/Variants';
 import { DoneAllIcon } from './components/DoneAllIcon';

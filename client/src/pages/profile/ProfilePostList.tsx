@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import PushPinSharpIcon from '@mui/icons-material/PushPinSharp';
 
 import { useProfilePosts } from 'RQhooks';
-import { limitPosts } from 'contants/pagination';
+import { limitPosts } from 'constants/pagination';
 import { LoadMoreInView } from 'components/Common/Buttons';
-import { PostList } from 'components/Common';
+import { PostItem, PostList } from 'components/Common';
 import { PostSkeleton } from 'components/Common/Variants';
+import { pink } from '@mui/material/colors';
 
 export const ProfilePostList = ({ userId = '' }) => {
   const [limit, setLimit] = useState(limitPosts);
@@ -16,8 +18,22 @@ export const ProfilePostList = ({ userId = '' }) => {
 
   return (
     <>
-      {/* PostList */}
-      {<PostList posts={posts} />}
+      {posts[0].pinned ? (
+        <>
+          {/* Pinned post */}
+          <Box sx={{ borderBottom: '2px solid #38444d' }}>
+            <Box sx={styles.PinnedPost}>
+              <PushPinSharpIcon /> <Typography fontSize={12}>Pinned</Typography>
+            </Box>
+            <PostItem post={posts[0]} />
+          </Box>
+
+          {/* PostList */}
+          <PostList posts={posts.slice(1)} />
+        </>
+      ) : (
+        <PostList posts={posts} />
+      )}
 
       {/* Button  */}
       {info && (
@@ -37,4 +53,15 @@ export const ProfilePostList = ({ userId = '' }) => {
       )}
     </>
   );
+};
+
+const styles = {
+  PinnedPost: {
+    display: 'flex',
+    alignItems: 'center',
+    px: 5,
+    justifyContent: 'flex-start',
+    svg: { height: 12, width: 12 },
+    color: pink[800],
+  },
 };

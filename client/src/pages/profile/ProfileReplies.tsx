@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useProfilePosts } from 'RQhooks';
-import { limitPosts } from 'contants/pagination';
+import { limitPosts } from 'constants/pagination';
 import { PostSkeleton } from 'components/Common/Variants';
 import { PostItem } from 'components/Common';
 import { Typography } from '@mui/material';
