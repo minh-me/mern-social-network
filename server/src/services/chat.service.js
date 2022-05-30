@@ -77,8 +77,8 @@ const updateChatById = async (chatId, body) => {
   const chat = await Chat.findByIdAndUpdate(chatId, body, {
     new: true,
   })
-    .populate(['admin', 'users', 'lastestMessage'])
-    .deepPopulate('lastestMessage.sender')
+    .populate(['admin', 'users', 'latestMessage'])
+    .deepPopulate('latestMessage.sender')
 
   if (!chat) throw new createHttpError.NotFound('Not found chat.')
 

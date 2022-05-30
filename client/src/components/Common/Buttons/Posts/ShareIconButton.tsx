@@ -3,7 +3,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import { pink } from '@mui/material/colors';
 
 export const ShareIconButton = ({ isActive = false, shares = [''] }) => {
-  const likeHandler = () => {
+  const retweetHandler = () => {
     console.log('Liked');
   };
 
@@ -18,7 +18,7 @@ export const ShareIconButton = ({ isActive = false, shares = [''] }) => {
           bgcolor: 'rgba(153, 158, 163, 0.2)',
         },
       }}
-      onClick={likeHandler}
+      onClick={retweetHandler}
       nums={shares.length || null}
       startIcon={<ShareIcon />}
     />

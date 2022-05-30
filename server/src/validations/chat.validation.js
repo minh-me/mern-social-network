@@ -18,7 +18,7 @@ const createChat = {
 const getChats = {
   chatName: yup.string(),
   isGroupChat: yup.string(),
-  lastestMessage: yup.string(),
+  latestMessage: yup.string(),
   role: yup.string(),
   page: yup.number().integer(),
   limit: yup.number().integer(),

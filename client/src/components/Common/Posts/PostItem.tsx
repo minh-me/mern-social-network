@@ -1,6 +1,6 @@
 import { FC, memo, useState } from 'react';
 import { Box, Divider } from '@mui/material';
-import { PostHeader, PostContent, PostFooter } from './components';
+import { PostHeader, PostBody, PostFooter } from './components';
 import { Post } from 'interface';
 import { CommentList } from '../Comments';
 
@@ -11,6 +11,7 @@ type PostItemProps = {
 
 export const PostItem: FC<PostItemProps> = memo(({ post, isOpenComment = false }) => {
   const [openComment, setOpenComment] = useState(isOpenComment);
+
   const toggleComment = () => setOpenComment(!openComment);
 
   return (
@@ -20,17 +21,17 @@ export const PostItem: FC<PostItemProps> = memo(({ post, isOpenComment = false }
         <PostHeader post={post} />
 
         {/* Post Content */}
-        <PostContent text={post.text} imageUrl={post.image?.url} />
+        <PostBody post={post} />
 
         {/* post footer */}
-
         <PostFooter
           postId={post.id}
           likes={post.likes}
           comments={post.comments}
-          shares={post.retweetUsers}
+          retweetUsers={post.retweetUsers}
           toggleComment={toggleComment}
         />
+
         {/* Comment */}
         {openComment && (
           <Box>

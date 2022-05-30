@@ -8,13 +8,13 @@ import {
 
 type Props = {
   comments: string[];
-  shares: string[];
+  retweetUsers: string[];
   likes: string[];
   postId: string;
   toggleComment: () => void;
 };
 
-export const PostFooter: FC<Props> = ({ comments, shares, likes, postId, toggleComment }) => {
+export const PostFooter: FC<Props> = ({ comments, retweetUsers, likes, postId, toggleComment }) => {
   return (
     <Box mt={2} sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
       {/* favorite */}
@@ -24,7 +24,7 @@ export const PostFooter: FC<Props> = ({ comments, shares, likes, postId, toggleC
       <CommentIconButton toggleComment={toggleComment} comments={comments} />
 
       {/* share */}
-      <ShareIconButton shares={shares} />
+      <ShareIconButton shares={retweetUsers} />
     </Box>
   );
 };

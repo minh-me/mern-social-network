@@ -24,6 +24,7 @@ export const PostHeader: FC<Props> = ({ post }) => {
       <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
         {/* Avatar */}
         <Avatar
+          className="avatar"
           src={postedBy.profilePic.url}
           sx={{ border: '1px solid white', mr: 1 }}
           alt={postedBy.name}
@@ -36,14 +37,21 @@ export const PostHeader: FC<Props> = ({ post }) => {
               underline="hover"
               component={LinkRoute}
               to={`/users/${postedBy.username}`}
+              className="name"
             >
               {postedBy.name}
             </Link>
-            <Typography fontSize={12} color="#999ea3" component="p" sx={{ mx: 1 }}>
+            <Typography
+              className="username"
+              fontSize={12}
+              color="#999ea3"
+              component="p"
+              sx={{ mx: 1 }}
+            >
               @{postedBy.username}
             </Typography>
           </Box>
-          <Typography fontSize={12} color="#686868" component="p">
+          <Typography className="createdAt" fontSize={12} color="#686868" component="p">
             {dayjs(createdAt).fromNow()}
           </Typography>
         </Box>

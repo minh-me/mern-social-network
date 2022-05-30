@@ -40,7 +40,7 @@ const getPosts = catchAsync(async (req, res) => {
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
   filter.hidden = false
-  options.populate = 'postedBy'
+  options.populate = 'postedBy,retweetData'
 
   if (filter.followingOnly !== undefined) {
     const followingOnly = filter.followingOnly === 'true'
@@ -84,7 +84,7 @@ const getProfilePosts = catchAsync(async (req, res) => {
     delete filter.postedBy
   }
 
-  options.populate = 'postedBy'
+  options.populate = 'postedBy,retweetData'
 
   const result = await postService.queryPosts(filter, options)
 
@@ -165,6 +165,27 @@ const likePost = catchAsync(async (req, res) => {
 })
 
 /**
+ * Retweet post
+ * @POST api/posts/:postId
+ * @access private
+ */
+const retweetPost = catchAsync(async (req, res) => {
+  // Update parent post
+  const post = await postService.updatePostById(req.params.postId, {
+    $addToSet: { retweetUsers: req.user.id },
+  })
+
+  // New post
+  const retweet = await postService.retweetPost({
+    postedBy: req.user.id,
+    retweetData: post._id,
+    ...req.body,
+  })
+
+  res.send(retweet)
+})
+
+/**
  * Delete post by postId
  * @DELETE api/posts/:postId
  * @access private
@@ -186,4 +207,5 @@ export {
   updatePost,
   deletePost,
   likePost,
+  retweetPost,
 }

@@ -2,7 +2,7 @@ import { Message } from './message.interface';
 import { Info } from './paginate.inteface';
 import { User } from './user.interface';
 
-interface LastestMessage extends Omit<Message, 'readBy'> {
+interface LatestMessage extends Omit<Message, 'readBy'> {
   readBy: string[];
 }
 
@@ -12,7 +12,7 @@ export interface Chat {
   admin: User;
   isGroupChat: boolean;
   users: User[];
-  lastestMessage?: LastestMessage;
+  latestMessage?: LatestMessage;
 
   createdAt?: string;
   updatedAt?: string;

@@ -28,3 +28,10 @@ body {
   border-radius: 2px;
   height: 50px;
 }
+
+.textBreak {
+  white-space: pre-line;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
