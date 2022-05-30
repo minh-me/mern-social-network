@@ -40,7 +40,7 @@ const getPosts = catchAsync(async (req, res) => {
   const options = pick(req.query, ['sort', 'select', 'limit', 'page'])
 
   filter.hidden = false
-  options.populate = 'postedBy,retweetData'
+  options.populate = 'postedBy,retweetData,retweetData.postedBy'
 
   if (filter.followingOnly !== undefined) {
     const followingOnly = filter.followingOnly === 'true'
@@ -84,7 +84,7 @@ const getProfilePosts = catchAsync(async (req, res) => {
     delete filter.postedBy
   }
 
-  options.populate = 'postedBy,retweetData'
+  options.populate = 'postedBy,retweetData,retweetData.postedBy'
 
   const result = await postService.queryPosts(filter, options)
 
@@ -175,12 +175,17 @@ const retweetPost = catchAsync(async (req, res) => {
     $addToSet: { retweetUsers: req.user.id },
   })
 
+  // Get retweet post
+  const retweetData = post.retweetData ? post.retweetData : post._id
+
   // New post
-  const retweet = await postService.retweetPost({
+  const retweet = await postService.createPost({
     postedBy: req.user.id,
-    retweetData: post._id,
+    retweetData,
     ...req.body,
   })
+
+  retweet.retweetData = post
 
   res.send(retweet)
 })
@@ -192,6 +197,13 @@ const retweetPost = catchAsync(async (req, res) => {
  */
 const deletePost = catchAsync(async (req, res) => {
   const post = await postService.deletePostById(req.params.postId)
+
+  // Update parent retweet post
+  if (post.retweetData) {
+    await postService.updatePostById(post.retweetData, {
+      $pull: { retweetUsers: req.user.id },
+    })
+  }
 
   // Delete all comments in post
   await commentService.deleteMany({ post: post.id })

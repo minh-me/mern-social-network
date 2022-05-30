@@ -25,6 +25,7 @@ export const PostItem: FC<PostItemProps> = memo(({ post, isOpenComment = false }
 
         {/* post footer */}
         <PostFooter
+          postedBy={post.postedBy.id}
           postId={post.id}
           likes={post.likes}
           comments={post.comments}

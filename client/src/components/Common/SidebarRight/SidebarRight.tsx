@@ -9,7 +9,7 @@ export const SidebarRight = () => {
   return (
     <Box sx={styles.SidebarContainer}>
       <Box mx={2} py={2} sx={styles.FormSearchContainer}>
-        <FormSearch name="users" />
+        <FormSearch name="search" to="/search" />
       </Box>
 
       {/* Posts */}
