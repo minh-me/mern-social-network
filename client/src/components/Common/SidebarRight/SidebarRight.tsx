@@ -47,7 +47,6 @@ const styles = {
   },
 
   SidebarPosts: {
-    background: '#1e2a34',
     borderRadius: '20px',
     ml: '12px',
     mr: '8px',
@@ -70,7 +69,6 @@ const styles = {
   },
 
   SidebarUsers: {
-    background: '#1e2a34',
     borderRadius: '20px',
     ml: '12px',
     mr: '8px',
