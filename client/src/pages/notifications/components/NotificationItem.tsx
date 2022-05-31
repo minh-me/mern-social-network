@@ -17,7 +17,7 @@ interface NotificationProps {
 
 const notifyMessages: Record<string, any> = {
   likePost: 'đã thích một bài viết của bạn.',
-  retweetPost: 'đã chia sẽ một bài viết của bạn.',
+  retweetPost: 'đã chia sẻ một bài viết của bạn.',
   follow: 'đã follow bạn.',
   commentPost: 'đã bình luận một bài viết của bạn.',
   commentUser: 'đã nhắc đến bạn.',

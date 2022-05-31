@@ -10,7 +10,6 @@ import { DoneAllIcon } from './components/DoneAllIcon';
 import { EVENTS, socketClient } from 'socketIO';
 import { notificationApi } from 'api/notification.api';
 import { useQueryClient } from 'react-query';
-import { Notification } from 'interface';
 
 export const NotificationPage = () => {
   const [limit, setLimit] = useState(limitNotifications);

@@ -31,7 +31,7 @@ export const PostHeader: FC<Props> = ({ post }) => {
         />
 
         <Box>
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Link
               sx={styles.userLinkContainer}
               underline="hover"
@@ -54,6 +54,11 @@ export const PostHeader: FC<Props> = ({ post }) => {
           <Typography className="createdAt" fontSize={12} color="#686868" component="p">
             {dayjs(createdAt).fromNow()}
           </Typography>
+          {post.retweetData && (
+            <Typography className="desc" fontSize={12} color="#909197" component="p">
+              đã chia sẻ bài viết.
+            </Typography>
+          )}
         </Box>
       </Box>
 
