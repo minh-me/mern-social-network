@@ -21,7 +21,7 @@ export interface Notification {
   updatedAt?: string;
 }
 
-export interface NotificationsReponse {
+export interface NotificationsResponse {
   info: Info;
   notifications: Notification[];
 }

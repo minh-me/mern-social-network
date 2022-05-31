@@ -24,6 +24,8 @@ router.get(
   notificationController.count
 )
 
+router.get('/latest', auth(), notificationController.getNotificationLatest)
+
 router.patch(
   '/update-many',
   auth(),

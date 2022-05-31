@@ -18,6 +18,13 @@ export const useNotifications = (
   });
 };
 
+export const useNotificationLatest = (options?: options) => {
+  return useQuery('notification-latest', notificationApi.getNotificationLatest, {
+    onError: handlerError,
+    ...options,
+  });
+};
+
 export const useCountNotifications = ({ opened = false }, options?: options) => {
   const queryKey = `notifications/count?opened=${opened}`;
 
@@ -42,7 +49,7 @@ export const useDeleteNotification = () => {
   });
 };
 
-export const useUpdateNotifycation = () => {
+export const useUpdateNotification = () => {
   const queryClient = useQueryClient();
 
   return useMutation(notificationApi.updateNotification, {
@@ -57,7 +64,7 @@ export const useUpdateNotifycation = () => {
   });
 };
 
-export const useUpdateManyNotication = () => {
+export const useUpdateManyNotification = () => {
   const queryClient = useQueryClient();
 
   return useMutation(notificationApi.updateMany, {

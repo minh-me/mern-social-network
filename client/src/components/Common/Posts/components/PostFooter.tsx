@@ -26,7 +26,7 @@ export const PostFooter: FC<Props> = ({
   return (
     <Box mt={2} sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
       {/* favorite */}
-      <LikeIconButton likes={likes} postId={postId} />
+      <LikeIconButton postedBy={postedBy} likes={likes} postId={postId} />
 
       {/* comments */}
       <CommentIconButton toggleComment={toggleComment} comments={comments} />

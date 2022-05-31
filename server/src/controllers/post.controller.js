@@ -152,7 +152,7 @@ const likePost = catchAsync(async (req, res) => {
   req.user = userUpdated
 
   // Create notification
-  if (!isLiked && updatedPost.postedBy.toString() !== user.id) {
+  if (!isLiked && updatedPost.postedBy._id.toString() !== user.id) {
     await notificationService.createNotificationLikePost(
       user.id,
       updatedPost.postedBy,
@@ -185,6 +185,16 @@ const retweetPost = catchAsync(async (req, res) => {
     ...req.body,
   })
 
+  // Create notification
+  if (post.postedBy._id.toString() !== req.user.id) {
+    await notificationService.createNotificationRetweetPost(
+      req.user.id,
+      post.postedBy,
+      retweet.retweetData
+    )
+  }
+
+  // Update retweetData
   retweet.retweetData = post
 
   res.send(retweet)

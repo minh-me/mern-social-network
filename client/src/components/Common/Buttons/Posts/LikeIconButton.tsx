@@ -3,14 +3,22 @@ import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded
 import { pink } from '@mui/material/colors';
 import { useLikePost } from 'RQhooks';
 import { useAuthContext } from 'hooks/useAppContext';
+import { EVENTS, socketClient } from 'socketIO';
 
-export const LikeIconButton = ({ likes = [''], postId = '' }) => {
+export const LikeIconButton = ({ likes = [''], postId = '', postedBy = '' }) => {
   const { auth } = useAuthContext();
-  const { mutate } = useLikePost();
+  const { mutateAsync } = useLikePost();
 
   const isLiked = likes.includes(auth?.id as string);
 
-  const likeHandler = () => mutate(postId);
+  const likeHandler = async () => {
+    await mutateAsync(postId);
+
+    // Socket
+    if (!isLiked && postedBy !== auth?.id) {
+      socketClient.emit(EVENTS.notificationReceived, postedBy);
+    }
+  };
 
   return (
     <PostActionButton
@@ -24,7 +32,7 @@ export const LikeIconButton = ({ likes = [''], postId = '' }) => {
         },
       }}
       onClick={likeHandler}
-      nums={likes.length || null}
+      numbs={likes.length || null}
       startIcon={<FavoriteBorderRoundedIcon />}
     />
   );

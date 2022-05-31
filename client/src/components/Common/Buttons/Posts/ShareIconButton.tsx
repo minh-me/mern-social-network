@@ -42,7 +42,7 @@ export const ShareIconButton = ({ shares = [''], postId = '', postedBy = '' }) =
         }}
         disabled={auth?.id === postedBy}
         onClick={() => setOpenModal(true)}
-        nums={shares.length || null}
+        numbs={shares.length || null}
         startIcon={<ShareIcon />}
       />
 
