@@ -31,9 +31,9 @@ function App() {
   // Received message
   useEffect(() => {
     socketClient.on(EVENTS.messageReceived, (message: Message) => {
-      const messageKey = queryClient.getQueryData('messageKey') as string;
+      const messageKey = queryClient.getQueryData<string>('messageKey');
       // Add new message if messageKey match
-      if (messageKey.startsWith(`messages?chat=${message.chat.id}`))
+      if (messageKey && messageKey.startsWith(`messages?chat=${message.chat.id}`))
         queryClient.setQueryData(messageKey, (oldMessages: any) => {
           return { ...oldMessages, messages: [message, ...oldMessages.messages] };
         });

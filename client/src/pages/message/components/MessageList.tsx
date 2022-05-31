@@ -1,7 +1,5 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
-import Lottie from 'react-lottie';
-import * as animationData from 'animations/dote-typing-animation.json';
 
 import { UserListSkeleton } from 'components/Common/Variants';
 import { MessageItem } from './MessageItem';
@@ -9,12 +7,6 @@ import { LoadMoreButton } from 'components/Common/Buttons';
 import { useMessages } from 'RQhooks/message.rq';
 import { useAuthContext } from 'hooks/useAppContext';
 import { socketClient, EVENTS } from 'socketIO';
-
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: animationData,
-};
 
 export const MessageList = ({ chatId = '' }) => {
   const { auth } = useAuthContext();
@@ -32,7 +24,7 @@ export const MessageList = ({ chatId = '' }) => {
   useEffect(() => {
     socketClient.on(EVENTS.typing, () => setIsTyping(true));
     socketClient.on(EVENTS.stopTyping, () => setIsTyping(false));
-  }, [setIsTyping]);
+  }, []);
 
   if (isLoading || !data) return <UserListSkeleton />;
 
@@ -42,7 +34,15 @@ export const MessageList = ({ chatId = '' }) => {
     <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexDirection: 'column-reverse' }}>
       <Box id={'el'} ref={el} sx={{ opacity: 0 }} />
 
-      {isTyping && <Lottie options={defaultOptions} style={{ margin: 0 }} width={98} />}
+      {isTyping && (
+        <Box mx={9} my={2}>
+          <div className="snippet" data-title=".dot-falling">
+            <div className="stage">
+              <div className="dot-falling"></div>
+            </div>
+          </div>
+        </Box>
+      )}
 
       {messages.map((message) => (
         <MessageItem isOwner={message.sender.id === auth?.id} key={message.id} message={message} />

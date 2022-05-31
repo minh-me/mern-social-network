@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 
 import { FormTextAndImageSubmit } from 'components/Common/Forms';
@@ -40,20 +40,24 @@ export const MessageFooter = ({ chatId }: Props) => {
       socketClient.emit(EVENTS.typing, chatId);
       setIsTyping(true);
     }
+  };
 
+  useEffect(() => {
     let lastTypingTime = new Date().getTime();
-    let timerLength = 3000; // 3s
+    let timerLength = 800; // 3s
 
-    setTimeout(() => {
+    let typingTimeout = setTimeout(() => {
       let timeNow = new Date().getTime();
       let timeDiff = timeNow - lastTypingTime;
 
-      if (timeDiff >= timerLength && isTyping) {
+      if ((timeDiff >= timerLength && isTyping) || !text) {
         setIsTyping(false);
         socketClient.emit(EVENTS.stopTyping, chatId);
       }
     }, timerLength);
-  };
+
+    return () => clearTimeout(typingTimeout);
+  }, [isTyping, text, chatId]);
 
   return (
     <Box p={2} sx={{ display: 'flex', alignItems: 'center' }}>

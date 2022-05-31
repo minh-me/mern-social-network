@@ -29,7 +29,10 @@ export const TextareaSubmit = ({
   onTyping,
 }: Props) => {
   const handleKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
-    if (event.key === 'Backspace' && !text && setLabel && label) setLabel('');
+    if (event.key === 'Backspace' && !text && setLabel && label) {
+      onTyping && onTyping();
+      setLabel('');
+    }
 
     if (!(event.key === 'Enter' && event.shiftKey) && event.key === 'Enter') {
       onSubmit();
@@ -40,7 +43,6 @@ export const TextareaSubmit = ({
   const [openEmoji, setOpenEmoji] = useState(false);
 
   const onEmojiClick = (event: any, emojiObject: IEmojiData) => {
-    console.log({ emojiObject });
     setText((preText) => `${preText}${emojiObject.emoji}`);
   };
 
