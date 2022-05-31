@@ -7,10 +7,15 @@ import { LoadMoreButton } from 'components/Common/Buttons';
 import { PostList } from 'components/Common';
 import { PostSkeleton } from 'components/Common/Variants';
 
-export const TabPostList = ({ search = '', sort = '-createdAt', limit = limitPosts }) => {
+export const TabPostList = ({
+  search = '',
+  sort = '-createdAt',
+  limit = limitPosts,
+  followingOnly = true,
+}) => {
   const [sizeLimit, setSizeLimit] = useState(limit);
   const { data, isLoading, isFetching } = usePosts(
-    { limit: sizeLimit, search, sort },
+    { limit: sizeLimit, search, sort, followingOnly },
     { cacheTime: search ? 1500 : 3 * 60 * 1000 }
   );
 

@@ -185,8 +185,6 @@ const retweetPost = catchAsync(async (req, res) => {
     ...req.body,
   })
 
-  console.log({ retweetData: retweet.retweetData })
-
   // Create notification
   if (post.postedBy._id.toString() !== req.user.id) {
     await notificationService.createNotificationRetweetPost(
