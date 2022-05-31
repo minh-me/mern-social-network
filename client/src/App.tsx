@@ -48,10 +48,12 @@ function App() {
           const readBy = message.readBy.map((user) => user.id);
 
           // Update to new
-          oldChats.chats[chatIndex].latestMessage = message;
-          oldChats.chats[chatIndex].latestMessage.readBy = readBy;
+          if (oldChats.chats[chatIndex]) {
+            oldChats.chats[chatIndex].latestMessage = message;
+            oldChats.chats[chatIndex].latestMessage.readBy = readBy;
 
-          oldChats.chats[chatIndex].updatedAt = message.createdAt;
+            oldChats.chats[chatIndex].updatedAt = message.createdAt;
+          }
 
           // Success
           return oldChats;
