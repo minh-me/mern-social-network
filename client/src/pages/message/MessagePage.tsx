@@ -8,7 +8,7 @@ import { MessageFooter } from './components/MessageFooter';
 import { styleScroll } from 'utils';
 import { MessageList } from './components/MessageList';
 import { useAddToReadBy } from 'RQhooks/message.rq';
-
+import { Message } from 'interface';
 import { socketClient, EVENTS } from 'socketIO';
 
 export const MessagePage = () => {
@@ -24,6 +24,13 @@ export const MessagePage = () => {
   useEffect(() => {
     socketClient.emit(EVENTS.joinChat, chatId);
   }, [chatId]);
+
+  // Received message
+  useEffect(() => {
+    socketClient.on(EVENTS.messageReceived, (message: Message) => {
+      mutate(message.chat.id);
+    });
+  }, [mutate]);
 
   return (
     <>

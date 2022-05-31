@@ -6,6 +6,7 @@ import { MDialog } from 'components/Common/Modal';
 import { Typography } from '@mui/material';
 import { useState } from 'react';
 import { useAuthContext } from 'hooks/useAppContext';
+import { EVENTS, socketClient } from 'socketIO';
 
 export const ShareIconButton = ({ shares = [''], postId = '', postedBy = '' }) => {
   const { auth } = useAuthContext();
@@ -25,6 +26,10 @@ export const ShareIconButton = ({ shares = [''], postId = '', postedBy = '' }) =
     }
 
     await retweetPost({ postId: entityId });
+
+    // Socket notification
+    socketClient.emit(EVENTS.notificationReceived, postedBy);
+
     setOpenModal(false);
   };
 

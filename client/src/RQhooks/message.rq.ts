@@ -35,8 +35,6 @@ export const useCreateMessage = () => {
   return useMutation(messageApi.createMessage, {
     onError: handlerError,
     onSuccess: (data) => {
-      socketClient.emit(EVENTS.newMessage, data);
-
       // Update current message
       queryClient.setQueryData(messageKey, (oldMessages: any) => ({
         ...oldMessages,
@@ -55,6 +53,9 @@ export const useCreateMessage = () => {
         // Success
         return oldChats;
       });
+    },
+    onSettled: (data) => {
+      if (data) socketClient.emit(EVENTS.newMessage, data);
     },
   });
 };

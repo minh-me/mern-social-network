@@ -185,12 +185,14 @@ const retweetPost = catchAsync(async (req, res) => {
     ...req.body,
   })
 
+  console.log({ retweetData: retweet.retweetData })
+
   // Create notification
   if (post.postedBy._id.toString() !== req.user.id) {
     await notificationService.createNotificationRetweetPost(
       req.user.id,
       post.postedBy,
-      retweet.retweetData
+      post._id
     )
   }
 
@@ -237,7 +239,7 @@ const deleteRetweetPost = catchAsync(async (req, res) => {
   })
 
   // Delete all comments in post
-  await commentService.deleteMany({ post: post.id })
+  await commentService.deleteMany({ post: post._id.toString() })
 
   res.send(post)
 })

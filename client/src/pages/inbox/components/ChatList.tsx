@@ -7,7 +7,7 @@ import { LoadMoreButton } from 'components/Common/Buttons';
 
 export const ChatList = () => {
   const [limit, setLimit] = useState(8);
-  const { data, isFetching, isLoading } = useChats({ limit });
+  const { data, isFetching, isLoading } = useChats({ limit, sort: '-updatedAt' });
 
   if (isLoading || !data) return <UserListSkeleton />;
   const { chats, info } = data;

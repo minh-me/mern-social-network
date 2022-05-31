@@ -75,7 +75,7 @@ export const ChatItem = ({ chat }: Props) => {
           color={latestMessage?.readBy.includes(auth?.id as string) ? '#686868' : '#d9d9d9'}
           component="p"
         >
-          {dayjs(chat.createdAt).fromNow()}
+          {dayjs(chat.updatedAt).fromNow()}
         </Typography>
       </Box>
     </Box>
