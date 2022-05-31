@@ -4,7 +4,7 @@ import { Button, SxProps, Theme } from '@mui/material';
 type PostActionButtonProps = {
   startIcon?: React.ReactNode;
   sx?: SxProps<Theme>;
-  nums?: number | null;
+  numbs?: number | null;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
 };
@@ -12,7 +12,7 @@ type PostActionButtonProps = {
 export const PostActionButton: FC<PostActionButtonProps> = ({
   sx,
   startIcon,
-  nums,
+  numbs: numbs,
   onClick,
   disabled = false,
 }) => {
@@ -26,7 +26,7 @@ export const PostActionButton: FC<PostActionButtonProps> = ({
         borderRadius: 4,
         transition: 'all 0.3s ease-in-out',
         fontSize: 14,
-        py: nums ? '2px' : '6px',
+        py: numbs ? '2px' : '6px',
         boxShadow: 0,
         span: {
           mr: '3px',
@@ -47,7 +47,7 @@ export const PostActionButton: FC<PostActionButtonProps> = ({
       startIcon={startIcon}
       onClick={onClick}
     >
-      {nums}
+      {numbs}
     </Button>
   );
 };

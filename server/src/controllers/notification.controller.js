@@ -2,7 +2,6 @@ import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
 import { notificationService } from '../services'
-import { tranSuccess } from '../_lang/en'
 
 /**
  * Create a notification
@@ -48,6 +47,18 @@ const getNotification = catchAsync(async (req, res) => {
   )
 
   if (!notification) throw createError.NotFound()
+
+  res.send(notification)
+})
+/**
+ * Get notification latest
+ * @GET api/notifications/latest
+ * @access private
+ */
+const getNotificationLatest = catchAsync(async (req, res) => {
+  const notification = await notificationService.getNotification({
+    userTo: req.user.id,
+  })
 
   res.send(notification)
 })
@@ -127,4 +138,5 @@ export {
   updateMany,
   deleteNotification,
   count,
+  getNotificationLatest,
 }

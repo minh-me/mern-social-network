@@ -42,9 +42,9 @@ io.on('connection', socket => {
   socket.on(EVENTS.stopTyping, room => socket.to(room).emit(EVENTS.stopTyping))
 
   // Notification
-  socket.on(EVENTS.notificationReceived, userId =>
-    socket.to(userId).emit(EVENTS.notificationReceived, userId)
-  )
+  socket.on(EVENTS.notificationReceived, userId => {
+    return socket.to(userId).emit(EVENTS.notificationReceived, userId)
+  })
 
   // New message
   socket.on(EVENTS.newMessage, message => {

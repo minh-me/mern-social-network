@@ -6,12 +6,12 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { styles } from './styles';
 import { MDialog } from 'components/Common/Modal';
-import { useDeleteNotification, useUpdateNotifycation } from 'RQhooks/notification.rq';
+import { useDeleteNotification, useUpdateNotification } from 'RQhooks/notification.rq';
 import { Link, useNavigate } from 'react-router-dom';
 
 dayjs.extend(relativeTime);
 
-interface NotiProps {
+interface NotificationProps {
   notification: Notification;
 }
 
@@ -23,13 +23,13 @@ const notifyMessages: Record<string, any> = {
   commentUser: 'đã nhắc đến bạn.',
 };
 
-export const NotificationItem: FC<NotiProps> = ({ notification }) => {
+export const NotificationItem: FC<NotificationProps> = ({ notification }) => {
   const { userFrom, type } = notification;
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
 
   const { mutateAsync: deleteAsync, isLoading } = useDeleteNotification();
-  const { mutate: update } = useUpdateNotifycation();
+  const { mutate: update } = useUpdateNotification();
 
   const handleDelete = async (entityId: string) => {
     if (entityId) await deleteAsync(entityId);

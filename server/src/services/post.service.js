@@ -54,8 +54,7 @@ const getPostById = async postId => {
 const updatePostById = async (postId, body) => {
   const post = await Post.findByIdAndUpdate(postId, body, {
     new: true,
-    populate: { path: 'postedBy' },
-  })
+  }).populate('postedBy')
 
   if (!post) throw new createHttpError.NotFound('Not found post.')
 

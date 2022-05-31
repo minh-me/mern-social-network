@@ -19,7 +19,7 @@ export const CommentIconButton = ({ comments, toggleComment }: Props) => {
         },
       }}
       onClick={toggleComment}
-      nums={comments.length || null}
+      numbs={comments.length || null}
       startIcon={<ChatBubbleOutlineRoundedIcon />}
     />
   );

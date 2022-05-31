@@ -13,7 +13,7 @@ const notificationTypes = {
 
 /**
  * Create new notification
- * @param {{userFrom: mongodbId; userTo: mongodbId, entityId: mongodbId, type: string}} notificationBody
+ * @param {{userFrom: ObjectId; userTo: ObjectId, entityId: ObjectId, type: string}} notificationBody
  * @returns {Promise<Notification>}
  */
 const createNotification = async notificationBody => {
@@ -24,9 +24,9 @@ const createNotification = async notificationBody => {
 
 /**
  * Create new notification
- * @param {mongodbId} userFrom
- * @param {mongodbId} userTo
- * @param {mongodbId} postId
+ * @param {ObjectId} userFrom
+ * @param {ObjectId} userTo
+ * @param {ObjectId} postId
  * @returns {Promise<Notification>}
  */
 const createNotificationLikePost = async (userFrom, userTo, postId) => {
@@ -41,9 +41,9 @@ const createNotificationLikePost = async (userFrom, userTo, postId) => {
 
 /**
  * Create new notification
- * @param {mongodbId} userFrom
- * @param {mongodbId} userTo
- * @param {mongodbId} postId
+ * @param {ObjectId} userFrom
+ * @param {ObjectId} userTo
+ * @param {ObjectId} postId
  * @returns {Promise<Notification>}
  */
 const createNotificationRetweetPost = async (userFrom, userTo, postId) => {
@@ -58,9 +58,9 @@ const createNotificationRetweetPost = async (userFrom, userTo, postId) => {
 
 /**
  * Create new notification
- * @param {mongodbId} userFrom
- * @param {mongodbId} userTo
- * @param {mongodbId} postId
+ * @param {ObjectId} userFrom
+ * @param {ObjectId} userTo
+ * @param {ObjectId} postId
  * @returns {Promise<Notification>}
  */
 const createNotificationComment = async (userFrom, userTo, postId) => {
@@ -74,8 +74,8 @@ const createNotificationComment = async (userFrom, userTo, postId) => {
 
 /**
  * Create new notification
- * @param {mongodbId} userFrom
- * @param {mongodbId} userTo
+ * @param {ObjectId} userFrom
+ * @param {ObjectId} userTo
  * @returns {Promise<Notification>}
  */
 const createNotificationFollow = async (userFrom, userTo) => {
@@ -90,9 +90,9 @@ const createNotificationFollow = async (userFrom, userTo) => {
 
 /**
  * Create new notification
- * @param {mongodbId} userFrom
- * @param {mongodbId} userTo
- * @param {mongodbId} chatId
+ * @param {ObjectId} userFrom
+ * @param {ObjectId} userTo
+ * @param {ObjectId} chatId
  * @returns {Promise<Notification>}
  */
 const createNotificationNewMessage = async (userFrom, userTo, chatId) => {
@@ -133,6 +133,19 @@ const queryNotifications = async (filter, options) => {
  */
 const getNotificationById = async notificationId => {
   const notification = await Notification.findById(notificationId)
+
+  return notification
+}
+
+/**
+ * Find notification by filter
+ * @param {Object} filter
+ * @returns {Promise<Notification>}
+ */
+const getNotification = async filter => {
+  const notification = await Notification.findOne(filter)
+    .sort('-createdAt')
+    .populate(['userTo', 'userFrom', 'entityId'])
 
   return notification
 }
@@ -208,4 +221,5 @@ export {
   createNotificationFollow,
   createNotificationNewMessage,
   count,
+  getNotification,
 }

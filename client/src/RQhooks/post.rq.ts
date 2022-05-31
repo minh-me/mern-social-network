@@ -93,7 +93,6 @@ export const useLikePost = () => {
           return updatePostLikes(oldData, postId, auth.id);
         });
     },
-    onSuccess: () => {},
     onError: (err: Error | AxiosError<any, any>, postId) => {
       if ((!postsKey && !profilePostsKey) || !auth) return;
 

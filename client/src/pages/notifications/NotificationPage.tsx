@@ -5,13 +5,35 @@ import { Title } from 'components/App';
 import { NotificationItem } from './components/NotificationItem';
 import { useNotifications } from 'RQhooks/notification.rq';
 import { limitNotifications } from 'constants/pagination';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserListSkeleton } from 'components/Common/Variants';
 import { DoneAllIcon } from './components/DoneAllIcon';
+import { EVENTS, socketClient } from 'socketIO';
+import { notificationApi } from 'api/notification.api';
+import { useQueryClient } from 'react-query';
 
 export const NotificationPage = () => {
   const [limit, setLimit] = useState(limitNotifications);
   const { data, isFetching, isLoading } = useNotifications({ limit });
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    socketClient.on(EVENTS.notificationReceived, async () => {
+      // Get notification latest
+      const notification = await notificationApi.getNotificationLatest();
+
+      const notificationsKey = queryClient.getQueryData('notificationsKey');
+
+      // Update notification in cache
+      if (notificationsKey)
+        queryClient.setQueryData(notificationsKey as string, (oldData: any) => {
+          oldData.notifications.unshift(notification);
+
+          return oldData;
+        });
+    });
+  }, [queryClient]);
 
   if (isLoading || !data)
     return (
