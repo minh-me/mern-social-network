@@ -15,7 +15,7 @@ import { FollowPage } from 'pages/follow/FollowPage';
 import { useAuthContext } from 'hooks/useAppContext';
 import { useEffect } from 'react';
 import { useQueryClient } from 'react-query';
-import { Message } from 'interface';
+import { Chat, Message } from 'interface';
 import { PostDetailPage } from 'pages/postDetail';
 import { socketClient, EVENTS } from 'socketIO';
 
@@ -32,11 +32,31 @@ function App() {
   useEffect(() => {
     socketClient.on(EVENTS.messageReceived, (message: Message) => {
       const messageKey = queryClient.getQueryData<string>('messageKey');
+      const chatsKey = queryClient.getQueryData<string>('chatsKey');
       // Add new message if messageKey match
       if (messageKey && messageKey.startsWith(`messages?chat=${message.chat.id}`))
         queryClient.setQueryData(messageKey, (oldMessages: any) => {
           return { ...oldMessages, messages: [message, ...oldMessages.messages] };
         });
+
+      if (chatsKey) {
+        queryClient.setQueryData(chatsKey, (oldChats: any) => {
+          // Get updated chat index
+          const chatIndex = oldChats.chats.findIndex((chat: Chat) => chat.id === message.chat.id);
+
+          // Get ReadBy id
+          const readBy = message.readBy.map((user) => user.id);
+
+          // Update to new
+          oldChats.chats[chatIndex].latestMessage = message;
+          oldChats.chats[chatIndex].latestMessage.readBy = readBy;
+
+          oldChats.chats[chatIndex].updatedAt = message.createdAt;
+
+          // Success
+          return oldChats;
+        });
+      }
     });
   }, [queryClient]);
 

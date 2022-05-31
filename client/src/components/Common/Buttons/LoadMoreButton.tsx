@@ -15,7 +15,7 @@ export const LoadMoreButton = ({ isFetching, totalResults, limit, onChangeLimit 
       {isFetching ? (
         <CircularProgress size={25} />
       ) : totalResults > limit ? (
-        <Button sx={{ textTransform: 'capitalize' }} onClick={() => onChangeLimit(limit + 2)}>
+        <Button sx={{ textTransform: 'capitalize' }} onClick={() => onChangeLimit(limit + 8)}>
           Load more
         </Button>
       ) : null}

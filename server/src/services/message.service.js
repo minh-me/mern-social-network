@@ -10,9 +10,10 @@ import { Message } from '../models'
 const createMessage = async messageBody => {
   const newMessage = await Message.create(messageBody)
 
+  console.log({ mesID: newMessage._id })
   // Update latestMessage in chat
   await chatService.updateChatById(newMessage.chat, {
-    latestMessage: newMessage.id,
+    latestMessage: newMessage._id,
   })
 
   return newMessage.populate(['chat', 'sender', 'readBy'])

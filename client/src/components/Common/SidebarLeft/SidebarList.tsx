@@ -17,22 +17,39 @@ import { useLogout } from 'RQhooks';
 import { storage } from 'utils';
 import { useAuthContext } from 'hooks/useAppContext';
 import { resetAppState } from 'context';
-import { useCountNotifications } from 'RQhooks/notification.rq';
+import { useNotifications } from 'RQhooks/notification.rq';
+import { useChats } from 'RQhooks/chat.rq';
 
 const SidebarList = () => {
-  const { dispatch } = useAuthContext();
+  const { dispatch, auth } = useAuthContext();
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   const queryClient = new QueryClient();
 
   const { mutateAsync } = useLogout();
-  const { data } = useCountNotifications({ opened: false });
+  const { data: notificationsData } = useNotifications({ limit: 8 });
+  const { data: chatsData } = useChats({ limit: 8, sort: '-updatedAt' });
+
+  let numbsNotification;
+  let numbsChat;
+
+  if (notificationsData) {
+    numbsNotification = notificationsData?.notifications.filter(
+      (notification) => notification.opened === false
+    ).length;
+  }
+
+  if (chatsData && auth?.id) {
+    numbsChat = chatsData?.chats.filter(
+      (chat) => !chat.latestMessage?.readBy.includes(auth.id)
+    ).length;
+  }
 
   const handleClose = async () => {
-    // Clear hoooks
+    // Clear hooks
     dispatch(resetAppState());
 
-    // Clear localstorage
+    // Clear local storage
     storage.clearToken();
 
     // Clear react query
@@ -85,7 +102,7 @@ const SidebarList = () => {
         <ListItemButton>
           <ListItemIcon sx={{ minWidth: '30px' }}>
             <Badge
-              badgeContent={data?.result}
+              badgeContent={numbsNotification}
               sx={{ span: { fontSize: 12, background: '#ec407a' }, color: 'white' }}
             >
               <NotificationsSharpIcon />
@@ -98,7 +115,12 @@ const SidebarList = () => {
       <NavLink to="/chat">
         <ListItemButton>
           <ListItemIcon sx={{ minWidth: '30px' }}>
-            <MailOutlineRoundedIcon sx={{ color: 'white' }} />
+            <Badge
+              badgeContent={numbsChat}
+              sx={{ span: { fontSize: 12, background: '#ec407a' }, color: 'white' }}
+            >
+              <MailOutlineRoundedIcon />
+            </Badge>
           </ListItemIcon>
           <ListItemText primary="Chat" />
         </ListItemButton>

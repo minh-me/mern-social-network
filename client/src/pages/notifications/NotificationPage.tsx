@@ -1,5 +1,4 @@
 import { Box, Typography } from '@mui/material';
-
 import { LoadMoreButton } from 'components/Common/Buttons';
 import { Title } from 'components/App';
 import { NotificationItem } from './components/NotificationItem';
@@ -11,6 +10,7 @@ import { DoneAllIcon } from './components/DoneAllIcon';
 import { EVENTS, socketClient } from 'socketIO';
 import { notificationApi } from 'api/notification.api';
 import { useQueryClient } from 'react-query';
+import { Notification } from 'interface';
 
 export const NotificationPage = () => {
   const [limit, setLimit] = useState(limitNotifications);

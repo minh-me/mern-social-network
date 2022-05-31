@@ -15,10 +15,10 @@ export const ProfilePostList = ({ userId = '' }) => {
 
   if (isLoading || !data) return <PostSkeleton />;
   const { info, posts } = data;
-
+  console.log({ posts });
   return (
     <>
-      {posts[0].pinned ? (
+      {posts.length > 0 && posts[0].pinned ? (
         <>
           {/* Pinned post */}
           <Box sx={{ borderBottom: '2px solid #38444d' }}>

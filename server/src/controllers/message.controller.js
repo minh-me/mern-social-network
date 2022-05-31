@@ -9,7 +9,7 @@ import { chatService, messageService, uploadService } from '../services'
  * @access private
  */
 const createMessage = catchAsync(async (req, res) => {
-  // If create message renameChat => parse isReanme to bool
+  // If create message renameChat => parse isRename to bool
   if (req.body.isRename) req.body.isRename = JSON.parse(req.body.isRename)
 
   // Create item
