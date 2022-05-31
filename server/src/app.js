@@ -10,7 +10,8 @@ import hpp from 'hpp'
 import httpError from 'http-errors'
 import 'colors'
 
-import { jwtStrategy, config, db, logger, authLimiter } from './config'
+import { scheduleJob } from './utils/backup/scheduleJob'
+import { jwtStrategy, config, db, authLimiter } from './config'
 import { errorHandler } from './middlewares'
 import routes from './routes/_index'
 import { configCors } from './config/cors'
@@ -61,6 +62,9 @@ passport.use('jwt', jwtStrategy)
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'src', 'uploads')))
+
+// Init schedule job
+scheduleJob()
 
 // api routes
 app.use('/api', routes)

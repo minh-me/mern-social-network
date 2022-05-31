@@ -75,5 +75,6 @@ export const config = {
     upload_directory: 'src/uploads',
     upload_limit_size: 1048576, // 1048576 byte = 1MB
     image_types: ['image/jpg', 'image/png', 'image/jpeg'],
+    db_name: 'mern-social-network',
   },
 }
