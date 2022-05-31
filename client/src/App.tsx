@@ -18,6 +18,7 @@ import { useQueryClient } from 'react-query';
 import { Chat, Message } from 'interface';
 import { PostDetailPage } from 'pages/postDetail';
 import { socketClient, EVENTS } from 'socketIO';
+import { Notfound } from 'components/App/Notfound';
 
 function App() {
   const { auth } = useAuthContext();
@@ -82,12 +83,12 @@ function App() {
               <Route path="/notification" element={<NotificationPage />} />
               <Route path="/chat" element={<ChatPage />} />
               <Route path="/chat/new" element={<NewChatPage />} />
-              <Route path="/messages" element={<MessagePage />} />
               <Route path="/messages/:chatId" element={<MessagePage />} />
               <Route path="/users/:username/followers" element={<FollowPage />} />
               <Route path="/users/:username/following" element={<FollowPage />} />
               <Route path="/users/:username" element={<ProfilePage />} />
             </Route>
+            <Route path="*" element={<Notfound />} />
           </Routes>
         </Container>
       </BrowserRouter>

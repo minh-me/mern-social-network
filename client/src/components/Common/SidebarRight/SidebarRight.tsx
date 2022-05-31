@@ -15,7 +15,7 @@ export const SidebarRight = () => {
       {/* Posts */}
       <Box sx={styles.SidebarPosts}>
         <SidebarRightList title="Trends for you">
-          <TabPostList sort="-numberLikes" limit={5} />
+          <TabPostList followingOnly={false} sort="-numberLikes" limit={5} />
         </SidebarRightList>
       </Box>
 
