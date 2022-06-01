@@ -10,11 +10,14 @@ import { LoadMoreInView } from 'components/Common/Buttons';
 export const ProfileReplies = ({ userId = '' }) => {
   const [limit, setLimit] = useState(limitPosts);
 
-  const { data, isLoading, isFetching } = useProfilePosts({
-    postedBy: userId,
-    limit,
-    onlyReply: true,
-  });
+  const { data, isLoading, isFetching } = useProfilePosts(
+    {
+      postedBy: userId,
+      limit,
+      onlyReply: true,
+    },
+    { cacheTime: userId ? 0.5 * 60 * 1000 : 5 * 60 * 1000 }
+  );
 
   if (isLoading || !data) return <PostSkeleton />;
   const { info, posts } = data;

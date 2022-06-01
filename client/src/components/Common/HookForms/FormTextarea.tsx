@@ -9,6 +9,7 @@ type FormProps = {
   autoFocus?: boolean;
   style?: React.CSSProperties;
   placeholder?: string;
+  required?: boolean;
   onSubmit?: () => void;
 };
 
@@ -20,6 +21,7 @@ export const FormTextarea = ({
   style,
   placeholder,
   onSubmit,
+  required = false,
 }: FormProps) => {
   const handleKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
     if (!(event.key === 'Enter' && event.shiftKey) && event.key === 'Enter' && onSubmit) {
@@ -38,6 +40,7 @@ export const FormTextarea = ({
           autoFocus={autoFocus}
           {...field}
           onKeyDown={handleKeyDown}
+          required={required}
           style={{
             flex: 1,
             outline: 'none',

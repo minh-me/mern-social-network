@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
-import { Button, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Button, Menu, MenuItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import { toast } from 'react-toastify';
+
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import VisibilityOffSharpIcon from '@mui/icons-material/VisibilityOffSharp';
 import VisibilitySharpIcon from '@mui/icons-material/VisibilitySharp';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PushPinSharpIcon from '@mui/icons-material/PushPinSharp';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
+
 import { useDeletePost, useUpdatePost } from 'RQhooks';
 import { Post } from 'interface';
-import { toast } from 'react-toastify';
+import { MDialog } from 'components/Common/Modal';
 
 type MenuPostProps = {
   post: Post;
 };
 
+type MenuTypes = 'Hidden' | 'Delete' | 'Pinned';
+
 export const MenuPost = ({ post }: MenuPostProps) => {
   const { id, pinned, hidden } = post;
+  const [openModal, setOpenModal] = useState<MenuTypes | undefined>();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
@@ -27,24 +33,31 @@ export const MenuPost = ({ post }: MenuPostProps) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = async (menuType: 'delete' | 'hidden' | 'pinned') => {
-    if (menuType === 'delete') {
+  const handleClose = async (menuType: MenuTypes) => {
+    if (menuType === 'Delete') {
       await toast.promise(deleteAsync(id), {
         pending: `Deleting in progress...`,
         success: `Deleted post successfully 👌`,
       });
     }
-    if (menuType === 'pinned' || menuType === 'hidden') {
+
+    if (menuType === 'Pinned' || menuType === 'Hidden') {
       const options = { pinned, hidden };
 
-      const postData = { filter: { id }, body: { [menuType]: !options[menuType] } };
+      const key = menuType.toLocaleLowerCase() as 'pinned' | 'hidden';
+
+      const postData = {
+        filter: { id },
+        body: { [key]: !options[key] },
+      };
 
       await toast.promise(updateAsync(postData), {
-        pending: `Update ${menuType} in progress...`,
-        success: `Update ${menuType} successfully 👌`,
+        pending: `${menuType} in progress...`,
+        success: `${menuType}  successfully 👌`,
       });
     }
 
+    setOpenModal(undefined);
     setAnchorEl(null);
   };
 
@@ -71,7 +84,7 @@ export const MenuPost = ({ post }: MenuPostProps) => {
           'aria-labelledby': 'menu-button',
         }}
       >
-        <MenuItem onClick={() => handleClose('pinned')}>
+        <MenuItem onClick={() => setOpenModal('Pinned')}>
           {pinned ? (
             <>
               <ListItemIcon>
@@ -89,7 +102,7 @@ export const MenuPost = ({ post }: MenuPostProps) => {
           )}
         </MenuItem>
 
-        <MenuItem onClick={() => handleClose('hidden')}>
+        <MenuItem onClick={() => setOpenModal('Hidden')}>
           {hidden ? (
             <>
               <ListItemIcon>
@@ -107,13 +120,37 @@ export const MenuPost = ({ post }: MenuPostProps) => {
           )}
         </MenuItem>
 
-        <MenuItem onClick={() => handleClose('delete')}>
+        <MenuItem onClick={() => setOpenModal('Delete')}>
           <ListItemIcon>
             <DeleteForeverIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Xóa</ListItemText>
         </MenuItem>
       </Menu>
+
+      <MDialog
+        position="center"
+        title={`${openModal} post?`}
+        onClose={() => {
+          setAnchorEl(null);
+          setOpenModal(undefined);
+        }}
+        entityId={openModal}
+        confirmButton={handleClose}
+        open={!!openModal}
+        textAlign="center"
+      >
+        <Typography component="span" sx={{ minWidth: 300, display: 'inline-block' }}>
+          {(openModal === 'Delete' && 'Xóa bài viết này khỏi danh sách bài viết của bạn?') ||
+            (openModal === 'Pinned' &&
+              `${pinned ? 'Bỏ ghim' : 'Ghim'} bài viết này trong trang cá nhân của bạn?`) ||
+            `${
+              hidden
+                ? 'Bạn muốn bỏ ẩn bài viết này?'
+                : 'Bạn muốn ẩn bài viết này? Chỉ hiện thị trong trang cá nhân của bạn.'
+            }`}
+        </Typography>
+      </MDialog>
     </>
   );
 };

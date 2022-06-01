@@ -7,13 +7,12 @@ export const useCreateComment = () => {
   const queryClient = useQueryClient();
 
   return useMutation(commentApi.createComment, {
-    onSuccess: () => {},
-    onError: handlerError,
-    onSettled: (data) => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
         predicate: (query) => query.queryKey.toString().startsWith(`comments?post=${data?.post}`),
       });
     },
+    onError: handlerError,
   });
 };
 
@@ -27,7 +26,7 @@ export const useCommentsByPost = (
     onError: handlerError,
     ...options,
     enabled: !!postId,
-    // cacheTime: 0,
+    cacheTime: 0,
   });
 };
 
@@ -48,13 +47,12 @@ export const useCommentsByAuthor = (
 export const useLikeComment = () => {
   const queryClient = useQueryClient();
 
-  return useMutation('like-comment', commentApi.likeComment, {
-    onSuccess: () => {},
-    onError: handlerError,
-    onSettled: (data) => {
+  return useMutation(commentApi.likeComment, {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
         predicate: (query) => query.queryKey.toString().startsWith(`comments?post=${data?.post}`),
       });
     },
+    onError: handlerError,
   });
 };

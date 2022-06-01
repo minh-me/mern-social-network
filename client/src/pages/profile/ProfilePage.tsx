@@ -20,7 +20,7 @@ export const ProfilePage = () => {
 
   const { data: user, isLoading } = useUserProfile(
     { username },
-    { cacheTime: username === 'profile' ? 2 * 60 * 1000 : 5 * 60 * 1000 }
+    { cacheTime: username === 'profile' ? 5 * 60 * 1000 : 0.5 * 60 * 1000 }
   );
 
   if (isLoading || !user) {

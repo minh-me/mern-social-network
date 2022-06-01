@@ -25,15 +25,6 @@ export const useNotificationLatest = (options?: options) => {
   });
 };
 
-export const useCountNotifications = ({ opened = false }, options?: options) => {
-  const queryKey = `notifications/count?opened=${opened}`;
-
-  return useQuery(queryKey, notificationApi.count, {
-    onError: handlerError,
-    ...options,
-  });
-};
-
 export const useDeleteNotification = () => {
   const queryClient = useQueryClient();
 

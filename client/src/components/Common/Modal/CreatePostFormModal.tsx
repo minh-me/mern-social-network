@@ -78,6 +78,7 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
               style={{ width: '100%', minHeight: 40, fontSize: 14 }}
               control={control}
               placeholder="Enter post text ..."
+              required={true}
               name="text"
               onSubmit={handleSubmit(onSubmit)}
             />

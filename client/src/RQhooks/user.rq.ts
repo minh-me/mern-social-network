@@ -31,7 +31,7 @@ export const useFollow = () => {
 
   return useMutation(userApi.follow, {
     onError: handlerError,
-    onSettled: () => {
+    onSuccess: () => {
       return queryClient.invalidateQueries({
         predicate: (query) => {
           return query.queryKey.toString().startsWith('users');

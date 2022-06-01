@@ -18,10 +18,6 @@ export const notificationApi = {
     return axiosInstance.get(`${notificationUrl}/latest`);
   },
 
-  count({ queryKey = ['notifications/count'] }): Promise<{ result: number }> {
-    return axiosInstance.get(`api/${queryKey[0]}`);
-  },
-
   createNotification(notification: {}) {
     return axiosInstance.post(`${notificationUrl}`, notification, {
       headers: { 'Content-Type': 'application/json' },
