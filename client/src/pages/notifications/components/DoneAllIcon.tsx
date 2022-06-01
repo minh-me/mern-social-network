@@ -5,7 +5,7 @@ import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 import { useUpdateManyNotification } from 'RQhooks/notification.rq';
 import { MDialog } from 'components/Common/Modal';
 
-export const DoneAllIcon = () => {
+export const DoneAllIcon = ({ disabled = false }) => {
   const { mutateAsync, isLoading } = useUpdateManyNotification();
 
   const [openModal, setOpenModal] = useState(false);
@@ -19,7 +19,7 @@ export const DoneAllIcon = () => {
     <>
       <IconButton
         size="small"
-        disabled={false}
+        disabled={disabled}
         onClick={() => setOpenModal(true)}
         sx={{ color: '#ff2b72', mr: 3 }}
       >
