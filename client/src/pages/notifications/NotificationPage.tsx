@@ -50,7 +50,7 @@ export const NotificationPage = () => {
     <>
       <Box sx={styles.titleContainer}>
         <Title title="Notifications" />
-        <DoneAllIcon />
+        <DoneAllIcon disabled={!notifications.some((notification) => !notification.opened)} />
       </Box>
 
       <Box>

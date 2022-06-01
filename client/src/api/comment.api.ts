@@ -13,6 +13,7 @@ export const commentApi = {
   getCommentsByPost({ queryKey = ['comments?page=1&limit=1'] }): Promise<CommentsResponse> {
     return axios.get(`api/${queryKey[0]}`);
   },
+
   getComments(filter: {}) {
     return axios.get(`${commentUrl}${filter}`);
   },

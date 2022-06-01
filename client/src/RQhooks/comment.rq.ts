@@ -30,20 +30,6 @@ export const useCommentsByPost = (
   });
 };
 
-export const useCommentsByAuthor = (
-  { author = '', page = 1, limit = 1, sort = 'createdAt' },
-  options?: options
-) => {
-  const queryKey = `comments?author=${author}&page=${page}&limit=${limit}&sort=${sort}`;
-
-  return useQuery(queryKey, commentApi.getCommentsByPost, {
-    onError: handlerError,
-    ...options,
-    enabled: !!author,
-    cacheTime: 0,
-  });
-};
-
 export const useLikeComment = () => {
   const queryClient = useQueryClient();
 
