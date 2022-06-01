@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { IconButton } from '@mui/material';
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 
-import { useUpdateManyNotification, useCountNotifications } from 'RQhooks/notification.rq';
+import { useUpdateManyNotification } from 'RQhooks/notification.rq';
 import { MDialog } from 'components/Common/Modal';
 
 export const DoneAllIcon = () => {
   const { mutateAsync, isLoading } = useUpdateManyNotification();
-  const { data } = useCountNotifications({ opened: false });
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -20,7 +19,7 @@ export const DoneAllIcon = () => {
     <>
       <IconButton
         size="small"
-        disabled={data?.result === 0}
+        disabled={false}
         onClick={() => setOpenModal(true)}
         sx={{ color: '#ff2b72', mr: 3 }}
       >

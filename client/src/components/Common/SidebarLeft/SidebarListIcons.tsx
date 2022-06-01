@@ -16,7 +16,6 @@ import { storage } from 'utils';
 import { useAuthContext } from 'hooks/useAppContext';
 import { resetAppState } from 'context';
 import { QueryClient } from 'react-query';
-import { useCountNotifications } from 'RQhooks/notification.rq';
 
 export const SidebarListIcons = () => {
   const { dispatch } = useAuthContext();
@@ -25,7 +24,6 @@ export const SidebarListIcons = () => {
   const queryClient = new QueryClient();
 
   const { mutateAsync } = useLogout();
-  const { data } = useCountNotifications({ opened: false });
 
   const handleClose = async () => {
     // Clear hoooks
@@ -81,7 +79,7 @@ export const SidebarListIcons = () => {
       <NavLink to="/notification">
         <ListItemButton>
           <Badge
-            badgeContent={data?.result}
+            badgeContent={undefined}
             sx={{ span: { fontSize: 12, background: '#ec407a' }, color: 'white' }}
           >
             <NotificationsSharpIcon />

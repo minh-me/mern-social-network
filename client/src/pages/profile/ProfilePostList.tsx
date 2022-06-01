@@ -11,7 +11,10 @@ import { pink } from '@mui/material/colors';
 
 export const ProfilePostList = ({ userId = '' }) => {
   const [limit, setLimit] = useState(limitPosts);
-  const { data, isLoading, isFetching } = useProfilePosts({ postedBy: userId, limit });
+  const { data, isLoading, isFetching } = useProfilePosts(
+    { postedBy: userId, limit },
+    { cacheTime: userId ? 0.5 * 60 * 1000 : 5 * 60 * 1000 }
+  );
 
   if (isLoading || !data) return <PostSkeleton />;
   const { info, posts } = data;
