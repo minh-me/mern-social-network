@@ -172,10 +172,10 @@ const updateCoverPhoto = async (userId, coverPhoto) => {
     '+coverPhoto.id'
   )
 
-  if (user.coverPhoto?.id) {
-    console.log({ user: user.coverPhoto.id })
-    await uploadService.destroy(user.coverPhoto.id)
-  }
+  // if (user.coverPhoto?.id) {
+  //   console.log({ user: user.coverPhoto.id })
+  //   await uploadService.destroy(user.coverPhoto.id)
+  // }
 
   return user
 }
