@@ -15,7 +15,7 @@ Social network is a small project that was built when I was a 3rd-year student.
 ![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654250224/cover_images/bnxgesirljxik3yg1243.png)
 ![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654250357/cover_images/igpdtzgjq6mppeajilfh.png)
 ![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654250392/cover_images/fqo4jxdiadofpj1qrf7b.png)
-![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654250437/cover_images/aelksfupxmcn1h1pqoe9.png)
+![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654250620/cover_images/v99pwxipew8aljo3viu4.png)
 ![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654250124/cover_images/zfskik7azwp1bksjgdrg.png)
 ![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654250482/cover_images/tyobhqexklmpozrikoce.png)
 ![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249704/cover_images/ftwmosm6phngnsijyyoi.png)
