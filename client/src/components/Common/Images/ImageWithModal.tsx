@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Box, SxProps, Theme } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -11,6 +11,21 @@ type Props = {
 
 export const ImageWithModal: FC<Props> = ({ imageUrl, sx, alt }) => {
   const [open, setOpen] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const img = imgRef.current;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) img?.setAttribute('src', img?.getAttribute('resource') || '');
+    });
+
+    if (img) observer.observe(img);
+
+    return () => {
+      if (img) observer.unobserve(img);
+    };
+  }, []);
 
   return (
     <>
@@ -23,7 +38,7 @@ export const ImageWithModal: FC<Props> = ({ imageUrl, sx, alt }) => {
           ...sx,
         }}
       >
-        <img onClick={() => setOpen(true)} src={imageUrl} alt={alt} />
+        <img ref={imgRef} onClick={() => setOpen(true)} resource={imageUrl} alt={alt} />
       </Box>
 
       <Dialog

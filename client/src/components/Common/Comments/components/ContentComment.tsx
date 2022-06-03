@@ -3,6 +3,7 @@ import { CommentText } from './CommentText';
 import { AuthorComment } from './AuthorComment';
 
 import { User } from '~/interface';
+import { useEffect, useRef } from 'react';
 
 type Props = {
   replyTo?: User;
@@ -11,6 +12,22 @@ type Props = {
 };
 
 export const ContentComment = ({ replyTo, text, image }: Props) => {
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const img = imgRef.current;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) img?.setAttribute('src', img?.getAttribute('alt') || '');
+    });
+
+    if (img) observer.observe(img);
+
+    return () => {
+      if (img) observer.unobserve(img);
+    };
+  }, []);
+
   return (
     <>
       <Box sx={{ display: 'flex' }}>
@@ -18,7 +35,7 @@ export const ContentComment = ({ replyTo, text, image }: Props) => {
         {text && <CommentText text={text} />}
       </Box>
       <Box mt={1} sx={styles.imageContainer}>
-        {image && <img src={image} alt={image} />}
+        {image && <img ref={imgRef} alt={image} />}
       </Box>
     </>
   );
