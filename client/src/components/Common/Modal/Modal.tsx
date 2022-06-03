@@ -30,7 +30,7 @@ export const Modal: FC<ModalProps> = (props) => {
       </DialogContent>
 
       {/* Button Submit */}
-      <DialogActions sx={{ background: '#15202b' }}>
+      <DialogActions sx={{ background: '#2c3140' }}>
         <LoadingButton
           loadingIndicator={`${buttonText}...`}
           loading={isLoading}
@@ -50,9 +50,9 @@ export const Modal: FC<ModalProps> = (props) => {
 };
 
 const styles = {
-  title: { background: '#15202b', color: 'white', textAlign: 'center' },
+  title: { background: '#2c3140', color: 'white', textAlign: 'center' },
 
-  contentContainer: { background: '#15202b', minWidth: '466px', px: 2 },
+  contentContainer: { background: '#2c3140', minWidth: '466px', px: 2 },
 
   button: {
     color: '#fff',

@@ -27,7 +27,7 @@ export const LoadMoreInView = ({ isFetching, totalResults, limit, onChangeLimit 
   const { ref, inView } = useInView();
 
   useEffect(() => {
-    if (!isFetching && inView) onChangeLimit(limit + 2);
+    if (!isFetching && inView) onChangeLimit(limit + 8);
   }, [inView, onChangeLimit, isFetching, limit]);
 
   return (
