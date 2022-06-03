@@ -1,7 +1,8 @@
-import { Avatar, Box, Button, TextField } from '@mui/material';
 import { useState } from 'react';
-import { CreatePostFormModal } from 'components/Common/Modal';
-import { useAuthContext } from 'hooks/useAppContext';
+import { Avatar, Box, Button, TextField } from '@mui/material';
+
+import { CreatePostFormModal } from '~/components/Common/Modal';
+import { useAuthContext } from '~/hooks/useAppContext';
 
 export const CreatePostForm = () => {
   const { auth } = useAuthContext();

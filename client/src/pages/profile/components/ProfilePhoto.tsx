@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { CoverPhoto, ProfilePic } from 'components/Common';
+import { CoverPhoto, ProfilePic } from '~/components/Common';
 
 type Props = {
   profilePic: string;

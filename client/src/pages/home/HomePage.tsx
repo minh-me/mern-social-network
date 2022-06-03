@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 
-import { Title } from 'components/App';
-import { usePosts } from 'RQhooks/post.rq';
-import { HomeSkeleton } from 'components/Common/Variants';
-import { LoadMoreInView } from 'components/Common/Buttons';
-import { CreatePostForm, PostList } from 'components/Common';
-import { limitPosts } from 'constants/pagination';
+import { Title } from '~/components/App';
+import { usePosts } from '~/RQhooks/post.rq';
+import { HomeSkeleton } from '~/components/Common/Variants';
+import { LoadMoreInView } from '~/components/Common/Buttons';
+import { CreatePostForm, PostList } from '~/components/Common';
+import { limitPosts } from '~/constants/pagination';
 
 export const HomePage = () => {
   const [limit, setLimit] = useState(limitPosts);
+
   const { data, isLoading, isFetching } = usePosts({ limit }, { cacheTime: 3 * 60 * 1000 });
 
   if (isLoading || !data) return <HomeSkeleton />;

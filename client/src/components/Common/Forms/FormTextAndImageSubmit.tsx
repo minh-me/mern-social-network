@@ -6,7 +6,7 @@ import { pink } from '@mui/material/colors';
 import { ImagePreview } from '../Images/ImagePreview';
 import { TextareaSubmit } from './TextareaSubmit';
 import { InputFile } from './InputFile';
-import { CancelButton, AddLoadingButton } from 'components/Common/Buttons';
+import { CancelButton, AddLoadingButton } from '~/components/Common/Buttons';
 
 type Props = {
   text: string;

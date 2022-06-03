@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AuthLayout, MainLayout } from 'components/Layout';
+import { AuthLayout, MainLayout } from '~/components/Layout';
 import { Container } from '@mui/material';
 import {
   ChatPage,
@@ -9,16 +9,16 @@ import {
   NotificationPage,
   ProfilePage,
   SearchPage,
-} from 'pages';
-import { Activate, ResetPassword, SignIn, SignUp } from 'pages/auth';
-import { FollowPage } from 'pages/follow/FollowPage';
-import { useAuthContext } from 'hooks/useAppContext';
+} from '~/pages';
+import { Activate, ResetPassword, SignIn, SignUp } from '~/pages/auth';
+import { FollowPage } from '~/pages/follow/FollowPage';
+import { useAuthContext } from '~/hooks/useAppContext';
 import { useEffect } from 'react';
 import { useQueryClient } from 'react-query';
-import { Chat, Message } from 'interface';
-import { PostDetailPage } from 'pages/postDetail';
-import { socketClient, EVENTS } from 'socketIO';
-import { Notfound } from 'components/App/Notfound';
+import { Chat, Message } from '~/interface';
+import { PostDetailPage } from '~/pages/postDetail';
+import { socketClient, EVENTS } from '~/socketIO';
+import { Notfound } from '~/components/App/Notfound';
 
 function App() {
   const { auth } = useAuthContext();

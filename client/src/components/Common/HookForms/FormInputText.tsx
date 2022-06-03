@@ -3,20 +3,6 @@ import { FC } from 'react';
 import { Controller } from 'react-hook-form';
 import { FormInputProps } from './FormInputProps';
 
-const styles = {
-  label: {
-    fontSize: 'small',
-    color: '#b9bbbe',
-    textTransform: 'uppercase',
-    fontWeight: 400,
-  },
-  input: {
-    color: 'white',
-    background: '#303338',
-    marginTop: '2px',
-  },
-};
-
 export const FormInputText: FC<FormInputProps> = ({ control, name, label, ...rest }) => {
   return (
     <Controller
@@ -48,4 +34,18 @@ export const FormInputText: FC<FormInputProps> = ({ control, name, label, ...res
       )}
     />
   );
+};
+
+const styles = {
+  label: {
+    fontSize: 'small',
+    color: '#b9bbbe',
+    textTransform: 'uppercase',
+    fontWeight: 400,
+  },
+  input: {
+    color: 'white',
+    background: '#303338',
+    marginTop: '2px',
+  },
 };

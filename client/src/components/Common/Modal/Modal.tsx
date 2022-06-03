@@ -15,25 +15,18 @@ type ModalProps = {
   formId?: string;
 };
 
-export const Modal: FC<ModalProps> = ({
-  open,
-  onClose,
-  title,
-  children,
-  isLoading = false,
-  disabledButton = false,
-  formId,
-  buttonText = 'Submit',
-}) => {
+export const Modal: FC<ModalProps> = (props) => {
+  const { isLoading = false, disabledButton = false, buttonText = 'Submit' } = props;
+
   return (
-    <Dialog sx={{ bottom: 'inherit' }} scroll="paper" open={open} onClose={onClose}>
-      <DialogTitle sx={styles.title}>{title}</DialogTitle>
+    <Dialog sx={{ bottom: 'inherit' }} scroll="paper" open={props.open} onClose={props.onClose}>
+      <DialogTitle sx={styles.title}>{props.title}</DialogTitle>
       <DialogContent sx={styles.contentContainer}>
         {/* User info */}
         <UserInfo />
 
         {/* Body */}
-        {children}
+        {props.children}
       </DialogContent>
 
       {/* Button Submit */}
@@ -44,7 +37,7 @@ export const Modal: FC<ModalProps> = ({
           variant="contained"
           size="small"
           type="submit"
-          form={formId}
+          form={props.formId}
           fullWidth
           sx={styles.button}
           disabled={disabledButton}

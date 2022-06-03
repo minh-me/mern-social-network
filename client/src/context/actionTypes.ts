@@ -1,4 +1,4 @@
-import { AuthUserResponse } from 'interface';
+import { AuthUserResponse } from '~/interface';
 
 export enum ActionType {
   AddAuth,

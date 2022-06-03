@@ -3,11 +3,12 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { FormInputText } from 'components/Common';
-import { passwordSchema } from 'validations';
-import { PasswordData } from 'interface';
+import { FormInputText } from '~/components/Common';
+import { passwordSchema } from '~/validations';
+import { PasswordData } from '~/interface';
+import { useResetPassword } from '~/RQhooks';
+
 import { styles } from './styles';
-import { useResetPassword } from 'RQhooks';
 
 const defaultValues: PasswordData = {
   password: '',
@@ -18,6 +19,7 @@ export const ResetPassword = () => {
     defaultValues,
     resolver: yupResolver(passwordSchema),
   });
+
   const { mutateAsync } = useResetPassword();
   const { reset_token } = useParams();
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ export const ResetPassword = () => {
   const onSubmit: SubmitHandler<PasswordData> = async ({ password }) => {
     if (!!reset_token) {
       await mutateAsync({ password, reset_token });
+
       navigate('/', { replace: true });
     }
   };

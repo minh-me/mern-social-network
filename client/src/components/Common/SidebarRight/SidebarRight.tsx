@@ -1,8 +1,10 @@
 import { Box } from '@mui/material';
-import { FormSearch } from 'pages/search/FormSearch';
-import { TabPostList } from 'pages/search/Tab_PostList';
-import { TabUserList } from 'pages/search/Tab_UserList';
-import { styleScroll } from 'utils';
+
+import { FormSearch } from '~/pages/search/FormSearch';
+import { TabPostList } from '~/pages/search/Tab_PostList';
+import { TabUserList } from '~/pages/search/Tab_UserList';
+import { styleScroll } from '~/utils';
+
 import { SidebarRightList } from './SidebarRightList';
 
 export const SidebarRight = () => {

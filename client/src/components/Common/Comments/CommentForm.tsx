@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Box, Avatar } from '@mui/material';
 
-import { useAuthContext } from 'hooks/useAppContext';
-import { useCreateComment } from 'RQhooks';
+import { useAuthContext } from '~/hooks/useAppContext';
+import { useCreateComment } from '~/RQhooks';
+
 import { FormTextAndImageSubmit } from '../Forms';
 
 type CommentFormProps = {

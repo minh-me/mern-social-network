@@ -1,5 +1,5 @@
-import { Button } from '@mui/material';
 import React, { FC } from 'react';
+import { Button } from '@mui/material';
 
 type Props = {
   text: string;

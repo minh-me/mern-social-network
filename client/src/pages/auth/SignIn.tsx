@@ -3,17 +3,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { useForm, SubmitHandler, ErrorOption } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-import { FormInputText } from 'components/Common';
-import { LoginData } from 'interface';
-import { styles } from './styles';
-import { emailSchema, loginSchema } from 'validations';
-import { MDialog } from 'components/Common/Modal';
-import { useForgotPassword, useLogin } from 'RQhooks';
+import { toast } from 'react-toastify';
 import { LoadingButton } from '@mui/lab';
 import { pink } from '@mui/material/colors';
-import { FacebookLoginButton, GoogleButton } from 'components/Common/Buttons';
-import { toast } from 'react-toastify';
+
+import { FormInputText } from '~/components/Common';
+import { LoginData } from '~/interface';
+import { emailSchema, loginSchema } from '~/validations';
+import { MDialog } from '~/components/Common/Modal';
+import { useForgotPassword, useLogin } from '~/RQhooks';
+import { FacebookLoginButton, GoogleButton } from '~/components/Common/Buttons';
+import { styles } from './styles';
 
 const defaultValues: LoginData = {
   email: '',

@@ -6,8 +6,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 
-import { postSchema } from 'validations';
-import { useCreatePost } from 'RQhooks/post.rq';
+import { postSchema } from '~/validations';
+import { useCreatePost } from '~/RQhooks/post.rq';
 import { ImagePreview } from '../Images/ImagePreview';
 import { Modal } from './Modal';
 import { FormInputFile } from '../HookForms/FormInputFile';
@@ -38,13 +38,17 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
 
   const onSubmit: SubmitHandler<InputProps> = async (data) => {
     const formData = new FormData();
+
     formData.append('text', data.text);
+
     if (data.image) formData.append('image', data.image[0]);
+
     await toast.promise(mutateAsync(formData), {
       pending: 'Posting in progress...',
       success: 'Post created successfully 👌',
       error: 'Post created failed 🤯',
     });
+
     handleClose();
   };
 
@@ -52,6 +56,7 @@ export const CreatePostFormModal: FC<ModalProps> = ({ open, setOpen }) => {
     if (formState.errors?.image) {
       toast.error(`🦄 ${formState.errors.image.message}!`);
     }
+
     resetField('image');
   }, [formState.errors?.image, resetField]);
 

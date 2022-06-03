@@ -1,9 +1,3 @@
-import React from 'react';
-
-type Props = {};
-
-const ChatLayout = (props: Props) => {
+export const ChatLayout = () => {
   return <div>ChatLayout</div>;
 };
-
-export default ChatLayout;

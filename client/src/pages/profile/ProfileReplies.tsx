@@ -1,11 +1,11 @@
 import { useState } from 'react';
-
-import { useProfilePosts } from 'RQhooks';
-import { limitPosts } from 'constants/pagination';
-import { PostSkeleton } from 'components/Common/Variants';
-import { PostItem } from 'components/Common';
 import { Typography } from '@mui/material';
-import { LoadMoreInView } from 'components/Common/Buttons';
+
+import { useProfilePosts } from '~/RQhooks';
+import { limitPosts } from '~/constants/pagination';
+import { PostSkeleton } from '~/components/Common/Variants';
+import { PostItem } from '~/components/Common';
+import { LoadMoreInView } from '~/components/Common/Buttons';
 
 export const ProfileReplies = ({ userId = '' }) => {
   const [limit, setLimit] = useState(limitPosts);
@@ -20,6 +20,7 @@ export const ProfileReplies = ({ userId = '' }) => {
   );
 
   if (isLoading || !data) return <PostSkeleton />;
+
   const { info, posts } = data;
 
   return (

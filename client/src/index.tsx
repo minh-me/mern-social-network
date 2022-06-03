@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
-import { ReactQueryProvider } from 'lib/ReactQueryProvider';
 import { ToastContainer } from 'react-toastify';
-import { AppContextProvider } from 'context/ContextProvider';
+
+import { ReactQueryProvider } from '~/lib/ReactQueryProvider';
+import { AppContextProvider } from '~/context/ContextProvider';
 
 ReactDOM.render(
   <React.StrictMode>

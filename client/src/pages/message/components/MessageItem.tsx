@@ -2,10 +2,12 @@ import { FC } from 'react';
 import { Box, Typography } from '@mui/material';
 import { Twemoji } from 'react-emoji-render';
 import Avatar from '@mui/material/Avatar';
-import { Message } from 'interface';
-import { ImageWithModal } from 'components/Common/Images/ImageWithModal';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+
+import { Message } from '~/interface';
+import { ImageWithModal } from '~/components/Common/Images/ImageWithModal';
+
 dayjs.extend(relativeTime);
 
 type MessageProps = {

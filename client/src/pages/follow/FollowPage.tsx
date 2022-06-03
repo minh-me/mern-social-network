@@ -1,24 +1,29 @@
-import { Title } from 'components/App';
 import { Box, Typography } from '@mui/material';
-import { Tab } from 'components/Common/Buttons/Tab';
-
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useUserProfile } from 'RQhooks';
-import { UserListSkeleton } from 'components/Common/Variants';
-import { UserList } from 'components/Common';
-import { User } from 'interface';
+
+import { User } from '~/interface';
+import { Title } from '~/components/App';
+import { useUserProfile } from '~/RQhooks';
+import { Tab } from '~/components/Common/Buttons/Tab';
+import { UserListSkeleton } from '~/components/Common/Variants';
+import { UserList } from '~/components/Common';
 
 export const FollowPage = () => {
   const { username } = useParams();
+
   const location = useLocation();
-  const selectedTab = location.pathname.split('/').slice(-1)[0] as 'followers' | 'following';
   const navigate = useNavigate();
+
+  const selectedTab = location.pathname.split('/').slice(-1)[0] as 'followers' | 'following';
+
   const isTabFollowers = selectedTab === 'followers';
 
   const { data, isLoading } = useUserProfile({ username });
 
   if (isLoading || !data) return <UserListSkeleton />;
+
   const { followers, following, name } = data;
+
   return (
     <>
       {/* Title */}

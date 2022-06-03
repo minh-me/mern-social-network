@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
-import { MDialogInput } from 'components/Common/Modal';
-import { useUpdateChat } from 'RQhooks/chat.rq';
 import { Twemoji } from 'react-emoji-render';
-import { Chat } from 'interface';
 import { useQueryClient } from 'react-query';
-import { useCreateMessage } from 'RQhooks/message.rq';
-import { socketClient, EVENTS } from 'socketIO';
+
+import { useCreateMessage } from '~/RQhooks/message.rq';
+import { MDialogInput } from '~/components/Common/Modal';
+import { useUpdateChat } from '~/RQhooks/chat.rq';
+import { Chat } from '~/interface';
+import { socketClient, EVENTS } from '~/socketIO';
 
 type Props = {
   chatId: string;

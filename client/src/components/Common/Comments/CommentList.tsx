@@ -1,9 +1,12 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
-import { CommentItem } from './CommentItem';
 import { useState } from 'react';
-import { CommentForm } from './CommentForm';
-import { useCommentsByPost } from 'RQhooks';
+
+import { useCommentsByPost } from '~/RQhooks';
+import { Comment } from '~/interface';
+
 import { CommentsSkeleton } from '../Variants/CommentSkeleton';
+import { CommentItem } from './CommentItem';
+import { CommentForm } from './CommentForm';
 
 type Props = {
   postId: string;
@@ -19,10 +22,10 @@ export const CommentList = ({ postId, authorPost }: Props) => {
 
   const { comments, info } = data;
 
-  const rootComments = comments.filter((comm) => !comm.parentId);
+  const rootComments = comments.filter((comm: Comment) => !comm.parentId);
 
   const getReplies = (commentId: string) =>
-    comments.filter((comm) => comm.parentId === commentId) || [];
+    comments.filter((comm: Comment) => comm.parentId === commentId) || [];
 
   const numDesc = (num: number) => (num === 1 ? ' comment' : `${num} comments`);
 
@@ -30,7 +33,7 @@ export const CommentList = ({ postId, authorPost }: Props) => {
     <>
       <Box my={2}>
         {limit <= 10 && <CommentForm postId={postId} />}
-        {rootComments.slice(0, limit).map((comment) => (
+        {rootComments.slice(0, limit).map((comment: Comment) => (
           <CommentItem
             authorPost={authorPost}
             key={comment.id}

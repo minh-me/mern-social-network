@@ -16,15 +16,11 @@ type ModalInputProps = {
   onSubmit: Function;
 };
 
-export const MDialogInput: FC<ModalInputProps> = ({
-  position = 'top',
-  title,
-  open,
-  onClose,
-  inputValue,
-  onSubmit,
-}) => {
+export const MDialogInput: FC<ModalInputProps> = (props) => {
+  const { position = 'top', title, open, onClose, inputValue, onSubmit } = props;
+
   const [value, setValue] = useState(inputValue);
+
   return (
     <Dialog
       sx={{ bottom: position === 'center' ? 0 : 'inherit' }}

@@ -25,10 +25,9 @@ export const LoadMoreButton = ({ isFetching, totalResults, limit, onChangeLimit 
 
 export const LoadMoreInView = ({ isFetching, totalResults, limit, onChangeLimit }: Props) => {
   const { ref, inView } = useInView();
+
   useEffect(() => {
-    if (!isFetching && inView) {
-      onChangeLimit(limit + 2);
-    }
+    if (!isFetching && inView) onChangeLimit(limit + 2);
   }, [inView, onChangeLimit, isFetching, limit]);
 
   return (

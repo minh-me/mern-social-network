@@ -1,10 +1,11 @@
-import { authApi } from 'api/auth.api';
-import { addAuth } from 'context/actions';
-import { useAuthContext } from 'hooks/useAppContext';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
-import { storage } from 'utils';
-import { handlerError } from 'utils/handleError';
+
+import { authApi } from '~/api/auth.api';
+import { addAuth } from '~/context/actions';
+import { useAuthContext } from '~/hooks/useAppContext';
+import { storage } from '~/utils';
+import { handlerError } from '~/utils/handleError';
 
 export const useLogin = () => {
   const { dispatch } = useAuthContext();

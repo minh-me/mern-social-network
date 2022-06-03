@@ -1,11 +1,13 @@
 import axios from 'axios';
-import { Chat, ChatsResponse } from 'interface';
-import axiosInstance from 'utils/axiosInstance';
+import { Chat, ChatsResponse } from '~/interface';
+import axiosInstance from '~/utils/axiosInstance';
 
 const chatUrl = '/api/chats';
 export const chatApi = {
   getChats({ queryKey = ['chats?page=1&limit=1'] }): Promise<ChatsResponse> {
-    return axiosInstance.get(`api/${queryKey[0]}`);
+    const endpoint = queryKey[0];
+
+    return axiosInstance.get(`api/${endpoint}`);
   },
 
   getChat(chatId: string): Promise<Chat> {
@@ -19,7 +21,9 @@ export const chatApi = {
   },
 
   updateChat(chatData: { filter: { chatId: string }; body: {} }): Promise<Chat> {
-    return axiosInstance.patch(`${chatUrl}/${chatData.filter.chatId}`, chatData.body, {
+    const { filter, body } = chatData;
+
+    return axiosInstance.patch(`${chatUrl}/${filter.chatId}`, body, {
       headers: { 'Content-Type': 'application/json' },
     });
   },

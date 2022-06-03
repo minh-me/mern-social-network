@@ -16,18 +16,20 @@ type Props = {
   placeholder?: string;
 };
 
-export const TextareaSubmit = ({
-  onSubmit,
-  autoFocus = true,
-  text,
-  setText,
-  style,
-  label,
-  setLabel,
-  disabled = false,
-  placeholder,
-  onTyping,
-}: Props) => {
+export const TextareaSubmit = (props: Props) => {
+  const {
+    onSubmit,
+    autoFocus = true,
+    text,
+    setText,
+    style,
+    label,
+    setLabel,
+    disabled = false,
+    placeholder,
+    onTyping,
+  } = props;
+
   const handleKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
     if (event.key === 'Backspace' && !text && setLabel && label) {
       onTyping && onTyping();

@@ -12,7 +12,7 @@ type PostActionButtonProps = {
 export const PostActionButton: FC<PostActionButtonProps> = ({
   sx,
   startIcon,
-  numbs: numbs,
+  numbs,
   onClick,
   disabled = false,
 }) => {

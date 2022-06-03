@@ -1,15 +1,16 @@
 import { memo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import LocalPostOfficeRoundedIcon from '@mui/icons-material/LocalPostOfficeRounded';
 
-import { useAuthContext } from 'hooks/useAppContext';
-import { UserProfile } from 'interface';
-import { FollowButton, IconsButtonOutlined } from 'components/Common/Buttons';
+import { useAuthContext } from '~/hooks/useAppContext';
+import { UserProfile } from '~/interface';
+import { FollowButton, IconsButtonOutlined } from '~/components/Common/Buttons';
+import { useCreateChat } from '~/RQhooks/chat.rq';
+
 import { ProfileFollowers } from './components/ProfileFollowers';
 import { ProfileInfo } from './components/ProfileInfo';
 import { ProfilePhoto } from './components/ProfilePhoto';
-import { useCreateChat } from 'RQhooks/chat.rq';
-import { useNavigate } from 'react-router-dom';
 
 type Props = {
   user: UserProfile;

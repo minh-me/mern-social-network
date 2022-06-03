@@ -3,7 +3,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { FormInputSearch } from 'components/Common';
+
+import { FormInputSearch } from '~/components/Common';
 
 const searchSchema = yup.object({
   text: yup.string().required().trim().label('Search'),
@@ -14,7 +15,9 @@ type Props = { name: string; to?: string };
 
 export const FormSearch: FC<Props> = memo(({ name, to }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+
   const queryValue = searchParams.get(name) || '';
+
   const navigate = useNavigate();
 
   const { control, handleSubmit, reset } = useForm<InputProps>({

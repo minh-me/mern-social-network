@@ -2,11 +2,12 @@ import { Box, IconButton } from '@mui/material';
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined';
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
-import { MessageHeaderSkeleton } from 'components/Common/Variants/MessageSkeleton';
+
+import { useChat } from '~/RQhooks/chat.rq';
+import { useAuthContext } from '~/hooks/useAppContext';
+import { MessageHeaderSkeleton } from '~/components/Common/Variants/MessageSkeleton';
 import { MessageAvatar } from './MessageAvatar';
 import { ChatName } from './ChatName';
-import { useChat } from 'RQhooks/chat.rq';
-import { useAuthContext } from 'hooks/useAppContext';
 
 type Props = {
   chatId: string | '';

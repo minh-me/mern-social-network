@@ -1,11 +1,13 @@
 import axios from 'axios';
-import { Message, MessagesResponse } from 'interface';
-import axiosInstance from 'utils/axiosInstance';
+import { Message, MessagesResponse } from '~/interface';
+import axiosInstance from '~/utils/axiosInstance';
 
 const messageUrl = '/api/messages';
 export const messageApi = {
-  getMessages({ queryKey = ['messages?page=1&limit=1'] }): Promise<MessagesResponse> {
-    return axiosInstance.get(`api/${queryKey[0]}`);
+  getMessages({ queryKey = ['messages?page=1'] }): Promise<MessagesResponse> {
+    const endpoint = queryKey[0];
+
+    return axiosInstance.get(`api/${endpoint}`);
   },
 
   getMessage(messageId: string): Promise<Message> {
@@ -19,7 +21,9 @@ export const messageApi = {
   },
 
   updateMessage(messageData: { filter: { messageId: string }; body: {} }): Promise<Message> {
-    return axios.post(`${messageUrl}/${messageData.filter.messageId}`, messageData.body, {
+    const { filter, body } = messageData;
+
+    return axios.post(`${messageUrl}/${filter.messageId}`, body, {
       headers: { 'Content-Type': 'application/json' },
     });
   },

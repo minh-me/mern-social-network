@@ -1,7 +1,3 @@
-import React from 'react';
-
-type Props = {};
-
-const AdminLayout = (props: Props) => {
+export const AdminLayout = () => {
   return <div>AdminLayout</div>;
 };

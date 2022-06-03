@@ -1,11 +1,12 @@
-import { Box, Typography } from '@mui/material';
-import { LoadMoreButton } from 'components/Common/Buttons';
-import { UserItem } from 'components/Common';
-import { UserListSkeleton } from 'components/Common/Variants';
-import { limitUsers } from 'constants/pagination';
-import { User } from 'interface';
 import { useState } from 'react';
-import { useUsers } from 'RQhooks';
+import { Box, Typography } from '@mui/material';
+
+import { LoadMoreButton } from '~/components/Common/Buttons';
+import { UserItem } from '~/components/Common';
+import { UserListSkeleton } from '~/components/Common/Variants';
+import { limitUsers } from '~/constants/pagination';
+import { User } from '~/interface';
+import { useUsers } from '~/RQhooks';
 
 type Props = {
   handleAddUsersSelected: (user: User) => void;
@@ -15,16 +16,18 @@ type Props = {
 
 export const ChatUserList = ({ search, handleAddUsersSelected, usersSelected }: Props) => {
   const [limit, setLimit] = useState(limitUsers);
+
   const { data, isFetching, isLoading } = useUsers({ limit, search }, { cacheTime: 1 * 60 * 1000 });
 
   if (isLoading || !data) return <UserListSkeleton />;
+
   const { users, info } = data;
 
   return (
     <Box px={2}>
       {users
-        .filter((user) => !usersSelected.includes(user))
-        .map((user) => {
+        .filter((user: User) => !usersSelected.includes(user))
+        .map((user: User) => {
           return (
             <Box
               onClick={() => handleAddUsersSelected(user)}
@@ -42,7 +45,7 @@ export const ChatUserList = ({ search, handleAddUsersSelected, usersSelected }: 
         isFetching={isFetching}
         totalResults={info.totalResults}
         limit={limit}
-        onChangeLimit={(limit) => setLimit(limit)}
+        onChangeLimit={(limit: number) => setLimit(limit)}
       />
 
       {users && users.length === 0 && (

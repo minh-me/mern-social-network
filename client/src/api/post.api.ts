@@ -1,14 +1,18 @@
-import { Post, PostsResponse } from 'interface';
-import axiosInstance from 'utils/axiosInstance';
+import { Post, PostsResponse } from '~/interface';
+import axiosInstance from '~/utils/axiosInstance';
 
 const postUrl = '/api/posts';
 export const postApi = {
-  getPosts({ queryKey = ['posts?page=1&limit=1'] }): Promise<PostsResponse> {
-    return axiosInstance.get(`api/${queryKey[0]}`);
+  getPosts({ queryKey = ['posts?page=1'] }): Promise<PostsResponse> {
+    const endpoint = queryKey[0];
+
+    return axiosInstance.get(`api/${endpoint}`);
   },
 
-  getProfilePosts({ queryKey = ['posts/profile?page=1&limit=1'] }): Promise<PostsResponse> {
-    return axiosInstance.get(`api/${queryKey[0]}`);
+  getProfilePosts({ queryKey = ['posts/profile?page=1'] }): Promise<PostsResponse> {
+    const endpoint = queryKey[0];
+
+    return axiosInstance.get(`api/${endpoint}`);
   },
 
   getPost(postId: string): Promise<Post> {
@@ -21,11 +25,10 @@ export const postApi = {
     });
   },
 
-  updatePost(updateRequest: {
-    filter: { id: string };
-    body: { [key: string]: any };
-  }): Promise<Post> {
-    return axiosInstance.patch(`${postUrl}/${updateRequest.filter.id}`, updateRequest.body, {
+  updatePost(postData: { filter: { id: string }; body: {} }): Promise<Post> {
+    const { filter, body } = postData;
+
+    return axiosInstance.patch(`${postUrl}/${filter.id}`, body, {
       headers: { 'Content-Type': 'application/json' },
     });
   },

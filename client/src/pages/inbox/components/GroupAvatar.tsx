@@ -1,6 +1,6 @@
-import { Box, Avatar } from '@mui/material';
-import { User } from 'interface';
 import { FC } from 'react';
+import { Box, Avatar } from '@mui/material';
+import { User } from '~/interface';
 
 type Props = {
   users: User[];

@@ -1,7 +1,8 @@
-import { PostItem } from 'components/Common';
-import { PostImageSkeleton } from 'components/Common/Variants';
 import { useParams } from 'react-router-dom';
-import { usePostById } from 'RQhooks';
+
+import { PostItem } from '~/components/Common';
+import { PostImageSkeleton } from '~/components/Common/Variants';
+import { usePostById } from '~/RQhooks';
 
 export const PostDetailPage = () => {
   const { postId } = useParams();

@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders } from 'a
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
 import { storage } from './storage';
-import { AuthResponse } from 'interface';
+import { AuthResponse } from '~/interface';
 
 let ac_token = storage.getToken() || '';
 

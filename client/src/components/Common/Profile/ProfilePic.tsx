@@ -3,12 +3,12 @@ import { Box, IconButton } from '@mui/material';
 import PhotoCameraRoundedIcon from '@mui/icons-material/PhotoCameraRounded';
 import pink from '@mui/material/colors/pink';
 import { SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 
+import { uploadAvatarSchema } from '~/validations';
+import { useUploadProfilePic } from '~/RQhooks';
 import { UploadFileModal } from '../Modal/UploadFileModal';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { uploadAvatarSchema } from 'validations';
-import { useUploadProfilePic } from 'RQhooks';
 
 export const ProfilePic = ({ profilePic = '' }) => {
   const [open, setOpen] = useState(false);
@@ -16,11 +16,14 @@ export const ProfilePic = ({ profilePic = '' }) => {
 
   const onSubmit: SubmitHandler<{ file: FileList }> = async (data) => {
     const formData = new FormData();
+
     formData.append('avatar', data.file[0]);
+
     await toast.promise(mutateAsync(formData), {
       pending: 'Upload...',
       success: 'Updated profile picture successfully!',
     });
+
     setOpen(false);
   };
 

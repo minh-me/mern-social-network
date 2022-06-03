@@ -1,7 +1,9 @@
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
-import { User } from 'interface/user.interface';
-import { UserAvatar } from 'pages/inbox/components/UserAvatar';
+
+import { User } from '~/interface/user.interface';
+import { UserAvatar } from '~/pages/inbox/components/UserAvatar';
+
 type Props = {
   users: User[];
   isGroupChat: boolean;

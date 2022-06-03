@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
-import { Title } from 'components/App';
-
-import { User } from 'interface';
-import { pink } from '@mui/material/colors';
-import { ChatUserList } from './components/ChatUserList';
-import { FormSearchUserLabel } from './components/FormSearchUserLabel';
-import { useCreateChat } from 'RQhooks/chat.rq';
 import { toast } from 'react-toastify';
 import { LoadingButton } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
+import { pink } from '@mui/material/colors';
+import { Box } from '@mui/material';
+
+import { Title } from '~/components/App';
+import { User } from '~/interface';
+import { useCreateChat } from '~/RQhooks/chat.rq';
+
+import { ChatUserList } from './components/ChatUserList';
+import { FormSearchUserLabel } from './components/FormSearchUserLabel';
 
 export const NewChatPage = () => {
   const [search, setSearch] = useState('');

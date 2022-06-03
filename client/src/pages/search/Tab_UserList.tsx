@@ -1,16 +1,20 @@
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import { UserList } from 'components/Common';
-import { UserListSkeleton } from 'components/Common/Variants';
-import { limitUsers } from 'constants/pagination';
 import { useState } from 'react';
-import { useUsers } from 'RQhooks';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
+
+import { UserList } from '~/components/Common';
+import { UserListSkeleton } from '~/components/Common/Variants';
+import { limitUsers } from '~/constants/pagination';
+import { useUsers } from '~/RQhooks';
 
 export const TabUserList = ({ search = '', sort = '-createdAt', limit = limitUsers }) => {
   const [sizeLimit, setSizeLimit] = useState(limit);
+
   const { data, isFetching, isLoading } = useUsers({ limit: sizeLimit, search, sort });
 
   if (isLoading || !data) return <UserListSkeleton />;
+
   const { users, info } = data;
+
   return (
     <Box px={2}>
       <UserList users={users} />

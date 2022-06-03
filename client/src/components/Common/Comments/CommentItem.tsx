@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { Box } from '@mui/material';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+import { Comment } from '~/interface';
+import { useAuthContext } from '~/hooks/useAppContext';
+
 import { ActionButton } from './components/ActionButton';
 import { AvatarComment } from './components/AvatarComment';
 import { AuthorComment } from './components/AuthorComment';
-
 import { ReplyCommentButton } from './components/ReplyCommentButton';
 import { LikeCommentButton } from './components/LikeCommentButton';
-import { Comment } from 'interface';
+import { ContentComment } from './components/ContentComment';
 import { CommentForm } from './CommentForm';
 import { Replies } from './Replies';
-import { ContentComment } from './components/ContentComment';
-import { useAuthContext } from 'hooks/useAppContext';
 
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 type CommentItemProps = {
@@ -24,8 +25,9 @@ type CommentItemProps = {
 
 export const CommentItem = ({ comment, replies, authorPost }: CommentItemProps) => {
   const { auth } = useAuthContext();
-  const { text, author, createdAt, image, replyTo } = comment;
   const [toggleReplyForm, setToggleReplyForm] = useState(false);
+
+  const { text, author, createdAt, image, replyTo } = comment;
 
   const isLiked = (auth && comment.likes.includes(auth.id)) || false;
   const replyId = comment.parentId ? comment.parentId : comment.id;

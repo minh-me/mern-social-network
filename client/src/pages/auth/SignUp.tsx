@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { toast } from 'react-toastify';
-
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormInputText, FormInputDate } from 'components/Common';
-import { MDialog } from 'components/Common/Modal';
 
-import { registerSchema } from 'validations';
-import { RegisterData } from 'interface';
+import { registerSchema } from '~/validations';
+import { RegisterData } from '~/interface';
+import { useRegister } from '~/RQhooks';
+import { MDialog } from '~/components/Common/Modal';
+import { FormInputText, FormInputDate } from '~/components/Common';
 import { styles } from './styles';
-import { useRegister } from 'RQhooks';
-import { LoadingButton } from '@mui/lab';
 
 const defaultValues: RegisterData = {
   email: '',
@@ -26,6 +25,7 @@ export const SignUp = () => {
     defaultValues,
     resolver: yupResolver(registerSchema),
   });
+
   const [openModal, setOpenModal] = useState(false);
   const { mutateAsync, isLoading } = useRegister();
 
@@ -33,6 +33,7 @@ export const SignUp = () => {
     await toast.promise(mutateAsync(data), {
       pending: 'Sign Up...',
     });
+
     setOpenModal(true);
   };
 

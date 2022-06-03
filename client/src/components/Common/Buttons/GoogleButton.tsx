@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material';
 import { useGoogleLogin } from 'react-google-login';
 import { useNavigate } from 'react-router-dom';
-import { useLoginWithGoogle } from 'RQhooks';
+import { useLoginWithGoogle } from '~/RQhooks';
 
 const OAUTH_CLIENT_ID = '679275323194-0m8bkvm059v14kcepq57l873v8lm7r37.apps.googleusercontent.com';
 

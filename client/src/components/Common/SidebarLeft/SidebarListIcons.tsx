@@ -10,12 +10,13 @@ import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Badge, Link, Typography } from '@mui/material';
-import { MDialog } from 'components/Common/Modal';
-import { useLogout } from 'RQhooks';
-import { storage } from 'utils';
-import { useAuthContext } from 'hooks/useAppContext';
-import { resetAppState } from 'context';
 import { QueryClient } from 'react-query';
+
+import { MDialog } from '~/components/Common/Modal';
+import { useLogout } from '~/RQhooks';
+import { storage } from '~/utils';
+import { useAuthContext } from '~/hooks/useAppContext';
+import { resetAppState } from '~/context';
 
 export const SidebarListIcons = () => {
   const { dispatch } = useAuthContext();

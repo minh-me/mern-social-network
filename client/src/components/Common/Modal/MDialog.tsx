@@ -20,29 +20,22 @@ type ModalProps = {
   isLoading?: boolean;
 };
 
-export const MDialog: FC<ModalProps> = ({
-  type = 'ok',
-  position = 'top',
-  title,
-  open,
-  children,
-  onClose,
-  confirmButton,
-  entityId,
-  textAlign = 'left',
-  isLoading = false,
-}) => {
+export const MDialog: FC<ModalProps> = (props) => {
+  const { type = 'ok', position = 'top', textAlign = 'left', isLoading = false } = props;
+
   return (
     <Dialog
       sx={{ bottom: position === 'center' ? 0 : 'inherit' }}
       maxWidth="xs"
-      open={open}
-      onClose={() => onClose()}
+      open={props.open}
+      onClose={() => props.onClose()}
     >
-      <DialogTitle sx={{ background: '#36393f', color: '#f91880', textAlign }}>{title}</DialogTitle>
+      <DialogTitle sx={{ background: '#36393f', color: '#f91880', textAlign }}>
+        {props.title}
+      </DialogTitle>
       <DialogContent sx={{ background: '#36393f' }}>
         <DialogContentText sx={{ color: '#DCDDDE', fontWeight: 400, fontSize: 14, textAlign }}>
-          {children}
+          {props.children}
         </DialogContentText>
       </DialogContent>
       <DialogActions sx={{ background: '#2f3136' }}>
@@ -52,7 +45,7 @@ export const MDialog: FC<ModalProps> = ({
             color="error"
             variant="contained"
             disabled={isLoading}
-            onClick={() => confirmButton(entityId)}
+            onClick={() => props.confirmButton(props.entityId)}
           >
             Xóa
           </Button>
@@ -61,7 +54,7 @@ export const MDialog: FC<ModalProps> = ({
             disabled={isLoading}
             sx={styles.button}
             variant="contained"
-            onClick={() => confirmButton(entityId)}
+            onClick={() => props.confirmButton(props.entityId)}
           >
             Okay!
           </Button>

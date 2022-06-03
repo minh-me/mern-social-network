@@ -1,7 +1,8 @@
 import { Box } from '@mui/material';
 import { CommentText } from './CommentText';
 import { AuthorComment } from './AuthorComment';
-import { User } from 'interface';
+
+import { User } from '~/interface';
 
 type Props = {
   replyTo?: User;

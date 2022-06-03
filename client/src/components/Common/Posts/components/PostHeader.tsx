@@ -1,12 +1,14 @@
 import { FC } from 'react';
 import { Link as LinkRoute } from 'react-router-dom';
 import { Avatar, Box, Link, Typography } from '@mui/material';
-
-import { Post } from 'interface';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useAuthContext } from 'hooks/useAppContext';
+
+import { Post } from '~/interface';
+import { useAuthContext } from '~/hooks/useAppContext';
+
 import { MenuPost } from './MenuPost';
+
 dayjs.extend(relativeTime);
 
 type Props = {

@@ -11,6 +11,7 @@ type Props = {
 export const InputFile = ({ setFile, uploadButton }: Props) => {
   const handleFileChange = (e: any) => {
     const file = e.target.files;
+
     setFile(file as FileList);
   };
 

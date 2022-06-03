@@ -1,17 +1,21 @@
-import { Title } from 'components/App';
 import { Box } from '@mui/material';
-import { Tab } from 'components/Common/Buttons/Tab';
-
 import { useNavigate, useLocation } from 'react-router-dom';
+
+import { Title } from '~/components/App';
+import { Tab } from '~/components/Common/Buttons/Tab';
+
 import { FormSearch } from './FormSearch';
 import { TabPostList } from './Tab_PostList';
 import { TabUserList } from './Tab_UserList';
 
 export const SearchPage = () => {
   const location = useLocation();
-  const selectedTab = location.pathname.split('/').slice(-1)[0] as 'posts' | 'users';
-  const isSelectedPosts = selectedTab === 'posts';
   const navigate = useNavigate();
+
+  const selectedTab = location.pathname.split('/').slice(-1)[0] as 'posts' | 'users';
+
+  const isSelectedPosts = selectedTab === 'posts';
+
   const { search } = location;
 
   return (

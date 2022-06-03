@@ -1,24 +1,26 @@
 import { useState } from 'react';
+import { pink } from '@mui/material/colors';
 import { Box, Typography } from '@mui/material';
 import PushPinSharpIcon from '@mui/icons-material/PushPinSharp';
 
-import { useProfilePosts } from 'RQhooks';
-import { limitPosts } from 'constants/pagination';
-import { LoadMoreInView } from 'components/Common/Buttons';
-import { PostItem, PostList } from 'components/Common';
-import { PostSkeleton } from 'components/Common/Variants';
-import { pink } from '@mui/material/colors';
+import { useProfilePosts } from '~/RQhooks';
+import { limitPosts } from '~/constants/pagination';
+import { LoadMoreInView } from '~/components/Common/Buttons';
+import { PostItem, PostList } from '~/components/Common';
+import { PostSkeleton } from '~/components/Common/Variants';
 
 export const ProfilePostList = ({ userId = '' }) => {
   const [limit, setLimit] = useState(limitPosts);
+
   const { data, isLoading, isFetching } = useProfilePosts(
     { postedBy: userId, limit },
     { cacheTime: userId ? 0.5 * 60 * 1000 : 5 * 60 * 1000 }
   );
 
   if (isLoading || !data) return <PostSkeleton />;
+
   const { info, posts } = data;
-  console.log({ posts });
+
   return (
     <>
       {posts.length > 0 && posts[0].pinned ? (

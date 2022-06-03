@@ -1,6 +1,6 @@
-import { postApi } from 'api/post.api';
+import { postApi } from '~/api/post.api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { handlerError } from 'utils/handleError';
+import { handlerError } from '~/utils/handleError';
 import { options } from './options.type';
 
 export const usePosts = (
