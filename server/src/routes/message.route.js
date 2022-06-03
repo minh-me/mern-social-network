@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { auth, uploadImage, uploadStorage, validate } from '../middlewares'
+import { auth, uploadImage, uploadStorage, validate } from '../middleware'
 import { messageValidation } from '../validations'
 import { messageController } from '../controllers'
 

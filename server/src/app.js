@@ -12,7 +12,7 @@ import 'colors'
 
 import { scheduleJob } from './utils/backup/scheduleJob'
 import { jwtStrategy, config, db, authLimiter } from './config'
-import { errorHandler } from './middlewares'
+import { errorHandler } from './middleware'
 import routes from './routes/_index'
 import { configCors } from './config/cors'
 

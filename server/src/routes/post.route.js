@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { validate, auth, uploadStorage, uploadPostImage } from '../middlewares'
+import { validate, auth, uploadStorage, uploadPostImage } from '../middleware'
 import { postValidation } from '../validations'
 import { postController } from '../controllers'
 

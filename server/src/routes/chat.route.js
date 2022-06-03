@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { validate, auth } from '../middlewares'
+import { validate, auth } from '../middleware'
 import { chatValidation } from '../validations'
 import { chatController } from '../controllers'
 

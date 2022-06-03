@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { validate, auth } from '../middlewares'
+import { validate, auth } from '../middleware'
 import { notificationValidation } from '../validations'
 import { notificationController } from '../controllers'
 
