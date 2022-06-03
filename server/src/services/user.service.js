@@ -1,6 +1,6 @@
 import createError from 'http-errors'
-import { postService } from './post.service'
-import { uploadService } from './upload.service'
+import * as postService from './post.service'
+import * as uploadService from './upload.service'
 import { User } from '../models'
 
 /**
@@ -173,6 +173,7 @@ const updateCoverPhoto = async (userId, coverPhoto) => {
   )
 
   if (user.coverPhoto?.id) {
+    console.log({ user: user.coverPhoto.id })
     await uploadService.destroy(user.coverPhoto.id)
   }
 
