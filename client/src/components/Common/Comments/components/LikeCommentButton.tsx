@@ -2,7 +2,8 @@ import { ActionButton } from './ActionButton';
 import { Box } from '@mui/material';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbUpRoundedIcon from '@mui/icons-material/ThumbUpRounded';
-import { useLikeComment } from 'RQhooks';
+
+import { useLikeComment } from '~/RQhooks';
 
 type Props = {
   likes: string[] | [];

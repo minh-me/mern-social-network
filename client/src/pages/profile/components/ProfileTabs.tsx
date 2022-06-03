@@ -1,6 +1,6 @@
 import { URLSearchParamsInit } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { Tab } from 'components/Common/Buttons';
+import { Tab } from '~/components/Common/Buttons';
 
 type Props = {
   setSearchParams: (

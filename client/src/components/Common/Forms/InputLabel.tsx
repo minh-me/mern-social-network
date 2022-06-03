@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 type Props = {
   setSearchText: React.Dispatch<React.SetStateAction<String | undefined>>;
 };
+
 const Input = styled(InputBase)(() => ({
   fontSize: 16,
   '& .MuiInputBase-input': {
@@ -18,8 +19,10 @@ const Input = styled(InputBase)(() => ({
     },
   },
 }));
+
 export const InputLabel: FC<Props> = ({ setSearchText }) => {
   const inputRef = useRef<HTMLInputElement>();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearchText(inputRef.current?.value);

@@ -12,13 +12,15 @@ import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import MailOutlineRoundedIcon from '@mui/icons-material/MailOutlineRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Badge, Link, Typography } from '@mui/material';
-import { MDialog } from 'components/Common/Modal';
-import { useLogout } from 'RQhooks';
-import { storage } from 'utils';
-import { useAuthContext } from 'hooks/useAppContext';
-import { resetAppState } from 'context';
-import { useNotifications } from 'RQhooks/notification.rq';
-import { useChats } from 'RQhooks/chat.rq';
+
+import { MDialog } from '~/components/Common/Modal';
+import { useLogout } from '~/RQhooks';
+import { storage } from '~/utils';
+import { useAuthContext } from '~/hooks/useAppContext';
+import { resetAppState } from '~/context';
+import { useNotifications } from '~/RQhooks/notification.rq';
+import { useChats } from '~/RQhooks/chat.rq';
+import { Notification, Chat } from '~/interface';
 
 const SidebarList = () => {
   const { dispatch, auth } = useAuthContext();
@@ -35,13 +37,13 @@ const SidebarList = () => {
 
   if (notificationsData) {
     numbsNotification = notificationsData?.notifications.filter(
-      (notification) => notification.opened === false
+      (notification: Notification) => notification.opened === false
     ).length;
   }
 
   if (chatsData && auth?.id) {
     numbsChat = chatsData?.chats.filter(
-      (chat) => !chat.latestMessage?.readBy.includes(auth.id)
+      (chat: Chat) => !chat.latestMessage?.readBy.includes(auth.id)
     ).length;
   }
 

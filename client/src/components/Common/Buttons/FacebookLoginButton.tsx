@@ -1,6 +1,6 @@
 import FacebookLogin from 'react-facebook-login';
 // import { useNavigate } from 'react-router-dom';
-// import { useLoginWithGoogle } from 'RQhooks';
+// import { useLoginWithGoogle } from '~/RQhooks';
 
 const FB_APP_ID = '726027201729735';
 

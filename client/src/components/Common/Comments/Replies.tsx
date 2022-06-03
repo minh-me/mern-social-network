@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import { CommentItem } from './CommentItem';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUp from '@mui/icons-material/ArrowDropUp';
-import { Comment } from 'interface';
+
+import { Comment } from '~/interface';
+import { CommentItem } from './CommentItem';
 
 type Props = {
   replies: Comment[];
@@ -15,7 +16,9 @@ export const Replies = ({ replies, authorPost }: Props) => {
   const [openReplies, setOpenRelies] = useState(false);
 
   const numReplies = replies.length;
+
   const numDesc = (num: number) => (num === 1 ? ' reply' : `${num} replies`);
+
   const handleOpenReplies = () => setOpenRelies(!openReplies);
 
   return (

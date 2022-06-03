@@ -1,6 +1,6 @@
+import { FC } from 'react';
 import { Theme } from '@emotion/react';
 import { Typography, SxProps } from '@mui/material';
-import { FC } from 'react';
 
 type Props = {
   children: JSX.Element[] | JSX.Element | string;

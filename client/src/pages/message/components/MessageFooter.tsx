@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 
-import { FormTextAndImageSubmit } from 'components/Common/Forms';
-import { useCreateMessage } from 'RQhooks/message.rq';
-import { socketClient, EVENTS } from 'socketIO';
+import { FormTextAndImageSubmit } from '~/components/Common/Forms';
+import { useCreateMessage } from '~/RQhooks/message.rq';
+import { socketClient, EVENTS } from '~/socketIO';
 
 type Props = {
   chatId: string;

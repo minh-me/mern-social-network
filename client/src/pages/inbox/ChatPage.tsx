@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { Title } from 'components/App';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import IconButton from '@mui/material/IconButton';
+
+import { Title } from '~/components/App';
 import { ChatList } from './components';
 
 export const ChatPage = () => {

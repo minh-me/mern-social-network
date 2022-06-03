@@ -17,14 +17,9 @@ type Props = {
   resolver?: Resolver<any, any>;
 };
 
-export const UploadFileModal: FC<Props> = ({
-  open,
-  onClose,
-  onSubmit,
-  isLoading = false,
-  title,
-  resolver,
-}) => {
+export const UploadFileModal: FC<Props> = (props) => {
+  const { open, onClose, onSubmit, isLoading = false, title, resolver } = props;
+
   const defaultValues = { file: undefined };
 
   const methods = useForm<any>({
@@ -42,15 +37,14 @@ export const UploadFileModal: FC<Props> = ({
   } = methods;
 
   useEffect(() => {
-    if (errors?.file) {
-      toast.error(`🦄 ${errors.file.message}!`);
-    }
-    resetField('file');
-  }, [errors?.file, resetField]);
-
-  useEffect(() => {
     if (open) resetField('file');
   }, [open, resetField]);
+
+  useEffect(() => {
+    if (errors?.file) toast.error(`🦄 ${errors.file.message}!`);
+
+    resetField('file');
+  }, [errors?.file, resetField]);
 
   return (
     <Modal

@@ -1,8 +1,10 @@
 import { FC, memo, useState } from 'react';
 import { Box, Divider } from '@mui/material';
-import { PostHeader, PostBody, PostFooter } from './components';
-import { Post } from 'interface';
+
+import { Post } from '~/interface';
+
 import { CommentList } from '../Comments';
+import { PostHeader, PostBody, PostFooter } from './components';
 
 type PostItemProps = {
   post: Post;

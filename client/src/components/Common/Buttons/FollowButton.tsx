@@ -1,6 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import { pink } from '@mui/material/colors';
-import { useFollow } from 'RQhooks';
+import { useFollow } from '~/RQhooks';
 
 type Props = {
   userId: string;

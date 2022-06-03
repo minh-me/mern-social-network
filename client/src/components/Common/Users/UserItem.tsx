@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { Avatar, Box, Link, Typography } from '@mui/material';
 import { Link as LinkRoute } from 'react-router-dom';
-import { User } from 'interface';
+
+import { User } from '~/interface';
+import { useAuthContext } from '~/hooks/useAppContext';
 import { FollowButton } from '../Buttons';
-import { useAuthContext } from 'hooks/useAppContext';
 
 interface UserItemProps {
   user: User;

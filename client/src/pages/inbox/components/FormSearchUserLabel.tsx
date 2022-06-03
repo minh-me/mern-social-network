@@ -1,7 +1,8 @@
 import { Box, Typography } from '@mui/material';
-import { User } from 'interface';
 import React from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+
+import { User } from '~/interface';
 import { LabelUsers } from './LabelUsers';
 
 type Props = {

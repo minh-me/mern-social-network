@@ -9,9 +9,9 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PushPinSharpIcon from '@mui/icons-material/PushPinSharp';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
 
-import { useDeletePost, useUpdatePost } from 'RQhooks';
-import { Post } from 'interface';
-import { MDialog } from 'components/Common/Modal';
+import { useDeletePost, useUpdatePost } from '~/RQhooks';
+import { Post } from '~/interface';
+import { MDialog } from '~/components/Common/Modal';
 
 type MenuPostProps = {
   post: Post;

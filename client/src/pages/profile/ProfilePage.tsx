@@ -1,15 +1,16 @@
 import { Box, Divider } from '@mui/material';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { Title } from 'components/App';
+import { Title } from '~/components/App';
+import { useUserProfile } from '~/RQhooks';
+import { ProfileHeaderSkeleton } from '~/components/Common/Variants';
+import { useAuthContext } from '~/hooks/useAppContext';
+import { UserProfile } from '~/interface';
+
+import { ProfileTabs } from './components/ProfileTabs';
 import { ProfilePostList } from './ProfilePostList';
 import { ProfileHeader } from './ProfileHeader';
-import { ProfileTabs } from './components/ProfileTabs';
-import { useUserProfile } from 'RQhooks';
-import { ProfileHeaderSkeleton } from 'components/Common/Variants';
 import { ProfileReplies } from './ProfileReplies';
-import { useAuthContext } from 'hooks/useAppContext';
-import { UserProfile } from 'interface';
 
 export const ProfilePage = () => {
   const params = useParams();

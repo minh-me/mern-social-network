@@ -1,6 +1,6 @@
-import { userApi } from 'api/user.api';
+import { userApi } from '~/api/user.api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { handlerError } from 'utils/handleError';
+import { handlerError } from '~/utils/handleError';
 import { options } from './options.type';
 
 export const useUserProfile = ({ username = 'profile' }, options?: options) => {

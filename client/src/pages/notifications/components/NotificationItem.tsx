@@ -1,13 +1,14 @@
 import { FC, useState } from 'react';
 import { Avatar, Box, Typography, Button } from '@mui/material';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
-import { Notification, NotificationTypes } from 'interface';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { styles } from './styles';
-import { MDialog } from 'components/Common/Modal';
-import { useDeleteNotification, useUpdateNotification } from 'RQhooks/notification.rq';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { MDialog } from '~/components/Common/Modal';
+import { useDeleteNotification, useUpdateNotification } from '~/RQhooks/notification.rq';
+import { Notification, NotificationTypes } from '~/interface';
 
 dayjs.extend(relativeTime);
 
@@ -43,11 +44,13 @@ export const NotificationItem: FC<NotificationProps> = ({ notification }) => {
     ) {
       return `/users/${notification.userFrom.username}`;
     }
+
     return `/posts/${notification.entityId}`;
   };
 
   const handleNavigateNotifyDetail = () => {
     update({ filter: { id: notification.id }, body: { opened: true } });
+
     navigate(linkNotifyDetail(notification));
   };
 

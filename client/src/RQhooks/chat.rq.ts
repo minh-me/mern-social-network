@@ -1,8 +1,8 @@
-import { chatApi } from 'api/chat.api';
+import { chatApi } from '~/api/chat.api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { handlerError } from 'utils/handleError';
+import { handlerError } from '~/utils/handleError';
 import { options } from './options.type';
-import { Chat } from 'interface/chat.interface';
+import { Chat } from '~/interface/chat.interface';
 
 export const useChats = ({ page = 1, limit = 1, sort = '-createdAt' }, options?: options) => {
   const queryKey = `chats?page=${page}&limit=${limit}&sort=${sort}`;

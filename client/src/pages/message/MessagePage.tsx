@@ -2,14 +2,15 @@ import { useEffect } from 'react';
 import { Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
-import { Title } from 'components/App';
+import { Title } from '~/components/App';
+import { styleScroll } from '~/utils';
+import { useAddToReadBy } from '~/RQhooks/message.rq';
+import { Message } from '~/interface';
+import { socketClient, EVENTS } from '~/socketIO';
+
 import { MessageHeader } from './components/MessageHeader';
 import { MessageFooter } from './components/MessageFooter';
-import { styleScroll } from 'utils';
 import { MessageList } from './components/MessageList';
-import { useAddToReadBy } from 'RQhooks/message.rq';
-import { Message } from 'interface';
-import { socketClient, EVENTS } from 'socketIO';
 
 export const MessagePage = () => {
   const { chatId } = useParams();

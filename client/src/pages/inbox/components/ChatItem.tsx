@@ -1,12 +1,15 @@
+import { Link } from 'react-router-dom';
+import { Twemoji } from 'react-emoji-render';
 import { Box, Typography } from '@mui/material';
-import { GroupAvatar } from './GroupAvatar';
-import { UserAvatar } from './UserAvatar';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Chat, User } from 'interface';
-import { Link } from 'react-router-dom';
-import { useAuthContext } from 'hooks/useAppContext';
-import { Twemoji } from 'react-emoji-render';
+
+import { useAuthContext } from '~/hooks/useAppContext';
+import { Chat, User } from '~/interface';
+
+import { GroupAvatar } from './GroupAvatar';
+import { UserAvatar } from './UserAvatar';
+
 dayjs.extend(relativeTime);
 
 type Props = {
@@ -15,6 +18,7 @@ type Props = {
 
 export const ChatItem = ({ chat }: Props) => {
   const { auth } = useAuthContext();
+
   const { latestMessage } = chat;
 
   let LatestMessage = () => (
@@ -43,7 +47,7 @@ export const ChatItem = ({ chat }: Props) => {
 
   // Check chat is not group
   if (!chat.isGroupChat) {
-    const user = chat.users.find((user) => user.id !== auth?.id) as User;
+    const user = chat.users.find((user: User) => user.id !== auth?.id) as User;
 
     chatName = user.name;
     MessageAvatar = () => <UserAvatar user={user} />;

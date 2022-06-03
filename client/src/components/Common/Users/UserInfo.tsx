@@ -1,5 +1,5 @@
 import { Avatar, Box, Typography } from '@mui/material';
-import { useAuthContext } from 'hooks/useAppContext';
+import { useAuthContext } from '~/hooks/useAppContext';
 
 export const UserInfo = () => {
   const { auth } = useAuthContext();

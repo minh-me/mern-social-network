@@ -1,15 +1,19 @@
 import axios from 'axios';
-import { User, UserProfile, UsersResponse } from 'interface';
-import axiosInstance from 'utils/axiosInstance';
+import { User, UserProfile, UsersResponse } from '~/interface';
+import axiosInstance from '~/utils/axiosInstance';
 
 const userUrl = '/api/users';
 export const userApi = {
   getProfile({ queryKey = ['users/profile'] }): Promise<UserProfile> {
-    return axiosInstance.get(`api/${queryKey[0]}`);
+    const endpoint = queryKey[0];
+
+    return axiosInstance.get(`api/${endpoint}`);
   },
 
-  getUsers({ queryKey = ['users?page=1&limit=1'] }): Promise<UsersResponse> {
-    return axiosInstance.get(`api/${queryKey[0]}`);
+  getUsers({ queryKey = ['users?page=1'] }): Promise<UsersResponse> {
+    const endpoint = queryKey[0];
+
+    return axiosInstance.get(`api/${endpoint}`);
   },
 
   getUser(userId: string) {

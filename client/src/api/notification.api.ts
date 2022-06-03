@@ -1,13 +1,13 @@
-import axiosInstance from 'utils/axiosInstance';
-import { NotificationsResponse, Notification } from 'interface';
+import axiosInstance from '~/utils/axiosInstance';
+import { NotificationsResponse, Notification } from '~/interface';
 
 const notificationUrl = '/api/notifications';
 
 export const notificationApi = {
-  getNotifications({
-    queryKey = ['notifications?page=1&limit=1'],
-  }): Promise<NotificationsResponse> {
-    return axiosInstance.get(`api/${queryKey[0]}`);
+  getNotifications({ queryKey = ['notifications?page=1'] }): Promise<NotificationsResponse> {
+    const endpoint = queryKey[0];
+
+    return axiosInstance.get(`api/${endpoint}`);
   },
 
   getNotification(notificationId: string) {
@@ -25,14 +25,18 @@ export const notificationApi = {
   },
 
   updateNotification(notifyData: { filter: { id: string }; body: {} }): Promise<Notification> {
-    return axiosInstance.patch(`${notificationUrl}/${notifyData.filter.id}`, notifyData.body, {
+    const { filter, body } = notifyData;
+
+    return axiosInstance.patch(`${notificationUrl}/${filter.id}`, body, {
       headers: { 'Content-Type': 'application/json' },
     });
   },
 
   updateMany(updateData = { filter: {}, body: {} }): Promise<Notification> {
-    return axiosInstance.patch(`${notificationUrl}/update-many`, updateData.body, {
-      params: updateData.filter,
+    const { filter, body } = updateData;
+
+    return axiosInstance.patch(`${notificationUrl}/update-many`, body, {
+      params: filter,
       headers: { 'Content-Type': 'application/json' },
     });
   },

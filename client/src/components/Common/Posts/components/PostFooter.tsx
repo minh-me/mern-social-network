@@ -4,7 +4,7 @@ import {
   LikeIconButton,
   CommentIconButton,
   ShareIconButton,
-} from 'components/Common/Buttons/Posts';
+} from '~/components/Common/Buttons/Posts';
 
 type Props = {
   comments: string[];
@@ -15,14 +15,9 @@ type Props = {
   toggleComment: () => void;
 };
 
-export const PostFooter: FC<Props> = ({
-  comments,
-  retweetUsers,
-  likes,
-  postId,
-  toggleComment,
-  postedBy,
-}) => {
+export const PostFooter: FC<Props> = (props) => {
+  const { comments, retweetUsers, likes, postId, toggleComment, postedBy } = props;
+
   return (
     <Box mt={2} sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
       {/* favorite */}

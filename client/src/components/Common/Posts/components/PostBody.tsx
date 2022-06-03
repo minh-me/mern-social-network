@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Post } from 'interface';
+import { Post } from '~/interface';
 import { PostHeader } from './PostHeader';
 import { PostContent } from './PostContent';
 import { Box } from '@mui/material';

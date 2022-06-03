@@ -1,12 +1,14 @@
-import { PostActionButton } from '../PostActionButton';
-import ShareIcon from '@mui/icons-material/Share';
-import { pink } from '@mui/material/colors';
-import { useDeleteRetweetPost, useRetweetPost } from 'RQhooks';
-import { MDialog } from 'components/Common/Modal';
-import { Typography } from '@mui/material';
 import { useState } from 'react';
-import { useAuthContext } from 'hooks/useAppContext';
-import { EVENTS, socketClient } from 'socketIO';
+import { pink } from '@mui/material/colors';
+import { Typography } from '@mui/material';
+import ShareIcon from '@mui/icons-material/Share';
+
+import { useAuthContext } from '~/hooks/useAppContext';
+import { useDeleteRetweetPost, useRetweetPost } from '~/RQhooks';
+import { EVENTS, socketClient } from '~/socketIO';
+import { MDialog } from '~/components/Common/Modal';
+
+import { PostActionButton } from '../PostActionButton';
 
 export const ShareIconButton = ({ shares = [''], postId = '', postedBy = '' }) => {
   const { auth } = useAuthContext();

@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { Post } from 'interface';
+
+import { Post } from '~/interface';
 import { PostItem } from './PostItem';
 
 type PostListProps = {

@@ -1,5 +1,5 @@
 import { Avatar } from '@mui/material';
-import { User } from 'interface';
+import { User } from '~/interface';
 
 type Props = {
   user: User;

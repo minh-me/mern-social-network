@@ -1,6 +1,6 @@
-import { commentApi } from 'api/comment.api';
+import { commentApi } from '~/api/comment.api';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { handlerError } from 'utils/handleError';
+import { handlerError } from '~/utils/handleError';
 import { options } from './options.type';
 
 export const useCreateComment = () => {

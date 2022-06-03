@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { messageApi } from 'api/message.api';
-import { handlerError } from 'utils/handleError';
+import { messageApi } from '~/api/message.api';
+import { handlerError } from '~/utils/handleError';
 import { options } from './options.type';
-import { Chat } from 'interface';
-import { socketClient, EVENTS } from 'socketIO';
+import { Chat } from '~/interface';
+import { socketClient, EVENTS } from '~/socketIO';
 
 export const useMessages = (
   { chatId = '', page = 1, limit = 1, sort = '-createdAt' },

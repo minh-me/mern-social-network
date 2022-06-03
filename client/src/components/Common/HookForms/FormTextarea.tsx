@@ -13,30 +13,23 @@ type FormProps = {
   onSubmit?: () => void;
 };
 
-export const FormTextarea = ({
-  control,
-  name,
-  disabled = false,
-  autoFocus = true,
-  style,
-  placeholder,
-  onSubmit,
-  required = false,
-}: FormProps) => {
+export const FormTextarea = (props: FormProps) => {
+  const { disabled = false, autoFocus = true, required = false } = props;
+
   const handleKeyDown: React.KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
-    if (!(event.key === 'Enter' && event.shiftKey) && event.key === 'Enter' && onSubmit) {
-      onSubmit();
+    if (!(event.key === 'Enter' && event.shiftKey) && event.key === 'Enter' && props.onSubmit) {
+      props.onSubmit();
       return;
     }
   };
 
   return (
     <Controller
-      control={control}
-      name={name}
+      control={props.control}
+      name={props.name}
       render={({ field }) => (
         <TextareaAutosize
-          placeholder={placeholder}
+          placeholder={props.placeholder}
           autoFocus={autoFocus}
           {...field}
           onKeyDown={handleKeyDown}
@@ -48,7 +41,7 @@ export const FormTextarea = ({
             border: '0',
             color: '#c4c2c5',
             padding: '8px 12px',
-            ...style,
+            ...props.style,
           }}
           disabled={disabled}
         />

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export const Notfound = () => {
   const navigate = useNavigate();
   const imageSrc = 'https://friendkit.cssninja.io/assets/img/illustrations/placeholders/3.svg';
+
   return (
     <Grid container>
       <Grid item sx={{ margin: '0 auto', textAlign: 'center' }}>

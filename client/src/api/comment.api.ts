@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Comment, CommentsResponse } from 'interface';
-import axiosInstance from 'utils/axiosInstance';
+import { Comment, CommentsResponse } from '~/interface';
+import axiosInstance from '~/utils/axiosInstance';
 
 const commentUrl = '/api/comments';
 export const commentApi = {
@@ -11,7 +11,9 @@ export const commentApi = {
   },
 
   getCommentsByPost({ queryKey = ['comments?page=1&limit=1'] }): Promise<CommentsResponse> {
-    return axios.get(`api/${queryKey[0]}`);
+    const endpoint = queryKey[0];
+
+    return axios.get(`api/${endpoint}`);
   },
 
   getComments(filter: {}) {

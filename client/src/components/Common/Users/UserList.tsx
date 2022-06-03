@@ -1,7 +1,9 @@
-import { Box } from '@mui/material';
-import { User } from 'interface';
 import { FC } from 'react';
+import { Box } from '@mui/material';
+
+import { User } from '~/interface';
 import { UserItem } from './UserItem';
+
 type UserListProps = {
   users: User[];
 };

@@ -1,9 +1,10 @@
-import { Button, FormControl, InputAdornment, InputBase } from '@mui/material';
 import { FC } from 'react';
+import { Button, FormControl, InputAdornment, InputBase } from '@mui/material';
 import { Controller } from 'react-hook-form';
-import { FormInputProps } from './FormInputProps';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/material/styles';
+
+import { FormInputProps } from './FormInputProps';
 
 export const FormInputSearch: FC<FormInputProps> = ({ control, name, ...rest }) => {
   return (

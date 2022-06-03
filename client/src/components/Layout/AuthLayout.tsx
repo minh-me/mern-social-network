@@ -1,7 +1,8 @@
 import { Grid } from '@mui/material';
 import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { storage, styleScroll } from 'utils';
+
+import { storage, styleScroll } from '~/utils';
 
 export const AuthLayout = () => {
   const token = storage.getToken();

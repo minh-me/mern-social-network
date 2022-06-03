@@ -1,7 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useActiveAccount } from 'RQhooks';
+
+import { useActiveAccount } from '~/RQhooks';
 
 export const Activate = () => {
   const { token } = useParams();
@@ -16,6 +17,7 @@ export const Activate = () => {
         navigate('/auth/register');
       }
     };
+
     if (token) activeAccount();
   }, [token, navigate, mutateAsync]);
 

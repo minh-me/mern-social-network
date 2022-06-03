@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { uploadApi } from 'api/upload.api';
-import { handlerError } from 'utils/handleError';
+import { uploadApi } from '~/api/upload.api';
+import { handlerError } from '~/utils/handleError';
 
 export const useUploadCoverPhoto = () => {
   const queryClient = useQueryClient();

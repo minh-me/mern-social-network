@@ -1,6 +1,6 @@
-import { Avatar, Chip, Typography } from '@mui/material';
-import { User } from 'interface';
 import { FC } from 'react';
+import { Avatar, Chip, Typography } from '@mui/material';
+import { User } from '~/interface';
 
 type LabelUsersProps = {
   users: User[];
@@ -13,19 +13,6 @@ export const LabelUsers: FC<LabelUsersProps> = ({ users, handleDeleteUser }) => 
   return (
     <Typography component="span">
       {users.map((user, index) => (
-        // <Typography
-        //   sx={{
-        //     borderRadius: 1,
-        //     p: '4px',
-        //     background: 'rgba(249, 24, 128, 0.6)',
-        //     mr: 1,
-        //   }}
-        //   fontSize={12}
-        //   key={user.id}
-        //   component="span"
-        // >
-        //   {user.name}
-        // </Typography>
         <Chip
           key={user.id}
           sx={{

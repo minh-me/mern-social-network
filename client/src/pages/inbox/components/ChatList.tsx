@@ -1,15 +1,18 @@
 import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
-import { useChats } from 'RQhooks/chat.rq';
-import { UserListSkeleton } from 'components/Common/Variants';
+
+import { useChats } from '~/RQhooks/chat.rq';
+import { LoadMoreButton } from '~/components/Common/Buttons';
+import { UserListSkeleton } from '~/components/Common/Variants';
 import { ChatItem } from './ChatItem';
-import { LoadMoreButton } from 'components/Common/Buttons';
 
 export const ChatList = () => {
   const [limit, setLimit] = useState(8);
+
   const { data, isFetching, isLoading } = useChats({ limit, sort: '-updatedAt' });
 
   if (isLoading || !data) return <UserListSkeleton />;
+
   const { chats, info } = data;
 
   return (

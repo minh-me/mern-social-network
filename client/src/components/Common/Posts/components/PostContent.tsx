@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { Typography, Box } from '@mui/material';
-import { ImageWithModal } from 'components/Common/Images/ImageWithModal';
 import ShowMoreText from 'react-show-more-text';
+
+import { ImageWithModal } from '~/components/Common/Images';
 
 type PostTextProps = {
   text: string;

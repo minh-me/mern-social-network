@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { Grid, Box } from '@mui/material';
 import { blueGrey } from '@mui/material/colors';
-import { Sidebar } from 'components/Common/SidebarLeft';
 import { Navigate, Outlet } from 'react-router-dom';
-import { storage, styleScroll } from 'utils';
-import { useAppContext } from 'hooks/useAppContext';
-import { authApi } from 'api/auth.api';
-import { addAuth } from 'context';
-import { SidebarRight } from 'components/Common/SidebarRight';
+import { toast } from 'react-toastify';
+
+import { storage, styleScroll } from '~/utils';
+import { useAppContext } from '~/hooks/useAppContext';
+import { authApi } from '~/api/auth.api';
+import { addAuth } from '~/context';
+import { Sidebar } from '~/components/Common/SidebarLeft';
+import { SidebarRight } from '~/components/Common/SidebarRight';
 
 export const MainLayout = () => {
   const { dispatch } = useAppContext();

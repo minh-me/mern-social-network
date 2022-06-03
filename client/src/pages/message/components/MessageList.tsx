@@ -1,18 +1,20 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 
-import { UserListSkeleton } from 'components/Common/Variants';
+import { UserListSkeleton } from '~/components/Common/Variants';
+import { LoadMoreButton } from '~/components/Common/Buttons';
+import { useMessages } from '~/RQhooks/message.rq';
+import { useAuthContext } from '~/hooks/useAppContext';
+import { socketClient, EVENTS } from '~/socketIO';
+
 import { MessageItem } from './MessageItem';
-import { LoadMoreButton } from 'components/Common/Buttons';
-import { useMessages } from 'RQhooks/message.rq';
-import { useAuthContext } from 'hooks/useAppContext';
-import { socketClient, EVENTS } from 'socketIO';
 
 export const MessageList = ({ chatId = '' }) => {
-  const { auth } = useAuthContext();
   const [limit, setLimit] = useState(8);
   const el = useRef<HTMLDivElement>(null);
   const [isTyping, setIsTyping] = useState(false);
+
+  const { auth } = useAuthContext();
 
   const { data, isFetching, isLoading } = useMessages({ chatId, limit }, { cacheTime: Infinity });
 
