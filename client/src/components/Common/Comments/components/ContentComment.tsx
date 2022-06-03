@@ -27,9 +27,10 @@ export const ContentComment = ({ replyTo, text, image }: Props) => {
 const styles = {
   imageContainer: {
     img: {
-      maxWidth: 400,
+      maxWidth: 340,
       borderRadius: '2px',
       overflow: 'hidden',
+      background: 'white',
     },
   },
 };

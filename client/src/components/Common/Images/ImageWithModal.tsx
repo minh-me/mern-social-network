@@ -19,7 +19,7 @@ export const ImageWithModal: FC<Props> = ({ imageUrl, sx, alt }) => {
           textAlign: 'center',
           maxHeight: '400px',
           overflow: 'hidden',
-          img: { maxWidth: '100%', maxHeight: '100%', borderRadius: 1 },
+          img: { maxWidth: '100%', maxHeight: '100%', borderRadius: 1, background: 'white' },
           ...sx,
         }}
       >
