@@ -8,15 +8,15 @@ Social network is a small project that was built when I was a 3rd-year student.
 
 ## Screenshots
 
-[](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249463/cover_images/ldt6mxj9kyrgdhvpttli.png)
-[](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249663/cover_images/mthf32e6bksmfwtnecdt.png)
-[](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249504/cover_images/e30ncfk4dowfx7k8oyqe.png)
-[](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249581/cover_images/euwom8hxhqiauql9f4pl.png)
-[](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249550/cover_images/lop1oknnosbmylqmiapy.png)
-[](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249396/cover_images/lkdzjpmqzhp2hbaxykha.png)
-[](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249432/cover_images/xmzz6ksq2ip6kwg0tjvh.png)
-[](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249628/cover_images/bpvbrszxcntjjgxu4t62.png)
-[](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249704/cover_images/ftwmosm6phngnsijyyoi.png)
+![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249463/cover_images/ldt6mxj9kyrgdhvpttli.png)
+![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249663/cover_images/mthf32e6bksmfwtnecdt.png)
+![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249504/cover_images/e30ncfk4dowfx7k8oyqe.png)
+![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249581/cover_images/euwom8hxhqiauql9f4pl.png)
+![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249550/cover_images/lop1oknnosbmylqmiapy.png)
+![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249396/cover_images/lkdzjpmqzhp2hbaxykha.png)
+![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249432/cover_images/xmzz6ksq2ip6kwg0tjvh.png)
+![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249628/cover_images/bpvbrszxcntjjgxu4t62.png)
+![](https://res.cloudinary.com/dvnmolznq/image/upload/v1654249704/cover_images/ftwmosm6phngnsijyyoi.png)
 
 ## Gif
 
