@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useState } from 'react';
 
-import { useCommentsByPost } from '~/RQhooks';
+import { useComments } from '~/RQhooks';
 import { Comment } from '~/interface';
 
 import { CommentsSkeleton } from '../Variants/CommentSkeleton';
@@ -16,11 +16,13 @@ type Props = {
 export const CommentList = ({ postId, authorPost }: Props) => {
   const [limit, setLimit] = useState(8);
 
-  const { data, isLoading, isFetching } = useCommentsByPost({ postId, limit });
+  const { data, isLoading, isFetching } = useComments({ postId, limit });
 
   if (isLoading || !data) return <CommentsSkeleton />;
 
   const { comments, info } = data;
+
+  console.log({ comments });
 
   const rootComments = comments.filter((comm: Comment) => !comm.parentId);
 
