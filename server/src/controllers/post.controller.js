@@ -216,7 +216,7 @@ const deletePost = catchAsync(async (req, res) => {
   }
 
   // Delete all comments in post
-  await commentService.deleteMany({ post: post.id })
+  // await commentService.deleteMany({ post: post.id })
 
   res.send(post)
 })

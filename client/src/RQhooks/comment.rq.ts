@@ -16,13 +16,13 @@ export const useCreateComment = () => {
   });
 };
 
-export const useCommentsByPost = (
+export const useComments = (
   { postId = '', page = 1, limit = 1, sort = 'createdAt' },
   options?: options
 ) => {
   const queryKey = `comments?post=${postId}&page=${page}&limit=${limit}&sort=${sort}`;
 
-  return useQuery(queryKey, commentApi.getCommentsByPost, {
+  return useQuery(queryKey, commentApi.getComments, {
     onError: handlerError,
     ...options,
     enabled: !!postId,

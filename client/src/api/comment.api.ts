@@ -10,13 +10,13 @@ export const commentApi = {
     });
   },
 
-  getCommentsByPost({ queryKey = ['comments?page=1&limit=1'] }): Promise<CommentsResponse> {
+  getComments({ queryKey = ['comments?page=1&limit=1'] }): Promise<CommentsResponse> {
     const endpoint = queryKey[0];
 
     return axios.get(`api/${endpoint}`);
   },
 
-  getComments(filter: {}) {
+  getCommentsByPost(filter: {}) {
     return axios.get(`${commentUrl}${filter}`);
   },
 
