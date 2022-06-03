@@ -90,7 +90,7 @@ const uploadCoverPhoto = async path => {
 const uploadPostImage = async path => {
   const options = {
     folder: 'posts/images',
-    width: 480,
+    // width: 480,
     crop: 'fill',
   }
 
@@ -110,7 +110,7 @@ const uploadPostImage = async path => {
 const uploadImageComment = async path => {
   const options = {
     folder: 'messages/images',
-    width: 400,
+    // width: 400,
     crop: 'fill',
   }
 
