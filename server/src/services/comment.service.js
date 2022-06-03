@@ -76,12 +76,15 @@ const deleteCommentById = async commentId => {
  */
 const deleteMany = async filter => {
   const comments = await Comment.find(filter)
+
   comments.forEach(comment => {
     if (comment?.image?.id) {
       uploadService.destroy(comment.image.id)
     }
   })
+
   const result = await Comment.deleteMany(filter)
+
   return result
 }
 
