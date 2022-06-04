@@ -66,7 +66,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Container maxWidth="lg">
+        <Container sx={{ px: 0 }} maxWidth="lg">
           <Routes>
             <Route path="/auth" element={<AuthLayout />}>
               <Route index element={<SignIn />} />
