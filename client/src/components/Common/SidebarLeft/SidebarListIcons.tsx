@@ -17,14 +17,34 @@ import { useLogout } from '~/RQhooks';
 import { storage } from '~/utils';
 import { useAuthContext } from '~/hooks/useAppContext';
 import { resetAppState } from '~/context';
+import { Chat, Notification } from '~/interface';
+import { useNotifications } from '~/RQhooks/notification.rq';
+import { useChats } from '~/RQhooks/chat.rq';
 
 export const SidebarListIcons = () => {
-  const { dispatch } = useAuthContext();
+  const { dispatch, auth } = useAuthContext();
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   const queryClient = new QueryClient();
 
   const { mutateAsync } = useLogout();
+  const { data: notificationsData } = useNotifications({ limit: 8 });
+  const { data: chatsData } = useChats({ limit: 8, sort: '-updatedAt' });
+
+  let numbsNotification;
+  let numbsChat;
+
+  if (notificationsData) {
+    numbsNotification = notificationsData?.notifications.filter(
+      (notification: Notification) => notification.opened === false
+    ).length;
+  }
+
+  if (chatsData && auth?.id) {
+    numbsChat = chatsData?.chats.filter(
+      (chat: Chat) => !chat.latestMessage?.readBy.includes(auth.id)
+    ).length;
+  }
 
   const handleClose = async () => {
     // Clear hoooks
@@ -80,7 +100,7 @@ export const SidebarListIcons = () => {
       <NavLink to="/notification">
         <ListItemButton>
           <Badge
-            badgeContent={undefined}
+            badgeContent={numbsNotification}
             sx={{ span: { fontSize: 12, background: '#ec407a' }, color: 'white' }}
           >
             <NotificationsSharpIcon />
@@ -91,7 +111,12 @@ export const SidebarListIcons = () => {
       <NavLink to="/chat">
         <ListItemButton>
           <ListItemIcon sx={{ minWidth: '30px' }}>
-            <MailOutlineRoundedIcon sx={{ color: 'white' }} />
+            <Badge
+              badgeContent={numbsChat}
+              sx={{ span: { fontSize: 12, background: '#ec407a' }, color: 'white' }}
+            >
+              <MailOutlineRoundedIcon />
+            </Badge>
           </ListItemIcon>
         </ListItemButton>
       </NavLink>
