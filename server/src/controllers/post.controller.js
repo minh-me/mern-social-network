@@ -42,7 +42,8 @@ const getPosts = catchAsync(async (req, res) => {
   filter.hidden = false
   options.populate = 'postedBy,retweetData,retweetData.postedBy'
 
-  if (filter.followingOnly !== undefined) {
+  // Check filter is not [undefined, '']
+  if (!filter.followingOnly) {
     const followingOnly = filter.followingOnly === 'true'
 
     if (followingOnly) {
