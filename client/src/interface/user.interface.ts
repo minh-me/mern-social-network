@@ -22,8 +22,8 @@ export interface User {
   following: string[];
   numberFollowers?: string;
 
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface UserProfile extends Omit<User, 'followers' | 'following'> {

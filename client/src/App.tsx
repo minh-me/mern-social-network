@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AuthLayout, MainLayout } from '~/components/Layout';
+import { AuthLayout, MainLayout, AdminLayout } from '~/components/Layout';
 import { Container } from '@mui/material';
 import {
   ChatPage,
@@ -19,6 +19,7 @@ import { Chat, Message } from '~/interface';
 import { PostDetailPage } from '~/pages/postDetail';
 import { socketClient, EVENTS } from '~/socketIO';
 import { Notfound } from '~/components/App/Notfound';
+import { AdminPage } from './pages/admin/AdminPage';
 
 function App() {
   const { auth } = useAuthContext();
@@ -73,6 +74,9 @@ function App() {
               <Route path="register" element={<SignUp />} />
               <Route path="reset-password/:reset_token" element={<ResetPassword />} />
               <Route path="activate/:token" element={<Activate />} />
+            </Route>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminPage />} />
             </Route>
             <Route path="/" element={<MainLayout />}>
               <Route path="/" element={<HomePage />} />
