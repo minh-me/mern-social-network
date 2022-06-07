@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors'
 import { Notification } from '../models'
 
-const notificationTypes = {
+export const notificationTypes = {
   likePost: 'likePost',
   retweetPost: 'retweetPost',
   follow: 'follow',
@@ -9,6 +9,7 @@ const notificationTypes = {
   newMessage: 'newMessage',
   commentPost: 'commentPost',
   commentUser: 'commentUser',
+  likeComment: 'likeComment',
 }
 
 /**
@@ -63,11 +64,29 @@ const createNotificationRetweetPost = async (userFrom, userTo, postId) => {
  * @param {ObjectId} postId
  * @returns {Promise<Notification>}
  */
-const createNotificationComment = async (userFrom, userTo, postId) => {
+const createNotificationComment = async (userFrom, userTo, postId, type) => {
   const notify = await createNotification({
     userFrom,
     userTo,
     entityId: postId,
+    type,
+  })
+  return notify
+}
+
+/**
+ * Create new notification
+ * @param {ObjectId} userFrom
+ * @param {ObjectId} userTo
+ * @param {ObjectId} postId
+ * @returns {Promise<Notification>}
+ */
+const createNotificationLikeComment = async (userFrom, userTo, postId) => {
+  const notify = await createNotification({
+    userFrom,
+    userTo,
+    entityId: postId,
+    type: notificationTypes.likeComment,
   })
   return notify
 }
@@ -222,4 +241,5 @@ export {
   createNotificationNewMessage,
   count,
   getNotification,
+  createNotificationLikeComment,
 }

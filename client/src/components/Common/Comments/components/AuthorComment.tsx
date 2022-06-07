@@ -6,18 +6,19 @@ import { User } from '~/interface';
 type Props = {
   author: User;
   isPostedBy?: boolean;
+  isReplyUser?: boolean;
 };
 
-export const AuthorComment = ({ author, isPostedBy }: Props) => {
+export const AuthorComment = ({ author, isPostedBy, isReplyUser = false }: Props) => {
   return (
     <Typography
       component={Link}
-      to={`users/${author?.username}`}
+      to={`users/${author.username}`}
       fontSize={13}
-      color="#fff"
+      color={isReplyUser ? '#0077ff' : '#fff'}
       sx={styles.AuthorName}
     >
-      {author?.name}
+      {author.name}
 
       {isPostedBy && (
         <Typography sx={styles.Label} component="span">

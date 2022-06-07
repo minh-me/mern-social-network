@@ -1,5 +1,5 @@
 import { ActionType, AppActions } from './actionTypes';
-import { AppState, initialAppState } from './state';
+import { AppState } from './state';
 
 export const appReducer = (state: AppState, action: AppActions) => {
   switch (action.type) {
@@ -7,7 +7,7 @@ export const appReducer = (state: AppState, action: AppActions) => {
       return { ...state, auth: action.payload };
 
     case ActionType.Reset:
-      return initialAppState;
+      return { auth: null };
 
     default:
       return state;

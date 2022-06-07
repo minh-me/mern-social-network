@@ -31,7 +31,7 @@ export const ContentComment = ({ replyTo, text, image }: Props) => {
   return (
     <>
       <Box sx={{ display: 'flex' }}>
-        {replyTo && <AuthorComment author={replyTo} />}
+        {replyTo && <AuthorComment isReplyUser={true} author={replyTo} />}
         {text && <CommentText text={text} />}
       </Box>
       <Box mt={1} sx={styles.imageContainer}>
