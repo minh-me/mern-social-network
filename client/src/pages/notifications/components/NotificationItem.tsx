@@ -21,7 +21,8 @@ const notifyMessages: Record<string, any> = {
   retweetPost: 'đã chia sẻ một bài viết của bạn.',
   follow: 'đã follow bạn.',
   commentPost: 'đã bình luận một bài viết của bạn.',
-  commentUser: 'đã nhắc đến bạn.',
+  commentUser: 'đã nhắc đến một bình luận của bạn.',
+  likeComment: 'đã thích bình luận của bạn.',
 };
 
 export const NotificationItem: FC<NotificationProps> = ({ notification }) => {

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
-import SidebarList from './SidebarList';
 import Logo from './Logo';
 import { SidebarListIcons } from './SidebarListIcons';
+import SidebarList from './SidebarList';
 
 export const Sidebar = () => {
   return (

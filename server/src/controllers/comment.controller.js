@@ -1,7 +1,13 @@
 import createError from 'http-errors'
 import pick from '../utils/pick'
 import catchAsync from '../utils/catchAsync'
-import { commentService, postService, uploadService } from '../services'
+import {
+  commentService,
+  notificationService,
+  postService,
+  uploadService,
+} from '../services'
+import { notificationTypes } from '../services/notification.service'
 
 /**
  * Create a comment
@@ -23,7 +29,7 @@ const createComment = catchAsync(async (req, res) => {
   const result = await commentService.createComment(comment)
 
   // Add comment to post
-  await postService
+  const post = await postService
     .updatePostById(comment.post, {
       $push: { comments: result.author },
     })
@@ -32,6 +38,22 @@ const createComment = catchAsync(async (req, res) => {
 
       throw new Error(error)
     })
+
+  // Create notification comment
+  const userFrom = result.author
+  const userTo = result.replyTo ? result.replyTo : post.postedBy._id.toString()
+  const type = result.replyTo
+    ? notificationTypes.commentUser
+    : notificationTypes.commentPost
+
+  if (userFrom !== userTo) {
+    await notificationService.createNotificationComment(
+      result.author,
+      userTo,
+      post._id,
+      type
+    )
+  }
 
   res.status(201).json(result)
 })
@@ -45,13 +67,24 @@ const likeComment = catchAsync(async (req, res) => {
   const { commentId } = req.params
   const { user } = req
 
-  let comment = await commentService.getCommentById(commentId)
+  const comment = await commentService.getCommentById(commentId)
 
-  const options = comment.likes.includes(user.id) ? '$pull' : '$addToSet'
+  const isLiked = comment.likes.includes(user.id)
 
-  comment = await commentService.updateCommentById(commentId, {
+  const options = isLiked ? '$pull' : '$addToSet'
+
+  const updatedComment = await commentService.updateCommentById(commentId, {
     [options]: { likes: user.id },
   })
+
+  // Create notification
+  if (!isLiked && updatedComment.author.toString() !== user.id) {
+    await notificationService.createNotificationLikeComment(
+      user.id,
+      updatedComment.author,
+      updatedComment.post
+    )
+  }
 
   res.send(comment)
 })
