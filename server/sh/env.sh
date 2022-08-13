@@ -32,7 +32,7 @@ export CLOUD_API_SECRET=PfIbFwRWDOiNlDd_E_XENdKyNsA
 export SMTP_HOST=smtp.gmail.com
 export SMTP_PORT=587
 export SMTP_USERNAME=minh.mchiu@gmail.com
-export SMTP_PASSWORD=Minhchiu.it.01
+export SMTP_PASSWORD=mphkvglrdlylboiu
 export EMAIL_FROM=minh.mchiu
 
 # OAuth client
