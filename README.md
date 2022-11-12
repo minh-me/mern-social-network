@@ -4,7 +4,7 @@ Social network is a small project that was built when I was a 3rd-year student.
 
 ## Demo
 
-[social-network]
+[social-network]: <a href="https://symphonious-kheer-356f00.netlify.app"> Demo </a>
 
 ## Screenshots
 
